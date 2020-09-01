@@ -1,0 +1,17 @@
+{
+    "name": "autolisp",
+    "version": "1.0.0",
+    "description": "JavaScript interpreter for AutoLisp",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "antlr4": "^4.8.0"
+    },
+    "devDependencies": {
+        "qunit": "^2.11.1"
+    }
+}
