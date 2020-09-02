@@ -18,15 +18,6 @@ import {EvalVisitor} from './EvalVisitor.js';
 //const input = '(princ (car (list 1 2 3)))' // 1
 //const input = '(princ (cdr (list 1 2 3)))' // (2 3)
 
-//const input = '(princ (/))' // TODO: expects at least 1 argument, but found none
-//const input = '(princ (/ 4))' // 4
-//const input = '(princ (/ 5 2))' // 2 Integer division
-//const input = '(princ (/ 5 2.0))' // 2.5
-//const input = '(princ (/ 100 2))' // 50
-//const input = '(princ (/ 100 2.0))' // 50.0
-//const input = '(princ (/ 100 20.0 2))' // 2.5
-//const input = '(princ (/ 100 20 2))' // 2 Integer division
-
 //const input = '(princ (+))'; // 0
 //const input = '(princ (+ 1))'; // 1
 //const input = '(princ (+ 1 2))'; // 3
@@ -80,4 +71,4 @@ function getValue(expr) {
     return expr;
 }
 
-evaluate(input);
+//evaluate(input);

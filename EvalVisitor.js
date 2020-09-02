@@ -23,12 +23,14 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitDivide(ctx) {
-        // TODO: check length > 0, check guide
+        if (ctx.expr().length == 0) {
+            return new Integer(0);
+        }
         let result = this.getValue(this.visit(ctx.expr(0)));
-        console.error('divide:', result);
+        //console.error('divide:', result);
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error('divide:', arg);
+            //console.error('divide:', arg);
             result = result.divide(arg);
         }
         return result;
@@ -148,19 +150,19 @@ export class EvalVisitor extends AutoLISPVisitor {
     visitTerminal(ctx) {
         const str = ctx.getText();
         if (ctx.parentCtx instanceof AutoLISPParser.IntegerContext) {
-            console.error('INTEGER:', str);
+            //console.error('INTEGER:', str);
             return new Integer(Number.parseInt(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {
-            console.error('REAL:', str);
+            //console.error('REAL:', str);
             return new Real(Number.parseFloat(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.StringContext) {
-            console.error('STRING:', str);
+            //console.error('STRING:', str);
             return new String(str);
         } else if (ctx.parentCtx instanceof AutoLISPParser.VariableContext) {
-            console.error('VARIABLE:', str);
+            //console.error('VARIABLE:', str);
             return this.vars[str];
         } else {
-            console.error('TERMINAL:', str);
+            //console.error('TERMINAL:', str);
             //console.error(ctx);
             return str;
         }

@@ -8,7 +8,7 @@ expr :
      // Operators (AutoCAD 2013 AutoLISP Reference Guild p.1)
        
        '(' '*' expr* ')'                       # multiply
-     | '(' '/' expr+ ')'                       # divide
+     | '(' '/' expr* ')'                       # divide
      | '(' '+' expr* ')'                       # add
      | '(' '-' expr+ ')'                       # subtract
      | '(' '=' expr+ ')'                       # equalTo
