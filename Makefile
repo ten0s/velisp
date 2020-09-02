@@ -3,10 +3,13 @@ all: compile
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/AutoLISP.g4
 
+test:
+	npm run test
+
 eval:
 	npm run eval
 
-treejs:
+tree:
 	npm run tree
 
 compileJava:
@@ -19,7 +22,7 @@ tokens: compileJava
 gui: compileJava
 	(cd grammar; grun AutoLISP module -gui)
 
-tree: compileJava
+treeJava: compileJava
 	(cd grammar; grun AutoLISP module -tree)
 
 clean:

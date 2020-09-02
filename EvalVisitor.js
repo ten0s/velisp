@@ -9,11 +9,14 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitMultiply(ctx) {
+        if (ctx.expr().length == 0) {
+            return new Integer(0);
+        }
         let result = new Integer(1);
-        console.error('multiply:', result);
+        //console.error('multiply:', result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error('multiply:', arg);
+            //console.error('multiply:', arg);
             result = result.multiply(arg);
         }
         return result;

@@ -18,14 +18,6 @@ import {EvalVisitor} from './EvalVisitor.js';
 //const input = '(princ (car (list 1 2 3)))' // 1
 //const input = '(princ (cdr (list 1 2 3)))' // (2 3)
 
-//const input = '(princ (*))'; // 1 TODO: 0
-//const input = '(princ (* 2))'; // 2
-//const input = '(princ (* 2 3))'; // 6
-//const input = '(princ (* 2 3.0))'; // 6.0
-//const input = '(princ (* 2 3 4.0))'; // 24.0
-//const input = '(princ (* 3 -4.5))'; // -13.5
-//const input = '(princ (* 1 2 3 4 5))'; // 120
-
 //const input = '(princ (/))' // TODO: expects at least 1 argument, but found none
 //const input = '(princ (/ 4))' // 4
 //const input = '(princ (/ 5 2))' // 2 Integer division
@@ -69,21 +61,17 @@ const input = '(princ (- 15 1 2 3 4 5))'; // 0
 //const input = '(setq a 1) (princ a) (princ (+ 2 a))'; // 3
 //const input = '(setq a 10) (while (> a 0) (princ a) (setq a (- a 1)))';
 
-const chars = new antlr4.InputStream(input);
-const lexer = new AutoLISPLexer(chars);
-
-// Don't use JavaScript strictMode
-//lexer.strictMode = false;
-
-const tokens = new antlr4.CommonTokenStream(lexer);
-const parser = new AutoLISPParser(tokens);
-//parser.buildParseTrees = true;
-const tree = parser.file();
-
-console.log(tree.toStringTree(parser.ruleNames));
-
-const result = getValue(tree.accept(new EvalVisitor()));
-console.log(result);
+export function evaluate(input) {
+    const chars = new antlr4.InputStream(input);
+    const lexer = new AutoLISPLexer(chars);
+    // Don't use JavaScript strictMode
+    //lexer.strictMode = false;
+    const tokens = new antlr4.CommonTokenStream(lexer);
+    const parser = new AutoLISPParser(tokens);
+    //parser.buildParseTrees = true;
+    const tree = parser.file();
+    return getValue(tree.accept(new EvalVisitor()));
+}
 
 function getValue(expr) {
     if (expr instanceof Array) {
@@ -91,3 +79,5 @@ function getValue(expr) {
     }
     return expr;
 }
+
+evaluate(input);

@@ -4,7 +4,8 @@
     "description": "JavaScript interpreter for AutoLISP",
     "main": "index.js",
     "scripts": {
-        "eval": "NODE_OPTIONS='-r esm' node eval.js",
+        "test": "NODE_OPTIONS='-r esm' node node_modules/qunit/bin/qunit.js tests/*.js",
+        "eval": "NODE_OPTIONS='-r esm' node AutoLISPEvaluator.js",
         "tree": "NODE_OPTIONS='-r esm' node tree.js"
     },
     "author": "",
