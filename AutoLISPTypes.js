@@ -1,4 +1,4 @@
-class Integer {
+export class Integer {
     constructor(val) {
         this.val = val;
     }
@@ -49,7 +49,7 @@ class Integer {
     }
 }
 
-class Real {
+export class Real {
     constructor(val) {
         this.val = val;
     }
@@ -92,14 +92,14 @@ class Real {
 
     toString() {
         if (Number.isInteger(this.val)) { 
-            return this.val + ".0"
+            return this.val + '.0'
         } else {
             return this.val.toString(); 
         }
     }
 }
 
-class String {
+export class String {
     constructor(str) {
         this.val = str;
     }
@@ -109,7 +109,7 @@ class String {
     }
 }
 
-class List {
+export class List {
     constructor(arr) {
         this.val = [...arr];
     }
@@ -126,11 +126,6 @@ class List {
     }
 
     toString() {
-        return `(${this.val.join(" ")})`; 
+        return `(${this.val.join(' ')})`;
     }
 }
-
-exports.Integer = Integer;
-exports.Real = Real;
-exports.String = String;
-exports.List = List;

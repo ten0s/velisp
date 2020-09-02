@@ -1,7 +1,7 @@
-const antlr4 = require('antlr4');
-const AutoLISPLexer = require('./grammar/AutoLISPLexer.js').AutoLISPLexer;
-const AutoLISPParser = require('./grammar/AutoLISPParser.js').AutoLISPParser;
-const EvalVisitor = require('./EvalVisitor.js');
+import antlr4 from 'antlr4';
+import {AutoLISPLexer} from './grammar/AutoLISPLexer.js';
+import {AutoLISPParser} from './grammar/AutoLISPParser.js';
+import {EvalVisitor} from './EvalVisitor.js';
 
 //const input = '2';
 //const input = '2.0';
@@ -82,4 +82,12 @@ const tree = parser.file();
 
 console.log(tree.toStringTree(parser.ruleNames));
 
-tree.accept(new EvalVisitor());
+const result = getValue(tree.accept(new EvalVisitor()));
+console.log(result);
+
+function getValue(expr) {
+    if (expr instanceof Array) {
+        return getValue(expr[0]);
+    }
+    return expr;
+}

@@ -1,8 +1,8 @@
-const AutoLISPParser = require('./grammar/AutoLISPParser').AutoLISPParser;
-const AutoLISPVisitor = require('./grammar/AutoLISPVisitor').AutoLISPVisitor;
-const {Integer, Real, String, List} = require('./AutoLISPTypes');
+import {AutoLISPParser} from './grammar/AutoLISPParser';
+import {AutoLISPVisitor} from './grammar/AutoLISPVisitor';
+import {Integer, Real, String, List} from './AutoLISPTypes';
 
-class EvalVisitor extends AutoLISPVisitor {
+export class EvalVisitor extends AutoLISPVisitor {
     constructor() {
         super();
         this.vars = {};
@@ -10,10 +10,10 @@ class EvalVisitor extends AutoLISPVisitor {
 
     visitMultiply(ctx) {
         let result = new Integer(1);
-        console.error("multiply:", result);
+        console.error('multiply:', result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error("multiply:", arg);
+            console.error('multiply:', arg);
             result = result.multiply(arg);
         }
         return result;
@@ -22,10 +22,10 @@ class EvalVisitor extends AutoLISPVisitor {
     visitDivide(ctx) {
         // TODO: check length > 0, check guide
         let result = this.getValue(this.visit(ctx.expr(0)));
-        console.error("divide:", result);
+        console.error('divide:', result);
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error("divide:", arg);
+            console.error('divide:', arg);
             result = result.divide(arg);
         }
         return result;
@@ -33,10 +33,10 @@ class EvalVisitor extends AutoLISPVisitor {
 
     visitAdd(ctx) {
         let result = new Integer(0);
-        console.error("add:", result);
+        console.error('add:', result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error("add:", arg);
+            console.error('add:', arg);
             result = result.add(arg);
         }
         return result;
@@ -45,13 +45,13 @@ class EvalVisitor extends AutoLISPVisitor {
     visitSubtract(ctx) {
         // TODO: check length > 0, check guide
         let result = this.getValue(this.visit(ctx.expr(0)));
-        console.error("subtract:", result);
+        console.error('subtract:', result);
         if (ctx.expr().length == 1) {
             return result.multiply(new Integer(-1));
         }
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error("subtract:", arg);
+            console.error('subtract:', arg);
             result = result.subtract(arg);
         }
         return result;
@@ -60,10 +60,10 @@ class EvalVisitor extends AutoLISPVisitor {
     visitEqualTo(ctx) {
         let result = true;
         let val1 = this.getValue(this.visit(ctx.expr(0)));
-        console.error("equalTo:", val1);
+        console.error('equalTo:', val1);
         for (let i = 1; i < ctx.expr().length; i++) {
             const val2 = this.getValue(this.visit(ctx.expr(i)));
-            console.error("equalTo:", val2);
+            console.error('equalTo:', val2);
             result = (val1 == val2);
             if (!result) break;
             val1 = val2;
@@ -105,14 +105,14 @@ class EvalVisitor extends AutoLISPVisitor {
     visitSetQ(ctx) {
         const key = this.getValue(this.visit(ctx.ID()));
         const val = this.getValue(this.visit(ctx.expr()));
-        console.error("setq:", key, val);
+        console.error('setq:', key, val);
         this.vars[key] = val;
         return val;
     }
 
     visitIf(ctx) {
         const test = this.getValue(this.visit(ctx.testexpr()));
-        console.error("if test:", test);
+        console.error('if test:', test);
         if (test) {
             return this.visit(ctx.thenexpr());
         } else {
@@ -124,7 +124,7 @@ class EvalVisitor extends AutoLISPVisitor {
         let ret = null;
         while (true) {
             const test = this.getValue(this.visit(ctx.testexpr()));
-            console.error("while test:", test);
+            console.error('while test:', test);
             if (test) {
                 for (let i = 0; i < ctx.expr().length; i++) {
                     ret = this.visit(ctx.expr(i));
@@ -138,26 +138,26 @@ class EvalVisitor extends AutoLISPVisitor {
 
     visitPrinc(ctx) {
         let expr = this.getValue(this.visit(ctx.expr()));
-        console.log("princ:", expr.toString());
+        console.log('princ:', expr.toString());
         return expr;
     }
 
     visitTerminal(ctx) {
         const str = ctx.getText();
         if (ctx.parentCtx instanceof AutoLISPParser.IntegerContext) {
-            console.error("INTEGER:", str);
+            console.error('INTEGER:', str);
             return new Integer(Number.parseInt(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {
-            console.error("REAL:", str);
+            console.error('REAL:', str);
             return new Real(Number.parseFloat(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.StringContext) {
-            console.error("STRING:", str);
+            console.error('STRING:', str);
             return new String(str);
         } else if (ctx.parentCtx instanceof AutoLISPParser.VariableContext) {
-            console.error("VARIABLE:", str);
+            console.error('VARIABLE:', str);
             return this.vars[str];
         } else {
-            console.error("TERMINAL:", str);
+            console.error('TERMINAL:', str);
             //console.error(ctx);
             return str;
         }
@@ -200,5 +200,3 @@ class EvalVisitor extends AutoLISPVisitor {
     }
     */
 }
-
-module.exports = EvalVisitor;

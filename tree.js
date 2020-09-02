@@ -1,6 +1,6 @@
-const antlr4 = require('antlr4');
-const AutoLISPLexer = require('./grammar/AutoLISPLexer.js').AutoLISPLexer;
-const AutoLISPParser = require('./grammar/AutoLISPParser.js').AutoLISPParser;
+import antlr4 from 'antlr4';
+import {AutoLISPLexer} from './grammar/AutoLISPLexer.js';
+import {AutoLISPParser} from './grammar/AutoLISPParser.js';
 
 const input = '(+ 1 2)';
 
@@ -13,6 +13,6 @@ const lexer = new AutoLISPLexer(chars);
 const tokens = new antlr4.CommonTokenStream(lexer);
 const parser = new AutoLISPParser(tokens);
 //parser.buildParseTrees = true;
-const tree = parser.module();
+const tree = parser.file();
 
 console.log(tree.toStringTree(parser.ruleNames));

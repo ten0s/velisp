@@ -4,7 +4,8 @@
     "description": "JavaScript interpreter for AutoLISP",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "eval": "NODE_OPTIONS='-r esm' node eval.js",
+        "tree": "NODE_OPTIONS='-r esm' node tree.js"
     },
     "author": "",
     "license": "ISC",
@@ -12,6 +13,7 @@
         "antlr4": "^4.8.0"
     },
     "devDependencies": {
+        "esm": "^3.2.25",
         "qunit": "^2.11.1"
     }
 }

@@ -3,8 +3,11 @@ all: compile
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/AutoLISP.g4
 
-run: compile
-	node eval.js
+eval:
+	npm run eval
+
+treejs:
+	npm run tree
 
 compileJava:
 	antlr4 -lib grammar -no-visitor -no-listener grammar/AutoLISP.g4
