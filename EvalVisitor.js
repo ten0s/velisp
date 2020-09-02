@@ -48,15 +48,17 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
     
     visitSubtract(ctx) {
-        // TODO: check length > 0, check guide
+        if (ctx.expr().length == 0) {
+            return new Integer(0);
+        }
         let result = this.getValue(this.visit(ctx.expr(0)));
-        console.error('subtract:', result);
+        //console.error('subtract:', result);
         if (ctx.expr().length == 1) {
             return result.multiply(new Integer(-1));
         }
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error('subtract:', arg);
+            //console.error('subtract:', arg);
             result = result.subtract(arg);
         }
         return result;

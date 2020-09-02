@@ -10,7 +10,7 @@ expr :
        '(' '*' expr* ')'                       # multiply
      | '(' '/' expr* ')'                       # divide
      | '(' '+' expr* ')'                       # add
-     | '(' '-' expr+ ')'                       # subtract
+     | '(' '-' expr* ')'                       # subtract
      | '(' '=' expr+ ')'                       # equalTo
      | '(' '/=' expr+ ')'                      # notEqualTo
      | '(' '<' expr+ ')'                       # lessThan

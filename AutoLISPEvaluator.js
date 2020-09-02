@@ -18,13 +18,6 @@ import {EvalVisitor} from './EvalVisitor.js';
 //const input = '(princ (car (list 1 2 3)))' // 1
 //const input = '(princ (cdr (list 1 2 3)))' // (2 3)
 
-//const input = '(princ (-))' // TODO: expects at least 1 argument, but found none
-//const input = '(princ (- 1))'; // -1
-//const input = '(princ (- 1 2.0))'; // -1.0
-//const input = '(princ (- 50 40))'; // 10
-//const input = '(princ (- 50 40.0))'; // 10.0
-const input = '(princ (- 15 1 2 3 4 5))'; // 0
-
 //const input = '(princ (= 1)'; // true TODO: T
 //const input = '(princ (= 4 4.0)'; // true TODO: T
 //const input = '(princ (= 20 388)'; // false TODO: nil
