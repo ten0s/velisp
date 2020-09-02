@@ -1,6 +1,6 @@
 import {AutoLISPParser} from './grammar/AutoLISPParser';
 import {AutoLISPVisitor} from './grammar/AutoLISPVisitor';
-import {Integer, Real, String, List} from './AutoLISPTypes';
+import {Bool, Integer, Real, String, List} from './AutoLISPTypes';
 
 export class EvalVisitor extends AutoLISPVisitor {
     constructor() {
@@ -65,13 +65,13 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitEqualTo(ctx) {
-        let result = true;
+        let result = new Bool(true);
         let val1 = this.getValue(this.visit(ctx.expr(0)));
-        console.error('equalTo:', val1);
+        //console.error('equalTo:', val1);
         for (let i = 1; i < ctx.expr().length; i++) {
             const val2 = this.getValue(this.visit(ctx.expr(i)));
-            console.error('equalTo:', val2);
-            result = (val1 == val2);
+            //console.error('equalTo:', val2);
+            result = val1.equalTo(val2);
             if (!result) break;
             val1 = val2;
         }

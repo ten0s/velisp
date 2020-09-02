@@ -1,3 +1,13 @@
+export class Bool {
+    constructor(val) {
+        this.val = val;
+    }
+
+    toString() {
+        return this.val ? "T" : "nil";
+    }
+}
+
 export class Integer {
     constructor(val) {
         this.val = val;
@@ -42,6 +52,15 @@ export class Integer {
             return new Real(this.val - that.val);
         }
         throw new Error(`Not implemented ${this} - ${that}`);
+    }
+
+    equalTo(that) {
+        if (that instanceof Integer) {
+            return new Bool(this.val === that.val);
+        } else if (that instanceof Real) {
+            return new Bool(this.val === that.val);
+        }
+        throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     toString() {
@@ -90,6 +109,15 @@ export class Real {
         throw new Error(`Not implemented ${this} - ${that}`);
     }
 
+    equalTo(that) {
+        if (that instanceof Integer) {
+            return new Bool(this.val === that.val);
+        } else if (that instanceof Real) {
+            return new Bool(this.val === that.val);
+        }
+        throw new Error(`Not implemented ${this} = ${that}`);
+    }
+
     toString() {
         if (Number.isInteger(this.val)) { 
             return this.val + '.0'
@@ -102,6 +130,13 @@ export class Real {
 export class String {
     constructor(str) {
         this.val = str;
+    }
+
+    equalTo(that) {
+        if (that instanceof String) {
+            return new Bool(this.val === that.val);
+        }
+        throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     toString() {

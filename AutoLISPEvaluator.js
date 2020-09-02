@@ -5,21 +5,17 @@ import {EvalVisitor} from './EvalVisitor.js';
 
 //const input = '(princ 2)'; // 2
 //const input = '(princ 2.0)'; // 2.0
-//const input = '(princ "2.0")'; // "2.0" TODO: 2.0?
+//const input = '(princ "2.0")'; // 2.0
+//const input = '(princ (= 1 1))'; // T
+//const input = '(princ (= 0 1))'; // nil
 
-//const input = '(princ (= 1)'; // true TODO: T
-//const input = '(princ (= 4 4.0)'; // true TODO: T
-//const input = '(princ (= 20 388)'; // false TODO: nil
-//const input = '(princ (= 2.4 2.4 2.4)'; // true TODO: T
-//const input = '(princ (= 499 499 500)'; // false TODO: nil
-//const input = '(princ (= "me" "me"))'; // true TODO: T
+const input = '(princ (= 1))';
+
+//const input = '(princ (> 2 1))'; // T
+//const input = '(princ (> 1 1))'; // nil
 
 //const input = '(if 1 (princ 1) (princ 0))'; // 1
 //const input = '(if 0 (princ 1) (princ 0))'; // 0
-
-//const input = '(princ (= 1 1))'; // true
-//const input = '(princ (> 2 1))'; // true
-//const input = '(princ (> 1 1))'; // false
 //const input = '(princ (if 1 1 0))' // 1
 //const input = '(princ (if 0 1 0))' // 0
 
