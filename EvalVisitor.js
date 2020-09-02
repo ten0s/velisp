@@ -1,5 +1,6 @@
 const AutoLISPParser = require('./grammar/AutoLISPParser').AutoLISPParser;
 const AutoLISPVisitor = require('./grammar/AutoLISPVisitor').AutoLISPVisitor;
+const {Integer, Real, String, List} = require('./AutoLISPTypes');
 
 class EvalVisitor extends AutoLISPVisitor {
     constructor() {
@@ -8,45 +9,50 @@ class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitMultiply(ctx) {
-        let result = 1;
+        let result = new Integer(1);
+        console.error("multiply:", result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
             console.error("multiply:", arg);
-            result *= arg;
+            result = result.multiply(arg);
         }
         return result;
     }
 
     visitDivide(ctx) {
+        // TODO: check length > 0, check guide
         let result = this.getValue(this.visit(ctx.expr(0)));
+        console.error("divide:", result);
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
             console.error("divide:", arg);
-            result /= arg;
+            result = result.divide(arg);
         }
         return result;
     }
 
     visitAdd(ctx) {
-        let result = 0;
+        let result = new Integer(0);
+        console.error("add:", result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
             console.error("add:", arg);
-            result += arg;
+            result = result.add(arg);
         }
         return result;
     }
     
     visitSubtract(ctx) {
+        // TODO: check length > 0, check guide
         let result = this.getValue(this.visit(ctx.expr(0)));
         console.error("subtract:", result);
         if (ctx.expr().length == 1) {
-            return -result;
+            return result.multiply(new Integer(-1));
         }
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
             console.error("subtract:", arg);
-            result -= arg;
+            result = result.subtract(arg);
         }
         return result;
     }
@@ -83,7 +89,17 @@ class EvalVisitor extends AutoLISPVisitor {
             const val = this.getValue(this.visit(ctx.expr(i)));
             result.push(val);
         }
-        return result;
+        return new List(result);
+    }
+
+    visitCar(ctx) {
+        let list = this.getValue(this.visit(ctx.expr()));
+        return list.car();
+    }
+
+    visitCdr(ctx) {
+        let list = this.getValue(this.visit(ctx.expr()));
+        return list.cdr();
     }
 
     visitSetQ(ctx) {
@@ -122,30 +138,28 @@ class EvalVisitor extends AutoLISPVisitor {
 
     visitPrinc(ctx) {
         let expr = this.getValue(this.visit(ctx.expr()));
-        console.log("princ:", expr);
+        console.log("princ:", expr.toString());
         return expr;
     }
 
     visitTerminal(ctx) {
-        const value = ctx.getText();
+        const str = ctx.getText();
         if (ctx.parentCtx instanceof AutoLISPParser.IntegerContext) {
-            console.error("INTEGER:", value);
-            return Number.parseInt(value);
+            console.error("INTEGER:", str);
+            return new Integer(Number.parseInt(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {
-            console.error("REAL:", value);
-            // TODO: still returns INT if 2.0,
-            // TODO: need some hierarchy of Integer, Real, Boolean, etc to be implemented
-            return Number.parseFloat(value) * 1.0;
+            console.error("REAL:", str);
+            return new Real(Number.parseFloat(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.StringContext) {
-            console.error("STRING:", value);
-            return value;
+            console.error("STRING:", str);
+            return new String(str);
         } else if (ctx.parentCtx instanceof AutoLISPParser.VariableContext) {
-            console.error("VARIABLE:", value);
-            return this.vars[value];
+            console.error("VARIABLE:", str);
+            return this.vars[str];
         } else {
-            console.error("TERMINAL:", value);
+            console.error("TERMINAL:", str);
             //console.error(ctx);
-            return value;
+            return str;
         }
     }
 

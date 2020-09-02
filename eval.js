@@ -10,38 +10,45 @@ const EvalVisitor = require('./EvalVisitor.js');
 //const input = '(list 1 2 3)';
 
 //const input = '(princ 2)'; // 2
-//const input = '(princ 2.0)'; // 2
-//const input = '(princ "2.0")'; // "2.0" ?
-//const input = '(princ (list))'
-//const input = '(princ (list 1 2 3))'
+//const input = '(princ 2.0)'; // 2.0
+//const input = '(princ "2.0")'; // "2.0" TODO: 2.0?
 
-//const input = '(princ (*))'; // 1
-//const input = '(princ (* 1))'; // 1
+//const input = '(princ (list))' // () TODO: '() | nil
+//const input = '(princ (list 1 2 3))' // (1 2 3)
+//const input = '(princ (car (list 1 2 3)))' // 1
+//const input = '(princ (cdr (list 1 2 3)))' // (2 3)
+
+//const input = '(princ (*))'; // 1 TODO: 0
 //const input = '(princ (* 2))'; // 2
-//const input = '(princ (* 1 2))'; // 2
-//const input = '(princ (* 1 2.0))'; // 2 TODO: 2.0
+//const input = '(princ (* 2 3))'; // 6
+//const input = '(princ (* 2 3.0))'; // 6.0
+//const input = '(princ (* 2 3 4.0))'; // 24.0
+//const input = '(princ (* 3 -4.5))'; // -13.5
 //const input = '(princ (* 1 2 3 4 5))'; // 120
 
 //const input = '(princ (/))' // TODO: expects at least 1 argument, but found none
 //const input = '(princ (/ 4))' // 4
+//const input = '(princ (/ 5 2))' // 2 Integer division
+//const input = '(princ (/ 5 2.0))' // 2.5
 //const input = '(princ (/ 100 2))' // 50
-//const input = '(princ (/ 100 2.0))' // 50 TODO: 50.0
+//const input = '(princ (/ 100 2.0))' // 50.0
 //const input = '(princ (/ 100 20.0 2))' // 2.5
-//const input = '(princ (/ 100 20 2))' // 2.5 TODO: 2
+//const input = '(princ (/ 100 20 2))' // 2 Integer division
 
 //const input = '(princ (+))'; // 0
 //const input = '(princ (+ 1))'; // 1
 //const input = '(princ (+ 1 2))'; // 3
-//const input = '(princ (+ 1 2.0))'; // 3
+//const input = '(princ (+ 1 2.0))'; // 3.0
+//const input = '(princ (+ 2.0 1))'; // 3.0
 //const input = '(princ (+ 1 2 3 4 5))'; // 15
-const input = '(princ (+ 2147483646 3))'//2147483649 TODO: -2147483647
+//const input = '(princ (+ 2147483646 3))'//2147483649 TODO: -2147483647
 
 //const input = '(princ (-))' // TODO: expects at least 1 argument, but found none
 //const input = '(princ (- 1))'; // -1
-//const input = '(princ (- 1 2.0))'; // -1
+//const input = '(princ (- 1 2.0))'; // -1.0
 //const input = '(princ (- 50 40))'; // 10
-//const input = '(princ (- 50 40.0))'; // 10 TODO: 10.0
-//const input = '(princ (- 15 1 2 3 4 5))'; // 0
+//const input = '(princ (- 50 40.0))'; // 10.0
+const input = '(princ (- 15 1 2 3 4 5))'; // 0
 
 //const input = '(princ (= 1)'; // true TODO: T
 //const input = '(princ (= 4 4.0)'; // true TODO: T

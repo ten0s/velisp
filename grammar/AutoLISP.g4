@@ -84,21 +84,6 @@ fragment LETTER : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
 fragment ID     : LETTER[a-zA-Z0-9_]* ;
 
-/*
-
-file : expr+ ;
-
-expr : ATOM
-     | list
-     ;
-
-list : '(' expr* ')' ;
-
-NIL : 'nil' ;
-
-ATOM : [a-z]+ ;
-*/
-
 // (operator arguments*)
 
 // primitive operators
