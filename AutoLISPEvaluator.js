@@ -3,20 +3,9 @@ import {AutoLISPLexer} from './grammar/AutoLISPLexer.js';
 import {AutoLISPParser} from './grammar/AutoLISPParser.js';
 import {EvalVisitor} from './EvalVisitor.js';
 
-//const input = '2';
-//const input = '2.0';
-//const input = '"2.0"';
-//const input = '(list)';
-//const input = '(list 1 2 3)';
-
 //const input = '(princ 2)'; // 2
 //const input = '(princ 2.0)'; // 2.0
 //const input = '(princ "2.0")'; // "2.0" TODO: 2.0?
-
-//const input = '(princ (list))' // () TODO: '() | nil
-//const input = '(princ (list 1 2 3))' // (1 2 3)
-//const input = '(princ (car (list 1 2 3)))' // 1
-//const input = '(princ (cdr (list 1 2 3)))' // (2 3)
 
 //const input = '(princ (= 1)'; // true TODO: T
 //const input = '(princ (= 4 4.0)'; // true TODO: T

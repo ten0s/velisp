@@ -159,7 +159,7 @@ export class EvalVisitor extends AutoLISPVisitor {
             return new Real(Number.parseFloat(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.StringContext) {
             //console.error('STRING:', str);
-            return new String(str);
+            return new String(str.replace(/\"/g, ''));
         } else if (ctx.parentCtx instanceof AutoLISPParser.VariableContext) {
             //console.error('VARIABLE:', str);
             return this.vars[str];
