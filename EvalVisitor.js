@@ -79,11 +79,13 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitGreaterThan(ctx) {
-        let result = true;
+        let result = new Bool(true);
         let val1 = this.getValue(this.visit(ctx.expr(0)));
+        //console.error('greaterThan:', val1);
         for (let i = 1; i < ctx.expr().length; i++) {
             const val2 = this.getValue(this.visit(ctx.expr(i)));
-            result = (val1 > val2);
+            //console.error('greaterThan:', val2);
+            result = val1.greaterThan(val2);
             if (!result) break;
             val1 = val2;
         }

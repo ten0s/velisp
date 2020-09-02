@@ -63,6 +63,15 @@ export class Integer {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    greaterThan(that) {
+        if (that instanceof Integer) {
+            return new Bool(this.val > that.val);
+        } else if (that instanceof Real) {
+            return new Bool(this.val > that.val);
+        }
+        throw new Error(`Not implemented ${this} > ${that}`);
+    }
+
     toString() {
         return this.val.toString();
     }
@@ -118,6 +127,15 @@ export class Real {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    greaterThan(that) {
+        if (that instanceof Integer) {
+            return new Bool(this.val > that.val);
+        } else if (that instanceof Real) {
+            return new Bool(this.val > that.val);
+        }
+        throw new Error(`Not implemented ${this} > ${that}`);
+    }
+
     toString() {
         if (Number.isInteger(this.val)) { 
             return this.val + '.0'
@@ -137,6 +155,13 @@ export class String {
             return new Bool(this.val === that.val);
         }
         throw new Error(`Not implemented ${this} = ${that}`);
+    }
+
+    greaterThan(that) {
+        if (that instanceof String) {
+            return new Bool(this.val > that.val);
+        }
+        throw new Error(`Not implemented ${this} > ${that}`);
     }
 
     toString() {
