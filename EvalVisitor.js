@@ -38,10 +38,10 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitAdd(ctx) {
         let result = new Integer(0);
-        console.error('add:', result);
+        //console.error('add:', result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
-            console.error('add:', arg);
+            //console.error('add:', arg);
             result = result.add(arg);
         }
         return result;
