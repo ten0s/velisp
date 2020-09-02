@@ -1,17 +1,17 @@
 const antlr4 = require('antlr4');
-const AutoLispLexer = require('./grammar/AutoLispLexer.js').AutoLispLexer;
-const AutoLispParser = require('./grammar/AutoLispParser.js').AutoLispParser;
+const AutoLISPLexer = require('./grammar/AutoLISPLexer.js').AutoLISPLexer;
+const AutoLISPParser = require('./grammar/AutoLISPParser.js').AutoLISPParser;
 
 const input = '(+ 1 2)';
 
 const chars = new antlr4.InputStream(input);
-const lexer = new AutoLispLexer(chars);
+const lexer = new AutoLISPLexer(chars);
 
 // Don't use JavaScript strictMode
 //lexer.strictMode = false;
 
 const tokens = new antlr4.CommonTokenStream(lexer);
-const parser = new AutoLispParser(tokens);
+const parser = new AutoLISPParser(tokens);
 //parser.buildParseTrees = true;
 const tree = parser.module();
 

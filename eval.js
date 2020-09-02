@@ -1,6 +1,6 @@
 const antlr4 = require('antlr4');
-const AutoLispLexer = require('./grammar/AutoLispLexer.js').AutoLispLexer;
-const AutoLispParser = require('./grammar/AutoLispParser.js').AutoLispParser;
+const AutoLISPLexer = require('./grammar/AutoLISPLexer.js').AutoLISPLexer;
+const AutoLISPParser = require('./grammar/AutoLISPParser.js').AutoLISPParser;
 const EvalVisitor = require('./EvalVisitor.js');
 
 //const input = '2';
@@ -13,7 +13,7 @@ const EvalVisitor = require('./EvalVisitor.js');
 //const input = '(princ 2.0)'; // 2
 //const input = '(princ "2.0")'; // "2.0" ?
 //const input = '(princ (list))'
-const input = '(princ (list 1 2 3))'
+//const input = '(princ (list 1 2 3))'
 
 //const input = '(princ (*))'; // 1
 //const input = '(princ (* 1))'; // 1
@@ -34,6 +34,7 @@ const input = '(princ (list 1 2 3))'
 //const input = '(princ (+ 1 2))'; // 3
 //const input = '(princ (+ 1 2.0))'; // 3
 //const input = '(princ (+ 1 2 3 4 5))'; // 15
+const input = '(princ (+ 2147483646 3))'//2147483649 TODO: -2147483647
 
 //const input = '(princ (-))' // TODO: expects at least 1 argument, but found none
 //const input = '(princ (- 1))'; // -1
@@ -62,15 +63,15 @@ const input = '(princ (list 1 2 3))'
 //const input = '(setq a 10) (while (> a 0) (princ a) (setq a (- a 1)))';
 
 const chars = new antlr4.InputStream(input);
-const lexer = new AutoLispLexer(chars);
+const lexer = new AutoLISPLexer(chars);
 
 // Don't use JavaScript strictMode
 //lexer.strictMode = false;
 
 const tokens = new antlr4.CommonTokenStream(lexer);
-const parser = new AutoLispParser(tokens);
+const parser = new AutoLISPParser(tokens);
 //parser.buildParseTrees = true;
-const tree = parser.module();
+const tree = parser.file();
 
 console.log(tree.toStringTree(parser.ruleNames));
 

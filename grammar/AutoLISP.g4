@@ -1,11 +1,11 @@
-grammar AutoLisp;
+grammar AutoLISP;
 
 // Parser rules
 
-module : expr+ ;
+file : expr+ ;
 
 expr :
-     // Operators
+     // Operators (AutoCAD 2013 AutoLISP Reference Guild p.1)
        
        '(' '*' expr* ')'                       # multiply
      | '(' '/' expr+ ')'                       # divide
@@ -21,22 +21,41 @@ expr :
      | '(' '1+' expr ')'                       # increment // re-impl in lisp
      | '(' '1-' expr ')'                       # decrement // re-impl in lisp
 
-     // Special forms
+     | '(' 'list' expr* ')'                    # list 
+     | '(' 'car' expr ')'                      # car // TODO: is expr correct here?
+     | '(' 'cdr' expr ')'                      # cdr // TODO: is expr correct here?
 
-     | '(' 'list' expr* ')'                    # list
-     | '(' 'setq' ID expr ')'                  # setQ
-     | '(' 'if' testexpr thenexpr elseexpr ')' # if    // (re-)impl in lisp using cond
-     | '(' 'while' testexpr expr+ ')'          # while
-     
-     | '(' 'defun' ID '(' ID* ')' expr+ ')'    # defun
+     // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
+
+     // and
+     // command
      | '(' 'cond' test+ ')'                    # cond
+     | '(' 'defun' SYMBOL '(' SYMBOL* ')' expr+ ')'    # defun
+     // defun-q
+     // foreach
+     // function
+     | '(' 'if' testexpr thenexpr elseexpr ')' # if
+     // lambda
+     // or
+     // progn
+     // quote
+     // repeat
+     | '(' 'setq' SYMBOL expr ')'              # setQ // TODO: multiple 
+     // trace
+     // untrace
+     // vlax-for
+     | '(' 'while' testexpr expr+ ')'          # while
+
+     // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
 
      | '(' 'princ' expr ')'                    # princ
 
-     | ID                                      # id // VAR?
+     // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
+
      | INTEGER                                 # integer
      | REAL                                    # real
      | STRING                                  # string
+     | VARIABLE                                # variable
      ;
 
 testexpr : expr
@@ -53,14 +72,17 @@ test : (expr expr)
 
 // Lexer rules
 
-ID : LETTER[a-zA-Z0-9_]* ;
 INTEGER : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STRING : '"' .*? '"' ;
+VARIABLE : ID ;
+SYMBOL : ID ;
+
 WHITESPACE: [ \r\n]+ -> skip ;
 
 fragment LETTER : [a-zA-Z] ;
-fragment DIGIT : [0-9] ;
+fragment DIGIT  : [0-9] ;
+fragment ID     : LETTER[a-zA-Z0-9_]* ;
 
 /*
 

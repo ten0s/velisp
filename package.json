@@ -1,7 +1,7 @@
 {
     "name": "autolisp",
     "version": "1.0.0",
-    "description": "JavaScript interpreter for AutoLisp",
+    "description": "JavaScript interpreter for AutoLISP",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"

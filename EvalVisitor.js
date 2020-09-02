@@ -1,7 +1,7 @@
-const AutoLispParser = require('./grammar/AutoLispParser').AutoLispParser;
-const AutoLispVisitor = require('./grammar/AutoLispVisitor').AutoLispVisitor;
+const AutoLISPParser = require('./grammar/AutoLISPParser').AutoLISPParser;
+const AutoLISPVisitor = require('./grammar/AutoLISPVisitor').AutoLISPVisitor;
 
-class EvalVisitor extends AutoLispVisitor {
+class EvalVisitor extends AutoLISPVisitor {
     constructor() {
         super();
         this.vars = {};
@@ -127,25 +127,25 @@ class EvalVisitor extends AutoLispVisitor {
     }
 
     visitTerminal(ctx) {
-        if (ctx.parentCtx instanceof AutoLispParser.IdContext) {
-            const id = ctx.getText();
-            console.error("ID:", id);
-            return this.vars[id];
-        } else if (ctx.parentCtx instanceof AutoLispParser.IntegerContext) {
-            console.error("INTEGER:", ctx.getText());
-            return Number.parseInt(ctx.getText());
-        } else if (ctx.parentCtx instanceof AutoLispParser.RealContext) {
-            console.error("REAL:", ctx.getText());
+        const value = ctx.getText();
+        if (ctx.parentCtx instanceof AutoLISPParser.IntegerContext) {
+            console.error("INTEGER:", value);
+            return Number.parseInt(value);
+        } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {
+            console.error("REAL:", value);
             // TODO: still returns INT if 2.0,
             // TODO: need some hierarchy of Integer, Real, Boolean, etc to be implemented
-            return Number.parseFloat(ctx.getText()) * 1.0;
-        } else if (ctx.parentCtx instanceof AutoLispParser.StringContext) {
-            console.error("STRING:", ctx.getText());
-            return ctx.getText();
+            return Number.parseFloat(value) * 1.0;
+        } else if (ctx.parentCtx instanceof AutoLISPParser.StringContext) {
+            console.error("STRING:", value);
+            return value;
+        } else if (ctx.parentCtx instanceof AutoLISPParser.VariableContext) {
+            console.error("VARIABLE:", value);
+            return this.vars[value];
         } else {
-            console.error("TERMINAL:", ctx.getText());
+            console.error("TERMINAL:", value);
             //console.error(ctx);
-            return ctx.getText();
+            return value;
         }
     }
 
