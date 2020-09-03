@@ -233,6 +233,7 @@ export class Str {
 
 export class List {
     constructor(arr) {
+        // TODO: who should make copy, see cdr
         this.val = [...arr];
     }
 
