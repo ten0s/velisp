@@ -181,8 +181,8 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitIf(ctx) {
         const test = this.getValue(this.visit(ctx.testexpr()));
-        console.error('if test:', test);
-        if (test) {
+        //console.error('if test:', test);
+        if (test.isTruthy()) {
             return this.visit(ctx.thenexpr());
         } else {
             return this.visit(ctx.elseexpr());

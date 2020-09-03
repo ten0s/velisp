@@ -11,11 +11,6 @@ import {EvalVisitor} from './EvalVisitor.js';
 
 const input = '(princ (= 1))';
 
-//const input = '(if 1 (princ 1) (princ 0))'; // 1
-//const input = '(if 0 (princ 1) (princ 0))'; // 0
-//const input = '(princ (if 1 1 0))' // 1
-//const input = '(princ (if 0 1 0))' // 0
-
 //const input = '(setq a 1) (princ a) (princ (+ 2 a))'; // 3
 //const input = '(setq a 10) (while (> a 0) (princ a) (setq a (- a 1)))';
 

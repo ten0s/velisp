@@ -3,10 +3,12 @@ export class Bool {
         this.val = val;
     }
 
+    // :: () -> true | false
     isTruthy() {
         return this.val;
     }
 
+    // :: () -> true | false
     isFalsy() {
         return !this.val;
     }
@@ -37,6 +39,16 @@ export class Bool {
 export class Int {
     constructor(val) {
         this.val = val;
+    }
+
+    // :: () -> true
+    isTruthy() {
+        return true;
+    }
+
+    // :: () -> false
+    isFalsy() {
+        return false;
     }
 
     multiply(that) {
@@ -112,6 +124,16 @@ export class Real {
         this.val = val;
     }
 
+    // :: () -> true
+    isTruthy() {
+        return true;
+    }
+
+    // :: () -> false
+    isFalsy() {
+        return false;
+    }
+
     multiply(that) {
         if (that instanceof Int) {
             return new Real(this.val * that.val);
@@ -180,6 +202,16 @@ export class Str {
         this.val = str;
     }
 
+    // :: () -> true
+    isTruthy() {
+        return true;
+    }
+
+    // :: () -> false
+    isFalsy() {
+        return false;
+    }
+
     equalTo(that) {
         if (that instanceof Str) {
             return new Bool(this.val === that.val);
@@ -202,6 +234,16 @@ export class Str {
 export class List {
     constructor(arr) {
         this.val = [...arr];
+    }
+
+    // :: () -> true | false
+    isTruthy() {
+        return this.val.length !== 0;
+    }
+
+    // :: () -> true | false
+    isFalsy() {
+        return this.val.length === 0;
     }
 
     car() {
