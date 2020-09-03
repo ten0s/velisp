@@ -171,15 +171,17 @@ export class EvalVisitor extends AutoLISPVisitor {
         return list.cdr();
     }
 
-    visitSetQ(ctx) {
-        let val;
-        for (let i = 0; i < ctx.idexpr().length; i++) {
-            const key = this.getValue(this.visit(ctx.idexpr(i).ID()));
-            val = this.getValue(this.visit(ctx.idexpr(i).expr()));
-            //console.error(`setq ${key} = ${val}`);
-            this.vars[key] = val;
+    visitCond(ctx) {
+        let result = new Bool(false);
+        for (let i = 0; i < ctx.testresult().length; i++) {
+            const test = this.getValue(this.visit(ctx.testresult(i).testexpr()));
+            //console.error('cond test:', test);
+            if (test.isTruthy()) {
+                result = this.visit(ctx.testresult(i).resultexpr());
+                break;
+            }
         }
-        return val;
+        return result;
     }
 
     visitIf(ctx) {
@@ -196,20 +198,31 @@ export class EvalVisitor extends AutoLISPVisitor {
         }
     }
 
+    visitSetQ(ctx) {
+        let val;
+        for (let i = 0; i < ctx.idexpr().length; i++) {
+            const key = this.getValue(this.visit(ctx.idexpr(i).ID()));
+            val = this.getValue(this.visit(ctx.idexpr(i).expr()));
+            //console.error(`setq ${key} = ${val}`);
+            this.vars[key] = val;
+        }
+        return val;
+    }
+
     visitWhile(ctx) {
-        let ret = new Bool(false);
+        let result = new Bool(false);
         while (true) {
             const test = this.getValue(this.visit(ctx.testexpr()));
             //console.error('while test:', test);
             if (test.isTruthy()) {
                 for (let i = 0; i < ctx.expr().length; i++) {
-                    ret = this.visit(ctx.expr(i));
+                    result = this.visit(ctx.expr(i));
                 }
             } else {
                 break;
             }
         }
-        return ret;
+        return result;
     }
 
     visitPrinc(ctx) {

@@ -29,8 +29,8 @@ expr :
 
      // and
      // command
-     | '(' 'cond' test+ ')'                    # cond
-     | '(' 'defun' ID '(' ID* ')' expr+ ')'    # defun
+     | '(' 'cond' testresult* ')'              # cond
+     | '(' 'defun' ID '(' ID* ')' expr+ ')'    # defun // TODO: locals
      // defun-q
      // foreach
      // function
@@ -60,6 +60,12 @@ expr :
      | ID                                      # id
      ;
 
+testresult : '(' testexpr resultexpr ')'
+           ;
+
+resultexpr : expr
+           ;
+
 testexpr : expr
          ;
 
@@ -69,9 +75,6 @@ thenexpr : expr
 elseexpr : expr
          ;
          
-test : (expr expr)
-     ;
-
 idexpr : (ID expr)
        ;
 
