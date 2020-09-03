@@ -1,18 +1,18 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Integer, Real, String, List} from '../AutoLISPTypes';
+import {Int, Real, Str, List} from '../AutoLISPTypes';
 
 const tests = [
     {test: '(list)', result: new List([])},
     {test: '(list 1 2 3)', result: new List([
-        new Integer(1), new Integer(2), new Integer(3)
+        new Int(1), new Int(2), new Int(3)
     ])},
     {test: '(list 1 "2" 3.0 (list 4))', result: new List([
-        new Integer(1), new String('2'), new Real(3.0), new List([new Integer(4)])
+        new Int(1), new Str('2'), new Real(3.0), new List([new Int(4)])
     ])},
-    {test: '(car (list 1 2 3))', result: new Integer(1)},
+    {test: '(car (list 1 2 3))', result: new Int(1)},
     {test: '(cdr (list 1 2 3))', result: new List([
-        new Integer(2), new Integer(3)
+        new Int(2), new Int(3)
     ])},
 ];
 

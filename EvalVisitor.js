@@ -1,6 +1,6 @@
 import {AutoLISPParser} from './grammar/AutoLISPParser';
 import {AutoLISPVisitor} from './grammar/AutoLISPVisitor';
-import {Bool, Integer, Real, String, List} from './AutoLISPTypes';
+import {Bool, Int, Real, Str, List} from './AutoLISPTypes';
 
 export class EvalVisitor extends AutoLISPVisitor {
     constructor() {
@@ -10,9 +10,9 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitMultiply(ctx) {
         if (ctx.expr().length == 0) {
-            return new Integer(0);
+            return new Int(0);
         }
-        let result = new Integer(1);
+        let result = new Int(1);
         //console.error('multiply:', result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
@@ -24,7 +24,7 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitDivide(ctx) {
         if (ctx.expr().length == 0) {
-            return new Integer(0);
+            return new Int(0);
         }
         let result = this.getValue(this.visit(ctx.expr(0)));
         //console.error('divide:', result);
@@ -37,7 +37,7 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitAdd(ctx) {
-        let result = new Integer(0);
+        let result = new Int(0);
         //console.error('add:', result);
         for (let i = 0; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
@@ -49,12 +49,12 @@ export class EvalVisitor extends AutoLISPVisitor {
     
     visitSubtract(ctx) {
         if (ctx.expr().length == 0) {
-            return new Integer(0);
+            return new Int(0);
         }
         let result = this.getValue(this.visit(ctx.expr(0)));
         //console.error('subtract:', result);
         if (ctx.expr().length == 1) {
-            return result.multiply(new Integer(-1));
+            return result.multiply(new Int(-1));
         }
         for (let i = 1; i < ctx.expr().length; i++) {
             const arg = this.getValue(this.visit(ctx.expr(i)));
@@ -209,17 +209,17 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitTerminal(ctx) {
         const str = ctx.getText();
-        if (ctx.parentCtx instanceof AutoLISPParser.IntegerContext) {
-            //console.error('INTEGER:', str);
-            return new Integer(Number.parseInt(str));
+        if (ctx.parentCtx instanceof AutoLISPParser.IntContext) {
+            //console.error('INT:', str);
+            return new Int(Number.parseInt(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {
             //console.error('REAL:', str);
             return new Real(Number.parseFloat(str));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.StringContext) {
-            //console.error('STRING:', str);
-            return new String(str.replace(/\"/g, ''));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.VariableContext) {
-            //console.error('VARIABLE:', str);
+        } else if (ctx.parentCtx instanceof AutoLISPParser.StrContext) {
+            //console.error('STR:', str);
+            return new Str(str.replace(/\"/g, ''));
+        } else if (ctx.parentCtx instanceof AutoLISPParser.VarContext) {
+            //console.error('VAR:', str);
             return this.vars[str];
         } else {
             //console.error('TERMINAL:', str);

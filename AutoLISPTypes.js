@@ -34,14 +34,14 @@ export class Bool {
     }
 }
 
-export class Integer {
+export class Int {
     constructor(val) {
         this.val = val;
     }
 
     multiply(that) {
-        if (that instanceof Integer) {
-            return new Integer(this.val * that.val);
+        if (that instanceof Int) {
+            return new Int(this.val * that.val);
         } else if (that instanceof Real) {
             return new Real(this.val * that.val);
         }
@@ -49,12 +49,12 @@ export class Integer {
     }
 
     divide(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             const res = this.val / that.val;
             if (Number.isInteger(res)) {
-                return new Integer(res);
+                return new Int(res);
             } else {
-                return new Integer(Math.floor(res));
+                return new Int(Math.floor(res));
             }            
         } else if (that instanceof Real) {
             return new Real(this.val / that.val);
@@ -63,8 +63,8 @@ export class Integer {
     }
 
     add(that) {
-        if (that instanceof Integer) {
-            return new Integer(this.val + that.val);
+        if (that instanceof Int) {
+            return new Int(this.val + that.val);
         } else if (that instanceof Real) {
             return new Real(this.val + that.val);
         }
@@ -72,8 +72,8 @@ export class Integer {
     }
 
     subtract(that) {
-        if (that instanceof Integer) {
-            return new Integer(this.val - that.val);
+        if (that instanceof Int) {
+            return new Int(this.val - that.val);
         } else if (that instanceof Real) {
             return new Real(this.val - that.val);
         }
@@ -81,7 +81,7 @@ export class Integer {
     }
 
     equalTo(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Bool(this.val === that.val);
         } else if (that instanceof Real) {
             return new Bool(this.val === that.val);
@@ -90,7 +90,7 @@ export class Integer {
     }
 
     lessThan(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Bool(this.val < that.val);
         } else if (that instanceof Real) {
             return new Bool(this.val < that.val);
@@ -109,7 +109,7 @@ export class Real {
     }
 
     multiply(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Real(this.val * that.val);
         } else if (that instanceof Real) {
             return new Real(this.val * that.val);
@@ -118,7 +118,7 @@ export class Real {
     }
 
     divide(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Real(this.val / that.val);
         } else if (that instanceof Real) {
             return new Real(this.val / that.val);
@@ -127,7 +127,7 @@ export class Real {
     }
 
     add(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Real(this.val + that.val);
         } else if (that instanceof Real) {
             return new Real(this.val + that.val);
@@ -136,7 +136,7 @@ export class Real {
     }
 
     subtract(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Real(this.val - that.val);
         } else if (that instanceof Real) {
             return new Real(this.val - that.val);
@@ -145,7 +145,7 @@ export class Real {
     }
 
     equalTo(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Bool(this.val === that.val);
         } else if (that instanceof Real) {
             return new Bool(this.val === that.val);
@@ -154,7 +154,7 @@ export class Real {
     }
 
     lessThan(that) {
-        if (that instanceof Integer) {
+        if (that instanceof Int) {
             return new Bool(this.val < that.val);
         } else if (that instanceof Real) {
             return new Bool(this.val < that.val);
@@ -171,20 +171,20 @@ export class Real {
     }
 }
 
-export class String {
+export class Str {
     constructor(str) {
         this.val = str;
     }
 
     equalTo(that) {
-        if (that instanceof String) {
+        if (that instanceof Str) {
             return new Bool(this.val === that.val);
         }
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     lessThan(that) {
-        if (that instanceof String) {
+        if (that instanceof Str) {
             return new Bool(this.val < that.val);
         }
         throw new Error(`Not implemented ${this} < ${that}`);

@@ -52,10 +52,10 @@ expr :
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
-     | INTEGER                                 # integer
+     | INT                                     # int
      | REAL                                    # real
-     | STRING                                  # string
-     | VARIABLE                                # variable
+     | STR                                     # str
+     | VAR                                     # var
      ;
 
 testexpr : expr
@@ -72,10 +72,10 @@ test : (expr expr)
 
 // Lexer rules
 
-INTEGER : '-'?DIGIT+ ;
+INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
-STRING : '"' .*? '"' ;
-VARIABLE : ID ;
+STR : '"' .*? '"' ;
+VAR : ID ;
 SYMBOL : ID ;
 
 WHITESPACE: [ \r\n]+ -> skip ;
