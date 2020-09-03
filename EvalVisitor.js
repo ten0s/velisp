@@ -213,7 +213,13 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitTerminal(ctx) {
         const str = ctx.getText();
-        if (ctx.parentCtx instanceof AutoLISPParser.IntContext) {
+        if (ctx.parentCtx instanceof AutoLISPParser.NilContext) {
+            //console.error('NIL:', str);
+            return new Bool(false);
+        } else if (ctx.parentCtx instanceof AutoLISPParser.TContext) {
+            //console.error('T:', str);
+            return new Bool(true);
+        } else if (ctx.parentCtx instanceof AutoLISPParser.IntContext) {
             //console.error('INT:', str);
             return new Int(Number.parseInt(str));
         } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {

@@ -3,9 +3,10 @@ import {evaluate} from '../AutoLISPEvaluator.js';
 import {Bool} from '../AutoLISPTypes';
 
 const tests = [
+    {test: '(<= nil)', result: new Bool(true)},
+    {test: '(<= T)', result: new Bool(true)},
     {test: '(<= 1)', result: new Bool(true)},
-    // TODO: '(<= nil)' new Bool(true)
-    // TODO: '(<= T)' new Bool(true)
+
     {test: '(<= 1 1))', result: new Bool(true)},
     {test: '(<= 1 1.0)', result: new Bool(true)},
     {test: '(<= 1.0 1)', result: new Bool(true)},

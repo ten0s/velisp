@@ -3,8 +3,8 @@ import {evaluate} from '../AutoLISPEvaluator.js';
 import {Int, Str} from '../AutoLISPTypes';
 
 const tests = [
-    // TODO: {test: '(if T 1 0)', result: new Int(1)},
-    // TODO: {test: '(if nil 1 0)', result: new Int(0)},
+    {test: '(if T 1 0)', result: new Int(1)},
+    {test: '(if nil 1 0)', result: new Int(0)},
 
     {test: '(if 0 1 0)', result: new Int(1)}, // 0 is truthy
     {test: '(if 1 1 0)', result: new Int(1)}, // 1 is truthy

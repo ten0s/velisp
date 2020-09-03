@@ -52,6 +52,8 @@ expr :
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
+     | NIL                                     # nil
+     | T                                       # t
      | INT                                     # int
      | REAL                                    # real
      | STR                                     # str
@@ -72,6 +74,8 @@ test : (expr expr)
 
 // Lexer rules
 
+NIL : [nN][iI][lL] ;
+T : [tT] ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
