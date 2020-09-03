@@ -34,7 +34,7 @@ expr :
      // defun-q
      // foreach
      // function
-     | '(' 'if' testexpr thenexpr elseexpr ')' # if
+     | '(' 'if' testexpr thenexpr elseexpr? ')' # if
      // lambda
      // or
      // progn

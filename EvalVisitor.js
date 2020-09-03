@@ -185,7 +185,11 @@ export class EvalVisitor extends AutoLISPVisitor {
         if (test.isTruthy()) {
             return this.visit(ctx.thenexpr());
         } else {
-            return this.visit(ctx.elseexpr());
+            if (ctx.elseexpr()) {
+                return this.visit(ctx.elseexpr());
+            } else {
+                return new Bool(false);
+            }
         }
     }
 
