@@ -17,13 +17,13 @@ compileJava:
 	javac grammar/*.java
 
 tokens: compileJava
-	(cd grammar; grun AutoLISP module -tokens)
+	(cd grammar; grun AutoLISP file -tokens)
 
 gui: compileJava
-	(cd grammar; grun AutoLISP module -gui)
+	(cd grammar; grun AutoLISP file -gui)
 
 treeJava: compileJava
-	(cd grammar; grun AutoLISP module -tree)
+	(cd grammar; grun AutoLISP file -tree)
 
 clean:
 	rm -f grammar/*.class grammar/*.java

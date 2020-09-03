@@ -172,10 +172,13 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitSetQ(ctx) {
-        const key = this.getValue(this.visit(ctx.ID()));
-        const val = this.getValue(this.visit(ctx.expr()));
-        console.error('setq:', key, val);
-        this.vars[key] = val;
+        let val;
+        for (let i = 0; i < ctx.idexpr().length; i++) {
+            const key = this.getValue(this.visit(ctx.idexpr(i).ID()));
+            val = this.getValue(this.visit(ctx.idexpr(i).expr()));
+            //console.error(`setq ${key} = ${val}`);
+            this.vars[key] = val;
+        }
         return val;
     }
 
@@ -198,7 +201,7 @@ export class EvalVisitor extends AutoLISPVisitor {
         while (true) {
             const test = this.getValue(this.visit(ctx.testexpr()));
             console.error('while test:', test);
-            if (test) {
+            if (test.isTruthy()) {
                 for (let i = 0; i < ctx.expr().length; i++) {
                     ret = this.visit(ctx.expr(i));
                 }
@@ -232,10 +235,11 @@ export class EvalVisitor extends AutoLISPVisitor {
         } else if (ctx.parentCtx instanceof AutoLISPParser.StrContext) {
             //console.error('STR:', str);
             return new Str(str.replace(/\"/g, ''));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.VarContext) {
-            //console.error('VAR:', str);
+        } else if (ctx.parentCtx instanceof AutoLISPParser.IdContext) {
+            //console.error('ID:', str);
             return this.vars[str];
         } else {
+            // Also handles ID outside of expr
             //console.error('TERMINAL:', str);
             //console.error(ctx);
             return str;
@@ -248,34 +252,4 @@ export class EvalVisitor extends AutoLISPVisitor {
         }
         return expr;        
     }
-
-    /*
-    visitChildren(ctx) {
-        if (!ctx) {
-            return;
-        }
-        
-        if (ctx.children) {
-            return ctx.children.map(child => {
-                if (child.children && child.children.length != 0) {
-                    return child.accept(this);
-                } else {
-                    return child.getText();
-                }
-            });
-        }
-    }
-    */
-
-    /*
-    visitChildren(ctx) {
-        let code = '';
-        
-        for (let i = 0; i < ctx.getChildCount(); i++) {
-            code += this.visit(ctx.getChild(i));
-        }
-        
-        return code.trim();
-    }
-    */
 }

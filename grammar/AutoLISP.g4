@@ -30,7 +30,7 @@ expr :
      // and
      // command
      | '(' 'cond' test+ ')'                    # cond
-     | '(' 'defun' SYMBOL '(' SYMBOL* ')' expr+ ')'    # defun
+     | '(' 'defun' ID '(' ID* ')' expr+ ')'    # defun
      // defun-q
      // foreach
      // function
@@ -40,7 +40,7 @@ expr :
      // progn
      // quote
      // repeat
-     | '(' 'setq' SYMBOL expr ')'              # setQ // TODO: multiple 
+     | '(' 'setq' idexpr+ ')'                   # setQ
      // trace
      // untrace
      // vlax-for
@@ -57,7 +57,7 @@ expr :
      | INT                                     # int
      | REAL                                    # real
      | STR                                     # str
-     | VAR                                     # var
+     | ID                                      # id
      ;
 
 testexpr : expr
@@ -72,6 +72,9 @@ elseexpr : expr
 test : (expr expr)
      ;
 
+idexpr : (ID expr)
+       ;
+
 // Lexer rules
 
 NIL : [nN][iI][lL] ;
@@ -79,18 +82,13 @@ T : [tT] ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
-VAR : ID ;
-SYMBOL : ID ;
+ID : LETTER[a-zA-Z0-9_]* ;
 
 WHITESPACE: [ \r\n]+ -> skip ;
 
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
-fragment ID     : LETTER[a-zA-Z0-9_]* ;
 
-// (operator arguments*)
-
-// primitive operators
 // quote, atom, eq, car, cdr, cons, cond
 
 // quoting protect list from evaluation

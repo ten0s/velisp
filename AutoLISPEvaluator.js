@@ -9,10 +9,7 @@ import {EvalVisitor} from './EvalVisitor.js';
 //const input = '(princ (= 1 1))'; // T
 //const input = '(princ (= 0 1))'; // nil
 
-const input = '(princ (= 1))';
-
-//const input = '(setq a 1) (princ a) (princ (+ 2 a))'; // 3
-//const input = '(setq a 10) (while (> a 0) (princ a) (setq a (- a 1)))';
+const input = '(setq a 10) (while (> a 0) (princ a) (setq a (- a 1)))';
 
 export function evaluate(input) {
     const chars = new antlr4.InputStream(input);
@@ -23,14 +20,19 @@ export function evaluate(input) {
     const parser = new AutoLISPParser(tokens);
     //parser.buildParseTrees = true;
     const tree = parser.file();
-    return getValue(tree.accept(new EvalVisitor()));
+    const results = tree.accept(new EvalVisitor());
+    //console.log(results);
+    const result = getResult(results);
+    //console.log(result);
+    return result;
 }
 
-function getValue(expr) {
-    if (expr instanceof Array) {
-        return getValue(expr[0]);
+function getResult(res) {
+    if (res instanceof Array) {
+        return getResult(res[res.length-1]);
+    } else {
+        return res;
     }
-    return expr;
 }
 
 //evaluate(input);
