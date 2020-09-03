@@ -148,6 +148,10 @@ export class EvalVisitor extends AutoLISPVisitor {
         return result;
     }
 
+    visitBitwiseNOT(ctx) {
+        return this.getValue(this.visit(ctx.expr())).bitwiseNot();
+    }
+
     visitList(ctx) {
         let result = [];
         for (let i = 0; i < ctx.expr().length; i++) {

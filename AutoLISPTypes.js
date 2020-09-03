@@ -98,6 +98,10 @@ export class Int {
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
+    bitwiseNot() {
+        return new Int(~this.val);
+    }
+
     toString() {
         return this.val.toString();
     }
