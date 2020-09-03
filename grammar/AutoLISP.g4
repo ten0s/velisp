@@ -16,7 +16,7 @@ expr :
      | '(' '<' expr+ ')'                       # lessThan
      | '(' '<=' expr+ ')'                      # lessThanOrEqualTo
      | '(' '>' expr+ ')'                       # greaterThan
-     | '(' '<=' expr+ ')'                      # greaterThanOrEqualTo
+     | '(' '>=' expr+ ')'                      # greaterThanOrEqualTo
      | '(' '~' expr ')'                        # bitwiseNOT
      | '(' '1+' expr ')'                       # increment // re-impl in lisp
      | '(' '1-' expr ')'                       # decrement // re-impl in lisp
