@@ -72,7 +72,21 @@ export class EvalVisitor extends AutoLISPVisitor {
             const val2 = this.getValue(this.visit(ctx.expr(i)));
             //console.error('equalTo:', val2);
             result = val1.equalTo(val2);
-            if (!result) break;
+            if (result.isFalsy()) break;
+            val1 = val2;
+        }
+        return result;
+    }
+
+    visitLessThan(ctx) {
+        let result = new Bool(true);
+        let val1 = this.getValue(this.visit(ctx.expr(0)));
+        //console.error('lessThan:', val1);
+        for (let i = 1; i < ctx.expr().length; i++) {
+            const val2 = this.getValue(this.visit(ctx.expr(i)));
+            //console.error('lessThan:', val2);
+            result = val1.lessThan(val2);
+            if (result.isFalsy()) break;
             val1 = val2;
         }
         return result;
@@ -85,8 +99,8 @@ export class EvalVisitor extends AutoLISPVisitor {
         for (let i = 1; i < ctx.expr().length; i++) {
             const val2 = this.getValue(this.visit(ctx.expr(i)));
             //console.error('greaterThan:', val2);
-            result = val1.greaterThan(val2);
-            if (!result) break;
+            result = val1.lessThan(val2).or(val1.equalTo(val2)).not();
+            if (result.isFalsy()) break;
             val1 = val2;
         }
         return result;

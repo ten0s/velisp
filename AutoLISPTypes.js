@@ -3,6 +3,32 @@ export class Bool {
         this.val = val;
     }
 
+    isTruthy() {
+        return this.val;
+    }
+
+    isFalsy() {
+        return !this.val;
+    }
+
+    and(that) {
+        if (that instanceof Bool) {
+            return new Bool(this.val && that.val);
+        }
+        throw new Error(`Not implemented ${this} and ${that}`);
+    }
+
+    or(that) {
+        if (that instanceof Bool) {
+            return new Bool(this.val || that.val);
+        }
+        throw new Error(`Not implemented ${this} or ${that}`);
+    }
+
+    not() {
+        return new Bool(!this.val);
+    }
+
     toString() {
         return this.val ? "T" : "nil";
     }
@@ -63,13 +89,13 @@ export class Integer {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
-    greaterThan(that) {
+    lessThan(that) {
         if (that instanceof Integer) {
-            return new Bool(this.val > that.val);
+            return new Bool(this.val < that.val);
         } else if (that instanceof Real) {
-            return new Bool(this.val > that.val);
+            return new Bool(this.val < that.val);
         }
-        throw new Error(`Not implemented ${this} > ${that}`);
+        throw new Error(`Not implemented ${this} < ${that}`);
     }
 
     toString() {
@@ -127,13 +153,13 @@ export class Real {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
-    greaterThan(that) {
+    lessThan(that) {
         if (that instanceof Integer) {
-            return new Bool(this.val > that.val);
+            return new Bool(this.val < that.val);
         } else if (that instanceof Real) {
-            return new Bool(this.val > that.val);
+            return new Bool(this.val < that.val);
         }
-        throw new Error(`Not implemented ${this} > ${that}`);
+        throw new Error(`Not implemented ${this} < ${that}`);
     }
 
     toString() {
@@ -157,11 +183,11 @@ export class String {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
-    greaterThan(that) {
+    lessThan(that) {
         if (that instanceof String) {
-            return new Bool(this.val > that.val);
+            return new Bool(this.val < that.val);
         }
-        throw new Error(`Not implemented ${this} > ${that}`);
+        throw new Error(`Not implemented ${this} < ${that}`);
     }
 
     toString() {
