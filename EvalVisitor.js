@@ -197,10 +197,10 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitWhile(ctx) {
-        let ret = null;
+        let ret = new Bool(false);
         while (true) {
             const test = this.getValue(this.visit(ctx.testexpr()));
-            console.error('while test:', test);
+            //console.error('while test:', test);
             if (test.isTruthy()) {
                 for (let i = 0; i < ctx.expr().length; i++) {
                     ret = this.visit(ctx.expr(i));
