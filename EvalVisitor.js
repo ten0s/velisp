@@ -198,6 +198,22 @@ export class EvalVisitor extends AutoLISPVisitor {
         }
     }
 
+    visitRepeat(ctx) {
+        let result = new Bool(false);
+        let count = this.getValue(this.visit(ctx.numexpr()));
+        //console.error('repeat count:', count);
+        if (count instanceof Int && count.value() > 0) {
+            for (let i = 0; i < count.value(); i++) {
+                for (let j = 0; j < ctx.expr().length; j++) {
+                    result = this.visit(ctx.expr(j));
+                }
+            }
+        } else {
+            throw new Error(`repeat: num expected to be positive integer, but saw ${count}`);
+        }
+        return result;
+    }
+
     visitSetQ(ctx) {
         let val;
         for (let i = 0; i < ctx.idexpr().length; i++) {

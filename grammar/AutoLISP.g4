@@ -39,8 +39,8 @@ expr :
      // or
      // progn
      // quote
-     // repeat
-     | '(' 'setq' idexpr+ ')'                   # setQ
+     | '(' 'repeat' numexpr expr* ')'          # repeat
+     | '(' 'setq' idexpr+ ')'                  # setQ
      // trace
      // untrace
      // vlax-for
@@ -75,6 +75,9 @@ thenexpr : expr
 elseexpr : expr
          ;
          
+numexpr : expr
+        ;
+
 idexpr : (ID expr)
        ;
 

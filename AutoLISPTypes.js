@@ -51,6 +51,10 @@ export class Int {
         return false;
     }
 
+    value() {
+        return this.val;
+    }
+
     multiply(that) {
         if (that instanceof Int) {
             return new Int(this.val * that.val);
