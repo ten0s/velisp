@@ -1,21 +1,18 @@
-import {AutoLISPParser} from './grammar/AutoLISPParser';
-import {AutoLISPVisitor} from './grammar/AutoLISPVisitor';
-import {Bool, Int, Real, Str, List} from './AutoLISPTypes';
+import {AutoLISPParser} from './grammar/AutoLISPParser.js';
+import {AutoLISPVisitor} from './grammar/AutoLISPVisitor.js';
+import {AutoLISPContext} from './AutoLISPContext.js';
+import {Bool, Int, Real, Str, List} from './AutoLISPTypes.js';
 
 export class EvalVisitor extends AutoLISPVisitor {
-    constructor() {
+    constructor(context) {
         super();
-        this.syms = {
-            "1+": function (self, exprs) {
-                let arg = self.getValue(self.visit(exprs[0]));
-                return arg.add(new Int(1));
-            },
-            "1-": function (self, exprs) {
-                let arg = self.getValue(self.visit(exprs[0]));
-                return arg.subtract(new Int(1));
-            }
-        };
-        this.vars = {};
+        this.contexts = [context];
+        this.contexts[0].setSym("1+", function (self, args) {
+            return args[0].add(new Int(1));
+        });
+        this.contexts[0].setSym("1-", function (self, args) {
+            return args[0].subtract(new Int(1));
+        });
     }
 
     visitMultiply(ctx) {
@@ -196,26 +193,26 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitDefun(ctx) {
         let name = this.visit(ctx.ID(0));
-        console.error(`(defun ${name} ...)`);
+        //console.error(`(defun ${name} ...)`);
         let params = [];
         for (let i = 1; i < ctx.ID().length; i++) {
             params.push(this.visit(ctx.ID(i)));
         }
-        this.syms[name] = function (self, args) {
+        this.contexts[0].setSym(name, function (self, args) {
             if (args.length < params.length) {
                 throw new Error(`${name}: too few arguments`);
             } else if (args.length > params.length) {
                 throw new Error(`${name}: too many arguments`);
             }
             for (let i = 0; i < params.length; i++) {
-                self.vars[params[i]] = self.getValue(self.visit(args[i]));
+                self.contexts[self.contexts.length-1].setVar(params[i], args[i]);
             }
             let result = new Bool(false);
             for (let i = 0; i < ctx.expr().length; i++) {
                 result = self.visit(ctx.expr(i));
             }
             return result;
-        }
+        });
         return name; // TODO: new Sym(name)?
     }
 
@@ -255,8 +252,8 @@ export class EvalVisitor extends AutoLISPVisitor {
         for (let i = 0; i < ctx.idexpr().length; i++) {
             const id = this.getValue(this.visit(ctx.idexpr(i).ID()));
             value = this.getValue(this.visit(ctx.idexpr(i).expr()));
-            //console.error(`setq ${key} = ${val}`);
-            this.vars[id] = value;
+            //console.error(`setq ${id} = ${val}`);
+            this.contexts[this.contexts.length-1].setVar(id, value);
         }
         return value;
     }
@@ -279,22 +276,25 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitPrinc(ctx) {
         let expr = this.getValue(this.visit(ctx.expr()));
-        console.log('princ:', expr.toString());
+        console.log(expr.toString());
         return expr;
     }
 
     visitFunCall(ctx) {
         //let id = this.getValue(this.visit(ctx.funexpr()));
         let name = this.visit(ctx.ID());
-        console.error(`(${name} ...)`);
-        const fun = this.syms[name];
+        const fun = this.contexts[0].getSym(name);
         if (fun) {
+            // Evaluate args eagerly
             let args = [];
             for (let i = 0; i < ctx.argexpr().length; i++) {
-                args.push(ctx.argexpr(i));
+                args.push(this.getValue(this.visit(ctx.argexpr(i))));
             }
-            //console.error(`(${id} ${args.join(' ')})`);
-            return fun(this, args);
+            //console.error(`(${name} ${args.join(' ')})`);
+            this.contexts.push(new AutoLISPContext(this.contexts[this.contexts.length-1]));
+            const result = fun(this, args);
+            this.contexts.pop();
+            return result;
         }
         throw new Error(`unknown function ${name}`);
     }
@@ -318,7 +318,7 @@ export class EvalVisitor extends AutoLISPVisitor {
             return new Str(str.replace(/\"/g, ''));
         } else if (ctx.parentCtx instanceof AutoLISPParser.IdContext) {
             //console.error('ID:', str);
-            return this.vars[str];
+            return this.contexts[this.contexts.length-1].getVar(str);
         } else {
             // Also handles ID outside of expr
             //console.error('TERMINAL:', str);

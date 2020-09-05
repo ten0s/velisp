@@ -7,6 +7,7 @@ const tests = [
     {test: '(cond (nil "no"))', result: new Bool(false)},
     {test: '(cond (T "yes"))', result: new Str('yes')},
     {test: '(cond (nil "no") (T "yes"))', result: new Str('yes')},
+    {test: '(cond ((= 0 1) "no") ((= 1 1) "yes"))', result: new Str('yes')},
 ];
 
 QUnit.test("cond", assert => {
