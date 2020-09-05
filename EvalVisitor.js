@@ -5,6 +5,16 @@ import {Bool, Int, Real, Str, List} from './AutoLISPTypes';
 export class EvalVisitor extends AutoLISPVisitor {
     constructor() {
         super();
+        this.syms = {
+            "1+": function (self, exprs) {
+                let arg = self.getValue(self.visit(exprs[0]));
+                return arg.add(new Int(1));
+            },
+            "1-": function (self, exprs) {
+                let arg = self.getValue(self.visit(exprs[0]));
+                return arg.subtract(new Int(1));
+            }
+        };
         this.vars = {};
     }
 
@@ -184,6 +194,28 @@ export class EvalVisitor extends AutoLISPVisitor {
         return result;
     }
 
+    visitDefun(ctx) {
+        let name = this.visit(ctx.ID(0));
+        console.error(`(defun ${name} ...)`);
+        let params = [];
+        for (let i = 1; i < ctx.ID().length; i++) {
+            params.push(this.visit(ctx.ID(i)));
+        }
+        this.syms[name] = function (self, args) {
+            if (args.length < params.length) {
+                throw new Error(`${name}: too few arguments`);
+            } else if (args.length > params.length) {
+                throw new Error(`${name}: too many arguments`);
+            }
+            let result = new Bool(false);
+            for (let i = 0; i < ctx.expr().length; i++) {
+                result = self.visit(ctx.expr(i));
+            }
+            return result;
+        }
+        return name; // TODO: new Sym(name)?
+    }
+
     visitIf(ctx) {
         const test = this.getValue(this.visit(ctx.testexpr()));
         //console.error('if test:', test);
@@ -215,14 +247,15 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitSetQ(ctx) {
-        let val;
+        // TODO: no args
+        let value;
         for (let i = 0; i < ctx.idexpr().length; i++) {
-            const key = this.getValue(this.visit(ctx.idexpr(i).ID()));
-            val = this.getValue(this.visit(ctx.idexpr(i).expr()));
+            const id = this.getValue(this.visit(ctx.idexpr(i).ID()));
+            value = this.getValue(this.visit(ctx.idexpr(i).expr()));
             //console.error(`setq ${key} = ${val}`);
-            this.vars[key] = val;
+            this.vars[id] = value;
         }
-        return val;
+        return value;
     }
 
     visitWhile(ctx) {
@@ -245,6 +278,22 @@ export class EvalVisitor extends AutoLISPVisitor {
         let expr = this.getValue(this.visit(ctx.expr()));
         console.log('princ:', expr.toString());
         return expr;
+    }
+
+    visitFunCall(ctx) {
+        //let id = this.getValue(this.visit(ctx.funexpr()));
+        let name = this.visit(ctx.ID());
+        console.error(`(${name} ...)`);
+        const fun = this.syms[name];
+        if (fun) {
+            let args = [];
+            for (let i = 0; i < ctx.argexpr().length; i++) {
+                args.push(ctx.argexpr(i));
+            }
+            //console.error(`(${id} ${args.join(' ')})`);
+            return fun(this, args);
+        }
+        throw new Error(`unknown function ${name}`);
     }
 
     visitTerminal(ctx) {

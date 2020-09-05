@@ -18,8 +18,6 @@ expr :
      | '(' '>' expr+ ')'                       # greaterThan
      | '(' '>=' expr+ ')'                      # greaterThanOrEqualTo
      | '(' '~' expr ')'                        # bitwiseNOT
-     | '(' '1+' expr ')'                       # increment // re-impl in lisp
-     | '(' '1-' expr ')'                       # decrement // re-impl in lisp
 
      | '(' 'list' expr* ')'                    # list 
      | '(' 'car' expr ')'                      # car // TODO: is expr correct here?
@@ -50,6 +48,8 @@ expr :
 
      | '(' 'princ' expr ')'                    # princ
 
+     | '(' ID argexpr* ')'                     # funCall // support funexpr
+
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
      | NIL                                     # nil
@@ -78,8 +78,14 @@ elseexpr : expr
 numexpr : expr
         ;
 
-idexpr : (ID expr)
+idexpr : ID expr
        ;
+
+funexpr : expr
+        ;
+
+argexpr : expr
+        ;
 
 // Lexer rules
 
@@ -88,7 +94,7 @@ T : [tT] ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
-ID : LETTER[a-zA-Z0-9_]* ;
+ID : [a-zA-Z0-9!$%*\-+]+ ; // TODO: can't have only numeric chars
 
 WHITESPACE: [ \r\n]+ -> skip ;
 
