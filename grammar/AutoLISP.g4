@@ -96,7 +96,11 @@ REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
 ID : [a-zA-Z0-9!$%*\-+]+ ; // TODO: can't have only numeric chars
 
-WHITESPACE: [ \r\n]+ -> skip ;
+INLINE_COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
+LINE_COMMENT : ';'+ .*? NEWLINE -> skip ;
+
+NEWLINE : '\r'? '\n' -> skip ;
+WHITESPACE : [ \t]+ -> skip ;
 
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
