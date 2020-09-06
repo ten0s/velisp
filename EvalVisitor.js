@@ -25,17 +25,25 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitDefun(ctx) {
-        let name = this.visit(ctx.ID(0));
+        let name = this.visit(ctx.defunName().ID());
         //console.error(`(defun ${name} ...)`);
         let params = [];
-        for (let i = 1; i < ctx.ID().length; i++) {
-            params.push(this.visit(ctx.ID(i)));
+        let locals = [];
+        for (let i = 0; i < ctx.defunParam().length; i++) {
+            params.push(this.visit(ctx.defunParam(i).ID()));
+        }
+        for (let i = 0; i < ctx.defunLocal().length; i++) {
+            locals.push(this.visit(ctx.defunLocal(i).ID()));
         }
         this.contexts[this.contexts.length-1].setSym(name, new Fun(name, params, function (self, args) {
             if (args.length < params.length) {
                 throw new Error(`${name}: too few arguments`);
             } else if (args.length > params.length) {
                 throw new Error(`${name}: too many arguments`);
+            }
+            // Since locals with the same names as params will reset the values, init locals first.
+            for (let i = 0; i < locals.length; i++) {
+                self.contexts[self.contexts.length-1].initVar(locals[i], new Bool(false));
             }
             for (let i = 0; i < params.length; i++) {
                 self.contexts[self.contexts.length-1].initVar(params[i], args[i]);

@@ -9,65 +9,63 @@ expr :
 
      // and
      // command
-       '(' 'cond' testresult* ')'              # cond
-     | '(' 'defun' ID '(' ID* ')' expr+ ')'    # defun // TODO: locals
+       '(' 'cond' testresult* ')'                                                 # cond
+     | '(' 'defun' defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')' # defun
      // defun-q
      // foreach
      // function
-     | '(' 'if' testexpr thenexpr elseexpr? ')' # if
+     | '(' 'if' testexpr thenexpr elseexpr? ')'                                   # if
      // lambda
      // or
      // progn
      // quote
-     | '(' 'repeat' numexpr expr* ')'          # repeat
-     | '(' 'setq' idexpr+ ')'                  # setQ
+     | '(' 'repeat' numexpr expr* ')'                                             # repeat
+     | '(' 'setq' idexpr+ ')'                                                     # setQ
      // trace
      // untrace
      // vlax-for
-     | '(' 'while' testexpr expr+ ')'          # while
+     | '(' 'while' testexpr expr+ ')'                                             # while
 
      // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
 
-     | '(' 'princ' expr ')'                    # princ
+     | '(' 'princ' expr ')'                                                       # princ
 
-     | '(' ID argexpr* ')'                     # funCall // TODO: support funexpr?
+     | '(' ID argexpr* ')'                                                        # funCall
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
-     | NIL                                     # nil
-     | T                                       # t
-     | INT                                     # int
-     | REAL                                    # real
-     | STR                                     # str
-     | ID                                      # id
+     | NIL                                                                        # nil
+     | T                                                                          # t
+     | INT                                                                        # int
+     | REAL                                                                       # real
+     | STR                                                                        # str
+     | ID                                                                         # id
      ;
 
-testresult : '(' testexpr resultexpr ')'
-           ;
+// cond, if, while
+testexpr : expr ;
 
-resultexpr : expr
-           ;
+// cond
+testresult : '(' testexpr resultexpr ')' ;
+resultexpr : expr ;
 
-testexpr : expr
-         ;
+// defun
+defunName : ID ;
+defunParam : ID ;
+defunLocal : ID ;
 
-thenexpr : expr
-         ;
+// if
+thenexpr : expr ;
+elseexpr : expr ;
 
-elseexpr : expr
-         ;
-         
-numexpr : expr
-        ;
+// repeat
+numexpr : expr ;
 
-idexpr : ID expr
-       ;
+// setq
+idexpr : ID expr ;
 
-funexpr : expr
-        ;
-
-argexpr : expr
-        ;
+// funCall
+argexpr : expr ;
 
 // Lexer rules
 
