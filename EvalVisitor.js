@@ -124,7 +124,18 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitFun(ctx) {
         let name = this.visit(ctx.ID());
-        const fun = this.contexts[this.contexts.length-1].getSym(name);
+        //console.log(`funName: ${name}`);
+        let fun = null;
+        // Try to get symbol out of variable
+        const local = this.contexts[this.contexts.length-1].getVar(name);
+        // If there's such a variable and it's a symbol, try find the function
+        if (!local.isNil() && local instanceof Sym) {
+            fun = this.contexts[this.contexts.length-1].getSym(local.value());
+        }
+        // If the above failed, try to find the function directly by name
+        if (!fun || fun.isNil()) {
+            fun = this.contexts[this.contexts.length-1].getSym(name);
+        }
         if (fun instanceof Fun) {
             // Evaluate args eagerly
             let args = [];
