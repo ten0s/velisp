@@ -30,7 +30,7 @@ expr :
 
      | '(' 'princ' expr ')'                    # princ
 
-     | '(' ID argexpr* ')'                     # funCall // support funexpr
+     | '(' ID argexpr* ')'                     # funCall // TODO: support funexpr?
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 

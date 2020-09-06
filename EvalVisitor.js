@@ -9,6 +9,8 @@ export class EvalVisitor extends AutoLISPVisitor {
         this.contexts = [context];
     }
 
+    // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
+
     visitCond(ctx) {
         let result = new Bool(false);
         for (let i = 0; i < ctx.testresult().length; i++) {
