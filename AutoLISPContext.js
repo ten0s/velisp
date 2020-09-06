@@ -2,8 +2,14 @@ import {Bool, Int, List, Fun} from './AutoLISPTypes.js';
 
 export class AutoLISPGlobalContext {
     constructor() {
+        // Symbols
         this.syms = {};
+        // Variables
+        this.vars = {};
+
+        //
         // Kernel Operators (AutoCAD 2013 AutoLISP Reference Guild p.1)
+        //
         this.syms['*'] = new Fun('*', ['[num] ...'], function (self, args) {
             if (args.length == 0) {
                 return new Int(0);
@@ -121,7 +127,9 @@ export class AutoLISPGlobalContext {
         this.syms['1-'] = new Fun('1-', ['num'], function (self, args) {
             return args[0].subtract(new Int(1));
         });
+        //
         // Kernel List Functions
+        //
         this.syms['list'] = new Fun('list', ['[expr ...]'], function (self, args) {
             let result = [];
             for (let i = 0; i < args.length; i++) {
@@ -137,7 +145,6 @@ export class AutoLISPGlobalContext {
             let list = args[0];
             return list.cdr();
         });
-        this.vars = {};
     }
 
     setVar(name, value) {
