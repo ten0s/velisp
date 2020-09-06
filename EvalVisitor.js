@@ -9,25 +9,6 @@ export class EvalVisitor extends AutoLISPVisitor {
         this.contexts = [context];
     }
 
-    visitList(ctx) {
-        let result = [];
-        for (let i = 0; i < ctx.expr().length; i++) {
-            const val = this.getValue(this.visit(ctx.expr(i)));
-            result.push(val);
-        }
-        return new List(result);
-    }
-
-    visitCar(ctx) {
-        let list = this.getValue(this.visit(ctx.expr()));
-        return list.car();
-    }
-
-    visitCdr(ctx) {
-        let list = this.getValue(this.visit(ctx.expr()));
-        return list.cdr();
-    }
-
     visitCond(ctx) {
         let result = new Bool(false);
         for (let i = 0; i < ctx.testresult().length; i++) {

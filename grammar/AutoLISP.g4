@@ -5,15 +5,11 @@ grammar AutoLISP;
 file : expr+ ;
 
 expr :
-       '(' 'list' expr* ')'                    # list
-     | '(' 'car' expr ')'                      # car // TODO: is expr correct here?
-     | '(' 'cdr' expr ')'                      # cdr // TODO: is expr correct here?
-
      // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
 
      // and
      // command
-     | '(' 'cond' testresult* ')'              # cond
+       '(' 'cond' testresult* ')'              # cond
      | '(' 'defun' ID '(' ID* ')' expr+ ')'    # defun // TODO: locals
      // defun-q
      // foreach

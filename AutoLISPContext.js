@@ -1,4 +1,4 @@
-import {Bool, Int, Fun} from './AutoLISPTypes.js';
+import {Bool, Int, List, Fun} from './AutoLISPTypes.js';
 
 export class AutoLISPGlobalContext {
     constructor() {
@@ -120,6 +120,22 @@ export class AutoLISPGlobalContext {
         // TODO: re-impl in lisp
         this.syms['1-'] = new Fun('1-', ['num'], function (self, args) {
             return args[0].subtract(new Int(1));
+        });
+        // Kernel List Functions
+        this.syms['list'] = new Fun('list', ['[expr ...]'], function (self, args) {
+            let result = [];
+            for (let i = 0; i < args.length; i++) {
+                result.push(args[i]);
+            }
+            return new List(result);
+        });
+        this.syms['car'] = new Fun('car', ['list'], function (self, args) {
+            let list = args[0];
+            return list.car();
+        });
+        this.syms['cdr'] = new Fun('cdr', ['list'], function (self, args) {
+            let list = args[0];
+            return list.cdr();
         });
         this.vars = {};
     }
