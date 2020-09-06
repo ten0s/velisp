@@ -7,12 +7,6 @@ export class EvalVisitor extends AutoLISPVisitor {
     constructor(context) {
         super();
         this.contexts = [context];
-        this.contexts[0].setSym("1+", new Fun('1+', ['num'], function (self, args) {
-            return args[0].add(new Int(1));
-        }));
-        this.contexts[0].setSym("1-", new Fun('1-', ['num'], function (self, args) {
-            return args[0].subtract(new Int(1));
-        }));
     }
 
     visitMultiply(ctx) {
