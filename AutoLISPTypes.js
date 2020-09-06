@@ -1,39 +1,39 @@
 export class Bool {
-    constructor(val) {
-        this.val = val;
+    constructor(bool) {
+        this.bool = bool;
     }
 
     // :: () -> true | false
     isNil() {
-        return !this.val;
+        return !this.bool;
     }
 
     and(that) {
         if (that instanceof Bool) {
-            return new Bool(this.val && that.val);
+            return new Bool(this.bool && that.bool);
         }
         throw new Error(`Not implemented ${this} and ${that}`);
     }
 
     or(that) {
         if (that instanceof Bool) {
-            return new Bool(this.val || that.val);
+            return new Bool(this.bool || that.bool);
         }
         throw new Error(`Not implemented ${this} or ${that}`);
     }
 
     not() {
-        return new Bool(!this.val);
+        return new Bool(!this.bool);
     }
 
     toString() {
-        return this.val ? "T" : "nil";
+        return this.bool ? "T" : "nil";
     }
 }
 
 export class Int {
-    constructor(val) {
-        this.val = val;
+    constructor(int) {
+        this.int = int;
     }
 
     // :: () -> false
@@ -42,80 +42,80 @@ export class Int {
     }
 
     value() {
-        return this.val;
+        return this.int;
     }
 
     multiply(that) {
         if (that instanceof Int) {
-            return new Int(this.val * that.val);
+            return new Int(this.int * that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val * that.val);
+            return new Real(this.int * that.real);
         }
         throw new Error(`Not implemented ${this} * ${that}`);
     }
 
     divide(that) {
         if (that instanceof Int) {
-            const res = this.val / that.val;
+            const res = this.int / that.int;
             if (Number.isInteger(res)) {
                 return new Int(res);
             } else {
                 return new Int(Math.floor(res));
-            }            
+            }
         } else if (that instanceof Real) {
-            return new Real(this.val / that.val);
+            return new Real(this.int / that.real);
         }
         throw new Error(`Not implemented ${this} / ${that}`);
     }
 
     add(that) {
         if (that instanceof Int) {
-            return new Int(this.val + that.val);
+            return new Int(this.int + that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val + that.val);
+            return new Real(this.int + that.real);
         }
         throw new Error(`Not implemented ${this} + ${that}`);
     }
 
     subtract(that) {
         if (that instanceof Int) {
-            return new Int(this.val - that.val);
+            return new Int(this.int - that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val - that.val);
+            return new Real(this.int - that.real);
         }
         throw new Error(`Not implemented ${this} - ${that}`);
     }
 
     equalTo(that) {
         if (that instanceof Int) {
-            return new Bool(this.val === that.val);
+            return new Bool(this.int === that.int);
         } else if (that instanceof Real) {
-            return new Bool(this.val === that.val);
+            return new Bool(this.int === that.real);
         }
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     lessThan(that) {
         if (that instanceof Int) {
-            return new Bool(this.val < that.val);
+            return new Bool(this.int < that.int);
         } else if (that instanceof Real) {
-            return new Bool(this.val < that.val);
+            return new Bool(this.int < that.real);
         }
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
     bitwiseNot() {
-        return new Int(~this.val);
+        return new Int(~this.int);
     }
 
     toString() {
-        return this.val.toString();
+        return this.int.toString();
     }
 }
 
 export class Real {
-    constructor(val) {
-        this.val = val;
+    constructor(real) {
+        this.real = real;
     }
 
     // :: () -> false
@@ -124,75 +124,75 @@ export class Real {
     }
 
     value() {
-        return this.val;
+        return this.real;
     }
 
     multiply(that) {
         if (that instanceof Int) {
-            return new Real(this.val * that.val);
+            return new Real(this.real * that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val * that.val);
+            return new Real(this.real * that.real);
         }
         throw new Error(`Not implemented ${this} * ${that}`);
     }
 
     divide(that) {
         if (that instanceof Int) {
-            return new Real(this.val / that.val);
+            return new Real(this.real / that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val / that.val);
+            return new Real(this.real / that.real);
         }
         throw new Error(`Not implemented ${this} / ${that}`);
     }
 
     add(that) {
         if (that instanceof Int) {
-            return new Real(this.val + that.val);
+            return new Real(this.real + that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val + that.val);
+            return new Real(this.real + that.real);
         }
         throw new Error(`Not implemented ${this} + ${that}`);
     }
 
     subtract(that) {
         if (that instanceof Int) {
-            return new Real(this.val - that.val);
+            return new Real(this.real - that.int);
         } else if (that instanceof Real) {
-            return new Real(this.val - that.val);
+            return new Real(this.real - that.real);
         }
         throw new Error(`Not implemented ${this} - ${that}`);
     }
 
     equalTo(that) {
         if (that instanceof Int) {
-            return new Bool(this.val === that.val);
+            return new Bool(this.real === that.int);
         } else if (that instanceof Real) {
-            return new Bool(this.val === that.val);
+            return new Bool(this.real === that.real);
         }
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     lessThan(that) {
         if (that instanceof Int) {
-            return new Bool(this.val < that.val);
+            return new Bool(this.real < that.int);
         } else if (that instanceof Real) {
-            return new Bool(this.val < that.val);
+            return new Bool(this.real < that.real);
         }
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
     toString() {
-        if (Number.isInteger(this.val)) { 
-            return this.val + '.0'
+        if (Number.isInteger(this.real)) {
+            return this.real + '.0'
         } else {
-            return this.val.toString(); 
+            return this.real.toString();
         }
     }
 }
 
 export class Str {
     constructor(str) {
-        this.val = str;
+        this.str = str;
     }
 
     // :: () -> false
@@ -201,31 +201,31 @@ export class Str {
     }
 
     value() {
-        return this.val;
+        return this.str;
     }
 
     equalTo(that) {
         if (that instanceof Str) {
-            return new Bool(this.val === that.val);
+            return new Bool(this.str === that.str);
         }
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     lessThan(that) {
         if (that instanceof Str) {
-            return new Bool(this.val < that.val);
+            return new Bool(this.str < that.str);
         }
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
     toString() {
-        return this.val;
+        return this.str;
     }
 }
 
 export class Sym {
-    constructor(val) {
-        this.val = val;
+    constructor(sym) {
+        this.sym = sym;
     }
 
     // :: () -> false
@@ -234,42 +234,46 @@ export class Sym {
     }
 
     value() {
-        return this.val;
+        return this.sym;
     }
 
     toString() {
-        return this.val;
+        return this.sym;
     }
 }
 
 export class List {
     constructor(arr) {
         // TODO: who should make copy, see cdr
-        this.val = [...arr];
+        this.arr = [...arr];
     }
 
     // :: () -> true | false
     isNil() {
-        return this.val.length === 0;
+        return this.arr.length === 0;
     }
 
     value() {
-        return this.val;
+        return this.arr;
+    }
+
+    cons(first) {
+        return new List([first, ...this.arr]);
     }
 
     car() {
         // TODO: check length
-        return this.val[0];
+        return this.arr[0];
     }
 
     cdr() {
         // TODO: check length
-        const [, ...rest] = this.val;
+        const [, ...rest] = this.arr;
         return new List(rest);
     }
 
     toString() {
-        return `(${this.val.join(' ')})`;
+        return `(${this.arr.join(' ')})`;
     }
 }
 
