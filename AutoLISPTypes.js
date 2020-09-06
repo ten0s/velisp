@@ -266,3 +266,29 @@ export class List {
         return `(${this.val.join(' ')})`;
     }
 }
+
+export class Fun {
+    constructor(name, params, fun) {
+        this.name = name;
+        this.params = params;
+        this.fun = fun;
+    }
+
+    // :: () -> true
+    isTruthy() {
+        return true;
+    }
+
+    // :: () -> false
+    isFalsy() {
+        return false;
+    }
+
+    apply(evaluator, args) {
+        return this.fun(evaluator, args);
+    }
+
+    toString() {
+        return `(${this.name} ${params.join(' ')})`;
+    }
+}

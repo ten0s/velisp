@@ -22,11 +22,11 @@ const tests = [
                           (fib (- n 1))))))
             (fib 10)`, result: new Int(55)},
     {test: `(defun fib (n)
+              (defun fib-iter (a b counter)
+                (if (= counter 0)
+                  a
+                  (fib-iter b (+ a b) (- counter 1))))
               (fib-iter 0 1 n))
-            (defun fib-iter (a b counter)
-              (if (= counter 0)
-                a
-                (fib-iter b (+ a b) (- counter 1))))
             (fib 10)`, result: new Int(55)},
 ];
 
