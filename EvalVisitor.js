@@ -16,7 +16,7 @@ export class EvalVisitor extends AutoLISPVisitor {
         for (let i = 0; i < ctx.condTestResult().length; i++) {
             const test = this.getValue(this.visit(ctx.condTestResult(i).condTest()));
             //console.error('cond test:', test);
-            if (test.isTruthy()) {
+            if (!test.isNil()) {
                 result = this.visit(ctx.condTestResult(i).condResult());
                 break;
             }
@@ -60,7 +60,7 @@ export class EvalVisitor extends AutoLISPVisitor {
     visitIf(ctx) {
         const test = this.getValue(this.visit(ctx.ifTest()));
         //console.error('if test:', test);
-        if (test.isTruthy()) {
+        if (!test.isNil()) {
             return this.visit(ctx.ifThen());
         } else {
             if (ctx.ifElse()) {
@@ -104,7 +104,7 @@ export class EvalVisitor extends AutoLISPVisitor {
         while (true) {
             const test = this.getValue(this.visit(ctx.whileTest()));
             //console.error('while test:', test);
-            if (test.isTruthy()) {
+            if (!test.isNil()) {
                 for (let i = 0; i < ctx.expr().length; i++) {
                     result = this.visit(ctx.expr(i));
                 }

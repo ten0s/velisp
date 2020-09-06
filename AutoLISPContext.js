@@ -56,7 +56,7 @@ export class AutoLISPGlobalContext {
             for (let i = 1; i < args.length; i++) {
                 const val2 = args[i];
                 result = val1.equalTo(val2);
-                if (result.isFalsy()) break;
+                if (result.isNil()) break;
                 val1 = val2;
             }
             return result;
@@ -67,7 +67,7 @@ export class AutoLISPGlobalContext {
             for (let i = 1; i < args.length; i++) {
                 const val2 = args[i];
                 result = val1.equalTo(val2).not();
-                if (result.isFalsy()) break;
+                if (result.isNil()) break;
                 val1 = val2;
             }
             return result;
@@ -78,7 +78,7 @@ export class AutoLISPGlobalContext {
             for (let i = 1; i < args.length; i++) {
                 const val2 = args[i];
                 result = val1.lessThan(val2);
-                if (result.isFalsy()) break;
+                if (result.isNil()) break;
                 val1 = val2;
             }
             return result;
@@ -89,7 +89,7 @@ export class AutoLISPGlobalContext {
             for (let i = 1; i < args.length; i++) {
                 const val2 = args[i];
                 result = val1.lessThan(val2).or(val1.equalTo(val2));
-                if (result.isFalsy()) break;
+                if (result.isNil()) break;
                 val1 = val2;
             }
             return result;
@@ -100,7 +100,7 @@ export class AutoLISPGlobalContext {
             for (let i = 1; i < args.length; i++) {
                 const val2 = args[i];
                 result = val1.lessThan(val2).or(val1.equalTo(val2)).not();
-                if (result.isFalsy()) break;
+                if (result.isNil()) break;
                 val1 = val2;
             }
             return result;
@@ -111,7 +111,7 @@ export class AutoLISPGlobalContext {
             for (let i = 1; i < args.length; i++) {
                 const val2 = args[i];
                 result = val1.lessThan(val2).not();
-                if (result.isFalsy()) break;
+                if (result.isNil()) break;
                 val1 = val2;
             }
             return result;

@@ -4,12 +4,7 @@ export class Bool {
     }
 
     // :: () -> true | false
-    isTruthy() {
-        return this.val;
-    }
-
-    // :: () -> true | false
-    isFalsy() {
+    isNil() {
         return !this.val;
     }
 
@@ -41,13 +36,8 @@ export class Int {
         this.val = val;
     }
 
-    // :: () -> true
-    isTruthy() {
-        return true;
-    }
-
     // :: () -> false
-    isFalsy() {
+    isNil() {
         return false;
     }
 
@@ -128,13 +118,8 @@ export class Real {
         this.val = val;
     }
 
-    // :: () -> true
-    isTruthy() {
-        return true;
-    }
-
     // :: () -> false
-    isFalsy() {
+    isNil() {
         return false;
     }
 
@@ -206,13 +191,8 @@ export class Str {
         this.val = str;
     }
 
-    // :: () -> true
-    isTruthy() {
-        return true;
-    }
-
     // :: () -> false
-    isFalsy() {
+    isNil() {
         return false;
     }
 
@@ -240,14 +220,9 @@ export class Sym {
         this.val = val;
     }
 
-    // :: () -> true
-    isTruthy() {
-        return this.val;
-    }
-
     // :: () -> false
-    isFalsy() {
-        return !this.val;
+    isNil() {
+        return false;
     }
 
     toString() {
@@ -262,12 +237,7 @@ export class List {
     }
 
     // :: () -> true | false
-    isTruthy() {
-        return this.val.length !== 0;
-    }
-
-    // :: () -> true | false
-    isFalsy() {
+    isNil() {
         return this.val.length === 0;
     }
 
@@ -294,13 +264,8 @@ export class Fun {
         this.fun = fun;
     }
 
-    // :: () -> true
-    isTruthy() {
-        return true;
-    }
-
     // :: () -> false
-    isFalsy() {
+    isNil() {
         return false;
     }
 
