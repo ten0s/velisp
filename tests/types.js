@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Bool, Int, Real, Str, List} from '../AutoLISPTypes';
+import {Bool, Int, Real, Str, Sym, List} from '../AutoLISPTypes';
 
 const tests = [
     {test: 'nil', result: new Bool(false)},
@@ -15,6 +15,8 @@ const tests = [
     {test: '2.0', result: new Real(2.0)},
 
     {test: '"2.0"', result: new Str('2.0')},
+
+    {test: '\'foo', result: new Sym('foo')},
 
     {test: '(list)', result: new List([])},
     {test: '(list 1 2 3)', result: new List([

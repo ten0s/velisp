@@ -1,7 +1,7 @@
 import {AutoLISPParser} from './grammar/AutoLISPParser.js';
 import {AutoLISPVisitor} from './grammar/AutoLISPVisitor.js';
 import {AutoLISPContext} from './AutoLISPContext.js';
-import {Bool, Int, Real, Str, List, Fun} from './AutoLISPTypes.js';
+import {Bool, Int, Real, Str, Sym, List, Fun} from './AutoLISPTypes.js';
 
 export class EvalVisitor extends AutoLISPVisitor {
     constructor(context) {
@@ -54,7 +54,7 @@ export class EvalVisitor extends AutoLISPVisitor {
             }
             return result;
         }));
-        return name; // TODO: new Sym(name)?
+        return new Sym(name);
     }
 
     visitIf(ctx) {
@@ -156,6 +156,9 @@ export class EvalVisitor extends AutoLISPVisitor {
         } else if (ctx.parentCtx instanceof AutoLISPParser.StrContext) {
             //console.error('STR:', str);
             return new Str(str.replace(/\"/g, ''));
+        } else if (ctx.parentCtx instanceof AutoLISPParser.SymContext) {
+            //console.error('SYM:', str);
+            return new Sym(str.replace(/\'/g, ''));
         } else if (ctx.parentCtx instanceof AutoLISPParser.IdContext) {
             //console.error('ID:', str);
             return this.contexts[this.contexts.length-1].getVar(str);

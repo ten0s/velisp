@@ -235,6 +235,26 @@ export class Str {
     }
 }
 
+export class Sym {
+    constructor(val) {
+        this.val = val;
+    }
+
+    // :: () -> true
+    isTruthy() {
+        return this.val;
+    }
+
+    // :: () -> false
+    isFalsy() {
+        return !this.val;
+    }
+
+    toString() {
+        return this.val;
+    }
+}
+
 export class List {
     constructor(arr) {
         // TODO: who should make copy, see cdr

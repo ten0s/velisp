@@ -1,8 +1,9 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Int, Str} from '../AutoLISPTypes';
+import {Int, Str, Sym} from '../AutoLISPTypes';
 
 const tests = [
+    {test: '(defun foo () "foo")', result: new Sym('foo')},
     {test: '(defun foo () "foo") (foo)', result: new Str('foo')},
     {test: '(defun id (x) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x) x) (id (+ 1 2))', result: new Int(3)},

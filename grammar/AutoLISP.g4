@@ -40,6 +40,7 @@ expr :
      | REAL                                                                       # real
      | STR                                                                        # str
      | ID                                                                         # id
+     | SYM                                                                        # sym
      ;
 
 condTestResult : '(' condTest condResult ')' ;
@@ -69,6 +70,7 @@ T : [tT] ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
+SYM : '\''ID ;
 ID : [a-zA-Z0-9!$%*/\-+=<>~]+ ; // TODO: can't have only numeric chars
 
 INLINE_COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
