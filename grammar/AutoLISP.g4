@@ -7,23 +7,17 @@ file : expr+ ;
 expr :
      // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
 
-     // and
-     // command
+     //                                                                           # and
        '(' 'cond' condTestResult* ')'                                             # cond
      | '(' 'defun' defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')' # defun
-     // defun-q
-     // foreach
-     // function
+     //                                                                           # foreach
      | '(' 'if' ifTest ifThen ifElse? ')'                                         # if
-     // lambda
-     // or
-     // progn
-     // quote
+     //                                                                           # lambda
+     //                                                                           # or
+     //                                                                           # progn
+     //                                                                           # quote
      | '(' 'repeat' repeatNum expr* ')'                                           # repeat
      | '(' 'setq' setqIdVal+ ')'                                                  # setQ
-     // trace
-     // untrace
-     // vlax-for
      | '(' 'while' whileTest expr+ ')'                                            # while
 
      // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
@@ -82,7 +76,7 @@ WHITESPACE : [ \t]+ -> skip ;
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
 
-// quote, atom, eq, car, cdr, cons, cond
+// quote, atom, eq
 
 // quoting protect list from evaluation
 // (quote x) == 'x => x
