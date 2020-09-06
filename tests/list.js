@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Int, Real, Str, List} from '../AutoLISPTypes';
+import {Int, Real, Str, List} from '../AutoLISPTypes.js';
 
 const tests = [
     {test: '(list)', result: new List([])},

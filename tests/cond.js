@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Bool, Str} from '../AutoLISPTypes';
+import {Bool, Str} from '../AutoLISPTypes.js';
 
 const tests = [
     {test: '(cond)', result: new Bool(false)},

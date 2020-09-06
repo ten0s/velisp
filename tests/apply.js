@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Int, Str} from '../AutoLISPTypes';
+import {Int, Str} from '../AutoLISPTypes.js';
 
 const tests = [
     {test: '(apply (defun foo () "foo") (list))', result: new Str('foo')},
