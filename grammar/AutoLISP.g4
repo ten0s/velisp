@@ -9,28 +9,28 @@ expr :
 
      // and
      // command
-       '(' 'cond' testresult* ')'                                                 # cond
+       '(' 'cond' condTestResult* ')'                                             # cond
      | '(' 'defun' defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')' # defun
      // defun-q
      // foreach
      // function
-     | '(' 'if' testexpr thenexpr elseexpr? ')'                                   # if
+     | '(' 'if' ifTest ifThen ifElse? ')'                                         # if
      // lambda
      // or
      // progn
      // quote
-     | '(' 'repeat' numexpr expr* ')'                                             # repeat
-     | '(' 'setq' idexpr+ ')'                                                     # setQ
+     | '(' 'repeat' repeatNum expr* ')'                                           # repeat
+     | '(' 'setq' setqIdVal+ ')'                                                  # setQ
      // trace
      // untrace
      // vlax-for
-     | '(' 'while' testexpr expr+ ')'                                             # while
+     | '(' 'while' whileTest expr+ ')'                                            # while
 
      // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
 
      | '(' 'princ' expr ')'                                                       # princ
 
-     | '(' ID argexpr* ')'                                                        # funCall
+     | '(' ID funArg* ')'                                                         # fun
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
@@ -42,30 +42,25 @@ expr :
      | ID                                                                         # id
      ;
 
-// cond, if, while
-testexpr : expr ;
+condTestResult : '(' condTest condResult ')' ;
+condTest : expr ;
+condResult : expr ;
 
-// cond
-testresult : '(' testexpr resultexpr ')' ;
-resultexpr : expr ;
-
-// defun
 defunName : ID ;
 defunParam : ID ;
 defunLocal : ID ;
 
-// if
-thenexpr : expr ;
-elseexpr : expr ;
+ifTest : expr ;
+ifThen : expr ;
+ifElse : expr ;
 
-// repeat
-numexpr : expr ;
+repeatNum : expr ;
 
-// setq
-idexpr : ID expr ;
+setqIdVal : ID expr ;
 
-// funCall
-argexpr : expr ;
+whileTest : expr ;
+
+funArg : expr ;
 
 // Lexer rules
 

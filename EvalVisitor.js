@@ -13,11 +13,11 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitCond(ctx) {
         let result = new Bool(false);
-        for (let i = 0; i < ctx.testresult().length; i++) {
-            const test = this.getValue(this.visit(ctx.testresult(i).testexpr()));
+        for (let i = 0; i < ctx.condTestResult().length; i++) {
+            const test = this.getValue(this.visit(ctx.condTestResult(i).condTest()));
             //console.error('cond test:', test);
             if (test.isTruthy()) {
-                result = this.visit(ctx.testresult(i).resultexpr());
+                result = this.visit(ctx.condTestResult(i).condResult());
                 break;
             }
         }
@@ -58,13 +58,13 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitIf(ctx) {
-        const test = this.getValue(this.visit(ctx.testexpr()));
+        const test = this.getValue(this.visit(ctx.ifTest()));
         //console.error('if test:', test);
         if (test.isTruthy()) {
-            return this.visit(ctx.thenexpr());
+            return this.visit(ctx.ifThen());
         } else {
-            if (ctx.elseexpr()) {
-                return this.visit(ctx.elseexpr());
+            if (ctx.ifElse()) {
+                return this.visit(ctx.ifElse());
             } else {
                 return new Bool(false);
             }
@@ -73,7 +73,7 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     visitRepeat(ctx) {
         let result = new Bool(false);
-        let count = this.getValue(this.visit(ctx.numexpr()));
+        let count = this.getValue(this.visit(ctx.repeatNum()));
         //console.error('repeat count:', count);
         if (count instanceof Int && count.value() > 0) {
             for (let i = 0; i < count.value(); i++) {
@@ -90,9 +90,9 @@ export class EvalVisitor extends AutoLISPVisitor {
     visitSetQ(ctx) {
         // TODO: no args
         let value;
-        for (let i = 0; i < ctx.idexpr().length; i++) {
-            const id = this.getValue(this.visit(ctx.idexpr(i).ID()));
-            value = this.getValue(this.visit(ctx.idexpr(i).expr()));
+        for (let i = 0; i < ctx.setqIdVal().length; i++) {
+            const id = this.getValue(this.visit(ctx.setqIdVal(i).ID()));
+            value = this.getValue(this.visit(ctx.setqIdVal(i).expr()));
             //console.error(`setq ${id} = ${val}`);
             this.contexts[this.contexts.length-1].setVar(id, value);
         }
@@ -102,7 +102,7 @@ export class EvalVisitor extends AutoLISPVisitor {
     visitWhile(ctx) {
         let result = new Bool(false);
         while (true) {
-            const test = this.getValue(this.visit(ctx.testexpr()));
+            const test = this.getValue(this.visit(ctx.whileTest()));
             //console.error('while test:', test);
             if (test.isTruthy()) {
                 for (let i = 0; i < ctx.expr().length; i++) {
@@ -121,15 +121,14 @@ export class EvalVisitor extends AutoLISPVisitor {
         return expr;
     }
 
-    visitFunCall(ctx) {
-        //let id = this.getValue(this.visit(ctx.funexpr()));
+    visitFun(ctx) {
         let name = this.visit(ctx.ID());
         const fun = this.contexts[this.contexts.length-1].getSym(name);
         if (fun instanceof Fun) {
             // Evaluate args eagerly
             let args = [];
-            for (let i = 0; i < ctx.argexpr().length; i++) {
-                args.push(this.getValue(this.visit(ctx.argexpr(i))));
+            for (let i = 0; i < ctx.funArg().length; i++) {
+                args.push(this.getValue(this.visit(ctx.funArg(i))));
             }
             //console.error(`(${name} ${args.join(' ')})`);
             this.contexts.push(new AutoLISPContext(this.contexts[this.contexts.length-1]));
