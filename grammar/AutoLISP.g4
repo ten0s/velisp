@@ -5,21 +5,7 @@ grammar AutoLISP;
 file : expr+ ;
 
 expr :
-     // Operators (AutoCAD 2013 AutoLISP Reference Guild p.1)
-       
-       '(' '*' expr* ')'                       # multiply
-     | '(' '/' expr* ')'                       # divide
-     | '(' '+' expr* ')'                       # add
-     | '(' '-' expr* ')'                       # subtract
-     | '(' '=' expr+ ')'                       # equalTo
-     | '(' '/=' expr+ ')'                      # notEqualTo
-     | '(' '<' expr+ ')'                       # lessThan
-     | '(' '<=' expr+ ')'                      # lessThanOrEqualTo
-     | '(' '>' expr+ ')'                       # greaterThan
-     | '(' '>=' expr+ ')'                      # greaterThanOrEqualTo
-     | '(' '~' expr ')'                        # bitwiseNOT
-
-     | '(' 'list' expr* ')'                    # list 
+       '(' 'list' expr* ')'                    # list
      | '(' 'car' expr ')'                      # car // TODO: is expr correct here?
      | '(' 'cdr' expr ')'                      # cdr // TODO: is expr correct here?
 
@@ -94,7 +80,7 @@ T : [tT] ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
-ID : [a-zA-Z0-9!$%*\-+]+ ; // TODO: can't have only numeric chars
+ID : [a-zA-Z0-9!$%*/\-+=<>~]+ ; // TODO: can't have only numeric chars
 
 INLINE_COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
 LINE_COMMENT : ';'+ .*? NEWLINE -> skip ;
