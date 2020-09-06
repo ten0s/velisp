@@ -1,4 +1,4 @@
-import {Bool, Int, List, Fun} from './AutoLISPTypes.js';
+import {Bool, Int, List, Pair, Fun} from './AutoLISPTypes.js';
 
 export class AutoLISPGlobalContext {
     constructor() {
@@ -137,13 +137,24 @@ export class AutoLISPGlobalContext {
             }
             return new List(result);
         });
-        this.syms['car'] = new Fun('car', ['list'], function (self, args) {
-            let list = args[0];
-            return list.car();
+        this.syms['cons'] = new Fun('cons', ['first', 'listoratom'], function (self, args) {
+            let fst = args[0];
+            let snd = args[1];
+            if (snd instanceof List) {
+                return snd.cons(fst);
+            } else if (snd.isNil()) {
+                return new List([fst]);
+            } else {
+                return new Pair(fst, snd);
+            }
         });
-        this.syms['cdr'] = new Fun('cdr', ['list'], function (self, args) {
-            let list = args[0];
-            return list.cdr();
+        this.syms['car'] = new Fun('car', ['listorpair'], function (self, args) {
+            let listOrPair = args[0];
+            return listOrPair.car();
+        });
+        this.syms['cdr'] = new Fun('cdr', ['listorpair'], function (self, args) {
+            let listOrPair = args[0];
+            return listOrPair.cdr();
         });
         //
         //

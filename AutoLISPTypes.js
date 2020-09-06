@@ -277,6 +277,30 @@ export class List {
     }
 }
 
+export class Pair {
+    constructor(fst, snd) {
+        this.fst = fst;
+        this.snd = snd;
+    }
+
+    // :: () -> false
+    isNil() {
+        return false;
+    }
+
+    car() {
+        return this.fst;
+    }
+
+    cdr() {
+        return this.snd;
+    }
+
+    toString() {
+        return `(${this.fst} . ${this.snd})`;
+    }
+}
+
 export class Fun {
     constructor(name, params, fun) {
         this.name = name;
