@@ -35,6 +35,7 @@ export class EvalVisitor extends AutoLISPVisitor {
         for (let i = 0; i < ctx.defunLocal().length; i++) {
             locals.push(this.visit(ctx.defunLocal(i).ID()));
         }
+        // TODO: Are params really needed here?
         this.contexts[this.contexts.length-1].setSym(name, new Fun(name, params, function (self, args) {
             if (args.length < params.length) {
                 throw new Error(`${name}: too few arguments`);

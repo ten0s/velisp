@@ -123,6 +123,10 @@ export class Real {
         return false;
     }
 
+    value() {
+        return this.val;
+    }
+
     multiply(that) {
         if (that instanceof Int) {
             return new Real(this.val * that.val);
@@ -196,6 +200,10 @@ export class Str {
         return false;
     }
 
+    value() {
+        return this.val;
+    }
+
     equalTo(that) {
         if (that instanceof Str) {
             return new Bool(this.val === that.val);
@@ -225,6 +233,10 @@ export class Sym {
         return false;
     }
 
+    value() {
+        return this.val;
+    }
+
     toString() {
         return this.val;
     }
@@ -239,6 +251,10 @@ export class List {
     // :: () -> true | false
     isNil() {
         return this.val.length === 0;
+    }
+
+    value() {
+        return this.val;
     }
 
     car() {
