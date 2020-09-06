@@ -38,7 +38,7 @@ export class EvalVisitor extends AutoLISPVisitor {
                 throw new Error(`${name}: too many arguments`);
             }
             for (let i = 0; i < params.length; i++) {
-                self.contexts[self.contexts.length-1].setVar(params[i], args[i]);
+                self.contexts[self.contexts.length-1].initVar(params[i], args[i]);
             }
             let result = new Bool(false);
             for (let i = 0; i < ctx.expr().length; i++) {
