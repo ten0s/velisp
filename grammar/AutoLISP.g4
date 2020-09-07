@@ -17,7 +17,7 @@ expr :
      | '(' 'progn' expr* ')'                                                      # progn
      //                                                                           # quote
      | '(' 'repeat' repeatNum expr* ')'                                           # repeat
-     | '(' 'setq' setqIdVal+ ')'                                                  # setQ
+     | '(' 'setq' setqNameExpr* ')'                                               # setQ
      | '(' 'while' whileTest expr+ ')'                                            # while
 
      // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
@@ -51,7 +51,7 @@ ifElse : expr ;
 
 repeatNum : expr ;
 
-setqIdVal : ID expr ;
+setqNameExpr : ID expr ;
 
 whileTest : expr ;
 

@@ -117,13 +117,13 @@ export class EvalVisitor extends AutoLISPVisitor {
     }
 
     visitSetQ(ctx) {
-        // TODO: no args
-        let value;
-        for (let i = 0; i < ctx.setqIdVal().length; i++) {
-            const id = this.getValue(this.visit(ctx.setqIdVal(i).ID()));
-            value = this.getValue(this.visit(ctx.setqIdVal(i).expr()));
-            //console.error(`setq ${id} = ${val}`);
-            this.contexts[this.contexts.length-1].setVar(id, value);
+        let value = new Bool(false);
+        for (let i = 0; i < ctx.setqNameExpr().length; i++) {
+            // This argument is not evaluated
+            const name = ctx.setqNameExpr(i).ID();
+            value = this.visit(ctx.setqNameExpr(i).expr());
+            //console.error(`setq: ${name} = ${value}`);
+            this.contexts[this.contexts.length-1].setVar(name, value);
         }
         return value;
     }
