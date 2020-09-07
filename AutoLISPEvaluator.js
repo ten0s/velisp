@@ -2,7 +2,7 @@ import antlr4 from 'antlr4';
 import {AutoLISPLexer} from './grammar/AutoLISPLexer.js';
 import {AutoLISPParser} from './grammar/AutoLISPParser.js';
 import {AutoLISPGlobalContext} from './AutoLISPContext.js';
-import {EvalVisitor} from './EvalVisitor.js';
+import {AutoLISPEvalVisitor} from './AutoLISPEvalVisitor.js';
 
 //const input = '(princ 2)'; // 2
 //const input = '(princ 2.0)'; // 2.0
@@ -31,7 +31,7 @@ export function evaluate(input) {
     const parser = new AutoLISPParser(tokens);
     //parser.buildParseTrees = true;
     const tree = parser.file();
-    const results = tree.accept(new EvalVisitor(new AutoLISPGlobalContext()));
+    const results = tree.accept(new AutoLISPEvalVisitor(new AutoLISPGlobalContext()));
     //console.log(results);
     const result = getResult(results);
     //console.log(result);

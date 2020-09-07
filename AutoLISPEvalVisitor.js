@@ -3,7 +3,7 @@ import {AutoLISPVisitor} from './grammar/AutoLISPVisitor.js';
 import {AutoLISPContext} from './AutoLISPContext.js';
 import {Bool, Int, Real, Str, Sym, List, Fun} from './AutoLISPTypes.js';
 
-export class EvalVisitor extends AutoLISPVisitor {
+export class AutoLISPEvalVisitor extends AutoLISPVisitor {
     constructor(context) {
         super();
         this.contexts = [context];
