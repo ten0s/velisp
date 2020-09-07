@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
 import {evaluate} from '../AutoLISPEvaluator.js';
-import {Bool, Int, Str} from '../AutoLISPTypes.js';
+import {Bool, Int, Str, Pair} from '../AutoLISPTypes.js';
 
 const tests = [
     {test: '(if T 1 0)', result: new Int(1)},
@@ -29,6 +29,17 @@ const tests = [
     {test: '(if (= 2 (+ 1 1)) "yes" "no")', result: new Str('yes')},
     {test: '(if (/= 2 (+ 1 1)) "yes" "no")', result: new Str('no')},
     {test: '(if (/= 2 (+ 1 1)) "yes")', result: new Bool(false)}, // no else
+
+    {test: `(setq a 0 b 0)
+            (if T (progn (setq a (1- a)) (setq a (1- a)) (setq a (1- a)))
+                  (progn (setq b (1- b)) (setq b (1- b)) (setq b (1- b))))
+            (cons a b)`,
+     result: new Pair(new Int(-3), new Int(0))},
+    {test: `(setq a 0 b 0)
+            (if nil (progn (setq a (1- a)) (setq a (1- a)) (setq a (1- a)))
+                  (progn (setq b (1- b)) (setq b (1- b)) (setq b (1- b))))
+            (cons a b)`,
+     result: new Pair(new Int(0), new Int(-3))},
 ];
 
 QUnit.test("if", assert => {

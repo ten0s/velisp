@@ -14,7 +14,7 @@ expr :
      | '(' 'if' ifTest ifThen ifElse? ')'                                         # if
      //                                                                           # lambda
      //                                                                           # or
-     //                                                                           # progn
+     | '(' 'progn' expr* ')'                                                      # progn
      //                                                                           # quote
      | '(' 'repeat' repeatNum expr* ')'                                           # repeat
      | '(' 'setq' setqIdVal+ ')'                                                  # setQ

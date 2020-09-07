@@ -72,6 +72,14 @@ export class EvalVisitor extends AutoLISPVisitor {
         }
     }
 
+    visitProgn(ctx) {
+        let result = new Bool(false);
+        for (let i = 0; i < ctx.expr().length; i++) {
+            result = this.visit(ctx.expr(i));
+        }
+        return result;
+    }
+
     visitRepeat(ctx) {
         let result = new Bool(false);
         let count = this.getValue(this.visit(ctx.repeatNum()));
