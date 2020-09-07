@@ -75,24 +75,3 @@ WHITESPACE : [ \t]+ -> skip ;
 
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
-
-// quote, atom, eq
-
-// quoting protect list from evaluation
-// (quote x) == 'x => x
-// 'x => x
-// (quote (a b c)) => (a b c)
-
-// (atom ()) == (atom nil) == (atom abc) == true (T)
-// (atom (a)) == nil | ()
-
-// (lambda (p1 ... pn) expr)
-
-// (null x) is empty list
-// (defun null (x) (eq x '()))
-
-// (defun and (x y) (cond (x (cond (y 't) ('t '())) ('t '()))))
-
-// (defun not (x) (cond (x '()) ('t 't)))
-
-// (defun append (x y) (cond ((null x) y) ('t (cons (car x) (append (cdr x) y)))))
