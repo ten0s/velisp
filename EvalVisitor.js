@@ -11,6 +11,16 @@ export class EvalVisitor extends AutoLISPVisitor {
 
     // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
 
+    visitAnd(ctx) {
+        for (let i = 0; i < ctx.expr().length; i++) {
+            const result = this.getValue(this.visit(ctx.expr(i)));
+            if (result.isNil()) {
+                return new Bool(false);
+            }
+        }
+        return new Bool(true);
+    }
+
     visitCond(ctx) {
         let result = new Bool(false);
         for (let i = 0; i < ctx.condTestResult().length; i++) {
@@ -70,6 +80,16 @@ export class EvalVisitor extends AutoLISPVisitor {
                 return new Bool(false);
             }
         }
+    }
+
+    visitOr(ctx) {
+        for (let i = 0; i < ctx.expr().length; i++) {
+            const result = this.getValue(this.visit(ctx.expr(i)));
+            if (!result.isNil()) {
+                return new Bool(true);
+            }
+        }
+        return new Bool(false);
     }
 
     visitProgn(ctx) {

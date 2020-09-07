@@ -7,13 +7,13 @@ file : expr+ ;
 expr :
      // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
 
-     //                                                                           # and
-       '(' 'cond' condTestResult* ')'                                             # cond
+       '(' 'and' expr* ')'                                                        # and
+     | '(' 'cond' condTestResult* ')'                                             # cond
      | '(' 'defun' defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')' # defun
      //                                                                           # foreach
      | '(' 'if' ifTest ifThen ifElse? ')'                                         # if
      //                                                                           # lambda
-     //                                                                           # or
+     | '(' 'or' expr* ')'                                                         # or
      | '(' 'progn' expr* ')'                                                      # progn
      //                                                                           # quote
      | '(' 'repeat' repeatNum expr* ')'                                           # repeat
