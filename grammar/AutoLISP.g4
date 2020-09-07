@@ -10,7 +10,7 @@ expr :
        '(' 'and' expr* ')'                                                        # and
      | '(' 'cond' condTestResult* ')'                                             # cond
      | '(' 'defun' defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')' # defun
-     //                                                                           # foreach
+     | '(' 'foreach' foreachName foreachList expr* ')'                            # foreach
      | '(' 'if' ifTest ifThen ifElse? ')'                                         # if
      //                                                                           # lambda
      | '(' 'or' expr* ')'                                                         # or
@@ -44,6 +44,9 @@ condResult : expr ;
 defunName : ID ;
 defunParam : ID ;
 defunLocal : ID ;
+
+foreachName : ID ;
+foreachList : expr ;
 
 ifTest : expr ;
 ifThen : expr ;

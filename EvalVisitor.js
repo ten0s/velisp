@@ -68,6 +68,33 @@ export class EvalVisitor extends AutoLISPVisitor {
         return new Sym(name);
     }
 
+    visitForeach(ctx) {
+        let name = this.visit(ctx.foreachName().ID());
+        const list = this.getValue(this.visit(ctx.foreachList()));
+        //console.error(`foreach: ${name} ${list}`);
+        if (list instanceof List) {
+            let result = new Bool(false);
+            // Push new context with 'name' = nil
+            const context = new AutoLISPContext(this.contexts[this.contexts.length-1]);
+            context.initVar(name, new Bool(false));
+            this.contexts.push(context);
+            for (let i = 0; i < list.value().length; i++) {
+                // Set each list value directly into our context, not the latest context,
+                // to make it possible to shadow 'name' in some down context
+                const value = list.value()[i];
+                //console.error(`foreach: ${value}`);
+                context.setVar(name, value);
+                for (let j = 0; j < ctx.expr().length; j++) {
+                    result = this.visit(ctx.expr(j));
+                }
+            }
+            // Pop new context
+            this.contexts.pop();
+            return result;
+        }
+        throw new Error(`foreach: invalid 'list' type`);
+    }
+
     visitIf(ctx) {
         const test = this.getValue(this.visit(ctx.ifTest()));
         //console.error('if test:', test);
@@ -171,8 +198,10 @@ export class EvalVisitor extends AutoLISPVisitor {
                 args.push(this.getValue(this.visit(ctx.funArg(i))));
             }
             //console.error(`(${name} ${args.join(' ')})`);
+            // Push new context
             this.contexts.push(new AutoLISPContext(this.contexts[this.contexts.length-1]));
             const result = fun.apply(this, args);
+            // Pop new context
             this.contexts.pop();
             return result;
         }
@@ -214,6 +243,6 @@ export class EvalVisitor extends AutoLISPVisitor {
         if (expr instanceof Array) {
             return this.getValue(expr[0]);
         }
-        return expr;        
+        return expr;
     }
 }
