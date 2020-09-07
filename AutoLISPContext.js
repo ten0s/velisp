@@ -171,6 +171,10 @@ export class AutoLISPGlobalContext {
             }
             throw new Error(`apply: no such function ${sym}`);
         });
+        this.syms['not'] = new Fun('not', ['item'], function (self, args) {
+            return new Bool(args[0].isNil());
+        });
+        this.syms['null'] = this.syms['not'];
     }
 
     setVar(name, value) {
