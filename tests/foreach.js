@@ -3,7 +3,8 @@ import {evaluate} from '../AutoLISPEvaluator.js';
 import {Bool, Int} from '../AutoLISPTypes.js';
 
 const tests = [
-    {test: '(while nil "done")', result: new Bool(false)},
+    {test: `(foreach n (list 1 2 3))`, result: new Bool(false)},
+    {test: `(foreach n (list 1 2 3) n)`, result: new Int(3)},
     {test: `(setq fac 1)
             (foreach n (list 1 2 3 4 5)
               (setq fac (* n fac)))`, result: new Int(120)},
