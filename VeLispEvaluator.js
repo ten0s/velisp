@@ -11,12 +11,6 @@ import {VeLispEvalVisitor} from './VeLispEvalVisitor.js';
 //const input = '(princ (= 0 1))'; // nil
 //const input = '(princ \'foo)'; // foo
 
-const input = `
-;(princ (foreach n (list 1 2 3) (princ n)))
-;(princ (foreach n (list 1 2 3 4 5) (setq fac (* n fac))))
-(princ fac)
-`;
-
 export function evaluate(input) {
     const chars = new antlr4.InputStream(input);
     const lexer = new VeLispLexer(chars);
@@ -40,5 +34,3 @@ function getResult(res) {
         return res;
     }
 }
-
-evaluate(input);

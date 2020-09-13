@@ -3,6 +3,9 @@ all: compile
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
 
+run:
+	npm start
+
 test:
 	npm run test
 

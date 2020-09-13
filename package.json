@@ -1,17 +1,19 @@
 {
-    "name": "autolisp",
-    "version": "1.0.0",
+    "name": "velisp",
+    "version": "0.0.1",
     "description": "JavaScript interpreter for AutoLISP",
     "main": "index.js",
     "scripts": {
+        "start" : "NODE_OPTIONS='-r esm' node index.js",
         "test": "NODE_OPTIONS='-r esm' node node_modules/qunit/bin/qunit.js tests/*.js",
         "eval": "NODE_OPTIONS='-r esm' node VeLispEvaluator.js",
         "tree": "NODE_OPTIONS='-r esm' node tree.js"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "Dmitry Klionsky",
+    "license": "",
     "dependencies": {
-        "antlr4": "^4.8.0"
+        "antlr4": "^4.8.0",
+        "commander": "^6.1.0"
     },
     "devDependencies": {
         "esm": "^3.2.25",
