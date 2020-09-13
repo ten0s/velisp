@@ -14,7 +14,7 @@ $ node src/index.js examples/fib.lsp
 ```
 $ make pkg
 $ ls velisp*
-velisp  velisp.exe
-$ ./velisp examples/fib.lsp
+velisp-0.0.1  velisp-0.0.1.exe
+$ ./velisp-0.0.1 examples/fib.lsp
 55
 ```

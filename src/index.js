@@ -1,9 +1,10 @@
 const fs = require('fs');
 const {Command} = require('commander');
 const {evaluate} = require('./VeLispEvaluator.js');
+const config = require('../package.json');
 
 const program = new Command();
-program.version('0.0.1')
+program.version(config.version)
     .arguments('[file]')
     .action((file) => {
         //console.log(file);

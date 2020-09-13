@@ -12,10 +12,13 @@ tree:
 pkg: pkgLinux pkgWin
 
 pkgLinux:
-	npm run pkg -- -t node10-linux-x64 -o velisp
+	npm run pkg -- -t node10-linux-x64 -o velisp-`jq -r .version package.json`
 
 pkgWin:
-	npm run pkg -- -t node10-win-x64 -o velisp.exe
+	npm run pkg -- -t node10-win-x64 -o velisp-`jq -r .version package.json`
+
+cleanPkg:
+	rm -f velisp*
 
 compileJava:
 	antlr4 -lib grammar -no-visitor -no-listener grammar/VeLisp.g4
@@ -30,5 +33,7 @@ gui: compileJava
 treeJava: compileJava
 	(cd grammar; grun VeLisp file -tree)
 
-clean:
+cleanJava:
 	rm -f grammar/*.class grammar/*.java
+
+clean: cleanJava cleanPkg
