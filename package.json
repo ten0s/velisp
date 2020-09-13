@@ -4,7 +4,7 @@
     "description": "JavaScript interpreter for AutoLISP",
     "main": "src/index.js",
     "scripts": {
-        "start": "node src/index.js",
+        "pkg": "node node_modules/pkg/lib-es5/bin.js -c package.json src/index.js",
         "test": "node node_modules/qunit/bin/qunit.js tests/*.js",
         "tree": "node src/tree.js"
     },
@@ -15,6 +15,11 @@
         "commander": "^6.1.0"
     },
     "devDependencies": {
+        "pkg": "^4.4.9",
         "qunit": "^2.11.1"
+    },
+    "pkg": {
+        "assets": [],
+        "scripts": []
     }
 }

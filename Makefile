@@ -9,6 +9,14 @@ test:
 tree:
 	npm run tree
 
+pkg: pkgLinux pkgWin
+
+pkgLinux:
+	npm run pkg -- -t node10-linux-x64 -o velisp
+
+pkgWin:
+	npm run pkg -- -t node10-win-x64 -o velisp.exe
+
 compileJava:
 	antlr4 -lib grammar -no-visitor -no-listener grammar/VeLisp.g4
 	javac grammar/*.java
