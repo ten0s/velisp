@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
-import {evaluate} from '../AutoLISPEvaluator.js';
-import {Bool, Int, Real, List} from '../AutoLISPTypes.js';
+import {evaluate} from '../VeLispEvaluator.js';
+import {Bool, Int, Real, List} from '../VeLispTypes.js';
 
 const tests = [
     {test: '(setq)', result: new Bool(false)},

@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
-import {evaluate} from '../AutoLISPEvaluator.js';
-import {Int, Str, Sym, List} from '../AutoLISPTypes.js';
+import {evaluate} from '../VeLispEvaluator.js';
+import {Int, Str, Sym, List} from '../VeLispTypes.js';
 
 const tests = [
     {test: '(defun foo () "foo")', result: new Sym('foo')},

@@ -1,9 +1,9 @@
-import {AutoLISPParser} from './grammar/AutoLISPParser.js';
-import {AutoLISPVisitor} from './grammar/AutoLISPVisitor.js';
-import {AutoLISPContext} from './AutoLISPContext.js';
-import {Bool, Int, Real, Str, Sym, List, Fun} from './AutoLISPTypes.js';
+import {VeLispParser} from './grammar/VeLispParser.js';
+import {VeLispVisitor} from './grammar/VeLispVisitor.js';
+import {VeLispContext} from './VeLispContext.js';
+import {Bool, Int, Real, Str, Sym, List, Fun} from './VeLispTypes.js';
 
-export class AutoLISPEvalVisitor extends AutoLISPVisitor {
+export class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
         super();
         this.contexts = [context];
@@ -75,7 +75,7 @@ export class AutoLISPEvalVisitor extends AutoLISPVisitor {
         if (list instanceof List) {
             let result = new Bool(false);
             // Push new context with 'name' = nil
-            const context = new AutoLISPContext(this.contexts[this.contexts.length-1]);
+            const context = new VeLispContext(this.contexts[this.contexts.length-1]);
             context.initVar(name, new Bool(false));
             this.contexts.push(context);
             for (let i = 0; i < list.value().length; i++) {
@@ -199,7 +199,7 @@ export class AutoLISPEvalVisitor extends AutoLISPVisitor {
             }
             //console.error(`(${name} ${args.join(' ')})`);
             // Push new context
-            this.contexts.push(new AutoLISPContext(this.contexts[this.contexts.length-1]));
+            this.contexts.push(new VeLispContext(this.contexts[this.contexts.length-1]));
             const result = fun.apply(this, args);
             // Pop new context
             this.contexts.pop();
@@ -210,25 +210,25 @@ export class AutoLISPEvalVisitor extends AutoLISPVisitor {
 
     visitTerminal(ctx) {
         const str = ctx.getText();
-        if (ctx.parentCtx instanceof AutoLISPParser.NilContext) {
+        if (ctx.parentCtx instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
             return new Bool(false);
-        } else if (ctx.parentCtx instanceof AutoLISPParser.TContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.TContext) {
             //console.error('T:', str);
             return new Bool(true);
-        } else if (ctx.parentCtx instanceof AutoLISPParser.IntContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.IntContext) {
             //console.error('INT:', str);
             return new Int(Number.parseInt(str));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.RealContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.RealContext) {
             //console.error('REAL:', str);
             return new Real(Number.parseFloat(str));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.StrContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.StrContext) {
             //console.error('STR:', str);
             return new Str(str.replace(/\"/g, ''));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.SymContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.SymContext) {
             //console.error('SYM:', str);
             return new Sym(str.replace(/\'/g, ''));
-        } else if (ctx.parentCtx instanceof AutoLISPParser.IdContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
             return this.contexts[this.contexts.length-1].getVar(str);
         } else {

@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "NODE_OPTIONS='-r esm' node node_modules/qunit/bin/qunit.js tests/*.js",
-        "eval": "NODE_OPTIONS='-r esm' node AutoLISPEvaluator.js",
+        "eval": "NODE_OPTIONS='-r esm' node VeLispEvaluator.js",
         "tree": "NODE_OPTIONS='-r esm' node tree.js"
     },
     "author": "",

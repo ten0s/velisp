@@ -1,4 +1,4 @@
-grammar AutoLISP;
+grammar VeLisp;
 
 // Parser rules
 

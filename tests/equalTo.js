@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
-import {evaluate} from '../AutoLISPEvaluator.js';
-import {Bool, Int, Pair} from '../AutoLISPTypes.js';
+import {evaluate} from '../VeLispEvaluator.js';
+import {Bool, Int, Pair} from '../VeLispTypes.js';
 
 const tests = [
     // TODO: (eq & (equal tests

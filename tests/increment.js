@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
-import {evaluate} from '../AutoLISPEvaluator.js';
-import {Int, Real} from '../AutoLISPTypes.js';
+import {evaluate} from '../VeLispEvaluator.js';
+import {Int, Real} from '../VeLispTypes.js';
 
 const tests = [
     {test: '(1+ 0)', result: new Int(1)},

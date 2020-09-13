@@ -1,6 +1,6 @@
 import QUnit from 'qunit';
-import {evaluate} from '../AutoLISPEvaluator.js';
-import {Bool, Int} from '../AutoLISPTypes.js';
+import {evaluate} from '../VeLispEvaluator.js';
+import {Bool, Int} from '../VeLispTypes.js';
 
 const tests = [
     {test: '(progn)', result: new Bool(false)},

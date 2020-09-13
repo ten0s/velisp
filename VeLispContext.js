@@ -1,6 +1,6 @@
-import {Bool, Int, List, Pair, Fun} from './AutoLISPTypes.js';
+import {Bool, Int, List, Pair, Fun} from './VeLispTypes.js';
 
-export class AutoLISPGlobalContext {
+export class VeLispGlobalContext {
     constructor() {
         // Symbols
         this.syms = {};
@@ -203,7 +203,7 @@ export class AutoLISPGlobalContext {
     }
 }
 
-export class AutoLISPContext {
+export class VeLispContext {
     constructor(parent) {
         this.parent = parent;
         this.syms = {};
