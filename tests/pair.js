@@ -1,6 +1,6 @@
-import QUnit from 'qunit';
-import {evaluate} from '../VeLispEvaluator.js';
-import {Int, Sym, Pair} from '../VeLispTypes.js';
+const QUnit = require('qunit');
+const {evaluate} = require('../VeLispEvaluator.js');
+const {Int, Sym, Pair} = require('../VeLispTypes.js');
 
 const tests = [
     {test: '(cons 1 \'a)', result: new Pair(new Int(1), new Sym('a'))},

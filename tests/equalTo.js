@@ -1,6 +1,6 @@
-import QUnit from 'qunit';
-import {evaluate} from '../VeLispEvaluator.js';
-import {Bool, Int, Pair} from '../VeLispTypes.js';
+const QUnit = require('qunit');
+const {evaluate} = require('../VeLispEvaluator.js');
+const {Bool, Int, Pair} = require('../VeLispTypes.js');
 
 const tests = [
     // TODO: (eq & (equal tests

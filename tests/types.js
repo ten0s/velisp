@@ -1,6 +1,6 @@
-import QUnit from 'qunit';
-import {evaluate} from '../VeLispEvaluator.js';
-import {Bool, Int, Real, Str, Sym, List, Pair} from '../VeLispTypes.js';
+const QUnit = require('qunit');
+const {evaluate} = require('../VeLispEvaluator.js');
+const {Bool, Int, Real, Str, Sym, List, Pair} = require('../VeLispTypes.js');
 
 const tests = [
     {test: 'nil', result: new Bool(false)},

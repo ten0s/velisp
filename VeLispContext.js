@@ -1,6 +1,6 @@
-import {Bool, Int, List, Pair, Fun} from './VeLispTypes.js';
+const {Bool, Int, List, Pair, Fun} = require('./VeLispTypes.js');
 
-export class VeLispGlobalContext {
+class GlobalContext {
     constructor() {
         // Symbols
         this.syms = {};
@@ -203,7 +203,7 @@ export class VeLispGlobalContext {
     }
 }
 
-export class VeLispContext {
+class Context {
     constructor(parent) {
         this.parent = parent;
         this.syms = {};
@@ -252,3 +252,6 @@ export class VeLispContext {
         return this.parent.getSym(name);
     }
 }
+
+exports.GlobalContext = GlobalContext;
+exports.Context = Context;

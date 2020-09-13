@@ -1,4 +1,4 @@
-export class Bool {
+class Bool {
     constructor(bool) {
         this.bool = bool;
     }
@@ -43,7 +43,7 @@ export class Bool {
     }
 }
 
-export class Int {
+class Int {
     constructor(int) {
         this.int = int;
     }
@@ -130,7 +130,7 @@ export class Int {
     }
 }
 
-export class Real {
+class Real {
     constructor(real) {
         this.real = real;
     }
@@ -212,7 +212,7 @@ export class Real {
     }
 }
 
-export class Str {
+class Str {
     constructor(str) {
         this.str = str;
     }
@@ -245,7 +245,7 @@ export class Str {
     }
 }
 
-export class Sym {
+class Sym {
     constructor(sym) {
         this.sym = sym;
     }
@@ -271,7 +271,7 @@ export class Sym {
     }
 }
 
-export class List {
+class List {
     constructor(arr) {
         // TODO: who should make copy, see cdr
         this.arr = [...arr];
@@ -329,7 +329,7 @@ export class List {
     }
 }
 
-export class Pair {
+class Pair {
     constructor(fst, snd) {
         this.fst = fst;
         this.snd = snd;
@@ -362,7 +362,7 @@ export class Pair {
     }
 }
 
-export class Fun {
+class Fun {
     constructor(name, params, fun) {
         this.name = name;
         this.params = params;
@@ -382,3 +382,12 @@ export class Fun {
         return `(${this.name} ${params.join(' ')})`;
     }
 }
+
+exports.Bool = Bool;
+exports.Int = Int;
+exports.Real = Real;
+exports.Str = Str;
+exports.Sym = Sym;
+exports.List = List;
+exports.Pair = Pair;
+exports.Fun = Fun;

@@ -31,4 +31,3 @@ program.version('0.0.1')
         stream.on('error', console.log);
     })
     .parse(process.argv);
-

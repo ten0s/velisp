@@ -1,9 +1,9 @@
-import {VeLispParser} from './grammar/VeLispParser.js';
-import {VeLispVisitor} from './grammar/VeLispVisitor.js';
-import {VeLispContext} from './VeLispContext.js';
-import {Bool, Int, Real, Str, Sym, List, Fun} from './VeLispTypes.js';
+const {VeLispParser} = require('./grammar/VeLispParser.js');
+const {VeLispVisitor} = require('./grammar/VeLispVisitor.js');
+const {Context} = require('./VeLispContext.js');
+const {Bool, Int, Real, Str, Sym, List, Fun} = require('./VeLispTypes.js');
 
-export class VeLispEvalVisitor extends VeLispVisitor {
+class EvalVisitor extends VeLispVisitor {
     constructor(context) {
         super();
         this.contexts = [context];
@@ -75,7 +75,7 @@ export class VeLispEvalVisitor extends VeLispVisitor {
         if (list instanceof List) {
             let result = new Bool(false);
             // Push new context with 'name' = nil
-            const context = new VeLispContext(this.contexts[this.contexts.length-1]);
+            const context = new Context(this.contexts[this.contexts.length-1]);
             context.initVar(name, new Bool(false));
             this.contexts.push(context);
             for (let i = 0; i < list.value().length; i++) {
@@ -199,7 +199,7 @@ export class VeLispEvalVisitor extends VeLispVisitor {
             }
             //console.error(`(${name} ${args.join(' ')})`);
             // Push new context
-            this.contexts.push(new VeLispContext(this.contexts[this.contexts.length-1]));
+            this.contexts.push(new Context(this.contexts[this.contexts.length-1]));
             const result = fun.apply(this, args);
             // Pop new context
             this.contexts.pop();
@@ -246,3 +246,5 @@ export class VeLispEvalVisitor extends VeLispVisitor {
         return expr;
     }
 }
+
+exports.EvalVisitor = EvalVisitor;
