@@ -1,6 +1,6 @@
 const antlr4 = require('antlr4');
-const {VeLispLexer} = require('./grammar/VeLispLexer.js');
-const {VeLispParser} = require('./grammar/VeLispParser.js');
+const {VeLispLexer} = require('../grammar/VeLispLexer.js');
+const {VeLispParser} = require('../grammar/VeLispParser.js');
 const {GlobalContext} = require('./VeLispContext.js');
 const {EvalVisitor} = require('./VeLispEvalVisitor.js');
 

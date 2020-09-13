@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
-const {evaluate} = require('../VeLispEvaluator.js');
-const {Int, Str, Sym, List} = require('../VeLispTypes.js');
+const {evaluate} = require('../src/VeLispEvaluator.js');
+const {Int, Str, Sym, List} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(defun foo () "foo")', result: new Sym('foo')},

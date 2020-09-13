@@ -1,5 +1,5 @@
-const {VeLispParser} = require('./grammar/VeLispParser.js');
-const {VeLispVisitor} = require('./grammar/VeLispVisitor.js');
+const {VeLispParser} = require('../grammar/VeLispParser.js');
+const {VeLispVisitor} = require('../grammar/VeLispVisitor.js');
 const {Context} = require('./VeLispContext.js');
 const {Bool, Int, Real, Str, Sym, List, Fun} = require('./VeLispTypes.js');
 

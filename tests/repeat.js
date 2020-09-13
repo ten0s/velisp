@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
-const {evaluate} = require('../VeLispEvaluator.js');
-const {Bool, Int, Str} = require('../VeLispTypes.js');
+const {evaluate} = require('../src/VeLispEvaluator.js');
+const {Bool, Int, Str} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(repeat 1)', result: new Bool(false)},

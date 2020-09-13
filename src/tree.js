@@ -1,6 +1,6 @@
 import antlr4 from 'antlr4';
-import {VeLispLexer} from './grammar/VeLispLexer.js';
-import {VeLispParser} from './grammar/VeLispParser.js';
+import {VeLispLexer} from '../grammar/VeLispLexer.js';
+import {VeLispParser} from '../grammar/VeLispParser.js';
 
 const input = '(+ 1 2)';
 

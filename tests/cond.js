@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
-const {evaluate} = require('../VeLispEvaluator.js');
-const {Bool, Str} = require('../VeLispTypes.js');
+const {evaluate} = require('../src/VeLispEvaluator.js');
+const {Bool, Str} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(cond)', result: new Bool(false)},

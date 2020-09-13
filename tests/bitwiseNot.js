@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
-const {evaluate} = require('../VeLispEvaluator.js');
-const {Int} = require('../VeLispTypes.js');
+const {evaluate} = require('../src/VeLispEvaluator.js');
+const {Int} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(~ 0)', result: new Int(-1)},

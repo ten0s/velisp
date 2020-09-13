@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
-const {evaluate} = require('../VeLispEvaluator.js');
-const {Int, Real, Str, List} = require('../VeLispTypes.js');
+const {evaluate} = require('../src/VeLispEvaluator.js');
+const {Int, Real, Str, List} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(list)', result: new List([])},

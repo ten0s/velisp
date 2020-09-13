@@ -7,6 +7,6 @@ $ make test
 ```
 
 ```
-$ node index examples/fib.lsp
+$ node src/index.js examples/fib.lsp
 55
 ```

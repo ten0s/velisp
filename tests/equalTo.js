@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
-const {evaluate} = require('../VeLispEvaluator.js');
-const {Bool, Int, Pair} = require('../VeLispTypes.js');
+const {evaluate} = require('../src/VeLispEvaluator.js');
+const {Bool, Int, Pair} = require('../src/VeLispTypes.js');
 
 const tests = [
     // TODO: (eq & (equal tests
