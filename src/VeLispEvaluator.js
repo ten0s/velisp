@@ -3,6 +3,7 @@ const {VeLispLexer} = require('../grammar/VeLispLexer.js');
 const {VeLispParser} = require('../grammar/VeLispParser.js');
 const {GlobalContext} = require('./VeLispContext.js');
 const {EvalVisitor} = require('./VeLispEvalVisitor.js');
+const Kernel = require('./kernel/Kernel.js');
 
 //const input = '(princ 2)'; // 2
 //const input = '(princ 2.0)'; // 2.0
@@ -20,7 +21,9 @@ function evaluate(input) {
     const parser = new VeLispParser(tokens);
     //parser.buildParseTrees = true;
     const tree = parser.file();
-    const results = tree.accept(new EvalVisitor(new GlobalContext()));
+    const globalContext = new GlobalContext();
+    Kernel.addTo(globalContext);
+    const results = tree.accept(new EvalVisitor(globalContext));
     //console.log(results);
     const result = getResult(results);
     //console.log(result);
