@@ -6,11 +6,18 @@ const {Bool, List, Pair, Fun} = require('../VeLispTypes.js');
 
 exports.addTo = function (context) {
     context.setSym('list', new Fun('list', ['[expr ...]'], function (self, args) {
-        let result = [];
+        const result = [];
         for (let i = 0; i < args.length; i++) {
             result.push(args[i]);
         }
         return new List(result);
+    }));
+    context.setSym('listp', new Fun('listp', ['item'], function (self, args) {
+        const item = args[0];
+        if (item instanceof List || item.isNil()) {
+            return new Bool(true);
+        }
+        return new Bool(false);
     }));
     context.setSym('cons', new Fun('cons', ['first', 'listoratom'], function (self, args) {
         let fst = args[0];
