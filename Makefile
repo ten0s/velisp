@@ -9,13 +9,14 @@ test:
 tree:
 	npm run tree
 
-pkg: pkgLinux pkgWin
-
 pkgLinux:
-	npm run pkg -- -t node10-linux-x64 -o velisp-`jq -r .version package.json`
+	npx pkg -c package.json -t node10-linux-x64 -o velisp-`jq -r .version package.json`-linux-x64 src/index.js
 
-pkgWin:
-	npm run pkg -- -t node10-win-x64 -o velisp-`jq -r .version package.json`
+pkgWin86:
+	npx pkg -c package.json -t node10-win-x86 -o velisp-`jq -r .version package.json`-win-x86 --no-bytecode --public --public-packages '*' src/index.js
+
+pkgWin64:
+	npx pkg -c package.json -t node10-win-x64 -o velisp-`jq -r .version package.json`-win-x64 src/index.js
 
 cleanPkg:
 	rm -f velisp*
