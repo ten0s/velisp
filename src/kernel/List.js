@@ -20,8 +20,8 @@ exports.addTo = function (context) {
         return new Bool(false);
     }));
     context.setSym('cons', new Fun('cons', ['first', 'listoratom'], function (self, args) {
-        let fst = args[0];
-        let snd = args[1];
+        const fst = args[0];
+        const snd = args[1];
         if (snd instanceof List) {
             return snd.cons(fst);
         } else if (snd.isNil()) {
@@ -31,11 +31,11 @@ exports.addTo = function (context) {
         }
     }));
     context.setSym('car', new Fun('car', ['listorpair'], function (self, args) {
-        let listOrPair = args[0];
+        const listOrPair = args[0];
         return listOrPair.car();
     }));
     context.setSym('cdr', new Fun('cdr', ['listorpair'], function (self, args) {
-        let listOrPair = args[0];
+        const listOrPair = args[0];
         return listOrPair.cdr();
     }));
 }
