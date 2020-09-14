@@ -1,7 +1,7 @@
 const {Bool, List, Pair, Fun} = require('../VeLispTypes.js');
 
 //
-// Kernel List Functions
+// List Functions
 //
 
 exports.addTo = function (context) {

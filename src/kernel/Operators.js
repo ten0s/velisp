@@ -1,7 +1,7 @@
 const {Bool, Int, List, Pair, Fun} = require('../VeLispTypes.js');
 
 //
-// Kernel Operators (AutoCAD 2013 AutoLISP Reference Guild p.1)
+// Operators (AutoCAD 2013 AutoLISP Reference Guild p.1)
 //
 
 exports.addTo = function (context) {

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const {Command} = require('commander');
+const {GlobalContext} = require('./VeLispGlobalContext.js');
 const {evaluate} = require('./VeLispEvaluator.js');
 const config = require('../package.json');
 
@@ -8,7 +9,7 @@ program.version(config.version)
     .arguments('[file]')
     .action((file) => {
         //console.log(file);
-        let buffer = null;
+        let input = "";
         let stream = null;
         if (file) {
             //console.log(`read from ${file}`);
@@ -18,16 +19,11 @@ program.version(config.version)
             stream = process.stdin;
         }
         stream.on('data', (chunk) => {
-            if (!buffer) {
-                buffer = chunk;
-            } else {
-                buffer.push(chunk);
-            }
+            input += chunk.toString();
         });
         stream.on('end', () => {
-            const input = buffer.toString();
             //console.log(input);
-            evaluate(input);
+            evaluate(input, new GlobalContext());
         });
         stream.on('error', console.log);
     })
