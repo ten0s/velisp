@@ -1,7 +1,7 @@
 const antlr4 = require('antlr4');
 const {VeLispLexer} = require('../grammar/VeLispLexer.js');
 const {VeLispParser} = require('../grammar/VeLispParser.js');
-const {GlobalContext} = require('./VeLispContext.js');
+const {Context} = require('./VeLispContext.js');
 const {EvalVisitor} = require('./VeLispEvalVisitor.js');
 const Kernel = require('./kernel/Kernel.js');
 
@@ -21,7 +21,7 @@ function evaluate(input) {
     const parser = new VeLispParser(tokens);
     //parser.buildParseTrees = true;
     const tree = parser.file();
-    const globalContext = new GlobalContext();
+    const globalContext = new Context();
     Kernel.addTo(globalContext);
     const results = tree.accept(new EvalVisitor(globalContext));
     //console.log(results);
