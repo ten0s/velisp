@@ -13,6 +13,7 @@ pkgLinux:
 	npx pkg -c package.json -t node10-linux-x64 -o velisp-`jq -r .version package.json`-linux-x64 src/index.js
 
 pkgWin86:
+	# https://github.com/vercel/pkg-fetch/issues/68
 	npx pkg -c package.json -t node10-win-x86 -o velisp-`jq -r .version package.json`-win-x86 --no-bytecode --public --public-packages '*' src/index.js
 
 pkgWin64:
