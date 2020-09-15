@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const {Bool, Str, Sym, Fun} = require('../VeLispTypes.js');
-const {evaluate} = require('../VeLispEvaluator.js');
+const Evaluator = require('../VeLispEvaluator.js');
+const {fmtError} = require('../VeLispError.js');
 
 //
 // Application-Handling Functions
@@ -20,6 +21,9 @@ exports.initContext = function (context) {
         if (args.length == 0) {
             throw new Error('load: too few arguments');
         }
+        if (args.length > 2) {
+            throw new Error('load: too many arguments');
+        }
         if (!(args[0] instanceof Str)) {
             throw new Error('load: filename must be Str');
         }
@@ -31,8 +35,8 @@ exports.initContext = function (context) {
             // Since (load filename) can defun other functions
             // we need to store them in the parent context.
             const context = self.contexts[self.contexts.length-2];
-            return evaluate(data, context);
-        } catch (err) {
+            return Evaluator.evaluate(data, context);
+        } catch (e) {
             if (args.length == 2) {
                 let onfailure = args[1];
                 if (onfailure instanceof Sym) {
@@ -42,9 +46,9 @@ exports.initContext = function (context) {
                 if (onfailure instanceof Fun) {
                     return onfailure.apply(self, []);
                 }
-                return onfailure;
+                return args[1];
             }
-            throw new Error(`load: ${err.message}`);
+            throw new Error(fmtError('load', e));
         }
     }));
 }
