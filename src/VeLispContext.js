@@ -1,7 +1,6 @@
 const {Bool} = require('./VeLispTypes.js');
-const Kernel = require('./kernel/Kernel.js');
 
-class Context {
+class VeLispContext {
     constructor(parent = null) {
         this.parent = parent;
         this.syms = {};
@@ -62,12 +61,4 @@ class Context {
     }
 }
 
-class GlobalContext extends Context {
-    constructor() {
-        super();
-        Kernel.initContext(this);
-    }
-}
-
-exports.Context = Context;
-exports.GlobalContext = GlobalContext;
+exports.VeLispContext = VeLispContext;

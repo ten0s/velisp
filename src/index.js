@@ -1,6 +1,6 @@
 const fs = require('fs');
 const {Command} = require('commander');
-const {GlobalContext} = require('./VeLispContext.js');
+const {VeLispGlobalContext} = require('./VeLispGlobalContext.js');
 const {evaluate} = require('./VeLispEvaluator.js');
 const config = require('../package.json');
 
@@ -8,7 +8,7 @@ const program = new Command();
 program.version(config.version)
     .arguments('[file]')
     .action((file) => {
-        const context = new GlobalContext();
+        const context = new VeLispGlobalContext();
         if (file) {
             //console.log(`Read from ${file}`);
             read_stream(fs.createReadStream(file), context);
