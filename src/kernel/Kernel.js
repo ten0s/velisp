@@ -4,12 +4,12 @@ const List = require('./List.js');
 const Operators = require('./Operators.js');
 const Symbol = require('./Symbol.js');
 
-exports.addTo = function (context) {
+exports.initContext = function (context) {
     [
         Application,
         Function,
         List,
         Operators,
         Symbol
-    ].forEach(module => module.addTo(context));
+    ].forEach(module => module.initContext(context));
 }

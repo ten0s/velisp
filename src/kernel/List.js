@@ -4,7 +4,7 @@ const {Bool, List, Pair, Fun} = require('../VeLispTypes.js');
 // List Functions
 //
 
-exports.addTo = function (context) {
+exports.initContext = function (context) {
     context.setSym('list', new Fun('list', ['[expr ...]'], function (self, args) {
         const result = [];
         for (let i = 0; i < args.length; i++) {

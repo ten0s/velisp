@@ -4,7 +4,7 @@ const {Bool, Sym, List, Fun} = require('../VeLispTypes.js');
 // Function-Handling Functions
 //
 
-exports.addTo = function (context) {
+exports.initContext = function (context) {
     context.setSym('apply', new Fun('apply', ['function', 'list'], function (self, args) {
         //console.log('apply args', args);
         if (args.length < 2) {

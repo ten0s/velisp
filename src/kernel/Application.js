@@ -8,7 +8,7 @@ const {evaluate} = require('../VeLispEvaluator.js');
 // Application-Handling Functions
 //
 
-exports.addTo = function (context) {
+exports.initContext = function (context) {
     context.setSym('cwd', new Fun('cwd', [], function (self, args) {
         if (args.length > 0) {
             throw new Error('cwd: too many arguments');
