@@ -15,6 +15,25 @@ program.version(config.version)
         if (file) {
             //console.log(`Read from ${file}`);
             stream = fs.createReadStream(file);
+        } else if (process.stdin.isTTY) {
+            //console.log('Read from tty');
+            const repl = require('repl');
+            repl.start({
+                prompt: '> ',
+                input: process.stdin,
+                output: process.stdout,
+                eval: (input, context, filename, callback) => {
+                    if (input.trim()) {
+                        callback(null, evaluate(input, globalContext));
+                    } else {
+                        callback(null);
+                    }
+                },
+                writer: (output) => {
+                    // TODO: Types come in, color them appropriately
+                    return output;
+                }
+            });
         } else {
             //console.log('Read from stdin');
             stream = process.stdin;

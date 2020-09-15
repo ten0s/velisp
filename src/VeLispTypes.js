@@ -241,7 +241,7 @@ class Str {
     }
 
     toString() {
-        return this.str;
+        return `"${this.str}"`;
     }
 }
 
@@ -267,7 +267,7 @@ class Sym {
     }
 
     toString() {
-        return this.sym;
+        return `'${this.sym}`;
     }
 }
 
