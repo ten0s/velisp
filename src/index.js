@@ -1,4 +1,3 @@
-const fs = require('fs');
 const {Command} = require('commander');
 const {VeLispGlobalContext} = require('./VeLispGlobalContext.js');
 const {evaluate} = require('./VeLispEvaluator.js');
@@ -11,6 +10,7 @@ program.version(config.version)
         const context = new VeLispGlobalContext();
         if (file) {
             //console.log(`Read from ${file}`);
+            const fs = require('fs');
             read_stream(fs.createReadStream(file), context);
         } else if (process.stdin.isTTY) {
             //console.log('Read from tty');
