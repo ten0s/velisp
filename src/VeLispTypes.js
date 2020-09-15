@@ -294,15 +294,18 @@ class List {
 
     // :: (List) -> Any
     car() {
-        // TODO: check length
         return this.arr[0];
     }
 
     // :: (List) -> List
     cdr() {
-        // TODO: check length
         const [, ...rest] = this.arr;
         return new List(rest);
+    }
+
+    // :: (List) -> Integer
+    length() {
+        return this.arr.length;
     }
 
     // :: (List | Bool) -> Bool

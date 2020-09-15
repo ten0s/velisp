@@ -29,13 +29,37 @@ const tests = [
     ])},
 
     {test: '(car (list 1 2 3))', result: new Int(1)},
+    {test: '(car (cons 1 2))', result: new Int(1)},
+
     {test: '(cdr (list 1 2 3))', result: new List([
         new Int(2), new Int(3)
     ])},
+    {test: '(cdr (cons 1 2))', result: new Int(2)},
+];
+
+const errors = [
+    {test: '(listp)', result: new Error('listp: too few arguments')},
+    {test: '(listp 1 2)', result: new Error('listp: too many arguments')},
+
+    {test: '(cons)', result: new Error('cons: too few arguments')},
+    {test: '(cons 1)', result: new Error('cons: too few arguments')},
+    {test: '(cons 1 2 3)', result: new Error('cons: too many arguments')},
+
+    {test: '(car)', result: new Error('car: too few arguments')},
+    {test: '(car (list 1 2) (list 3))', result: new Error('car: too many arguments')},
+    {test: '(car (list))', result: new Error('car: must be non-empty List or Pair')},
+
+    {test: '(cdr)', result: new Error('cdr: too few arguments')},
+    {test: '(cdr (list 1 2) (list 3))', result: new Error('cdr: too many arguments')},
+    {test: '(cdr (list))', result: new Error('cdr: must be non-empty List or Pair')},
 ];
 
 QUnit.test("list", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });
