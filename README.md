@@ -7,6 +7,15 @@ $ make test
 ```
 
 ```
+$ npm start
+VeLisp 0.0.1 on linux
+Type ".help" for more information
+> (load "examples/fib.lsp")
+55
+55
+```
+
+```
 $ npm start -- examples/fib.lsp
 55
 ```
