@@ -8,7 +8,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.0.1 on linux
+VeLisp 0.0.2 on linux
 Type ".help" for more information
 > (load "examples/fib.lsp")
 55
@@ -22,6 +22,6 @@ $ npm start -- examples/fib.lsp
 
 ```
 $ make pkgLinux
-$ ./velisp-0.0.1-linux-x64 examples/fib.lsp
+$ ./velisp-0.0.2-linux-x64 examples/fib.lsp
 55
 ```

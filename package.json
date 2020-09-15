@@ -1,6 +1,6 @@
 {
     "name": "VeLisp",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "JavaScript interpreter for AutoLISP",
     "main": "src/index.js",
     "scripts": {
