@@ -25,10 +25,10 @@ exports.initContext = function (context) {
             } else if (list.isNil()) {
                 list = [];
             } else {
-                throw new Error('apply: list must be List or nil');
+                throw new Error('apply: list must be List');
             }
             return fun.apply(self, list);
         }
-        throw new Error(`apply: no such function ${fun}`);
+        throw new Error(`apply: no such function ${args[0]}`);
     }));
 }
