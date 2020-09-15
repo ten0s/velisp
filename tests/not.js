@@ -17,8 +17,17 @@ const tests = [
     {test: '(not (cons nil nil))', result: new Bool(false)},
 ];
 
+const errors = [
+    {test: '(not)', result: new Error('not: too few arguments')},
+    {test: '(not (list) \'error)', result: new Error('not: too many arguments')},
+];
+
 QUnit.test("not", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });
