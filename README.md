@@ -1,4 +1,4 @@
-VeLisp is a simple AutoLISP (c) compatible interpreter to run AutoCAD (c) independent code.
+VeLisp is a simple AutoLISP compatible interpreter to run AutoCAD independent code.
 
 ```
 $ npm install
