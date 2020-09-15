@@ -4,6 +4,7 @@
     "description": "JavaScript interpreter for AutoLISP",
     "main": "src/index.js",
     "scripts": {
+        "start": "node src/index.js",
         "test": "node node_modules/qunit/bin/qunit.js tests/*.js",
         "tree": "node src/tree.js"
     },

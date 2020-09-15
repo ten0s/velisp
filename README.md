@@ -1,4 +1,4 @@
-VeLisp is a AutoLISP interpreter written in JavaScript to run generic AutoLISP code outside AutoCAD.
+VeLisp is a simple AutoLISP compatible interpreter written in JavaScript to run outside AutoCAD.
 
 ```
 $ npm install
@@ -7,14 +7,12 @@ $ make test
 ```
 
 ```
-$ node src/index.js examples/fib.lsp
+$ npm start -- examples/fib.lsp
 55
 ```
 
 ```
-$ make pkg
-$ ls velisp*
-velisp-0.0.1  velisp-0.0.1.exe
-$ ./velisp-0.0.1 examples/fib.lsp
+$ make pkgLinux
+$ ./velisp-0.0.1-linux-x64 examples/fib.lsp
 55
 ```
