@@ -14,7 +14,7 @@ program.version(config.version)
             read_stream(fs.createReadStream(file), context);
         } else if (process.stdin.isTTY) {
             //console.log('Read from tty');
-            start_repl(context);
+            start_repl(config, context);
         } else {
             //console.log('Read from stdin');
             read_stream(process.stdin, context);
@@ -41,7 +41,9 @@ function read_stream(stream, context) {
     });
 }
 
-function start_repl(context) {
+function start_repl(config, context) {
+    console.log(`${config.name} ${config.version} on ${process.platform}`);
+    console.log('Type ".help" for more information');
     const repl = require('repl');
     repl.start({
         prompt: '> ',
