@@ -1,13 +1,16 @@
 const fs = require('fs');
 const {Bool, Str, Sym, Fun} = require('../VeLispTypes.js');
 const {evaluate} = require('../VeLispEvaluator.js');
+
 //
 // Application-Handling Functions
 //
 
 exports.addTo = function (context) {
     context.setSym('cwd', new Fun('cwd', [], function (self, args) {
-        //console.log(args);
+        if (args.length > 0) {
+            throw new Error('cwd: too many arguments');
+        }
         return new Str(process.cwd());
     }));
     context.setSym('load', new Fun('load', ['filename', '[onfailure]'], function (self, args) {

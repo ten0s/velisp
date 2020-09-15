@@ -1,4 +1,4 @@
-const {Bool, Fun} = require('../VeLispTypes.js');
+const {Bool, Sym, List, Fun} = require('../VeLispTypes.js');
 
 //
 // Function-Handling Functions
@@ -6,15 +6,29 @@ const {Bool, Fun} = require('../VeLispTypes.js');
 
 exports.addTo = function (context) {
     context.setSym('apply', new Fun('apply', ['function', 'list'], function (self, args) {
-        // TODO: check args
-        //console.log(args);
-        const sym = args[0].value();
-        const list = args[1].value();
-        const fun = self.contexts[self.contexts.length-1].getSym(sym);
-        if (!fun.isNil()) {
-            //console.log(list);
+        //console.log('apply args', args);
+        if (args.length < 2) {
+            throw new Error('apply: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('apply: too many arguments');
+        }
+        let fun = args[0];
+        if (fun instanceof Sym) {
+            // Try resolving symbol to function
+            fun = self.contexts[self.contexts.length-1].getSym(fun.value());
+        }
+        if (fun instanceof Fun) {
+            let list = args[1];
+            if (list instanceof List) {
+                list = list.value();
+            } else if (list.isNil()) {
+                list = [];
+            } else {
+                throw new Error('apply: list must be List or nil');
+            }
             return fun.apply(self, list);
         }
-        throw new Error(`apply: no such function ${sym}`);
+        throw new Error(`apply: no such function ${fun}`);
     }));
 }

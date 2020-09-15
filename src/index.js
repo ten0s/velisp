@@ -23,7 +23,11 @@ program.version(config.version)
         });
         stream.on('end', () => {
             //console.log(input);
-            evaluate(input, new GlobalContext());
+            try {
+                evaluate(input, new GlobalContext());
+            } catch (err) {
+                console.error(err.message);
+            }
         });
         stream.on('error', console.log);
     })
