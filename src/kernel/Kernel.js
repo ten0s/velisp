@@ -11,5 +11,7 @@ exports.initContext = function (context) {
         List,
         Operators,
         Symbol
-    ].forEach(module => module.initContext(context));
+    ].forEach(
+        module => module.initContext(context)
+    );
 }
