@@ -45,13 +45,26 @@ function startRepl(config, context) {
     console.log(`${config.name} ${config.version} on ${process.platform}`);
     console.log('Type ".help" for more information');
     const repl = require('repl');
-    repl.start({
+    const replServer = repl.start({
         prompt: '> ',
         eval: (input, replCtx, filename, callback) => {
             return replEval(repl, input, context, callback);
         },
         writer: (output) => {
             return replWriter(repl, output);
+        }
+    });
+    replServer.defineCommand('type', {
+        help: 'Evaluate expression and show its internal type',
+        action(input) {
+            try {
+                if (input.trim()) {
+                    console.log(evaluate(input, context));
+                }
+            } catch (e) {
+                console.error(e.message);
+            }
+            this.displayPrompt();
         }
     });
 }
@@ -61,7 +74,7 @@ function replEval(repl, input, context, callback) {
         try {
             return callback(null, evaluate(input, context));
         } catch (e) {
-            console.error(fmtError(e));
+            console.error(e.message);
             // fall through
         }
     }
