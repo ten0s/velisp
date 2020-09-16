@@ -11,18 +11,18 @@ program.version(config.version)
         if (file) {
             //console.log(`Read from ${file}`);
             const fs = require('fs');
-            read_stream(fs.createReadStream(file), context);
+            readStream(fs.createReadStream(file), context);
         } else if (process.stdin.isTTY) {
             //console.log('Read from tty');
-            start_repl(config, context);
+            startRepl(config, context);
         } else {
             //console.log('Read from stdin');
-            read_stream(process.stdin, context);
+            readStream(process.stdin, context);
         }
     })
     .parse(process.argv);
 
-function read_stream(stream, context) {
+function readStream(stream, context) {
     let input = "";
     stream.on('data', (chunk) => {
         input += chunk.toString();
@@ -41,22 +41,34 @@ function read_stream(stream, context) {
     });
 }
 
-function start_repl(config, context) {
+function startRepl(config, context) {
     console.log(`${config.name} ${config.version} on ${process.platform}`);
     console.log('Type ".help" for more information');
     const repl = require('repl');
     repl.start({
         prompt: '> ',
         eval: (input, replCtx, filename, callback) => {
-            if (input.trim()) {
-                callback(null, evaluate(input, context));
-            } else {
-                callback(null);
-            }
+            return replEval(repl, input, context, callback);
         },
         writer: (output) => {
-            // TODO: Types come in, color them appropriately
-            return output;
+            return replWriter(repl, output);
         }
     });
+}
+
+function replEval(repl, input, context, callback) {
+    if (input.trim()) {
+        try {
+            return callback(null, evaluate(input, context));
+        } catch (e) {
+            console.error(fmtError(e));
+            // fall through
+        }
+    }
+    callback(null);
+}
+
+function replWriter(repl, output) {
+    // TODO: Types come in, color them appropriately
+    return output;
 }
