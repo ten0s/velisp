@@ -96,8 +96,8 @@ VeLispVisitor.prototype.visitNil = function(ctx) {
 };
 
 
-// Visit a parse tree produced by VeLispParser#t.
-VeLispVisitor.prototype.visitT = function(ctx) {
+// Visit a parse tree produced by VeLispParser#tru.
+VeLispVisitor.prototype.visitTru = function(ctx) {
   return this.visitChildren(ctx);
 };
 

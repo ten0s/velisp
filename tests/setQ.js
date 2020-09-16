@@ -4,6 +4,11 @@ const {Bool, Int, Real, List} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(setq)', result: new Bool(false)},
+    {test: '(Setq)', result: new Bool(false)},
+    {test: '(SEtq)', result: new Bool(false)},
+    {test: '(SETq)', result: new Bool(false)},
+    {test: '(SETQ)', result: new Bool(false)},
+
     {test: '(setq a 1)', result: new Int(1)},
     {test: '(setq a 2) (+ a 1)', result: new Int(3)},
     {test: '(setq a 1 b 2 c 3) (+ a b c)', result: new Int(6)},

@@ -4,6 +4,12 @@ const {Int, Str, Sym, List} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(defun foo () "foo")', result: new Sym('foo')},
+    {test: '(Defun foo () "foo")', result: new Sym('foo')},
+    {test: '(DEfun foo () "foo")', result: new Sym('foo')},
+    {test: '(DEFun foo () "foo")', result: new Sym('foo')},
+    {test: '(DEFUn foo () "foo")', result: new Sym('foo')},
+    {test: '(DEFUN foo () "foo")', result: new Sym('foo')},
+
     {test: '(defun foo ( / ) "foo")', result: new Sym('foo')},
     {test: '(defun foo () "foo") (foo)', result: new Str('foo')},
     {test: '(defun foo ( / ) "foo") (foo)', result: new Str('foo')},
@@ -12,7 +18,7 @@ const tests = [
 
     {test: '(defun id (x) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x / ) x) (id "me")', result: new Str('me')},
-    // TODO: fix i has too few arguments
+    // TODO: fix id has too few arguments
     //{test: '(defun id (x /) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x) x) (id (+ 1 2))', result: new Int(3)},
     {test: '(defun plus (n1 n2) (+ n1 n2)) (plus 1 4)', result: new Int(5)},

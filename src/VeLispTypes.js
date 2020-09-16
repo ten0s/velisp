@@ -247,7 +247,7 @@ class Str {
 
 class Sym {
     constructor(sym) {
-        this.sym = sym;
+        this.sym = sym.toUpperCase();
     }
 
     // :: () -> false

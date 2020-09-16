@@ -7,29 +7,29 @@ file : expr+ ;
 expr :
      // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
 
-       '(' 'and' expr* ')'                                                        # and
-     | '(' 'cond' condTestResult* ')'                                             # cond
-     | '(' 'defun' defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')' # defun
-     | '(' 'foreach' foreachName foreachList expr* ')'                            # foreach
-     | '(' 'if' ifTest ifThen ifElse? ')'                                         # if
+       '(' AND expr* ')'                                                          # and
+     | '(' COND condTestResult* ')'                                               # cond
+     | '(' DEFUN defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')'   # defun
+     | '(' FOREACH foreachName foreachList expr* ')'                              # foreach
+     | '(' IF ifTest ifThen ifElse? ')'                                           # if
      //                                                                           # lambda
-     | '(' 'or' expr* ')'                                                         # or
-     | '(' 'progn' expr* ')'                                                      # progn
+     | '(' OR expr* ')'                                                           # or
+     | '(' PROGN expr* ')'                                                        # progn
      //                                                                           # quote
-     | '(' 'repeat' repeatNum expr* ')'                                           # repeat
-     | '(' 'setq' setqNameExpr* ')'                                               # setQ
-     | '(' 'while' whileTest expr+ ')'                                            # while
+     | '(' REPEAT repeatNum expr* ')'                                             # repeat
+     | '(' SETQ setqNameExpr* ')'                                                 # setQ
+     | '(' WHILE whileTest expr+ ')'                                              # while
 
      // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
 
-     | '(' 'princ' expr ')'                                                       # princ
+     | '(' PRINC expr ')'                                                         # princ
 
      | '(' ID funArg* ')'                                                         # fun
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
      | NIL                                                                        # nil
-     | T                                                                          # t
+     | TRU                                                                        # tru
      | INT                                                                        # int
      | REAL                                                                       # real
      | STR                                                                        # str
@@ -62,8 +62,20 @@ funArg : expr ;
 
 // Lexer rules
 
-NIL : [nN][iI][lL] ;
-T : [tT] ;
+AND : A N D ;
+COND : C O N D ;
+DEFUN : D E F U N ;
+FOREACH : F O R E A C H ;
+IF : I F ;
+OR : O R ;
+PROGN : P R O G N ;
+REPEAT : R E P E A T ;
+SETQ : S E T Q ;
+WHILE : W H I L E ;
+PRINC : P R I N C ;
+NIL : N I L ;
+TRU : T ;
+
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' .*? '"' ;
@@ -75,6 +87,33 @@ LINE_COMMENT : ';'+ .*? NEWLINE -> skip ;
 
 NEWLINE : '\r'? '\n' -> skip ;
 WHITESPACE : [ \t]+ -> skip ;
+
+fragment A : [aA] ;
+fragment B : [bB] ;
+fragment C : [cC] ;
+fragment D : [dD] ;
+fragment E : [eE] ;
+fragment F : [fF] ;
+fragment G : [gG] ;
+fragment H : [hH] ;
+fragment I : [iI] ;
+fragment J : [jJ] ;
+fragment K : [kK] ;
+fragment L : [lL] ;
+fragment M : [mM] ;
+fragment N : [nN] ;
+fragment O : [oO] ;
+fragment P : [pP] ;
+fragment Q : [qQ] ;
+fragment R : [rR] ;
+fragment S : [sS] ;
+fragment T : [tT] ;
+fragment U : [uU] ;
+fragment V : [vV] ;
+fragment W : [wW] ;
+fragment X : [xX] ;
+fragment Y : [yY] ;
+fragment Z : [zZ] ;
 
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;

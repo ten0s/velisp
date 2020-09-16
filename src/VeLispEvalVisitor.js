@@ -35,15 +35,15 @@ class EvalVisitor extends VeLispVisitor {
     }
 
     visitDefun(ctx) {
-        let name = this.visit(ctx.defunName().ID());
+        let name = this.visit(ctx.defunName().ID()).toUpperCase();
         //console.error(`(defun ${name} ...)`);
         let params = [];
         let locals = [];
         for (let i = 0; i < ctx.defunParam().length; i++) {
-            params.push(this.visit(ctx.defunParam(i).ID()));
+            params.push(this.visit(ctx.defunParam(i).ID()).toUpperCase());
         }
         for (let i = 0; i < ctx.defunLocal().length; i++) {
-            locals.push(this.visit(ctx.defunLocal(i).ID()));
+            locals.push(this.visit(ctx.defunLocal(i).ID()).toUpperCase());
         }
         // TODO: Are params really needed here?
         this.contexts[this.contexts.length-1].setSym(name, new Fun(name, params, function (self, args) {
@@ -69,7 +69,7 @@ class EvalVisitor extends VeLispVisitor {
     }
 
     visitForeach(ctx) {
-        let name = this.visit(ctx.foreachName().ID());
+        let name = this.visit(ctx.foreachName().ID()).toUpperCase();
         const list = this.getValue(this.visit(ctx.foreachList()));
         //console.error(`foreach: ${name} ${list}`);
         if (list instanceof List) {
@@ -92,7 +92,7 @@ class EvalVisitor extends VeLispVisitor {
             this.contexts.pop();
             return result;
         }
-        throw new Error(`foreach: invalid 'list' type`);
+        throw new Error('foreach: list must be List');
     }
 
     visitIf(ctx) {
@@ -147,7 +147,7 @@ class EvalVisitor extends VeLispVisitor {
         let value = new Bool(false);
         for (let i = 0; i < ctx.setqNameExpr().length; i++) {
             // This argument is not evaluated
-            const name = ctx.setqNameExpr(i).ID();
+            const name = this.visit(ctx.setqNameExpr(i).ID()).toUpperCase();
             value = this.visit(ctx.setqNameExpr(i).expr());
             //console.error(`setq: ${name} = ${value}`);
             this.contexts[this.contexts.length-1].setVar(name, value);
@@ -178,7 +178,7 @@ class EvalVisitor extends VeLispVisitor {
     }
 
     visitFun(ctx) {
-        let name = this.visit(ctx.ID());
+        let name = this.visit(ctx.ID()).toUpperCase();
         //console.log(`funName: ${name}`);
         let fun = null;
         // Try to get symbol out of variable
@@ -213,7 +213,7 @@ class EvalVisitor extends VeLispVisitor {
         if (ctx.parentCtx instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
             return new Bool(false);
-        } else if (ctx.parentCtx instanceof VeLispParser.TContext) {
+        } else if (ctx.parentCtx instanceof VeLispParser.TruContext) {
             //console.error('T:', str);
             return new Bool(true);
         } else if (ctx.parentCtx instanceof VeLispParser.IntContext) {
@@ -230,7 +230,7 @@ class EvalVisitor extends VeLispVisitor {
             return new Sym(str.replace(/\'/g, ''));
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
-            return this.contexts[this.contexts.length-1].getVar(str);
+            return this.contexts[this.contexts.length-1].getVar(str.toUpperCase());
         } else {
             // Also handles ID outside of expr
             //console.error('TERMINAL:', str);

@@ -10,13 +10,13 @@ const {fmtError} = require('../VeLispError.js');
 //
 
 exports.initContext = function (context) {
-    context.setSym('cwd', new Fun('cwd', [], function (self, args) {
+    context.setSym('CWD', new Fun('cwd', [], function (self, args) {
         if (args.length > 0) {
             throw new Error('cwd: too many arguments');
         }
         return new Str(process.cwd());
     }));
-    context.setSym('load', new Fun('load', ['filename', '[onfailure]'], function (self, args) {
+    context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], function (self, args) {
         //console.log('load args:', args);
         if (args.length == 0) {
             throw new Error('load: too few arguments');

@@ -53,96 +53,96 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0003\u0002\u0002\u0002\"\u00d2\u0003\u0002\u0002\u0002$&\u0005\u0004",
     "\u0003\u0002%$\u0003\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002\'",
     "%\u0003\u0002\u0002\u0002\'(\u0003\u0002\u0002\u0002(\u0003\u0003\u0002",
-    "\u0002\u0002)*\u0007\u0003\u0002\u0002*.\u0007\u0004\u0002\u0002+-\u0005",
+    "\u0002\u0002)*\u0007\u0003\u0002\u0002*.\u0007\u0006\u0002\u0002+-\u0005",
     "\u0004\u0003\u0002,+\u0003\u0002\u0002\u0002-0\u0003\u0002\u0002\u0002",
     ".,\u0003\u0002\u0002\u0002./\u0003\u0002\u0002\u0002/1\u0003\u0002\u0002",
-    "\u00020.\u0003\u0002\u0002\u00021\u00b1\u0007\u0005\u0002\u000223\u0007",
-    "\u0003\u0002\u000237\u0007\u0006\u0002\u000246\u0005\u0006\u0004\u0002",
+    "\u00020.\u0003\u0002\u0002\u00021\u00b1\u0007\u0004\u0002\u000223\u0007",
+    "\u0003\u0002\u000237\u0007\u0007\u0002\u000246\u0005\u0006\u0004\u0002",
     "54\u0003\u0002\u0002\u000269\u0003\u0002\u0002\u000275\u0003\u0002\u0002",
     "\u000278\u0003\u0002\u0002\u00028:\u0003\u0002\u0002\u000297\u0003\u0002",
-    "\u0002\u0002:\u00b1\u0007\u0005\u0002\u0002;<\u0007\u0003\u0002\u0002",
-    "<=\u0007\u0007\u0002\u0002=>\u0005\f\u0007\u0002>B\u0007\u0003\u0002",
-    "\u0002?A\u0005\u000e\b\u0002@?\u0003\u0002\u0002\u0002AD\u0003\u0002",
-    "\u0002\u0002B@\u0003\u0002\u0002\u0002BC\u0003\u0002\u0002\u0002CL\u0003",
-    "\u0002\u0002\u0002DB\u0003\u0002\u0002\u0002EI\u0007\b\u0002\u0002F",
-    "H\u0005\u0010\t\u0002GF\u0003\u0002\u0002\u0002HK\u0003\u0002\u0002",
-    "\u0002IG\u0003\u0002\u0002\u0002IJ\u0003\u0002\u0002\u0002JM\u0003\u0002",
-    "\u0002\u0002KI\u0003\u0002\u0002\u0002LE\u0003\u0002\u0002\u0002LM\u0003",
-    "\u0002\u0002\u0002MN\u0003\u0002\u0002\u0002NP\u0007\u0005\u0002\u0002",
-    "OQ\u0005\u0004\u0003\u0002PO\u0003\u0002\u0002\u0002QR\u0003\u0002\u0002",
-    "\u0002RP\u0003\u0002\u0002\u0002RS\u0003\u0002\u0002\u0002ST\u0003\u0002",
-    "\u0002\u0002TU\u0007\u0005\u0002\u0002U\u00b1\u0003\u0002\u0002\u0002",
-    "VW\u0007\u0003\u0002\u0002WX\u0007\t\u0002\u0002XY\u0005\u0012\n\u0002",
-    "Y]\u0005\u0014\u000b\u0002Z\\\u0005\u0004\u0003\u0002[Z\u0003\u0002",
-    "\u0002\u0002\\_\u0003\u0002\u0002\u0002][\u0003\u0002\u0002\u0002]^",
-    "\u0003\u0002\u0002\u0002^`\u0003\u0002\u0002\u0002_]\u0003\u0002\u0002",
-    "\u0002`a\u0007\u0005\u0002\u0002a\u00b1\u0003\u0002\u0002\u0002bc\u0007",
-    "\u0003\u0002\u0002cd\u0007\n\u0002\u0002de\u0005\u0016\f\u0002eg\u0005",
-    "\u0018\r\u0002fh\u0005\u001a\u000e\u0002gf\u0003\u0002\u0002\u0002g",
-    "h\u0003\u0002\u0002\u0002hi\u0003\u0002\u0002\u0002ij\u0007\u0005\u0002",
-    "\u0002j\u00b1\u0003\u0002\u0002\u0002kl\u0007\u0003\u0002\u0002lp\u0007",
-    "\u000b\u0002\u0002mo\u0005\u0004\u0003\u0002nm\u0003\u0002\u0002\u0002",
-    "or\u0003\u0002\u0002\u0002pn\u0003\u0002\u0002\u0002pq\u0003\u0002\u0002",
-    "\u0002qs\u0003\u0002\u0002\u0002rp\u0003\u0002\u0002\u0002s\u00b1\u0007",
-    "\u0005\u0002\u0002tu\u0007\u0003\u0002\u0002uy\u0007\f\u0002\u0002v",
-    "x\u0005\u0004\u0003\u0002wv\u0003\u0002\u0002\u0002x{\u0003\u0002\u0002",
-    "\u0002yw\u0003\u0002\u0002\u0002yz\u0003\u0002\u0002\u0002z|\u0003\u0002",
-    "\u0002\u0002{y\u0003\u0002\u0002\u0002|\u00b1\u0007\u0005\u0002\u0002",
-    "}~\u0007\u0003\u0002\u0002~\u007f\u0007\r\u0002\u0002\u007f\u0083\u0005",
-    "\u001c\u000f\u0002\u0080\u0082\u0005\u0004\u0003\u0002\u0081\u0080\u0003",
-    "\u0002\u0002\u0002\u0082\u0085\u0003\u0002\u0002\u0002\u0083\u0081\u0003",
-    "\u0002\u0002\u0002\u0083\u0084\u0003\u0002\u0002\u0002\u0084\u0086\u0003",
-    "\u0002\u0002\u0002\u0085\u0083\u0003\u0002\u0002\u0002\u0086\u0087\u0007",
-    "\u0005\u0002\u0002\u0087\u00b1\u0003\u0002\u0002\u0002\u0088\u0089\u0007",
-    "\u0003\u0002\u0002\u0089\u008d\u0007\u000e\u0002\u0002\u008a\u008c\u0005",
-    "\u001e\u0010\u0002\u008b\u008a\u0003\u0002\u0002\u0002\u008c\u008f\u0003",
-    "\u0002\u0002\u0002\u008d\u008b\u0003\u0002\u0002\u0002\u008d\u008e\u0003",
-    "\u0002\u0002\u0002\u008e\u0090\u0003\u0002\u0002\u0002\u008f\u008d\u0003",
-    "\u0002\u0002\u0002\u0090\u00b1\u0007\u0005\u0002\u0002\u0091\u0092\u0007",
-    "\u0003\u0002\u0002\u0092\u0093\u0007\u000f\u0002\u0002\u0093\u0095\u0005",
-    " \u0011\u0002\u0094\u0096\u0005\u0004\u0003\u0002\u0095\u0094\u0003",
-    "\u0002\u0002\u0002\u0096\u0097\u0003\u0002\u0002\u0002\u0097\u0095\u0003",
-    "\u0002\u0002\u0002\u0097\u0098\u0003\u0002\u0002\u0002\u0098\u0099\u0003",
-    "\u0002\u0002\u0002\u0099\u009a\u0007\u0005\u0002\u0002\u009a\u00b1\u0003",
-    "\u0002\u0002\u0002\u009b\u009c\u0007\u0003\u0002\u0002\u009c\u009d\u0007",
-    "\u0010\u0002\u0002\u009d\u009e\u0005\u0004\u0003\u0002\u009e\u009f\u0007",
-    "\u0005\u0002\u0002\u009f\u00b1\u0003\u0002\u0002\u0002\u00a0\u00a1\u0007",
-    "\u0003\u0002\u0002\u00a1\u00a5\u0007\u0017\u0002\u0002\u00a2\u00a4\u0005",
-    "\"\u0012\u0002\u00a3\u00a2\u0003\u0002\u0002\u0002\u00a4\u00a7\u0003",
-    "\u0002\u0002\u0002\u00a5\u00a3\u0003\u0002\u0002\u0002\u00a5\u00a6\u0003",
-    "\u0002\u0002\u0002\u00a6\u00a8\u0003\u0002\u0002\u0002\u00a7\u00a5\u0003",
-    "\u0002\u0002\u0002\u00a8\u00b1\u0007\u0005\u0002\u0002\u00a9\u00b1\u0007",
-    "\u0011\u0002\u0002\u00aa\u00b1\u0007\u0012\u0002\u0002\u00ab\u00b1\u0007",
-    "\u0013\u0002\u0002\u00ac\u00b1\u0007\u0014\u0002\u0002\u00ad\u00b1\u0007",
-    "\u0015\u0002\u0002\u00ae\u00b1\u0007\u0017\u0002\u0002\u00af\u00b1\u0007",
-    "\u0016\u0002\u0002\u00b0)\u0003\u0002\u0002\u0002\u00b02\u0003\u0002",
-    "\u0002\u0002\u00b0;\u0003\u0002\u0002\u0002\u00b0V\u0003\u0002\u0002",
-    "\u0002\u00b0b\u0003\u0002\u0002\u0002\u00b0k\u0003\u0002\u0002\u0002",
-    "\u00b0t\u0003\u0002\u0002\u0002\u00b0}\u0003\u0002\u0002\u0002\u00b0",
-    "\u0088\u0003\u0002\u0002\u0002\u00b0\u0091\u0003\u0002\u0002\u0002\u00b0",
-    "\u009b\u0003\u0002\u0002\u0002\u00b0\u00a0\u0003\u0002\u0002\u0002\u00b0",
-    "\u00a9\u0003\u0002\u0002\u0002\u00b0\u00aa\u0003\u0002\u0002\u0002\u00b0",
-    "\u00ab\u0003\u0002\u0002\u0002\u00b0\u00ac\u0003\u0002\u0002\u0002\u00b0",
-    "\u00ad\u0003\u0002\u0002\u0002\u00b0\u00ae\u0003\u0002\u0002\u0002\u00b0",
-    "\u00af\u0003\u0002\u0002\u0002\u00b1\u0005\u0003\u0002\u0002\u0002\u00b2",
-    "\u00b3\u0007\u0003\u0002\u0002\u00b3\u00b4\u0005\b\u0005\u0002\u00b4",
-    "\u00b5\u0005\n\u0006\u0002\u00b5\u00b6\u0007\u0005\u0002\u0002\u00b6",
-    "\u0007\u0003\u0002\u0002\u0002\u00b7\u00b8\u0005\u0004\u0003\u0002\u00b8",
-    "\t\u0003\u0002\u0002\u0002\u00b9\u00ba\u0005\u0004\u0003\u0002\u00ba",
-    "\u000b\u0003\u0002\u0002\u0002\u00bb\u00bc\u0007\u0017\u0002\u0002\u00bc",
-    "\r\u0003\u0002\u0002\u0002\u00bd\u00be\u0007\u0017\u0002\u0002\u00be",
-    "\u000f\u0003\u0002\u0002\u0002\u00bf\u00c0\u0007\u0017\u0002\u0002\u00c0",
-    "\u0011\u0003\u0002\u0002\u0002\u00c1\u00c2\u0007\u0017\u0002\u0002\u00c2",
-    "\u0013\u0003\u0002\u0002\u0002\u00c3\u00c4\u0005\u0004\u0003\u0002\u00c4",
-    "\u0015\u0003\u0002\u0002\u0002\u00c5\u00c6\u0005\u0004\u0003\u0002\u00c6",
-    "\u0017\u0003\u0002\u0002\u0002\u00c7\u00c8\u0005\u0004\u0003\u0002\u00c8",
-    "\u0019\u0003\u0002\u0002\u0002\u00c9\u00ca\u0005\u0004\u0003\u0002\u00ca",
-    "\u001b\u0003\u0002\u0002\u0002\u00cb\u00cc\u0005\u0004\u0003\u0002\u00cc",
-    "\u001d\u0003\u0002\u0002\u0002\u00cd\u00ce\u0007\u0017\u0002\u0002\u00ce",
-    "\u00cf\u0005\u0004\u0003\u0002\u00cf\u001f\u0003\u0002\u0002\u0002\u00d0",
-    "\u00d1\u0005\u0004\u0003\u0002\u00d1!\u0003\u0002\u0002\u0002\u00d2",
-    "\u00d3\u0005\u0004\u0003\u0002\u00d3#\u0003\u0002\u0002\u0002\u0012",
-    "\'.7BILR]gpy\u0083\u008d\u0097\u00a5\u00b0"].join("");
+    "\u0002\u0002:\u00b1\u0007\u0004\u0002\u0002;<\u0007\u0003\u0002\u0002",
+    "<=\u0007\b\u0002\u0002=>\u0005\f\u0007\u0002>B\u0007\u0003\u0002\u0002",
+    "?A\u0005\u000e\b\u0002@?\u0003\u0002\u0002\u0002AD\u0003\u0002\u0002",
+    "\u0002B@\u0003\u0002\u0002\u0002BC\u0003\u0002\u0002\u0002CL\u0003\u0002",
+    "\u0002\u0002DB\u0003\u0002\u0002\u0002EI\u0007\u0005\u0002\u0002FH\u0005",
+    "\u0010\t\u0002GF\u0003\u0002\u0002\u0002HK\u0003\u0002\u0002\u0002I",
+    "G\u0003\u0002\u0002\u0002IJ\u0003\u0002\u0002\u0002JM\u0003\u0002\u0002",
+    "\u0002KI\u0003\u0002\u0002\u0002LE\u0003\u0002\u0002\u0002LM\u0003\u0002",
+    "\u0002\u0002MN\u0003\u0002\u0002\u0002NP\u0007\u0004\u0002\u0002OQ\u0005",
+    "\u0004\u0003\u0002PO\u0003\u0002\u0002\u0002QR\u0003\u0002\u0002\u0002",
+    "RP\u0003\u0002\u0002\u0002RS\u0003\u0002\u0002\u0002ST\u0003\u0002\u0002",
+    "\u0002TU\u0007\u0004\u0002\u0002U\u00b1\u0003\u0002\u0002\u0002VW\u0007",
+    "\u0003\u0002\u0002WX\u0007\t\u0002\u0002XY\u0005\u0012\n\u0002Y]\u0005",
+    "\u0014\u000b\u0002Z\\\u0005\u0004\u0003\u0002[Z\u0003\u0002\u0002\u0002",
+    "\\_\u0003\u0002\u0002\u0002][\u0003\u0002\u0002\u0002]^\u0003\u0002",
+    "\u0002\u0002^`\u0003\u0002\u0002\u0002_]\u0003\u0002\u0002\u0002`a\u0007",
+    "\u0004\u0002\u0002a\u00b1\u0003\u0002\u0002\u0002bc\u0007\u0003\u0002",
+    "\u0002cd\u0007\n\u0002\u0002de\u0005\u0016\f\u0002eg\u0005\u0018\r\u0002",
+    "fh\u0005\u001a\u000e\u0002gf\u0003\u0002\u0002\u0002gh\u0003\u0002\u0002",
+    "\u0002hi\u0003\u0002\u0002\u0002ij\u0007\u0004\u0002\u0002j\u00b1\u0003",
+    "\u0002\u0002\u0002kl\u0007\u0003\u0002\u0002lp\u0007\u000b\u0002\u0002",
+    "mo\u0005\u0004\u0003\u0002nm\u0003\u0002\u0002\u0002or\u0003\u0002\u0002",
+    "\u0002pn\u0003\u0002\u0002\u0002pq\u0003\u0002\u0002\u0002qs\u0003\u0002",
+    "\u0002\u0002rp\u0003\u0002\u0002\u0002s\u00b1\u0007\u0004\u0002\u0002",
+    "tu\u0007\u0003\u0002\u0002uy\u0007\f\u0002\u0002vx\u0005\u0004\u0003",
+    "\u0002wv\u0003\u0002\u0002\u0002x{\u0003\u0002\u0002\u0002yw\u0003\u0002",
+    "\u0002\u0002yz\u0003\u0002\u0002\u0002z|\u0003\u0002\u0002\u0002{y\u0003",
+    "\u0002\u0002\u0002|\u00b1\u0007\u0004\u0002\u0002}~\u0007\u0003\u0002",
+    "\u0002~\u007f\u0007\r\u0002\u0002\u007f\u0083\u0005\u001c\u000f\u0002",
+    "\u0080\u0082\u0005\u0004\u0003\u0002\u0081\u0080\u0003\u0002\u0002\u0002",
+    "\u0082\u0085\u0003\u0002\u0002\u0002\u0083\u0081\u0003\u0002\u0002\u0002",
+    "\u0083\u0084\u0003\u0002\u0002\u0002\u0084\u0086\u0003\u0002\u0002\u0002",
+    "\u0085\u0083\u0003\u0002\u0002\u0002\u0086\u0087\u0007\u0004\u0002\u0002",
+    "\u0087\u00b1\u0003\u0002\u0002\u0002\u0088\u0089\u0007\u0003\u0002\u0002",
+    "\u0089\u008d\u0007\u000e\u0002\u0002\u008a\u008c\u0005\u001e\u0010\u0002",
+    "\u008b\u008a\u0003\u0002\u0002\u0002\u008c\u008f\u0003\u0002\u0002\u0002",
+    "\u008d\u008b\u0003\u0002\u0002\u0002\u008d\u008e\u0003\u0002\u0002\u0002",
+    "\u008e\u0090\u0003\u0002\u0002\u0002\u008f\u008d\u0003\u0002\u0002\u0002",
+    "\u0090\u00b1\u0007\u0004\u0002\u0002\u0091\u0092\u0007\u0003\u0002\u0002",
+    "\u0092\u0093\u0007\u000f\u0002\u0002\u0093\u0095\u0005 \u0011\u0002",
+    "\u0094\u0096\u0005\u0004\u0003\u0002\u0095\u0094\u0003\u0002\u0002\u0002",
+    "\u0096\u0097\u0003\u0002\u0002\u0002\u0097\u0095\u0003\u0002\u0002\u0002",
+    "\u0097\u0098\u0003\u0002\u0002\u0002\u0098\u0099\u0003\u0002\u0002\u0002",
+    "\u0099\u009a\u0007\u0004\u0002\u0002\u009a\u00b1\u0003\u0002\u0002\u0002",
+    "\u009b\u009c\u0007\u0003\u0002\u0002\u009c\u009d\u0007\u0010\u0002\u0002",
+    "\u009d\u009e\u0005\u0004\u0003\u0002\u009e\u009f\u0007\u0004\u0002\u0002",
+    "\u009f\u00b1\u0003\u0002\u0002\u0002\u00a0\u00a1\u0007\u0003\u0002\u0002",
+    "\u00a1\u00a5\u0007\u0017\u0002\u0002\u00a2\u00a4\u0005\"\u0012\u0002",
+    "\u00a3\u00a2\u0003\u0002\u0002\u0002\u00a4\u00a7\u0003\u0002\u0002\u0002",
+    "\u00a5\u00a3\u0003\u0002\u0002\u0002\u00a5\u00a6\u0003\u0002\u0002\u0002",
+    "\u00a6\u00a8\u0003\u0002\u0002\u0002\u00a7\u00a5\u0003\u0002\u0002\u0002",
+    "\u00a8\u00b1\u0007\u0004\u0002\u0002\u00a9\u00b1\u0007\u0011\u0002\u0002",
+    "\u00aa\u00b1\u0007\u0012\u0002\u0002\u00ab\u00b1\u0007\u0013\u0002\u0002",
+    "\u00ac\u00b1\u0007\u0014\u0002\u0002\u00ad\u00b1\u0007\u0015\u0002\u0002",
+    "\u00ae\u00b1\u0007\u0017\u0002\u0002\u00af\u00b1\u0007\u0016\u0002\u0002",
+    "\u00b0)\u0003\u0002\u0002\u0002\u00b02\u0003\u0002\u0002\u0002\u00b0",
+    ";\u0003\u0002\u0002\u0002\u00b0V\u0003\u0002\u0002\u0002\u00b0b\u0003",
+    "\u0002\u0002\u0002\u00b0k\u0003\u0002\u0002\u0002\u00b0t\u0003\u0002",
+    "\u0002\u0002\u00b0}\u0003\u0002\u0002\u0002\u00b0\u0088\u0003\u0002",
+    "\u0002\u0002\u00b0\u0091\u0003\u0002\u0002\u0002\u00b0\u009b\u0003\u0002",
+    "\u0002\u0002\u00b0\u00a0\u0003\u0002\u0002\u0002\u00b0\u00a9\u0003\u0002",
+    "\u0002\u0002\u00b0\u00aa\u0003\u0002\u0002\u0002\u00b0\u00ab\u0003\u0002",
+    "\u0002\u0002\u00b0\u00ac\u0003\u0002\u0002\u0002\u00b0\u00ad\u0003\u0002",
+    "\u0002\u0002\u00b0\u00ae\u0003\u0002\u0002\u0002\u00b0\u00af\u0003\u0002",
+    "\u0002\u0002\u00b1\u0005\u0003\u0002\u0002\u0002\u00b2\u00b3\u0007\u0003",
+    "\u0002\u0002\u00b3\u00b4\u0005\b\u0005\u0002\u00b4\u00b5\u0005\n\u0006",
+    "\u0002\u00b5\u00b6\u0007\u0004\u0002\u0002\u00b6\u0007\u0003\u0002\u0002",
+    "\u0002\u00b7\u00b8\u0005\u0004\u0003\u0002\u00b8\t\u0003\u0002\u0002",
+    "\u0002\u00b9\u00ba\u0005\u0004\u0003\u0002\u00ba\u000b\u0003\u0002\u0002",
+    "\u0002\u00bb\u00bc\u0007\u0017\u0002\u0002\u00bc\r\u0003\u0002\u0002",
+    "\u0002\u00bd\u00be\u0007\u0017\u0002\u0002\u00be\u000f\u0003\u0002\u0002",
+    "\u0002\u00bf\u00c0\u0007\u0017\u0002\u0002\u00c0\u0011\u0003\u0002\u0002",
+    "\u0002\u00c1\u00c2\u0007\u0017\u0002\u0002\u00c2\u0013\u0003\u0002\u0002",
+    "\u0002\u00c3\u00c4\u0005\u0004\u0003\u0002\u00c4\u0015\u0003\u0002\u0002",
+    "\u0002\u00c5\u00c6\u0005\u0004\u0003\u0002\u00c6\u0017\u0003\u0002\u0002",
+    "\u0002\u00c7\u00c8\u0005\u0004\u0003\u0002\u00c8\u0019\u0003\u0002\u0002",
+    "\u0002\u00c9\u00ca\u0005\u0004\u0003\u0002\u00ca\u001b\u0003\u0002\u0002",
+    "\u0002\u00cb\u00cc\u0005\u0004\u0003\u0002\u00cc\u001d\u0003\u0002\u0002",
+    "\u0002\u00cd\u00ce\u0007\u0017\u0002\u0002\u00ce\u00cf\u0005\u0004\u0003",
+    "\u0002\u00cf\u001f\u0003\u0002\u0002\u0002\u00d0\u00d1\u0005\u0004\u0003",
+    "\u0002\u00d1!\u0003\u0002\u0002\u0002\u00d2\u00d3\u0005\u0004\u0003",
+    "\u0002\u00d3#\u0003\u0002\u0002\u0002\u0012\'.7BILR]gpy\u0083\u008d",
+    "\u0097\u00a5\u00b0"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -151,14 +151,12 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'('", "'and'", "')'", "'cond'", "'defun'", "' / '", 
-                     "'foreach'", "'if'", "'or'", "'progn'", "'repeat'", 
-                     "'setq'", "'while'", "'princ'" ];
+var literalNames = [ null, "'('", "')'", "' / '" ];
 
-var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, null, "NIL", "T", "INT", 
-                      "REAL", "STR", "SYM", "ID", "INLINE_COMMENT", "LINE_COMMENT", 
-                      "NEWLINE", "WHITESPACE" ];
+var symbolicNames = [ null, null, null, null, "AND", "COND", "DEFUN", "FOREACH", 
+                      "IF", "OR", "PROGN", "REPEAT", "SETQ", "WHILE", "PRINC", 
+                      "NIL", "TRU", "INT", "REAL", "STR", "SYM", "ID", "INLINE_COMMENT", 
+                      "LINE_COMMENT", "NEWLINE", "WHITESPACE" ];
 
 var ruleNames =  [ "file", "expr", "condTestResult", "condTest", "condResult", 
                    "defunName", "defunParam", "defunLocal", "foreachName", 
@@ -187,19 +185,19 @@ VeLispParser.EOF = antlr4.Token.EOF;
 VeLispParser.T__0 = 1;
 VeLispParser.T__1 = 2;
 VeLispParser.T__2 = 3;
-VeLispParser.T__3 = 4;
-VeLispParser.T__4 = 5;
-VeLispParser.T__5 = 6;
-VeLispParser.T__6 = 7;
-VeLispParser.T__7 = 8;
-VeLispParser.T__8 = 9;
-VeLispParser.T__9 = 10;
-VeLispParser.T__10 = 11;
-VeLispParser.T__11 = 12;
-VeLispParser.T__12 = 13;
-VeLispParser.T__13 = 14;
+VeLispParser.AND = 4;
+VeLispParser.COND = 5;
+VeLispParser.DEFUN = 6;
+VeLispParser.FOREACH = 7;
+VeLispParser.IF = 8;
+VeLispParser.OR = 9;
+VeLispParser.PROGN = 10;
+VeLispParser.REPEAT = 11;
+VeLispParser.SETQ = 12;
+VeLispParser.WHILE = 13;
+VeLispParser.PRINC = 14;
 VeLispParser.NIL = 15;
-VeLispParser.T = 16;
+VeLispParser.TRU = 16;
 VeLispParser.INT = 17;
 VeLispParser.REAL = 18;
 VeLispParser.STR = 19;
@@ -285,7 +283,7 @@ VeLispParser.prototype.file = function() {
             this.state = 37; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-        } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0));
+        } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0));
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -335,6 +333,10 @@ OrContext.prototype.constructor = OrContext;
 
 VeLispParser.OrContext = OrContext;
 
+OrContext.prototype.OR = function() {
+    return this.getToken(VeLispParser.OR, 0);
+};
+
 OrContext.prototype.expr = function(i) {
     if(i===undefined) {
         i = null;
@@ -364,6 +366,10 @@ PrincContext.prototype = Object.create(ExprContext.prototype);
 PrincContext.prototype.constructor = PrincContext;
 
 VeLispParser.PrincContext = PrincContext;
+
+PrincContext.prototype.PRINC = function() {
+    return this.getToken(VeLispParser.PRINC, 0);
+};
 
 PrincContext.prototype.expr = function() {
     return this.getTypedRuleContext(ExprContext,0);
@@ -410,6 +416,10 @@ PrognContext.prototype = Object.create(ExprContext.prototype);
 PrognContext.prototype.constructor = PrognContext;
 
 VeLispParser.PrognContext = PrognContext;
+
+PrognContext.prototype.PROGN = function() {
+    return this.getToken(VeLispParser.PROGN, 0);
+};
 
 PrognContext.prototype.expr = function(i) {
     if(i===undefined) {
@@ -464,6 +474,10 @@ CondContext.prototype.constructor = CondContext;
 
 VeLispParser.CondContext = CondContext;
 
+CondContext.prototype.COND = function() {
+    return this.getToken(VeLispParser.COND, 0);
+};
+
 CondContext.prototype.condTestResult = function(i) {
     if(i===undefined) {
         i = null;
@@ -493,6 +507,10 @@ WhileContext.prototype = Object.create(ExprContext.prototype);
 WhileContext.prototype.constructor = WhileContext;
 
 VeLispParser.WhileContext = WhileContext;
+
+WhileContext.prototype.WHILE = function() {
+    return this.getToken(VeLispParser.WHILE, 0);
+};
 
 WhileContext.prototype.whileTest = function() {
     return this.getTypedRuleContext(WhileTestContext,0);
@@ -527,6 +545,10 @@ DefunContext.prototype = Object.create(ExprContext.prototype);
 DefunContext.prototype.constructor = DefunContext;
 
 VeLispParser.DefunContext = DefunContext;
+
+DefunContext.prototype.DEFUN = function() {
+    return this.getToken(VeLispParser.DEFUN, 0);
+};
 
 DefunContext.prototype.defunName = function() {
     return this.getTypedRuleContext(DefunNameContext,0);
@@ -653,6 +675,10 @@ ForeachContext.prototype.constructor = ForeachContext;
 
 VeLispParser.ForeachContext = ForeachContext;
 
+ForeachContext.prototype.FOREACH = function() {
+    return this.getToken(VeLispParser.FOREACH, 0);
+};
+
 ForeachContext.prototype.foreachName = function() {
     return this.getTypedRuleContext(ForeachNameContext,0);
 };
@@ -680,29 +706,6 @@ ForeachContext.prototype.accept = function(visitor) {
 };
 
 
-function TContext(parser, ctx) {
-	ExprContext.call(this, parser);
-    ExprContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-TContext.prototype = Object.create(ExprContext.prototype);
-TContext.prototype.constructor = TContext;
-
-VeLispParser.TContext = TContext;
-
-TContext.prototype.T = function() {
-    return this.getToken(VeLispParser.T, 0);
-};
-TContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof VeLispVisitor ) {
-        return visitor.visitT(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 function AndContext(parser, ctx) {
 	ExprContext.call(this, parser);
     ExprContext.prototype.copyFrom.call(this, ctx);
@@ -713,6 +716,10 @@ AndContext.prototype = Object.create(ExprContext.prototype);
 AndContext.prototype.constructor = AndContext;
 
 VeLispParser.AndContext = AndContext;
+
+AndContext.prototype.AND = function() {
+    return this.getToken(VeLispParser.AND, 0);
+};
 
 AndContext.prototype.expr = function(i) {
     if(i===undefined) {
@@ -733,6 +740,29 @@ AndContext.prototype.accept = function(visitor) {
 };
 
 
+function TruContext(parser, ctx) {
+	ExprContext.call(this, parser);
+    ExprContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+TruContext.prototype = Object.create(ExprContext.prototype);
+TruContext.prototype.constructor = TruContext;
+
+VeLispParser.TruContext = TruContext;
+
+TruContext.prototype.TRU = function() {
+    return this.getToken(VeLispParser.TRU, 0);
+};
+TruContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof VeLispVisitor ) {
+        return visitor.visitTru(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 function RepeatContext(parser, ctx) {
 	ExprContext.call(this, parser);
     ExprContext.prototype.copyFrom.call(this, ctx);
@@ -743,6 +773,10 @@ RepeatContext.prototype = Object.create(ExprContext.prototype);
 RepeatContext.prototype.constructor = RepeatContext;
 
 VeLispParser.RepeatContext = RepeatContext;
+
+RepeatContext.prototype.REPEAT = function() {
+    return this.getToken(VeLispParser.REPEAT, 0);
+};
 
 RepeatContext.prototype.repeatNum = function() {
     return this.getTypedRuleContext(RepeatNumContext,0);
@@ -777,6 +811,10 @@ SetQContext.prototype = Object.create(ExprContext.prototype);
 SetQContext.prototype.constructor = SetQContext;
 
 VeLispParser.SetQContext = SetQContext;
+
+SetQContext.prototype.SETQ = function() {
+    return this.getToken(VeLispParser.SETQ, 0);
+};
 
 SetQContext.prototype.setqNameExpr = function(i) {
     if(i===undefined) {
@@ -830,6 +868,10 @@ IfContext.prototype = Object.create(ExprContext.prototype);
 IfContext.prototype.constructor = IfContext;
 
 VeLispParser.IfContext = IfContext;
+
+IfContext.prototype.IF = function() {
+    return this.getToken(VeLispParser.IF, 0);
+};
 
 IfContext.prototype.ifTest = function() {
     return this.getTypedRuleContext(IfTestContext,0);
@@ -904,11 +946,11 @@ VeLispParser.prototype.expr = function() {
             this.state = 39;
             this.match(VeLispParser.T__0);
             this.state = 40;
-            this.match(VeLispParser.T__1);
+            this.match(VeLispParser.AND);
             this.state = 44;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 41;
                 this.expr();
                 this.state = 46;
@@ -916,7 +958,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 47;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 2:
@@ -925,7 +967,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 48;
             this.match(VeLispParser.T__0);
             this.state = 49;
-            this.match(VeLispParser.T__3);
+            this.match(VeLispParser.COND);
             this.state = 53;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -937,7 +979,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 56;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 3:
@@ -946,7 +988,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 57;
             this.match(VeLispParser.T__0);
             this.state = 58;
-            this.match(VeLispParser.T__4);
+            this.match(VeLispParser.DEFUN);
             this.state = 59;
             this.defunName();
             this.state = 60;
@@ -964,9 +1006,9 @@ VeLispParser.prototype.expr = function() {
             this.state = 74;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            if(_la===VeLispParser.T__5) {
+            if(_la===VeLispParser.T__2) {
                 this.state = 67;
-                this.match(VeLispParser.T__5);
+                this.match(VeLispParser.T__2);
                 this.state = 71;
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
@@ -980,7 +1022,7 @@ VeLispParser.prototype.expr = function() {
             }
 
             this.state = 76;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             this.state = 78; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -990,9 +1032,9 @@ VeLispParser.prototype.expr = function() {
                 this.state = 80; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
-            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0));
+            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0));
             this.state = 82;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 4:
@@ -1001,7 +1043,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 84;
             this.match(VeLispParser.T__0);
             this.state = 85;
-            this.match(VeLispParser.T__6);
+            this.match(VeLispParser.FOREACH);
             this.state = 86;
             this.foreachName();
             this.state = 87;
@@ -1009,7 +1051,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 91;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 88;
                 this.expr();
                 this.state = 93;
@@ -1017,7 +1059,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 94;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 5:
@@ -1026,7 +1068,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 96;
             this.match(VeLispParser.T__0);
             this.state = 97;
-            this.match(VeLispParser.T__7);
+            this.match(VeLispParser.IF);
             this.state = 98;
             this.ifTest();
             this.state = 99;
@@ -1034,13 +1076,13 @@ VeLispParser.prototype.expr = function() {
             this.state = 101;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 100;
                 this.ifElse();
             }
 
             this.state = 103;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 6:
@@ -1049,11 +1091,11 @@ VeLispParser.prototype.expr = function() {
             this.state = 105;
             this.match(VeLispParser.T__0);
             this.state = 106;
-            this.match(VeLispParser.T__8);
+            this.match(VeLispParser.OR);
             this.state = 110;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 107;
                 this.expr();
                 this.state = 112;
@@ -1061,7 +1103,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 113;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 7:
@@ -1070,11 +1112,11 @@ VeLispParser.prototype.expr = function() {
             this.state = 114;
             this.match(VeLispParser.T__0);
             this.state = 115;
-            this.match(VeLispParser.T__9);
+            this.match(VeLispParser.PROGN);
             this.state = 119;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 116;
                 this.expr();
                 this.state = 121;
@@ -1082,7 +1124,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 122;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 8:
@@ -1091,13 +1133,13 @@ VeLispParser.prototype.expr = function() {
             this.state = 123;
             this.match(VeLispParser.T__0);
             this.state = 124;
-            this.match(VeLispParser.T__10);
+            this.match(VeLispParser.REPEAT);
             this.state = 125;
             this.repeatNum();
             this.state = 129;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 126;
                 this.expr();
                 this.state = 131;
@@ -1105,7 +1147,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 132;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 9:
@@ -1114,7 +1156,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 134;
             this.match(VeLispParser.T__0);
             this.state = 135;
-            this.match(VeLispParser.T__11);
+            this.match(VeLispParser.SETQ);
             this.state = 139;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -1126,7 +1168,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 142;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 10:
@@ -1135,7 +1177,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 143;
             this.match(VeLispParser.T__0);
             this.state = 144;
-            this.match(VeLispParser.T__12);
+            this.match(VeLispParser.WHILE);
             this.state = 145;
             this.whileTest();
             this.state = 147; 
@@ -1147,9 +1189,9 @@ VeLispParser.prototype.expr = function() {
                 this.state = 149; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
-            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0));
+            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0));
             this.state = 151;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 11:
@@ -1158,11 +1200,11 @@ VeLispParser.prototype.expr = function() {
             this.state = 153;
             this.match(VeLispParser.T__0);
             this.state = 154;
-            this.match(VeLispParser.T__13);
+            this.match(VeLispParser.PRINC);
             this.state = 155;
             this.expr();
             this.state = 156;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 12:
@@ -1175,7 +1217,7 @@ VeLispParser.prototype.expr = function() {
             this.state = 163;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.T) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
                 this.state = 160;
                 this.funArg();
                 this.state = 165;
@@ -1183,7 +1225,7 @@ VeLispParser.prototype.expr = function() {
                 _la = this._input.LA(1);
             }
             this.state = 166;
-            this.match(VeLispParser.T__2);
+            this.match(VeLispParser.T__1);
             break;
 
         case 13:
@@ -1194,10 +1236,10 @@ VeLispParser.prototype.expr = function() {
             break;
 
         case 14:
-            localctx = new TContext(this, localctx);
+            localctx = new TruContext(this, localctx);
             this.enterOuterAlt(localctx, 14);
             this.state = 168;
-            this.match(VeLispParser.T);
+            this.match(VeLispParser.TRU);
             break;
 
         case 15:
@@ -1301,7 +1343,7 @@ VeLispParser.prototype.condTestResult = function() {
         this.state = 178;
         this.condResult();
         this.state = 179;
-        this.match(VeLispParser.T__2);
+        this.match(VeLispParser.T__1);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;

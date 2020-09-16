@@ -5,14 +5,14 @@ const {Bool, List, Pair, Fun} = require('../VeLispTypes.js');
 //
 
 exports.initContext = function (context) {
-    context.setSym('list', new Fun('list', ['[expr ...]'], function (self, args) {
+    context.setSym('LIST', new Fun('list', ['[expr ...]'], function (self, args) {
         const result = [];
         for (let i = 0; i < args.length; i++) {
             result.push(args[i]);
         }
         return new List(result);
     }));
-    context.setSym('listp', new Fun('listp', ['item'], function (self, args) {
+    context.setSym('LISTP', new Fun('listp', ['item'], function (self, args) {
         if (args.length == 0) {
             throw new Error('listp: too few arguments');
         }
@@ -25,7 +25,7 @@ exports.initContext = function (context) {
         }
         return new Bool(false);
     }));
-    context.setSym('cons', new Fun('cons', ['first', 'listoratom'], function (self, args) {
+    context.setSym('CONS', new Fun('cons', ['first', 'listoratom'], function (self, args) {
         if (args.length < 2) {
             throw new Error('cons: too few arguments');
         }
@@ -45,7 +45,7 @@ exports.initContext = function (context) {
             return new Pair(fst, snd);
         }
     }));
-    context.setSym('car', new Fun('car', ['listorpair'], function (self, args) {
+    context.setSym('CAR', new Fun('car', ['listorpair'], function (self, args) {
         if (args.length == 0) {
             throw new Error('car: too few arguments');
         }
@@ -61,7 +61,7 @@ exports.initContext = function (context) {
         }
         throw new Error('car: must be non-empty List or Pair');
     }));
-    context.setSym('cdr', new Fun('cdr', ['listorpair'], function (self, args) {
+    context.setSym('CDR', new Fun('cdr', ['listorpair'], function (self, args) {
         if (args.length == 0) {
             throw new Error('cdr: too few arguments');
         }

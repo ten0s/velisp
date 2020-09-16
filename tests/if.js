@@ -4,6 +4,9 @@ const {Bool, Int, Str, Pair} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(if T 1 0)', result: new Int(1)},
+    {test: '(If T 1 0)', result: new Int(1)},
+    {test: '(IF T 1 0)', result: new Int(1)},
+
     {test: '(if nil 1 0)', result: new Int(0)},
     {test: '(if T T nil)', result: new Bool(true)},
     {test: '(if nil T nil)', result: new Bool(false)},

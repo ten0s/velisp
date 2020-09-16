@@ -4,6 +4,9 @@ const {Bool} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(and)', result: new Bool(true)},
+    {test: '(And)', result: new Bool(true)},
+    {test: '(ANd)', result: new Bool(true)},
+    {test: '(AND)', result: new Bool(true)},
 
     {test: '(and nil)', result: new Bool(false)},
     {test: '(and T)', result: new Bool(true)},

@@ -4,6 +4,13 @@ const {Bool, Int, Str} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(repeat 1)', result: new Bool(false)},
+    {test: '(Repeat 1)', result: new Bool(false)},
+    {test: '(REpeat 1)', result: new Bool(false)},
+    {test: '(REPeat 1)', result: new Bool(false)},
+    {test: '(REPEat 1)', result: new Bool(false)},
+    {test: '(REPEAt 1)', result: new Bool(false)},
+    {test: '(REPEAT 1)', result: new Bool(false)},
+
     {test: '(repeat 5)', result: new Bool(false)},
     {test: '(repeat 1 "done")', result: new Str('done')},
     {test: '(repeat 5 "done")', result: new Str('done')},

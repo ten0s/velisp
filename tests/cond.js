@@ -4,6 +4,11 @@ const {Bool, Str} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(cond)', result: new Bool(false)},
+    {test: '(Cond)', result: new Bool(false)},
+    {test: '(COnd)', result: new Bool(false)},
+    {test: '(CONd)', result: new Bool(false)},
+    {test: '(COND)', result: new Bool(false)},
+
     {test: '(cond (nil "no"))', result: new Bool(false)},
     {test: '(cond (T "yes"))', result: new Str('yes')},
     {test: '(cond (nil "no") (T "yes"))', result: new Str('yes')},

@@ -4,6 +4,12 @@ const {Bool, Int} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(progn)', result: new Bool(false)},
+    {test: '(Progn)', result: new Bool(false)},
+    {test: '(PRogn)', result: new Bool(false)},
+    {test: '(PROgn)', result: new Bool(false)},
+    {test: '(PROGn)', result: new Bool(false)},
+    {test: '(PROGN)', result: new Bool(false)},
+
     {test: '(progn 1)', result: new Int(1)},
     {test: '(progn 1 2 (+ 1 2))', result: new Int(3)},
     {test: `(setq a 0)
