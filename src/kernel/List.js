@@ -32,14 +32,17 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('cons: too many arguments');
         }
-        const car = args[0];
-        const cdr = args[1];
-        if (cdr instanceof List) {
-            return cdr.cons(car);
-        } else if (cdr.isNil()) {
-            return new List([car]);
+        const fst = args[0];
+        const snd = args[1];
+        // TODO: (cons 1 (cons 2 3))?
+        // Now: (1 . (2 . 3))
+        // Exp: (1 2 . 3)
+        if (snd instanceof List) {
+            return snd.cons(fst);
+        } else if (snd.isNil()) {
+            return new List([fst]);
         } else {
-            return new Pair(car, cdr);
+            return new Pair(fst, snd);
         }
     }));
     context.setSym('car', new Fun('car', ['listorpair'], function (self, args) {
