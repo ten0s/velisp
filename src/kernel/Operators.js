@@ -5,7 +5,7 @@ const {Bool, Int, List, Pair, Fun} = require('../VeLispTypes.js');
 //
 
 exports.initContext = function (context) {
-    context.setSym('*', new Fun('*', ['[num] ...'], function (self, args) {
+    context.setSym('*', new Fun('*', ['[num] ...'], [], (self, args) => {
         if (args.length == 0) {
             return new Int(0);
         }
@@ -15,7 +15,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('/', new Fun('/', ['[num] ...'], function (self, args) {
+    context.setSym('/', new Fun('/', ['[num] ...'], [], (self, args) => {
         if (args.length == 0) {
             return new Int(0);
         }
@@ -25,14 +25,14 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('+', new Fun('+', ['[num] ...'], function (self, args) {
+    context.setSym('+', new Fun('+', ['[num] ...'], [], (self, args) => {
         let result = new Int(0);
         for (let i = 0; i < args.length; i++) {
             result = result.add(args[i]);
         }
         return result;
     }));
-    context.setSym('-', new Fun('-', ['[num] ...'], function (self, args) {
+    context.setSym('-', new Fun('-', ['[num] ...'], [], (self, args) => {
         if (args.length == 0) {
             return new Int(0);
         }
@@ -45,7 +45,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('=', new Fun('=', ['numstr [numstr] ...'], function (self, args) {
+    context.setSym('=', new Fun('=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('=: too few arguments');
         }
@@ -59,7 +59,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('/=', new Fun('/=', ['numstr [numstr] ...'], function (self, args) {
+    context.setSym('/=', new Fun('/=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('/=: too few arguments');
         }
@@ -73,7 +73,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('<', new Fun('<', ['numstr [numstr] ...'], function (self, args) {
+    context.setSym('<', new Fun('<', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('<: too few arguments');
         }
@@ -87,7 +87,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('<=', new Fun('<=', ['numstr [numstr] ...'], function (self, args) {
+    context.setSym('<=', new Fun('<=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('<=: too few arguments');
         }
@@ -101,7 +101,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('>', new Fun('>', ['numstr [numstr] ...'], function (self, args) {
+    context.setSym('>', new Fun('>', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('>: too few arguments');
         }
@@ -115,7 +115,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('>=', new Fun('>=', ['numstr [numstr] ...'], function (self, args) {
+    context.setSym('>=', new Fun('>=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('>=: too few arguments');
         }
@@ -129,7 +129,7 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('~', new Fun('~', ['int'], function (self, args) {
+    context.setSym('~', new Fun('~', ['int'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('~: too few arguments');
         }
@@ -142,11 +142,11 @@ exports.initContext = function (context) {
         throw new Error('~: expected Int');
     }));
     // TODO: re-impl in lisp
-    context.setSym('1+', new Fun('1+', ['num'], function (self, args) {
+    context.setSym('1+', new Fun('1+', ['num'], [], (self, args) => {
         return args[0].add(new Int(1));
     }));
     // TODO: re-impl in lisp
-    context.setSym('1-', new Fun('1-', ['num'], function (self, args) {
+    context.setSym('1-', new Fun('1-', ['num'], [], (self, args) => {
         return args[0].subtract(new Int(1));
     }));
 }

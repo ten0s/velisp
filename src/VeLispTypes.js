@@ -366,9 +366,10 @@ class Pair {
 }
 
 class Fun {
-    constructor(name, params, fun) {
+    constructor(name, params, locals, fun) {
         this.name = name;
         this.params = params;
+        this.locals = locals;
         this.fun = fun;
     }
 
@@ -382,7 +383,7 @@ class Fun {
     }
 
     toString() {
-        return `(${this.name} ${params.join(' ')})`;
+        return `(${this.name} ${params.join(' ')} ${locals.length > 0 ? ' / ' : ''} ${locals.join(' ')}})`;
     }
 }
 

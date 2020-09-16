@@ -46,7 +46,7 @@ class EvalVisitor extends VeLispVisitor {
             locals.push(this.visit(ctx.defunLocal(i).ID()).toUpperCase());
         }
         // TODO: Are params really needed here?
-        this.contexts[this.contexts.length-1].setSym(name, new Fun(name, params, function (self, args) {
+        this.contexts[this.contexts.length-1].setSym(name, new Fun(name, params, locals, (self, args) => {
             if (args.length < params.length) {
                 throw new Error(`${name}: too few arguments`);
             } else if (args.length > params.length) {

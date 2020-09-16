@@ -5,7 +5,7 @@ const {Bool, Sym, List, Fun} = require('../VeLispTypes.js');
 //
 
 exports.initContext = function (context) {
-    context.setSym('APPLY', new Fun('apply', ['function', 'list'], function (self, args) {
+    context.setSym('APPLY', new Fun('apply', ['function', 'list'], [], (self, args) => {
         //console.log('apply args', args);
         if (args.length < 2) {
             throw new Error('apply: too few arguments');
