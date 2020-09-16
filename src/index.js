@@ -67,6 +67,22 @@ function startRepl(config, context) {
             this.displayPrompt();
         }
     });
+    replServer.defineCommand('symbol', {
+        help: 'Show symbol\'s internal value',
+        action(input) {
+            try {
+                if (input.trim()) {
+                    const result = evaluate(input, context);
+                    if (result.value) {
+                        console.log(context.getSym(result.value()));
+                    }
+                }
+            } catch (e) {
+                console.error(e.message);
+            }
+            this.displayPrompt();
+        }
+    });
 }
 
 function replEval(repl, input, context, callback) {
