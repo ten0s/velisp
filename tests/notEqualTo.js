@@ -19,8 +19,16 @@ const tests = [
     {test: '(/= "me" "me"))', result: new Bool(false)},
 ];
 
+const errors = [
+    {test: '(/=)', result: new Error('/=: too few arguments')},
+];
+
 QUnit.test("notEqualTo", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });

@@ -44,8 +44,16 @@ const tests = [
     {test: '(= (cons 1 \'a) (cons 1 \'b))', result: new Bool(false)},
 ];
 
+const errors = [
+    {test: '(=)', result: new Error('=: too few arguments')},
+];
+
 QUnit.test("equalTo", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });

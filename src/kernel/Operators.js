@@ -46,6 +46,9 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('=', new Fun('=', ['numstr [numstr] ...'], function (self, args) {
+        if (args.length == 0) {
+            throw new Error('=: too few arguments');
+        }
         let result = new Bool(true);
         let val1 = args[0];
         for (let i = 1; i < args.length; i++) {
@@ -57,6 +60,9 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('/=', new Fun('/=', ['numstr [numstr] ...'], function (self, args) {
+        if (args.length == 0) {
+            throw new Error('/=: too few arguments');
+        }
         let result = new Bool(true);
         let val1 = args[0];
         for (let i = 1; i < args.length; i++) {
@@ -68,6 +74,9 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('<', new Fun('<', ['numstr [numstr] ...'], function (self, args) {
+        if (args.length == 0) {
+            throw new Error('<: too few arguments');
+        }
         let result = new Bool(true);
         let val1 = args[0];
         for (let i = 1; i < args.length; i++) {
@@ -79,6 +88,9 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('<=', new Fun('<=', ['numstr [numstr] ...'], function (self, args) {
+        if (args.length == 0) {
+            throw new Error('<=: too few arguments');
+        }
         let result = new Bool(true);
         let val1 = args[0];
         for (let i = 1; i < args.length; i++) {
@@ -90,6 +102,9 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('>', new Fun('>', ['numstr [numstr] ...'], function (self, args) {
+        if (args.length == 0) {
+            throw new Error('>: too few arguments');
+        }
         let result = new Bool(true);
         let val1 = args[0];
         for (let i = 1; i < args.length; i++) {
@@ -101,6 +116,9 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('>=', new Fun('>=', ['numstr [numstr] ...'], function (self, args) {
+        if (args.length == 0) {
+            throw new Error('>=: too few arguments');
+        }
         let result = new Bool(true);
         let val1 = args[0];
         for (let i = 1; i < args.length; i++) {

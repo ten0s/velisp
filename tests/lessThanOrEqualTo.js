@@ -22,8 +22,16 @@ const tests = [
     {test: '(<= "b" "c"))', result: new Bool(true)},
 ];
 
+const errors = [
+    {test: '(<=)', result: new Error('<=: too few arguments')},
+];
+
 QUnit.test("lessThanOrEqualTo", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });
