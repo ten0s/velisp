@@ -177,7 +177,7 @@ class EvalVisitor extends VeLispVisitor {
         return expr;
     }
 
-    visitFun(ctx) {
+    visitFunCall(ctx) {
         let name = this.visit(ctx.ID()).toUpperCase();
         //console.log(`funName: ${name}`);
         let fun = null;
@@ -205,7 +205,7 @@ class EvalVisitor extends VeLispVisitor {
             this.contexts.pop();
             return result;
         }
-        throw new Error(`unknown function ${name}`);
+        throw new Error(`${name}: function not defined`);
     }
 
     visitTerminal(ctx) {

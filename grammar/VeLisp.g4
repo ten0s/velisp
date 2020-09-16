@@ -24,7 +24,7 @@ expr :
 
      | '(' PRINC expr ')'                                                         # princ
 
-     | '(' ID funArg* ')'                                                         # fun
+     | '(' ID funArg* ')'                                                         # funCall
 
      // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 

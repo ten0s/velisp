@@ -535,6 +535,40 @@ WhileContext.prototype.accept = function(visitor) {
 };
 
 
+function FunCallContext(parser, ctx) {
+	ExprContext.call(this, parser);
+    ExprContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+FunCallContext.prototype = Object.create(ExprContext.prototype);
+FunCallContext.prototype.constructor = FunCallContext;
+
+VeLispParser.FunCallContext = FunCallContext;
+
+FunCallContext.prototype.ID = function() {
+    return this.getToken(VeLispParser.ID, 0);
+};
+
+FunCallContext.prototype.funArg = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(FunArgContext);
+    } else {
+        return this.getTypedRuleContext(FunArgContext,i);
+    }
+};
+FunCallContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof VeLispVisitor ) {
+        return visitor.visitFunCall(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 function DefunContext(parser, ctx) {
 	ExprContext.call(this, parser);
     ExprContext.prototype.copyFrom.call(this, ctx);
@@ -893,40 +927,6 @@ IfContext.prototype.accept = function(visitor) {
 };
 
 
-function FunContext(parser, ctx) {
-	ExprContext.call(this, parser);
-    ExprContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-FunContext.prototype = Object.create(ExprContext.prototype);
-FunContext.prototype.constructor = FunContext;
-
-VeLispParser.FunContext = FunContext;
-
-FunContext.prototype.ID = function() {
-    return this.getToken(VeLispParser.ID, 0);
-};
-
-FunContext.prototype.funArg = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(FunArgContext);
-    } else {
-        return this.getTypedRuleContext(FunArgContext,i);
-    }
-};
-FunContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof VeLispVisitor ) {
-        return visitor.visitFun(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 
 VeLispParser.ExprContext = ExprContext;
 
@@ -1208,7 +1208,7 @@ VeLispParser.prototype.expr = function() {
             break;
 
         case 12:
-            localctx = new FunContext(this, localctx);
+            localctx = new FunCallContext(this, localctx);
             this.enterOuterAlt(localctx, 12);
             this.state = 158;
             this.match(VeLispParser.T__0);
