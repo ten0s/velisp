@@ -112,7 +112,16 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('~', new Fun('~', ['int'], function (self, args) {
-        return args[0].bitwiseNot();
+        if (args.length == 0) {
+            throw new Error('~: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('~: too many arguments');
+        }
+        if (args[0] instanceof Int) {
+            return args[0].bitwiseNot();
+        }
+        throw new Error('~: expected Int');
     }));
     // TODO: re-impl in lisp
     context.setSym('1+', new Fun('1+', ['num'], function (self, args) {
