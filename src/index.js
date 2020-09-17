@@ -74,6 +74,7 @@ function startRepl(config, context) {
             this.displayPrompt();
         }
     });
+    // Looks like redundant since variable resolution works for both vars and funs.
     replServer.defineCommand('resolve', {
         help: 'Resolve symbol and show its internal type',
         action(input) {
