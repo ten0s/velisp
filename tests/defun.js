@@ -27,8 +27,15 @@ const tests = [
     {test: '(defun id (x / ) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x) x) (id (+ 1 2))', result: new Int(3)},
 
-    // Works because the a param is in the local context
+    // The a param is in the local context
     {test: '(defun a (a) (1+ a)) (a 1)', result: new Int(2)},
+    // The a fun and a param are in the local contexts
+    {test: `(defun a (x)
+              (defun a (a)
+                (1+ a))
+              (a x))
+            (a 1)`,
+     result: new Int(2)},
 
     {test: '(defun plus (n1 n2) (+ n1 n2)) (plus 1 4)', result: new Int(5)},
 
