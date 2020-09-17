@@ -10,17 +10,26 @@ const tests = [
     {test: '(DEFUn foo () "foo")', result: new Sym('foo')},
     {test: '(DEFUN foo () "foo")', result: new Sym('foo')},
 
-    {test: '(defun foo ( / ) "foo")', result: new Sym('foo')},
     {test: '(defun foo () "foo") (foo)', result: new Str('foo')},
+    {test: '(defun foo ( ) "foo") (foo)', result: new Str('foo')},
+    {test: '(defun foo (/) "foo") (foo)', result: new Str('foo')},
+    {test: '(defun foo (/ ) "foo") (foo)', result: new Str('foo')},
+    {test: '(defun foo ( /) "foo") (foo)', result: new Str('foo')},
     {test: '(defun foo ( / ) "foo") (foo)', result: new Str('foo')},
-    // TODO: fix foo has too few arguments
-    //{test: '(defun foo (/) "foo") (foo)', result: new Str('foo')},
 
     {test: '(defun id (x) x) (id "me")', result: new Str('me')},
+    {test: '(defun id (x ) x) (id "me")', result: new Str('me')},
+    {test: '(defun id ( x) x) (id "me")', result: new Str('me')},
+    {test: '(defun id ( x ) x) (id "me")', result: new Str('me')},
+    {test: '(defun id (x /) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x / ) x) (id "me")', result: new Str('me')},
-    // TODO: fix id has too few arguments
-    //{test: '(defun id (x /) x) (id "me")', result: new Str('me')},
+
+    {test: '(defun id (x / ) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x) x) (id (+ 1 2))', result: new Int(3)},
+
+    // Works because the a param is in the local context
+    {test: '(defun a (a) (1+ a)) (a 1)', result: new Int(2)},
+
     {test: '(defun plus (n1 n2) (+ n1 n2)) (plus 1 4)', result: new Int(5)},
 
     {test: `(setq n1 "one" n2 "two")
