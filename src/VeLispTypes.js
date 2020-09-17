@@ -383,7 +383,10 @@ class Fun {
     }
 
     toString() {
-        return `(${this.name} ${params.join(' ')} ${locals.length > 0 ? ' / ' : ''} ${locals.join(' ')}})`;
+        const name = this.name;
+        const params = this.params.join(' ');
+        const locals = this.locals.join(' ');
+        return `(defun ${name} (${params}${locals.length > 0 ? ' / ' : ''}${locals}))`;
     }
 }
 

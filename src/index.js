@@ -54,8 +54,15 @@ function startRepl(config, context) {
             return replWriter(repl, output);
         }
     });
+    replServer.defineCommand('context', {
+        help: 'Show global context',
+        action() {
+            console.log(context);
+            this.displayPrompt();
+        }
+    });
     replServer.defineCommand('type', {
-        help: 'Evaluate expression and show its internal type',
+        help: 'Show expression\'s internal type',
         action(input) {
             try {
                 if (input.trim()) {
@@ -67,8 +74,8 @@ function startRepl(config, context) {
             this.displayPrompt();
         }
     });
-    replServer.defineCommand('symbol', {
-        help: 'Show symbol\'s internal value',
+    replServer.defineCommand('resolve', {
+        help: 'Resolve symbol and show its internal type',
         action(input) {
             try {
                 if (input.trim()) {

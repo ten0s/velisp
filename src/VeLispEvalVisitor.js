@@ -148,7 +148,7 @@ class EvalVisitor extends VeLispVisitor {
         for (let i = 0; i < ctx.setqNameExpr().length; i++) {
             // This argument is not evaluated
             const name = this.visit(ctx.setqNameExpr(i).ID()).toUpperCase();
-            value = this.visit(ctx.setqNameExpr(i).expr());
+            value = this.getValue(this.visit(ctx.setqNameExpr(i).expr()));
             //console.error(`setq: ${name} = ${value}`);
             this.contexts[this.contexts.length-1].setVar(name, value);
         }
