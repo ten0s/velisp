@@ -8,8 +8,12 @@ In order to build **VeLisp** you need to have [Node.js 10.x](https://nodejs.org/
 ## Build
 
 ```
-$ npm install
 $ make
+```
+
+## Run tests
+
+```
 $ make test
 ```
 
@@ -19,9 +23,19 @@ $ make test
 $ npm start
 VeLisp 0.0.2 on linux
 Type ".help" for more information
+> (+ 1 2)
+3
 > (load "examples/fib.lsp")
 55
 55
+> (defun add (a b) (+ a b))
+'ADD
+> .type 'add
+Sym { sym: 'ADD' }
+> .type add
+Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
+> .type (add 1 2)
+Int { int: 3 }
 ```
 
 ## Run code from file
@@ -56,4 +70,15 @@ velisp-0.0.2-linux-x64  velisp-0.0.2-macos-x64  velisp-0.0.2-win-x64.exe  velisp
 ```
 $ ./velisp-0.0.2-linux-x64 examples/fib.lsp
 55
+```
+
+## Print parse tree
+
+```
+$ npm start -- --run tree
+VeLisp 0.0.2 on linux
+Type ".help" for more information
+>
+> (+ 1 2)
+(file (expr ( + (funArg (expr 1)) (funArg (expr 2)) )))
 ```

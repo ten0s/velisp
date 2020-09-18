@@ -2,11 +2,9 @@
     "name": "VeLisp",
     "version": "0.0.2",
     "description": "JavaScript interpreter for AutoLISP",
-    "main": "src/index.js",
+    "main": "src/main.js",
     "scripts": {
-        "start": "node src/index.js",
-        "test": "node node_modules/qunit/bin/qunit.js tests/*.js",
-        "tree": "node src/tree.js"
+        "start": "node src/main.js"
     },
     "author": "Dmitry Klionsky",
     "license": "",

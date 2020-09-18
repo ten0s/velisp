@@ -5,6 +5,21 @@ const {VeLispGlobalContext} = require('./VeLispGlobalContext.js');
 const {EvalVisitor} = require('./VeLispEvalVisitor.js');
 
 function evaluate(input, context = new VeLispGlobalContext()) {
+    input = preprocess(input);
+    const {tree} = parseInput(input);
+    const results = tree.accept(new EvalVisitor(context));
+    //console.log(results);
+    const result = getResult(results);
+    //console.log(result);
+    return result;
+}
+
+function tree(input, context = null) {
+    const {parser, tree} = parseInput(input);
+    return tree.toStringTree(parser.ruleNames);
+}
+
+function parseInput(input) {
     const chars = new antlr4.InputStream(input);
     const lexer = new VeLispLexer(chars);
     // Don't use JavaScript strictMode
@@ -12,12 +27,16 @@ function evaluate(input, context = new VeLispGlobalContext()) {
     const tokens = new antlr4.CommonTokenStream(lexer);
     const parser = new VeLispParser(tokens);
     //parser.buildParseTrees = true;
-    const tree = parser.file();
-    const results = tree.accept(new EvalVisitor(context));
-    //console.log(results);
-    const result = getResult(results);
-    //console.log(result);
-    return result;
+    return {
+        lexer,
+        tokens,
+        parser,
+        tree: parser.file(),
+    };
+}
+
+function preprocess(input) {
+    return input;
 }
 
 function getResult(res) {
@@ -29,3 +48,4 @@ function getResult(res) {
 }
 
 exports.evaluate = evaluate;
+exports.tree = tree;
