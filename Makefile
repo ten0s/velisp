@@ -19,6 +19,9 @@ pkgWin86:
 pkgWin64:
 	npx pkg -c package.json -t node10-win-x64 -o velisp-`jq -r .version package.json`-win-x64 src/index.js
 
+pkgMacOS:
+	npx pkg -c package.json -t node10-macos -o velisp-`jq -r .version package.json`-macos-x64 src/index.js
+
 cleanPkg:
 	rm -f velisp*
 
