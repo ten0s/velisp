@@ -105,4 +105,16 @@ exports.initContext = function (context) {
         }
         return new Bool(args[0] === args[1]);
     }));
+    context.setSym('EQUAL', new Fun('equal', ['expr1 expr2'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('equal: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('equal: too many arguments');
+        }
+        // Structural Equality
+        const val1 = args[0];
+        const val2 = args[1];
+        return val1.equal(val2);
+    }));
 }

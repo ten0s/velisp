@@ -1,13 +1,15 @@
 class Bool {
+    // :: (bool)
     constructor(bool) {
         this.bool = bool;
     }
 
-    // :: () -> true | false
+    // :: () -> bool
     isNil() {
         return !this.bool;
     }
 
+    // :: (Object) -> Bool
     and(that) {
         if (that instanceof Bool) {
             return new Bool(this.bool && that.bool);
@@ -15,6 +17,7 @@ class Bool {
         throw new Error(`Not implemented ${this} and ${that}`);
     }
 
+    // :: (Object) -> Bool
     or(that) {
         if (that instanceof Bool) {
             return new Bool(this.bool || that.bool);
@@ -22,10 +25,12 @@ class Bool {
         throw new Error(`Not implemented ${this} or ${that}`);
     }
 
+    // :: () -> Bool
     not() {
         return new Bool(!this.bool);
     }
 
+    // TODO: should not be here
     equalTo(that) {
         if (that instanceof Bool) {
             return new Bool(this.bool === that.bool);
@@ -38,12 +43,27 @@ class Bool {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    // :: (Object) -> Bool
+    equal(that) {
+        if (that instanceof Bool) {
+            return new Bool(this.bool === that.bool);
+        }
+        if (that instanceof List) {
+            if (that.isNil()) {
+                return new Bool(this.isNil());
+            }
+        }
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         return this.bool ? "T" : "nil";
     }
 }
 
 class Int {
+    // :: (int)
     constructor(int) {
         this.int = int;
     }
@@ -53,6 +73,7 @@ class Int {
         return false;
     }
 
+    // :: () -> int
     value() {
         return this.int;
     }
@@ -101,6 +122,7 @@ class Int {
         throw new Error(`Not implemented ${this} - ${that}`);
     }
 
+    // TODO: support string
     equalTo(that) {
         if (that instanceof Int) {
             return new Bool(this.int === that.int);
@@ -111,6 +133,7 @@ class Int {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    // TODO: support string
     lessThan(that) {
         if (that instanceof Int) {
             return new Bool(this.int < that.int);
@@ -121,16 +144,30 @@ class Int {
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
+    // :: () -> Int
     bitwiseNot() {
         return new Int(~this.int);
     }
 
+    // :: (Object) -> Bool
+    equal(that) {
+        if (that instanceof Int) {
+            return new Bool(this.int === that.int);
+        }
+        if (that instanceof Real) {
+            return new Bool(this.int === that.real);
+        }
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         return this.int.toString();
     }
 }
 
 class Real {
+    // (float | int)
     constructor(real) {
         this.real = real;
     }
@@ -140,6 +177,7 @@ class Real {
         return false;
     }
 
+    // :: () -> float
     value() {
         return this.real;
     }
@@ -184,6 +222,7 @@ class Real {
         throw new Error(`Not implemented ${this} - ${that}`);
     }
 
+    // TODO: support List
     equalTo(that) {
         if (that instanceof Int) {
             return new Bool(this.real === that.int);
@@ -194,6 +233,7 @@ class Real {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    // TODO: support List
     lessThan(that) {
         if (that instanceof Int) {
             return new Bool(this.real < that.int);
@@ -204,6 +244,18 @@ class Real {
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
+    // :: (Object) -> Bool
+    equal(that) {
+        if (that instanceof Int) {
+            return new Bool(this.real === that.int);
+        }
+        if (that instanceof Real) {
+            return new Bool(this.real === that.real);
+        }
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         if (Number.isInteger(this.real)) {
             return this.real + '.0';
@@ -213,6 +265,7 @@ class Real {
 }
 
 class Str {
+    // :: (string)
     constructor(str) {
         this.str = str;
     }
@@ -222,10 +275,12 @@ class Str {
         return false;
     }
 
+    // :: () -> string
     value() {
         return this.str;
     }
 
+    // TODO: support Int & Real
     equalTo(that) {
         if (that instanceof Str) {
             return new Bool(this.str === that.str);
@@ -233,6 +288,7 @@ class Str {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    // TODO: support Int & Real
     lessThan(that) {
         if (that instanceof Str) {
             return new Bool(this.str < that.str);
@@ -240,12 +296,22 @@ class Str {
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
+    // :: (Object) -> Bool
+    equal(that) {
+        if (that instanceof Str) {
+            return new Bool(this.str === that.str);
+        }
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         return `"${this.str}"`;
     }
 }
 
 class Sym {
+    // :: (string)
     constructor(sym) {
         this.sym = sym.toUpperCase();
     }
@@ -255,10 +321,12 @@ class Sym {
         return false;
     }
 
+    // :: () -> string
     value() {
         return this.sym;
     }
 
+    // TODO: should be not here
     equalTo(that) {
         if (that instanceof Sym) {
             return new Bool(this.sym === that.sym);
@@ -266,12 +334,22 @@ class Sym {
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    // :: (Object) -> Bool
+    equal(that) {
+        if (that instanceof Sym) {
+            return new Bool(this.sym === that.sym);
+        }
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         return `'${this.sym}`;
     }
 }
 
 class List {
+    // :: (Array)
     constructor(arr) {
         // TODO: who should make copy, see cdr
         this.arr = [...arr];
@@ -287,7 +365,7 @@ class List {
         return this.arr;
     }
 
-    // :: (List) -> Any
+    // :: (List) -> List
     cons(first) {
         return new List([first, ...this.arr]);
     }
@@ -303,13 +381,33 @@ class List {
         return new List(rest);
     }
 
-    // :: (List) -> Integer
+    // :: (List) -> int
     length() {
         return this.arr.length;
     }
 
+    // TODO: should not be here
     // :: (List | Bool) -> Bool
     equalTo(that) {
+        if (that instanceof List) {
+            if (this.arr.length != that.arr.length) {
+                return new Bool(false);
+            }
+            let result = new Bool(true);
+            for (let i = 0; i < this.arr.length; i++) {
+                result = result.and(this.arr[i].equal(that.arr[i]));
+                if (result.isNil()) break;
+            }
+            return result;
+        }
+        if (that.isNil()) {
+            return new Bool(this.isNil());
+        }
+        throw new Error(`Not implemented ${this} = ${that}`);
+    }
+
+    // :: (List | Bool) -> Bool
+    equal(that) {
         if (that instanceof List) {
             if (this.arr.length != that.arr.length) {
                 return new Bool(false);
@@ -324,15 +422,17 @@ class List {
         if (that.isNil()) {
             return new Bool(this.isNil());
         }
-        throw new Error(`Not implemented ${this} = ${that}`);
+        return new Bool(false);
     }
 
+    // :: () -> string
     toString() {
         return `(${this.arr.join(' ')})`;
     }
 }
 
 class Pair {
+    // :: (Any, Any)
     constructor(fst, snd) {
         this.fst = fst;
         this.snd = snd;
@@ -353,19 +453,30 @@ class Pair {
         return this.snd;
     }
 
+    // TODO: should not be here
     equalTo(that) {
         if (that instanceof Pair) {
-            return this.fst.equalTo(that.fst).and(this.snd.equalTo(that.snd));
+            return this.fst.equal(that.fst).and(this.snd.equal(that.snd));
         }
         throw new Error(`Not implemented ${this} = ${that}`);
     }
 
+    // :: (Object) -> Bool
+    equal(that) {
+        if (that instanceof Pair) {
+            return this.fst.equal(that.fst).and(this.snd.equal(that.snd));
+        }
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         return `(${this.fst} . ${this.snd})`;
     }
 }
 
 class Fun {
+    // :: (string, [string], [string], function)
     constructor(name, params, locals, fun) {
         this.name = name;
         this.params = params;
@@ -382,6 +493,12 @@ class Fun {
         return this.fun(evaluator, args);
     }
 
+    // :: () -> Bool
+    equal(that) {
+        return new Bool(false);
+    }
+
+    // :: () -> string
     toString() {
         const name = this.name;
         const params = this.params.join(' ');
