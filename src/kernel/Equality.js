@@ -89,4 +89,20 @@ exports.initContext = function (context) {
         }
         return result;
     }));
+    context.setSym('EQ', new Fun('eq', ['expr1 expr2'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('eq: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('eq: too many arguments');
+        }
+        // Referencial Equality, but treat Bool as a special case
+        if (typeof args[0] != typeof args[1]) {
+            return new Bool(false);
+        }
+        if (args[0] instanceof Bool) {
+            return new Bool(args[0].bool === args[1].bool);
+        }
+        return new Bool(args[0] === args[1]);
+    }));
 }
