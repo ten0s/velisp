@@ -1,16 +1,11 @@
-const Application = require('./Application.js');
-const Function = require('./Function.js');
-const List = require('./List.js');
-const Operators = require('./Operators.js');
-const Symbol = require('./Symbol.js');
-
 exports.initContext = function (context) {
     [
-        Application,
-        Function,
-        List,
-        Operators,
-        Symbol
+        require('./Application.js'),
+        require('./Arithmetic.js'),
+        require('./Equality.js'),
+        require('./Function.js'),
+        require('./List.js'),
+        require('./Symbol.js')
     ].forEach(
         module => module.initContext(context)
     );
