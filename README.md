@@ -38,7 +38,7 @@ $ cat examples/fib.lsp npm start
 55
 ```
 
-## Create Linux, Windows and MacOS executables that can be run without Node.js installed.
+## Create Linux, Windows and MacOS executables that can be run without Node.js installed
 
 
 ```
@@ -51,4 +51,9 @@ $ make pkgMacOS
 ```
 $ ls velisp*
 velisp-0.0.2-linux-x64  velisp-0.0.2-macos-x64  velisp-0.0.2-win-x64.exe  velisp-0.0.2-win-x86.exe
+```
+
+```
+$ ./velisp-0.0.2-linux-x64 examples/fib.lsp
+55
 ```
