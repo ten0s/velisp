@@ -30,19 +30,6 @@ class Bool {
         return new Bool(!this.bool);
     }
 
-    // TODO: should not be here
-    equalTo(that) {
-        if (that instanceof Bool) {
-            return new Bool(this.bool === that.bool);
-        }
-        if (that instanceof List) {
-            if (that.isNil()) {
-                return new Bool(this.isNil());
-            }
-        }
-        throw new Error(`Not implemented ${this} = ${that}`);
-    }
-
     // :: (Object) -> Bool
     equal(that) {
         if (that instanceof Bool) {
@@ -326,14 +313,6 @@ class Sym {
         return this.sym;
     }
 
-    // TODO: should be not here
-    equalTo(that) {
-        if (that instanceof Sym) {
-            return new Bool(this.sym === that.sym);
-        }
-        throw new Error(`Not implemented ${this} = ${that}`);
-    }
-
     // :: (Object) -> Bool
     equal(that) {
         if (that instanceof Sym) {
@@ -386,26 +365,6 @@ class List {
         return this.arr.length;
     }
 
-    // TODO: should not be here
-    // :: (List | Bool) -> Bool
-    equalTo(that) {
-        if (that instanceof List) {
-            if (this.arr.length != that.arr.length) {
-                return new Bool(false);
-            }
-            let result = new Bool(true);
-            for (let i = 0; i < this.arr.length; i++) {
-                result = result.and(this.arr[i].equal(that.arr[i]));
-                if (result.isNil()) break;
-            }
-            return result;
-        }
-        if (that.isNil()) {
-            return new Bool(this.isNil());
-        }
-        throw new Error(`Not implemented ${this} = ${that}`);
-    }
-
     // :: (List | Bool) -> Bool
     equal(that) {
         if (that instanceof List) {
@@ -414,7 +373,7 @@ class List {
             }
             let result = new Bool(true);
             for (let i = 0; i < this.arr.length; i++) {
-                result = result.and(this.arr[i].equalTo(that.arr[i]));
+                result = result.and(this.arr[i].equal(that.arr[i]));
                 if (result.isNil()) break;
             }
             return result;
@@ -451,14 +410,6 @@ class Pair {
     // :: (Pair) -> Any
     cdr() {
         return this.snd;
-    }
-
-    // TODO: should not be here
-    equalTo(that) {
-        if (that instanceof Pair) {
-            return this.fst.equal(that.fst).and(this.snd.equal(that.snd));
-        }
-        throw new Error(`Not implemented ${this} = ${that}`);
     }
 
     // :: (Object) -> Bool
