@@ -15,6 +15,14 @@ tree:
 test:
 	npx qunit tests/*.js
 
+rollPatch:
+	npm --no-git-tag-version version patch
+	sed -E "s/\{\{version\}\}/`jq -r .version package.json`/g" README.template > README.md
+	git add package.json package-lock.json README.md
+	git commit -m "Roll `jq -r .version package.json`"
+	# git tag -a "`jq -r .version package.json`" -m "Roll `jq -r .version package.json`"
+	echo git push origin master # --tags
+
 pkgLinux:
 	npx pkg -c package.json -t node10-linux-x64 -o velisp-`jq -r .version package.json`-linux-x64 src/main.js
 
