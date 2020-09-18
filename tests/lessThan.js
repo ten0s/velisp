@@ -3,8 +3,6 @@ const {evaluate} = require('../src/VeLispEvaluator.js');
 const {Bool} = require('../src/VeLispTypes.js');
 
 const tests = [
-    {test: '(< nil)', result: new Bool(true)},
-    {test: '(< T)', result: new Bool(true)},
     {test: '(< 1)', result: new Bool(true)},
 
     {test: '(< 1 1))', result: new Bool(false)},
@@ -21,6 +19,8 @@ const tests = [
 
 const errors = [
     {test: '(<)', result: new Error('<: too few arguments')},
+    {test: '(< nil)', result: new Error('<: expected Int, Real, Str')},
+    {test: '(< 1 nil)', result: new Error('<: expected Int, Real, Str')},
 ];
 
 QUnit.test("lessThan", assert => {

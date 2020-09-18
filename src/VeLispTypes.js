@@ -507,6 +507,16 @@ class Fun {
     }
 }
 
+function ensureType(funName, argValue, argTypes) {
+    for (const argType of argTypes) {
+        if (argValue instanceof argType) {
+            return argValue;
+        }
+    }
+    const typeNames = argTypes.map(type => type.name).join(', ');
+    throw new Error(`${funName}: expected ${typeNames}`);
+}
+
 exports.Bool = Bool;
 exports.Int = Int;
 exports.Real = Real;
@@ -515,3 +525,4 @@ exports.Sym = Sym;
 exports.List = List;
 exports.Pair = Pair;
 exports.Fun = Fun;
+exports.ensureType = ensureType;

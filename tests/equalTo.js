@@ -3,19 +3,9 @@ const {evaluate} = require('../src/VeLispEvaluator.js');
 const {Bool, Int, Pair} = require('../src/VeLispTypes.js');
 
 const tests = [
-    // TODO: (eq & (equal tests
-    {test: '(= nil)', result: new Bool(true)},
-    {test: '(= T)', result: new Bool(true)},
-
     {test: '(= 1)', result: new Bool(true)},
     {test: '(= 1.0)', result: new Bool(true)},
     {test: '(= "1.0")', result: new Bool(true)},
-
-    // TODO: (eq & (equal tests
-    {test: '(= nil nil))', result: new Bool(true)},
-    {test: '(= nil T))', result: new Bool(false)},
-    {test: '(= T nil))', result: new Bool(false)},
-    {test: '(= T T))', result: new Bool(true)},
 
     {test: '(= 1 1))', result: new Bool(true)},
     {test: '(= 4 4.0)', result: new Bool(true)},
@@ -30,22 +20,12 @@ const tests = [
     {test: `(setq a 0)
             (cons (= 1 2 (progn (setq a 1) 2)) a)`,
      result: new Pair(new Bool(false), new Int(1))},
-
-    // TODO: (eq & (equal tests
-    {test: '(= (list) (list))', result: new Bool(true)},
-    {test: '(= (list) nil)', result: new Bool(true)},
-    {test: '(= nil (list))', result: new Bool(true)},
-    {test: '(= (list 1 2 3) (list 1 2 3))', result: new Bool(true)},
-    {test: '(= (list 1 2 3) (list 1 2 3 4))', result: new Bool(false)},
-
-    // TODO: (eq & (equal tests
-    {test: '(= (cons 1 \'a) (cons 1 \'a))', result: new Bool(true)},
-    {test: '(= (cons 1 \'a) (cons 2 \'a))', result: new Bool(false)},
-    {test: '(= (cons 1 \'a) (cons 1 \'b))', result: new Bool(false)},
 ];
 
 const errors = [
     {test: '(=)', result: new Error('=: too few arguments')},
+    {test: '(= nil)', result: new Error('=: expected Int, Real, Str')},
+    {test: '(= 1 nil)', result: new Error('=: expected Int, Real, Str')},
 ];
 
 QUnit.test("equalTo", assert => {

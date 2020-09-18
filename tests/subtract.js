@@ -12,8 +12,17 @@ const tests = [
     {test: '(- 15 1 2 3 4 5)', result: new Int(0)},
 ];
 
+const errors = [
+    {test: '(- "1")', result: new Error('-: expected Int, Real')},
+    {test: '(- 1 "2")', result: new Error('-: expected Int, Real')},
+];
+
 QUnit.test("subtract", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });

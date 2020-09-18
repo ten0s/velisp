@@ -12,8 +12,16 @@ const tests = [
     {test: '(+ 2147483646 3))', result: new Int(2147483649)}, // TODO: -2147483647
 ];
 
+const errors = [
+    {test: '(+ 1 "2")', result: new Error('+: expected Int, Real')},
+];
+
 QUnit.test("add", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });

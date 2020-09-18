@@ -14,8 +14,17 @@ const tests = [
     {test: '(/ 100 20 2)', result: new Int(2)}, // Integer division
 ];
 
+const errors = [
+    {test: '(/ "1")', result: new Error('/: expected Int, Real')},
+    {test: '(/ 1 "2")', result: new Error('/: expected Int, Real')},
+];
+
 QUnit.test("divide", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });

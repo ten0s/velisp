@@ -71,14 +71,14 @@ const tests = [
     {test: `(defun double (x)
               (* 2 x))
             (defun map-apply (fn lst)
-              (cond ((= lst nil) nil)
+              (cond ((null lst) nil)
                     (T (cons (apply fn (list (car lst)))
                              (map-apply fn (cdr lst))))))
             (map-apply 'double (list 1 2 3))`,
      result: new List([new Int(2), new Int(4), new Int(6)])},
 
     {test: `(defun map (fn lst)
-              (cond ((= lst nil) nil)
+              (cond ((null lst) nil)
                     (T (cons (fn (car lst))
                              (map fn (cdr lst))))))
             (map '1+ (list 1 2 3))`,

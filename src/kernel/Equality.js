@@ -1,4 +1,4 @@
-const {Bool, Fun} = require('../VeLispTypes.js');
+const {Bool, Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js');
 
 //
 // Equality Functions
@@ -10,9 +10,9 @@ exports.initContext = function (context) {
             throw new Error('=: too few arguments');
         }
         let result = new Bool(true);
-        let val1 = args[0];
+        let val1 = ensureType('=', args[0], [Int, Real, Str]);
         for (let i = 1; i < args.length; i++) {
-            const val2 = args[i];
+            const val2 = ensureType('=', args[i], [Int, Real, Str]);
             result = val1.equalTo(val2);
             if (result.isNil()) break;
             val1 = val2;
@@ -24,9 +24,9 @@ exports.initContext = function (context) {
             throw new Error('/=: too few arguments');
         }
         let result = new Bool(true);
-        let val1 = args[0];
+        let val1 = ensureType('/=', args[0], [Int, Real, Str]);
         for (let i = 1; i < args.length; i++) {
-            const val2 = args[i];
+            const val2 = ensureType('/=', args[i], [Int, Real, Str]);
             result = val1.equalTo(val2).not();
             if (result.isNil()) break;
             val1 = val2;
@@ -38,9 +38,9 @@ exports.initContext = function (context) {
             throw new Error('<: too few arguments');
         }
         let result = new Bool(true);
-        let val1 = args[0];
+        let val1 = ensureType('<', args[0], [Int, Real, Str]);
         for (let i = 1; i < args.length; i++) {
-            const val2 = args[i];
+            const val2 = ensureType('<', args[i], [Int, Real, Str]);
             result = val1.lessThan(val2);
             if (result.isNil()) break;
             val1 = val2;
@@ -52,9 +52,9 @@ exports.initContext = function (context) {
             throw new Error('<=: too few arguments');
         }
         let result = new Bool(true);
-        let val1 = args[0];
+        let val1 = ensureType('<=', args[0], [Int, Real, Str]);
         for (let i = 1; i < args.length; i++) {
-            const val2 = args[i];
+            const val2 = ensureType('<=', args[i], [Int, Real, Str]);
             result = val1.lessThan(val2).or(val1.equalTo(val2));
             if (result.isNil()) break;
             val1 = val2;
@@ -66,9 +66,9 @@ exports.initContext = function (context) {
             throw new Error('>: too few arguments');
         }
         let result = new Bool(true);
-        let val1 = args[0];
+        let val1 = ensureType('>', args[0], [Int, Real, Str]);
         for (let i = 1; i < args.length; i++) {
-            const val2 = args[i];
+            const val2 = ensureType('>', args[i], [Int, Real, Str]);
             result = val1.lessThan(val2).or(val1.equalTo(val2)).not();
             if (result.isNil()) break;
             val1 = val2;
@@ -80,9 +80,9 @@ exports.initContext = function (context) {
             throw new Error('>=: too few arguments');
         }
         let result = new Bool(true);
-        let val1 = args[0];
+        let val1 = ensureType('>=', args[0], [Int, Real, Str]);
         for (let i = 1; i < args.length; i++) {
-            const val2 = args[i];
+            const val2 = ensureType('>=', args[i], [Int, Real, Str]);
             result = val1.lessThan(val2).not();
             if (result.isNil()) break;
             val1 = val2;

@@ -13,8 +13,16 @@ const tests = [
     {test: '(* 1 2 3 4 5)', result: new Int(120)},
 ];
 
+const errors = [
+    {test: '(* 1 "2")', result: new Error('*: expected Int, Real')},
+];
+
 QUnit.test("multiply", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });
