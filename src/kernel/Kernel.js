@@ -5,6 +5,7 @@ exports.initContext = function (context) {
         require('./Equality.js'),
         require('./Function.js'),
         require('./List.js'),
+        require('./String.js'),
         require('./Symbol.js')
     ].forEach(
         module => module.initContext(context)
