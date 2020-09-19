@@ -1,3 +1,5 @@
+.PHONY: test
+
 all: install compile
 
 install:
@@ -13,7 +15,7 @@ tree:
 	npm start -- --run tree
 
 test:
-	npx qunit tests/*.js
+	npx qunit
 
 rollPatch:
 	npm --no-git-tag-version version patch
