@@ -10,6 +10,7 @@ program.version(config.version)
     .action((file) => {
         const action = runAction(program.run);
         const context = new VeLispGlobalContext();
+        maybeInjectStdLib(action, context);
         if (file) {
             //console.log(`Read from ${file}`);
             const fs = require('fs');
@@ -40,6 +41,12 @@ function runAction(what, isREPL) {
     default:
         console.error(`Unknown action: ${what}`);
         process.exit(1);
+    }
+}
+
+function maybeInjectStdLib(action, context) {
+    if (action === evaluate) {
+        evaluate('(load (strcat (cwd) "/lib/stdlib/main.lsp"))', context);
     }
 }
 
