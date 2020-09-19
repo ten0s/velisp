@@ -19,7 +19,7 @@ const tests = [
 const errors = [
     {test: '(load)', result: new Error('load: too few arguments')},
     {test: '(load "filename" \'handled \'error)', result: new Error('load: too many arguments')},
-    {test: '(load \'filename)', result: new Error('load: filename must be Str')},
+    {test: '(load \'filename)', result: new Error('load: `filename` expected Str')},
     {test: '(load "examples/fib.bad")',
      result: new Error("load: examples/fib.bad: No such file or directory")},
 ];

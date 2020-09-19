@@ -25,7 +25,7 @@ exports.initContext = function (context) {
             } else if (list.isNil()) {
                 list = [];
             } else {
-                throw new Error('apply: list must be List');
+                throw new Error('apply: `list` expected List');
             }
             return fun.apply(self, list);
         }

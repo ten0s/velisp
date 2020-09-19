@@ -59,7 +59,7 @@ exports.initContext = function (context) {
         if (listOrPair instanceof Pair) {
             return listOrPair.car();
         }
-        throw new Error('car: must be non-empty List or Pair');
+        throw new Error('car: expected non-empty List, Pair');
     }));
     context.setSym('CDR', new Fun('cdr', ['listorpair'], [], (self, args) => {
         if (args.length == 0) {
@@ -75,6 +75,6 @@ exports.initContext = function (context) {
         if (listOrPair instanceof Pair) {
             return listOrPair.cdr();
         }
-        throw new Error('cdr: must be non-empty List or Pair');
+        throw new Error('cdr: expected non-empty List, Pair');
     }));
 }

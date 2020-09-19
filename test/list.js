@@ -47,11 +47,11 @@ const errors = [
 
     {test: '(car)', result: new Error('car: too few arguments')},
     {test: '(car (list 1 2) (list 3))', result: new Error('car: too many arguments')},
-    {test: '(car (list))', result: new Error('car: must be non-empty List or Pair')},
+    {test: '(car (list))', result: new Error('car: expected non-empty List, Pair')},
 
     {test: '(cdr)', result: new Error('cdr: too few arguments')},
     {test: '(cdr (list 1 2) (list 3))', result: new Error('cdr: too many arguments')},
-    {test: '(cdr (list))', result: new Error('cdr: must be non-empty List or Pair')},
+    {test: '(cdr (list))', result: new Error('cdr: expected non-empty List, Pair')},
 ];
 
 QUnit.test("list", assert => {

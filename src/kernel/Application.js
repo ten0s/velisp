@@ -25,7 +25,7 @@ exports.initContext = function (context) {
             throw new Error('load: too many arguments');
         }
         if (!(args[0] instanceof Str)) {
-            throw new Error('load: filename must be Str');
+            throw new Error('load: `filename` expected Str');
         }
         const filename = maybeAddExt(args[0].value());
         try {
