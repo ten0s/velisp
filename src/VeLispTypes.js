@@ -9,7 +9,7 @@ class Bool {
         return !this.bool;
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
     and(that) {
         if (that instanceof Bool) {
             return new Bool(this.bool && that.bool);
@@ -17,7 +17,7 @@ class Bool {
         throw new Error(`Not implemented ${this} and ${that}`);
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
     or(that) {
         if (that instanceof Bool) {
             return new Bool(this.bool || that.bool);
@@ -30,7 +30,15 @@ class Bool {
         return new Bool(!this.bool);
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        if (that instanceof Bool) {
+            return new Bool(this.bool === that.bool);
+        }
+        return new Bool(false);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Bool) {
             return new Bool(this.bool === that.bool);
@@ -136,7 +144,12 @@ class Int {
         return new Int(~this.int);
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        return this.equal(that);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Int) {
             return new Bool(this.int === that.int);
@@ -231,7 +244,12 @@ class Real {
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        return this.equal(that);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Int) {
             return new Bool(this.real === that.int);
@@ -283,7 +301,12 @@ class Str {
         throw new Error(`Not implemented ${this} < ${that}`);
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        return new Bool(this === that);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Str) {
             return new Bool(this.str === that.str);
@@ -313,7 +336,12 @@ class Sym {
         return this.sym;
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        return this.equal(that);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Sym) {
             return new Bool(this.sym === that.sym);
@@ -365,6 +393,11 @@ class List {
         return this.arr.length;
     }
 
+    // :: (Any) -> Bool
+    eq(that) {
+        return new Bool(this === that);
+    }
+
     // :: (List | Bool) -> Bool
     equal(that) {
         if (that instanceof List) {
@@ -412,7 +445,12 @@ class Pair {
         return this.snd;
     }
 
-    // :: (Object) -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        return new Bool(this === that);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Pair) {
             return this.fst.equal(that.fst).and(this.snd.equal(that.snd));
@@ -444,7 +482,12 @@ class Fun {
         return this.fun(evaluator, args);
     }
 
-    // :: () -> Bool
+    // :: (Any) -> Bool
+    eq(that) {
+        return new Bool(this === that);
+    }
+
+    // :: (Any) -> Bool
     equal(that) {
         return new Bool(false);
     }

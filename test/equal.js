@@ -9,13 +9,14 @@ const tests = [
     {test: '(equal T nil))', result: new Bool(false)},
 
     {test: '(equal 1 1))', result: new Bool(true)},
-    {test: '(equal 1 1.0)', result: new Bool(true)}, // TODO: ?
-    {test: '(equal 1.0 1)', result: new Bool(true)}, // TODO: ?
+    {test: '(equal 1 1.0)', result: new Bool(true)},
+    {test: '(equal 1.0 1)', result: new Bool(true)},
     {test: '(equal 1.0 1.0)', result: new Bool(true)},
 
     {test: '(equal "foo" "foo"))', result: new Bool(true)},
 
     {test: '(equal \'foo \'foo))', result: new Bool(true)},
+    {test: '(equal \'foo \'FOO))', result: new Bool(true)},
 
     {test: '(equal (list) (list))', result: new Bool(true)},
     {test: '(equal (list) nil)', result: new Bool(true)},

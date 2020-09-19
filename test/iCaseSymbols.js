@@ -22,9 +22,6 @@ const tests = [
     {test: '(setq FOO "foo") foo', result: new Str('foo')},
 
     {test: '(setq foo "foo" FOO "FOO") foo', result: new Str('FOO')},
-
-    // TODO: (eq 'foo 'FOO) => T
-    // TODO: (equal 'foo 'FOO) => T
 ];
 
 QUnit.test("defun", assert => {

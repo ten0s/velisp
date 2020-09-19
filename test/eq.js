@@ -8,13 +8,15 @@ const tests = [
     {test: '(eq nil T))', result: new Bool(false)},
     {test: '(eq T nil))', result: new Bool(false)},
 
-    {test: '(eq 1 1))', result: new Bool(false)}, // TODO: ?
-    {test: '(eq 1 1.0)', result: new Bool(false)},
-    {test: '(eq 1.0 1.0)', result: new Bool(false)}, // TODO: ?
+    {test: '(eq 1 1))', result: new Bool(true)},
+    {test: '(eq 1 1.0)', result: new Bool(true)},
+    {test: '(eq 1.0 1)', result: new Bool(true)},
+    {test: '(eq 1.0 1.0)', result: new Bool(true)},
 
     {test: '(eq "foo" "foo"))', result: new Bool(false)},
 
-    {test: '(eq \'foo \'foo))', result: new Bool(false)}, // TODO: ?
+    {test: '(eq \'foo \'foo))', result: new Bool(true)},
+    {test: '(eq \'foo \'FOO))', result: new Bool(true)},
 
     {test: '(eq (list) (list))', result: new Bool(false)},
     {test: '(eq (list) nil)', result: new Bool(false)},
