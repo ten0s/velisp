@@ -14,7 +14,7 @@ class Bool {
         if (that instanceof Bool) {
             return new Bool(this.bool && that.bool);
         }
-        throw new Error(`Not implemented ${this} and ${that}`);
+        throw new Error(`Not implemented (and ${this} ${that})`);
     }
 
     // :: (Any) -> Bool
@@ -22,7 +22,7 @@ class Bool {
         if (that instanceof Bool) {
             return new Bool(this.bool || that.bool);
         }
-        throw new Error(`Not implemented ${this} or ${that}`);
+        throw new Error(`Not implemented (or ${this} ${that})`);
     }
 
     // :: () -> Bool
@@ -80,7 +80,7 @@ class Int {
         if (that instanceof Real) {
             return new Real(this.int * that.real);
         }
-        throw new Error(`Not implemented ${this} * ${that}`);
+        throw new Error(`Not implemented (* ${this} ${that})`);
     }
 
     divide(that) {
@@ -94,7 +94,7 @@ class Int {
         if (that instanceof Real) {
             return new Real(this.int / that.real);
         }
-        throw new Error(`Not implemented ${this} / ${that}`);
+        throw new Error(`Not implemented (/ ${this} ${that})`);
     }
 
     add(that) {
@@ -104,7 +104,7 @@ class Int {
         if (that instanceof Real) {
             return new Real(this.int + that.real);
         }
-        throw new Error(`Not implemented ${this} + ${that}`);
+        throw new Error(`Not implemented (+ ${this} ${that})`);
     }
 
     subtract(that) {
@@ -114,7 +114,7 @@ class Int {
         if (that instanceof Real) {
             return new Real(this.int - that.real);
         }
-        throw new Error(`Not implemented ${this} - ${that}`);
+        throw new Error(`Not implemented (- ${this} ${that})`);
     }
 
     // TODO: support string
@@ -125,7 +125,7 @@ class Int {
         if (that instanceof Real) {
             return new Bool(this.int === that.real);
         }
-        throw new Error(`Not implemented ${this} = ${that}`);
+        throw new Error(`Not implemented (= ${this} ${that})`);
     }
 
     // TODO: support string
@@ -136,7 +136,7 @@ class Int {
         if (that instanceof Real) {
             return new Bool(this.int < that.real);
         }
-        throw new Error(`Not implemented ${this} < ${that}`);
+        throw new Error(`Not implemented (< ${this} ${that})`);
     }
 
     // :: () -> Int
@@ -189,7 +189,7 @@ class Real {
         if (that instanceof Real) {
             return new Real(this.real * that.real);
         }
-        throw new Error(`Not implemented ${this} * ${that}`);
+        throw new Error(`Not implemented (* ${this} ${that})`);
     }
 
     divide(that) {
@@ -199,7 +199,7 @@ class Real {
         if (that instanceof Real) {
             return new Real(this.real / that.real);
         }
-        throw new Error(`Not implemented ${this} / ${that}`);
+        throw new Error(`Not implemented (/ ${this} ${that})`);
     }
 
     add(that) {
@@ -209,7 +209,7 @@ class Real {
         if (that instanceof Real) {
             return new Real(this.real + that.real);
         }
-        throw new Error(`Not implemented ${this} + ${that}`);
+        throw new Error(`Not implemented (+ ${this} ${that})`);
     }
 
     subtract(that) {
@@ -219,7 +219,7 @@ class Real {
         if (that instanceof Real) {
             return new Real(this.real - that.real);
         }
-        throw new Error(`Not implemented ${this} - ${that}`);
+        throw new Error(`Not implemented (+ ${this} ${that})`);
     }
 
     // TODO: support List
@@ -230,7 +230,7 @@ class Real {
         if (that instanceof Real) {
             return new Bool(this.real === that.real);
         }
-        throw new Error(`Not implemented ${this} = ${that}`);
+        throw new Error(`Not implemented (= ${this} ${that})`);
     }
 
     // TODO: support List
@@ -241,7 +241,7 @@ class Real {
         if (that instanceof Real) {
             return new Bool(this.real < that.real);
         }
-        throw new Error(`Not implemented ${this} < ${that}`);
+        throw new Error(`Not implemented (< ${this} ${that})`);
     }
 
     // :: (Any) -> Bool
@@ -285,12 +285,40 @@ class Str {
         return this.str;
     }
 
+    // :: (List) -> int
+    length() {
+        return this.str.length;
+    }
+
+    // :: (Str) -> Str
+    concat(that) {
+        if (that instanceof Str) {
+            return new Str(this.str + that.str);
+        }
+        throw new Error(`Not implemented (strcat ${this} ${that})`);
+    }
+
+    // :: (Int, Int) -> Str
+    substring(start, length) {
+        return new Str(this.str.substring(start, start + length));
+    }
+
+    // :: () -> Str
+    toUpperCase() {
+        return new Str(this.str.toUpperCase());
+    }
+
+    // :: () -> Str
+    toLowerCase() {
+        return new Str(this.str.toLowerCase());
+    }
+
     // TODO: support Int & Real
     equalTo(that) {
         if (that instanceof Str) {
             return new Bool(this.str === that.str);
         }
-        throw new Error(`Not implemented ${this} = ${that}`);
+        throw new Error(`Not implemented (= ${this} ${that})`);
     }
 
     // TODO: support Int & Real
@@ -298,7 +326,7 @@ class Str {
         if (that instanceof Str) {
             return new Bool(this.str < that.str);
         }
-        throw new Error(`Not implemented ${this} < ${that}`);
+        throw new Error(`Not implemented (< ${this} ${that})`);
     }
 
     // :: (Any) -> Bool
@@ -501,14 +529,14 @@ class Fun {
     }
 }
 
-function ensureType(funName, argValue, argTypes) {
+function ensureType(prefix, argValue, argTypes) {
     for (const argType of argTypes) {
         if (argValue instanceof argType) {
             return argValue;
         }
     }
     const typeNames = argTypes.map(type => type.name).join(', ');
-    throw new Error(`${funName}: expected ${typeNames}`);
+    throw new Error(`${prefix} expected ${typeNames}`);
 }
 
 exports.Bool = Bool;
