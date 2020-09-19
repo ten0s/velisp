@@ -1,8 +1,17 @@
-;; (member 'c (list 'a 'b 'c 'd 'e))
-;; => ('C 'D 'E)
-;; (member 'q (list 'a 'b 'c 'd 'e))
-;; => nil
+;; > (member 'c (list 'a 'b 'c 'd 'e))
+;; ('C 'D 'E)
+;; > (member 'q (list 'a 'b 'c 'd 'e))
+;; nil
 (defun member (val lst)
   (if (null lst) nil
     (if (equal val (car lst)) lst
       (member val (cdr lst)))))
+
+;; > (mapcar '1+ (list))
+;; nil
+;; > (mapcar '1+ (list 1 2 3))
+;; (2 3 4)
+(defun mapcar (fn lst)
+  (if (null lst) nil
+    (cons (fn (car lst))
+          (mapcar fn (cdr lst)))))
