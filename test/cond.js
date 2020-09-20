@@ -9,6 +9,10 @@ const tests = [
     {test: '(CONd)', result: new Bool(false)},
     {test: '(COND)', result: new Bool(false)},
 
+    {test: '(cond (nil))', result: new Bool(false)},
+    {test: '(cond (nil) (T))', result: new Bool(true)},
+    {test: '(cond (nil) (T "one" "two" "three"))', result: new Str('three')},
+    {test: '(cond (nil) (T "one" "two") (T "three"))', result: new Str('two')},
     {test: '(cond (nil "no"))', result: new Bool(false)},
     {test: '(cond (T "yes"))', result: new Str('yes')},
     {test: '(cond (nil "no") (T "yes"))', result: new Str('yes')},

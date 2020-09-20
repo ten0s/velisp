@@ -27,7 +27,10 @@ class EvalVisitor extends VeLispVisitor {
             const test = this.getValue(this.visit(ctx.condTestResult(i).condTest()));
             //console.error('cond test:', test);
             if (!test.isNil()) {
-                result = this.visit(ctx.condTestResult(i).condResult());
+                result = test;
+                for (let j = 0; j < ctx.condTestResult(i).condResult().length; j++) {
+                    result = this.getValue(this.visit(ctx.condTestResult(i).condResult(j)));
+                }
                 break;
             }
         }

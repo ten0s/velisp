@@ -7,7 +7,7 @@ var grammarFileName = "VeLisp.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u001a\u00d0\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u0003\u001a\u00d5\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
@@ -35,21 +35,22 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u009f\n\u0003\f\u0003\u000e\u0003\u00a2\u000b\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0005\u0003\u00ac\n\u0003\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0006\u0003\u0006",
-    "\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003\t\u0003\t\u0003\n\u0003",
-    "\n\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e",
-    "\u0003\u000e\u0003\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0010",
-    "\u0003\u0011\u0003\u0011\u0003\u0012\u0003\u0012\u0003\u0012\u0002\u0002",
-    "\u0013\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a",
-    "\u001c\u001e \"\u0002\u0002\u0002\u00de\u0002%\u0003\u0002\u0002\u0002",
-    "\u0004\u00ab\u0003\u0002\u0002\u0002\u0006\u00ad\u0003\u0002\u0002\u0002",
-    "\b\u00b2\u0003\u0002\u0002\u0002\n\u00b4\u0003\u0002\u0002\u0002\f\u00b6",
-    "\u0003\u0002\u0002\u0002\u000e\u00b8\u0003\u0002\u0002\u0002\u0010\u00ba",
-    "\u0003\u0002\u0002\u0002\u0012\u00bc\u0003\u0002\u0002\u0002\u0014\u00be",
-    "\u0003\u0002\u0002\u0002\u0016\u00c0\u0003\u0002\u0002\u0002\u0018\u00c2",
-    "\u0003\u0002\u0002\u0002\u001a\u00c4\u0003\u0002\u0002\u0002\u001c\u00c6",
-    "\u0003\u0002\u0002\u0002\u001e\u00c8\u0003\u0002\u0002\u0002 \u00cb",
-    "\u0003\u0002\u0002\u0002\"\u00cd\u0003\u0002\u0002\u0002$&\u0005\u0004",
+    "\u0007\u0004\u00b1\n\u0004\f\u0004\u000e\u0004\u00b4\u000b\u0004\u0003",
+    "\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0006\u0003\u0006\u0003",
+    "\u0007\u0003\u0007\u0003\b\u0003\b\u0003\t\u0003\t\u0003\n\u0003\n\u0003",
+    "\u000b\u0003\u000b\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e\u0003",
+    "\u000e\u0003\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0010\u0003",
+    "\u0011\u0003\u0011\u0003\u0012\u0003\u0012\u0003\u0012\u0002\u0002\u0013",
+    "\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c",
+    "\u001e \"\u0002\u0002\u0002\u00e4\u0002%\u0003\u0002\u0002\u0002\u0004",
+    "\u00ab\u0003\u0002\u0002\u0002\u0006\u00ad\u0003\u0002\u0002\u0002\b",
+    "\u00b7\u0003\u0002\u0002\u0002\n\u00b9\u0003\u0002\u0002\u0002\f\u00bb",
+    "\u0003\u0002\u0002\u0002\u000e\u00bd\u0003\u0002\u0002\u0002\u0010\u00bf",
+    "\u0003\u0002\u0002\u0002\u0012\u00c1\u0003\u0002\u0002\u0002\u0014\u00c3",
+    "\u0003\u0002\u0002\u0002\u0016\u00c5\u0003\u0002\u0002\u0002\u0018\u00c7",
+    "\u0003\u0002\u0002\u0002\u001a\u00c9\u0003\u0002\u0002\u0002\u001c\u00cb",
+    "\u0003\u0002\u0002\u0002\u001e\u00cd\u0003\u0002\u0002\u0002 \u00d0",
+    "\u0003\u0002\u0002\u0002\"\u00d2\u0003\u0002\u0002\u0002$&\u0005\u0004",
     "\u0003\u0002%$\u0003\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002\'",
     "%\u0003\u0002\u0002\u0002\'(\u0003\u0002\u0002\u0002(\u0003\u0003\u0002",
     "\u0002\u0002)*\u0007\u0003\u0002\u0002*.\u0007\u0006\u0002\u0002+-\u0005",
@@ -121,24 +122,27 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002\u0002\u00ab\u00a7\u0003\u0002\u0002\u0002\u00ab\u00a8\u0003\u0002",
     "\u0002\u0002\u00ab\u00a9\u0003\u0002\u0002\u0002\u00ab\u00aa\u0003\u0002",
     "\u0002\u0002\u00ac\u0005\u0003\u0002\u0002\u0002\u00ad\u00ae\u0007\u0003",
-    "\u0002\u0002\u00ae\u00af\u0005\b\u0005\u0002\u00af\u00b0\u0005\n\u0006",
-    "\u0002\u00b0\u00b1\u0007\u0004\u0002\u0002\u00b1\u0007\u0003\u0002\u0002",
-    "\u0002\u00b2\u00b3\u0005\u0004\u0003\u0002\u00b3\t\u0003\u0002\u0002",
-    "\u0002\u00b4\u00b5\u0005\u0004\u0003\u0002\u00b5\u000b\u0003\u0002\u0002",
-    "\u0002\u00b6\u00b7\u0007\u0016\u0002\u0002\u00b7\r\u0003\u0002\u0002",
-    "\u0002\u00b8\u00b9\u0007\u0016\u0002\u0002\u00b9\u000f\u0003\u0002\u0002",
-    "\u0002\u00ba\u00bb\u0007\u0016\u0002\u0002\u00bb\u0011\u0003\u0002\u0002",
-    "\u0002\u00bc\u00bd\u0007\u0016\u0002\u0002\u00bd\u0013\u0003\u0002\u0002",
-    "\u0002\u00be\u00bf\u0005\u0004\u0003\u0002\u00bf\u0015\u0003\u0002\u0002",
-    "\u0002\u00c0\u00c1\u0005\u0004\u0003\u0002\u00c1\u0017\u0003\u0002\u0002",
-    "\u0002\u00c2\u00c3\u0005\u0004\u0003\u0002\u00c3\u0019\u0003\u0002\u0002",
-    "\u0002\u00c4\u00c5\u0005\u0004\u0003\u0002\u00c5\u001b\u0003\u0002\u0002",
-    "\u0002\u00c6\u00c7\u0005\u0004\u0003\u0002\u00c7\u001d\u0003\u0002\u0002",
-    "\u0002\u00c8\u00c9\u0007\u0016\u0002\u0002\u00c9\u00ca\u0005\u0004\u0003",
-    "\u0002\u00ca\u001f\u0003\u0002\u0002\u0002\u00cb\u00cc\u0005\u0004\u0003",
-    "\u0002\u00cc!\u0003\u0002\u0002\u0002\u00cd\u00ce\u0005\u0004\u0003",
-    "\u0002\u00ce#\u0003\u0002\u0002\u0002\u0012\'.7BILR]gpy\u0083\u008d",
-    "\u0097\u00a0\u00ab"].join("");
+    "\u0002\u0002\u00ae\u00b2\u0005\b\u0005\u0002\u00af\u00b1\u0005\n\u0006",
+    "\u0002\u00b0\u00af\u0003\u0002\u0002\u0002\u00b1\u00b4\u0003\u0002\u0002",
+    "\u0002\u00b2\u00b0\u0003\u0002\u0002\u0002\u00b2\u00b3\u0003\u0002\u0002",
+    "\u0002\u00b3\u00b5\u0003\u0002\u0002\u0002\u00b4\u00b2\u0003\u0002\u0002",
+    "\u0002\u00b5\u00b6\u0007\u0004\u0002\u0002\u00b6\u0007\u0003\u0002\u0002",
+    "\u0002\u00b7\u00b8\u0005\u0004\u0003\u0002\u00b8\t\u0003\u0002\u0002",
+    "\u0002\u00b9\u00ba\u0005\u0004\u0003\u0002\u00ba\u000b\u0003\u0002\u0002",
+    "\u0002\u00bb\u00bc\u0007\u0016\u0002\u0002\u00bc\r\u0003\u0002\u0002",
+    "\u0002\u00bd\u00be\u0007\u0016\u0002\u0002\u00be\u000f\u0003\u0002\u0002",
+    "\u0002\u00bf\u00c0\u0007\u0016\u0002\u0002\u00c0\u0011\u0003\u0002\u0002",
+    "\u0002\u00c1\u00c2\u0007\u0016\u0002\u0002\u00c2\u0013\u0003\u0002\u0002",
+    "\u0002\u00c3\u00c4\u0005\u0004\u0003\u0002\u00c4\u0015\u0003\u0002\u0002",
+    "\u0002\u00c5\u00c6\u0005\u0004\u0003\u0002\u00c6\u0017\u0003\u0002\u0002",
+    "\u0002\u00c7\u00c8\u0005\u0004\u0003\u0002\u00c8\u0019\u0003\u0002\u0002",
+    "\u0002\u00c9\u00ca\u0005\u0004\u0003\u0002\u00ca\u001b\u0003\u0002\u0002",
+    "\u0002\u00cb\u00cc\u0005\u0004\u0003\u0002\u00cc\u001d\u0003\u0002\u0002",
+    "\u0002\u00cd\u00ce\u0007\u0016\u0002\u0002\u00ce\u00cf\u0005\u0004\u0003",
+    "\u0002\u00cf\u001f\u0003\u0002\u0002\u0002\u00d0\u00d1\u0005\u0004\u0003",
+    "\u0002\u00d1!\u0003\u0002\u0002\u0002\u00d2\u00d3\u0005\u0004\u0003",
+    "\u0002\u00d3#\u0003\u0002\u0002\u0002\u0013\'.7BILR]gpy\u0083\u008d",
+    "\u0097\u00a0\u00ab\u00b2"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -1268,8 +1272,15 @@ CondTestResultContext.prototype.condTest = function() {
     return this.getTypedRuleContext(CondTestContext,0);
 };
 
-CondTestResultContext.prototype.condResult = function() {
-    return this.getTypedRuleContext(CondResultContext,0);
+CondTestResultContext.prototype.condResult = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(CondResultContext);
+    } else {
+        return this.getTypedRuleContext(CondResultContext,i);
+    }
 };
 
 CondTestResultContext.prototype.accept = function(visitor) {
@@ -1289,15 +1300,24 @@ VeLispParser.prototype.condTestResult = function() {
 
     var localctx = new CondTestResultContext(this, this._ctx, this.state);
     this.enterRule(localctx, 4, VeLispParser.RULE_condTestResult);
+    var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 171;
         this.match(VeLispParser.T__0);
         this.state = 172;
         this.condTest();
-        this.state = 173;
-        this.condResult();
-        this.state = 174;
+        this.state = 176;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeLispParser.T__0) | (1 << VeLispParser.NIL) | (1 << VeLispParser.TRU) | (1 << VeLispParser.INT) | (1 << VeLispParser.REAL) | (1 << VeLispParser.STR) | (1 << VeLispParser.SYM) | (1 << VeLispParser.ID))) !== 0)) {
+            this.state = 173;
+            this.condResult();
+            this.state = 178;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+        }
+        this.state = 179;
         this.match(VeLispParser.T__1);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1353,7 +1373,7 @@ VeLispParser.prototype.condTest = function() {
     this.enterRule(localctx, 6, VeLispParser.RULE_condTest);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 176;
+        this.state = 181;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1409,7 +1429,7 @@ VeLispParser.prototype.condResult = function() {
     this.enterRule(localctx, 8, VeLispParser.RULE_condResult);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 178;
+        this.state = 183;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1465,7 +1485,7 @@ VeLispParser.prototype.defunName = function() {
     this.enterRule(localctx, 10, VeLispParser.RULE_defunName);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 180;
+        this.state = 185;
         this.match(VeLispParser.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1521,7 +1541,7 @@ VeLispParser.prototype.defunParam = function() {
     this.enterRule(localctx, 12, VeLispParser.RULE_defunParam);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 182;
+        this.state = 187;
         this.match(VeLispParser.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1577,7 +1597,7 @@ VeLispParser.prototype.defunLocal = function() {
     this.enterRule(localctx, 14, VeLispParser.RULE_defunLocal);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 184;
+        this.state = 189;
         this.match(VeLispParser.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1633,7 +1653,7 @@ VeLispParser.prototype.foreachName = function() {
     this.enterRule(localctx, 16, VeLispParser.RULE_foreachName);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 186;
+        this.state = 191;
         this.match(VeLispParser.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1689,7 +1709,7 @@ VeLispParser.prototype.foreachList = function() {
     this.enterRule(localctx, 18, VeLispParser.RULE_foreachList);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 188;
+        this.state = 193;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1745,7 +1765,7 @@ VeLispParser.prototype.ifTest = function() {
     this.enterRule(localctx, 20, VeLispParser.RULE_ifTest);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 190;
+        this.state = 195;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1801,7 +1821,7 @@ VeLispParser.prototype.ifThen = function() {
     this.enterRule(localctx, 22, VeLispParser.RULE_ifThen);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 192;
+        this.state = 197;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1857,7 +1877,7 @@ VeLispParser.prototype.ifElse = function() {
     this.enterRule(localctx, 24, VeLispParser.RULE_ifElse);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 194;
+        this.state = 199;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1913,7 +1933,7 @@ VeLispParser.prototype.repeatNum = function() {
     this.enterRule(localctx, 26, VeLispParser.RULE_repeatNum);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 196;
+        this.state = 201;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1973,9 +1993,9 @@ VeLispParser.prototype.setqNameExpr = function() {
     this.enterRule(localctx, 28, VeLispParser.RULE_setqNameExpr);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 198;
+        this.state = 203;
         this.match(VeLispParser.ID);
-        this.state = 199;
+        this.state = 204;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2031,7 +2051,7 @@ VeLispParser.prototype.whileTest = function() {
     this.enterRule(localctx, 30, VeLispParser.RULE_whileTest);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 201;
+        this.state = 206;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2087,7 +2107,7 @@ VeLispParser.prototype.funArg = function() {
     this.enterRule(localctx, 32, VeLispParser.RULE_funArg);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 203;
+        this.state = 208;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

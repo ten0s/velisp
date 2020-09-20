@@ -29,7 +29,7 @@ expr :
      | SYM                                                                        # sym
      ;
 
-condTestResult : '(' condTest condResult ')' ;
+condTestResult : '(' condTest condResult* ')' ;
 condTest : expr ;
 condResult : expr ;
 
