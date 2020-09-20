@@ -5,8 +5,6 @@ grammar VeLisp;
 file : expr+ ;
 
 expr :
-     // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
-
        '(' AND expr* ')'                                                          # and
      | '(' COND condTestResult* ')'                                               # cond
      | '(' DEFUN defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')'   # defun
@@ -20,13 +18,7 @@ expr :
      | '(' SETQ setqNameExpr* ')'                                                 # setQ
      | '(' WHILE whileTest expr+ ')'                                              # while
 
-     // Basic Output Functions (AutoCAD 2013 AutoLISP Developer's Guild p.16)
-
-     | '(' PRINC expr ')'                                                         # princ
-
      | '(' ID funArg* ')'                                                         # funCall
-
-     // Data Types (AutoCAD 2013 AutoLISP Developer's Guild p.6)
 
      | NIL                                                                        # nil
      | TRU                                                                        # tru
@@ -72,7 +64,6 @@ PROGN : P R O G N ;
 REPEAT : R E P E A T ;
 SETQ : S E T Q ;
 WHILE : W H I L E ;
-PRINC : P R I N C ;
 NIL : N I L ;
 TRU : T ;
 

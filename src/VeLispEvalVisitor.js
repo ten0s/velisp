@@ -175,12 +175,6 @@ class EvalVisitor extends VeLispVisitor {
         return result;
     }
 
-    visitPrinc(ctx) {
-        let expr = this.getValue(this.visit(ctx.expr()));
-        console.log(expr.toString());
-        return expr;
-    }
-
     visitFunCall(ctx) {
         let name = this.visit(ctx.ID()).toUpperCase();
         //console.log(`funName: ${name}`);

@@ -78,12 +78,6 @@ VeLispVisitor.prototype.visitWhile = function(ctx) {
 };
 
 
-// Visit a parse tree produced by VeLispParser#princ.
-VeLispVisitor.prototype.visitPrinc = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by VeLispParser#funCall.
 VeLispVisitor.prototype.visitFunCall = function(ctx) {
   return this.visitChildren(ctx);

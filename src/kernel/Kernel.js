@@ -4,6 +4,7 @@ exports.initContext = function (context) {
         require('./Arithmetic.js'),
         require('./Equality.js'),
         require('./Function.js'),
+        require('./IO.js'),
         require('./List.js'),
         require('./String.js'),
         require('./Symbol.js'),
