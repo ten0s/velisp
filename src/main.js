@@ -46,7 +46,10 @@ function runAction(what, isREPL) {
 
 function maybeInjectStdLib(action, context) {
     if (action === evaluate) {
-        evaluate('(load (strcat (cwd) "/lib/stdlib/main.lsp"))', context);
+        const path = require('path');
+        const rootdir = path.join(__dirname, '..');
+        process.env['VELISP_ROOT'] = rootdir;
+        evaluate(`(load "${rootdir}/lib/stdlib/main.lsp")`, context);
     }
 }
 
