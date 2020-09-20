@@ -6,7 +6,7 @@ const Evaluator = require('../VeLispEvaluator.js');
 const {fmtError} = require('../VeLispError.js');
 
 //
-// Application-Handling Functions
+// System Functions
 //
 
 exports.initContext = function (context) {
