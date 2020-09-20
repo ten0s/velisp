@@ -23,11 +23,23 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('getenv: too many arguments');
         }
-        const name = ensureType('getenv', args[0], [Str]);
+        const name = ensureType('getenv:', args[0], [Str]);
         const value = process.env[name.value()];
         if (typeof value === "undefined") {
             return new Bool(false);
         }
         return new Str(value);
+    }));
+    context.setSym('SETENV', new Fun('setenv', ['varname', 'value'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('setenv: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('setenv: too many arguments');
+        }
+        const name = ensureType('setenv: `varname`', args[0], [Str]);
+        const value = ensureType('setenv: `value`', args[1], [Str]);
+        process.env[name.value()] = value.value();
+        return value;
     }));
 }
