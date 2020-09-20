@@ -17,6 +17,10 @@ const tests = [
 const errors = [
     {test: '(/ "1")', result: new Error('/: expected Int, Real')},
     {test: '(/ 1 "2")', result: new Error('/: expected Int, Real')},
+    {test: '(/ 1 0)', result: new Error('/: division by zero')},
+    {test: '(/ 1 0.0)', result: new Error('/: division by zero')},
+    {test: '(/ 1.0 0)', result: new Error('/: division by zero')},
+    {test: '(/ 1.0 0.0)', result: new Error('/: division by zero')},
 ];
 
 QUnit.test("divide", assert => {

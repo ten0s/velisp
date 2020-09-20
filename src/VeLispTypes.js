@@ -85,6 +85,9 @@ class Int {
 
     divide(that) {
         if (that instanceof Int) {
+            if (that.int === 0) {
+                throw new Error('/: division by zero');
+            }
             const res = this.int / that.int;
             if (Number.isInteger(res)) {
                 return new Int(res);
@@ -92,6 +95,9 @@ class Int {
             return new Int(Math.floor(res));
         }
         if (that instanceof Real) {
+            if (that.real === 0) {
+                throw new Error('/: division by zero');
+            }
             return new Real(this.int / that.real);
         }
         throw new Error(`Not implemented (/ ${this} ${that})`);
@@ -194,9 +200,15 @@ class Real {
 
     divide(that) {
         if (that instanceof Int) {
+            if (that.int === 0) {
+                throw new Error('/: division by zero');
+            }
             return new Real(this.real / that.int);
         }
         if (that instanceof Real) {
+            if (that.real === 0.0) {
+                throw new Error('/: division by zero');
+            }
             return new Real(this.real / that.real);
         }
         throw new Error(`Not implemented (/ ${this} ${that})`);
