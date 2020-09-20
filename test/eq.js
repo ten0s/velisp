@@ -13,7 +13,7 @@ const tests = [
     {test: '(eq 1.0 1)', result: new Bool(true)},
     {test: '(eq 1.0 1.0)', result: new Bool(true)},
 
-    {test: '(eq "foo" "foo"))', result: new Bool(false)},
+    {test: '(eq "foo" "foo"))', result: new Bool(true)},
 
     {test: '(eq \'foo \'foo))', result: new Bool(true)},
     {test: '(eq \'foo \'FOO))', result: new Bool(true)},

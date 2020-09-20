@@ -285,7 +285,7 @@ class Str {
         return this.str;
     }
 
-    // :: (List) -> int
+    // :: () -> int
     length() {
         return this.str.length;
     }
@@ -331,7 +331,7 @@ class Str {
 
     // :: (Any) -> Bool
     eq(that) {
-        return new Bool(this === that);
+        return this.equal(that);
     }
 
     // :: (Any) -> Bool
@@ -416,7 +416,7 @@ class List {
         return new List(rest);
     }
 
-    // :: (List) -> int
+    // :: () -> int
     length() {
         return this.arr.length;
     }
