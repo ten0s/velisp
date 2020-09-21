@@ -7,10 +7,10 @@ const {EvalVisitor} = require('./VeLispEvalVisitor.js');
 function evaluate(input, context = new VeLispGlobalContext()) {
     input = preprocess(input);
     const {tree} = parseInput(input);
-    const results = tree.accept(new EvalVisitor(context));
-    //console.log(results);
-    const result = getResult(results);
-    //console.log(result);
+    const allResults = tree.accept(new EvalVisitor(context));
+    //console.log('allResults:', allResults);
+    const result = lastResult(allResults);
+    //console.log('result:', result);
     return result;
 }
 
@@ -39,12 +39,11 @@ function preprocess(input) {
     return input;
 }
 
-function getResult(res) {
+function lastResult(res) {
     if (res instanceof Array) {
-        return getResult(res[res.length-1]);
-    } else {
-        return res;
+        return lastResult(res[res.length-1]);
     }
+    return res;
 }
 
 exports.evaluate = evaluate;

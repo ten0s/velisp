@@ -96,12 +96,16 @@ function startRepl(config, action, context) {
         replServer.defineCommand('type', {
             help: 'Show expression\'s internal type',
             action(input) {
-                try {
-                    if (input.trim()) {
-                        console.log(action(input, context));
+                if (input.trim()) {
+                    try {
+                        const result = action(input, context);
+                        if (result !== null) {
+                            console.log(result);
+                        }
+                    } catch (e) {
+                        console.error(e.message);
+                        // fall through
                     }
-                } catch (e) {
-                    console.error(e.message);
                 }
                 this.displayPrompt();
             }
@@ -112,7 +116,10 @@ function startRepl(config, action, context) {
 function replEval(repl, input, action, context, callback) {
     if (input.trim()) {
         try {
-            return callback(null, action(input, context));
+            const result = action(input, context);
+            if (result !== null) {
+                return callback(null, result);
+            }
         } catch (e) {
             console.error(e.message);
             // fall through

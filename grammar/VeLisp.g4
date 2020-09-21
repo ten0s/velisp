@@ -2,7 +2,7 @@ grammar VeLisp;
 
 // Parser rules
 
-file : expr+ ;
+file : expr* ;
 
 expr :
        '(' AND expr* ')'                                                          # and
