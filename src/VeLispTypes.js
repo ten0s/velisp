@@ -529,6 +529,9 @@ class Fun {
 
     // :: (Any) -> Bool
     equal(that) {
+        if (that instanceof Fun) {
+            return new Bool(this === that);
+        }
         return new Bool(false);
     }
 

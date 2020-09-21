@@ -32,6 +32,8 @@ const tests = [
             (equal f1 f2)`, result: new Bool(true)},
     {test: `(setq f1 (list a b c) f2 (list a b c) f3 f2)
             (equal f1 f3)`, result: new Bool(true)},
+
+    {test: '(equal + +)', result: new Bool(true)},
 ];
 
 const errors = [
