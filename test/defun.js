@@ -17,6 +17,8 @@ const tests = [
     {test: '(defun foo ( /) "foo") (foo)', result: new Str('foo')},
     {test: '(defun foo ( / ) "foo") (foo)', result: new Str('foo')},
 
+    {test: '(defun c:foo ( / ) "foo") (c:foo)', result: new Str('foo')},
+
     {test: '(defun id (x) x) (id "me")', result: new Str('me')},
     {test: '(defun id (x ) x) (id "me")', result: new Str('me')},
     {test: '(defun id ( x) x) (id "me")', result: new Str('me')},
