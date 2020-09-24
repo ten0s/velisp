@@ -10,6 +10,7 @@ exports.initContext = function (context) {
         require('./String.js'),
         require('./Symbol.js'),
         require('./System.js'),
+        require('./VL-String.js'),
         require('./VL-Symbol.js'),
     ].forEach(
         module => module.initContext(context)
