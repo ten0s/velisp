@@ -21,7 +21,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.0.4 on linux
+VeLisp 0.0.5 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -64,11 +64,11 @@ $ make pkgMacOS
 
 ```
 $ ls velisp*
-velisp-0.0.4-linux-x64 velisp-0.0.4-macos-x64 velisp-0.0.4-win-x64.exe velisp-0.0.4-win-x86.exe
+velisp-0.0.5-linux-x64 velisp-0.0.5-macos-x64 velisp-0.0.5-win-x64.exe velisp-0.0.5-win-x86.exe
 ```
 
 ```
-$ ./velisp-0.0.4-linux-x64 examples/fib.lsp
+$ ./velisp-0.0.5-linux-x64 examples/fib.lsp
 55
 ```
 
@@ -76,7 +76,7 @@ $ ./velisp-0.0.4-linux-x64 examples/fib.lsp
 
 ```
 $ npm start -- --run tree
-VeLisp 0.0.4 on linux
+VeLisp 0.0.5 on linux
 Type ".help" for more information
 >
 > (+ 1 2)
