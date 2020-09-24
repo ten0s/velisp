@@ -26,7 +26,7 @@ exports.initContext = function (context) {
         }
         process.exit(code);
     }));
-    context.setSym('GETENV', new Fun('getenv', ['varname'], [], (self, args) => {
+    context.setSym('GETENV', new Fun('getenv', ['name'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('getenv: too few arguments');
         }
@@ -48,16 +48,16 @@ exports.initContext = function (context) {
         if (args.length === 1) {
             code = ensureType('quit:', args[0], [Int]).value();
         }
-        process.exit(code);
+         process.exit(code);
     }));
-    context.setSym('SETENV', new Fun('setenv', ['varname', 'value'], [], (self, args) => {
+    context.setSym('SETENV', new Fun('setenv', ['name', 'value'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('setenv: too few arguments');
         }
         if (args.length > 2) {
             throw new Error('setenv: too many arguments');
         }
-        const name = ensureType('setenv: `varname`', args[0], [Str]);
+        const name = ensureType('setenv: `name`', args[0], [Str]);
         const value = ensureType('setenv: `value`', args[1], [Str]);
         process.env[name.value()] = value.value();
         return value;

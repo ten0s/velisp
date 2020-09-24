@@ -12,7 +12,7 @@ const errors = [
     {test: '(setenv)', result: new Error('setenv: too few arguments')},
     {test: '(setenv "NAME")', result: new Error('setenv: too few arguments')},
     {test: '(setenv "NAME" "VALUE" "VALUE")', result: new Error('setenv: too many arguments')},
-    {test: '(setenv \'NAME "VALUE")', result: new Error('setenv: `varname` expected Str')},
+    {test: '(setenv \'NAME "VALUE")', result: new Error('setenv: `name` expected Str')},
     {test: '(setenv "NAME" \'VALUE)', result: new Error('setenv: `value` expected Str')},
 ];
 
