@@ -15,6 +15,7 @@ $ make
 
 ```
 $ make test
+$ node src/main.js lib/stdlib/test.lsp
 ```
 
 ## Run REPL (Read–Eval–Print Loop)

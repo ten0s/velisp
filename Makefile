@@ -9,13 +9,14 @@ compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
 
 run:
-	npm start
+	node src/main.js
 
 tree:
-	npm start -- --run tree
+	node src/main.js --run tree
 
 test:
 	npx qunit
+	node src/main lib/stdlib/test.lsp
 
 rollPatch:
 	npm --no-git-tag-version version patch
