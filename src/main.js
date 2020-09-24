@@ -13,7 +13,7 @@ function main() {
         .action((file) => {
             const action = runAction(program.run);
             const context = new VeLispGlobalContext();
-            maybeInjectStdLib(action, context);
+            maybeInjectLib(action, context);
             if (file) {
                 //console.log(`Read from ${file}`);
                 const fs = require('fs');
@@ -48,12 +48,12 @@ function runAction(what, isREPL) {
     }
 }
 
-function maybeInjectStdLib(action, context) {
+function maybeInjectLib(action, context) {
     if (action === evaluate) {
         const path = require('path');
         const rootdir = path.join(__dirname, '..');
         process.env['VELISP_ROOT'] = rootdir;
-        evaluate(`(load "${rootdir}/lib/stdlib/main.lsp")`, context);
+        evaluate(`(load "${rootdir}/lib/main.lsp")`, context);
     }
 }
 
