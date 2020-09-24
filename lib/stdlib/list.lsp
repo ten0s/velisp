@@ -50,7 +50,7 @@
   (cdr (cadr lst)))
 
 (defun cddar (lst)
-  (cdr (cddr lst)))
+  (cdr (cdar lst)))
 
 (defun cdddr (lst)
   (cdr (cddr lst)))
