@@ -3,7 +3,6 @@ const path = require('path');
 
 const {Bool, Int, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
-const {fmtError} = require('../VeLispError.js');
 
 //
 // System Functions

@@ -1,6 +1,5 @@
 const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
-const {fmtError} = require('../VeLispError.js');
 
 //
 // I/O Functions
