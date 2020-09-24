@@ -355,6 +355,18 @@ class Str {
     }
 
     // :: () -> string
+    toEscapedString()  {
+        // TODO: FIXME
+        // Poor man's replaceAll
+        return this.str
+            .split('\\"').join('"')
+            .split('\\\\').join('\\')
+            .split('\\r').join('\r')
+            .split('\\n').join('\n')
+            .split('\\t').join('\t')
+    }
+
+    // :: () -> string
     toString() {
         return `"${this.str}"`;
     }

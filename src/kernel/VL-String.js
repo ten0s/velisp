@@ -25,7 +25,7 @@ exports.initContext = function (context) {
         }
         const arg = args[0];
         if (arg instanceof Str) {
-            return new Str(arg.value().replace('\\n', '\n'));
+            return new Str(arg.toEscapedString());
         } else {
             return new Str(arg.toString());
         }

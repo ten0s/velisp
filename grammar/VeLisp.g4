@@ -69,7 +69,7 @@ TRU : T ;
 
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
-STR : '"' .*? '"' ;
+STR : '"' CHAR* '"' ;
 SYM : '\''ID ;
 ID : [a-zA-Z0-9!$%*/\-+=<>~:]+ ; // TODO: can't have only numeric chars
 
@@ -78,6 +78,16 @@ LINE_COMMENT : ';'+ .*? NEWLINE -> skip ;
 
 NEWLINE : '\r'? '\n' -> skip ;
 WHITESPACE : [ \t]+ -> skip ;
+
+fragment CHAR
+         : ~["\\\r\n]
+         | '\\' ESCAPE_SEQ
+         | NEWLINE
+         ;
+
+fragment ESCAPE_SEQ
+         : ["\\rnt]
+         ;
 
 fragment A : [aA] ;
 fragment B : [bB] ;

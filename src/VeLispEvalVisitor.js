@@ -225,9 +225,11 @@ class EvalVisitor extends VeLispVisitor {
             return new Real(Number.parseFloat(str));
         } else if (ctx.parentCtx instanceof VeLispParser.StrContext) {
             //console.error('STR:', str);
-            return new Str(str.replace(/\"/g, ''));
+            // Remove first and last double quotes (")
+            return new Str(str.substring(1, str.length-1));
         } else if (ctx.parentCtx instanceof VeLispParser.SymContext) {
             //console.error('SYM:', str);
+            // Remove first single quote (')
             return new Sym(str.replace(/\'/g, ''));
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);

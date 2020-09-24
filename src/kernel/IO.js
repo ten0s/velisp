@@ -14,7 +14,7 @@ exports.initContext = function (context) {
             throw new Error('prompt: too many arguments');
         }
         const arg = ensureType('prompt:', args[0], [Str]);
-        console.log(arg.value().replace('\\n', '\n'));
+        console.log(arg.toEscapedString());
         return new Bool(false);
     }));
     context.setSym('PRIN1', new Fun('prin1', ['[expr [file-desc]]'], [], (self, args) => {
@@ -41,7 +41,7 @@ exports.initContext = function (context) {
         const arg = args[0];
         // TODO: file-desc
         if (arg instanceof Str) {
-            console.log(arg.value().replace('\\n', '\n'));
+            console.log(arg.toEscapedString());
         } else {
             console.log(arg.toString());
         }
@@ -60,7 +60,7 @@ exports.initContext = function (context) {
         console.log('\n' + arg.toString() + ' ');
         return arg;
     }));
-    context.setSym('GETENV', new Fun('getenv', ['varname'], [], (self, args) => {
+    context.setSym('GETENV', new Fun('getenv', ['name'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('getenv: too few arguments');
         }
@@ -69,19 +69,19 @@ exports.initContext = function (context) {
         }
         const name = ensureType('getenv:', args[0], [Str]);
         const value = process.env[name.value()];
-        if (typeof value === "undefined") {
+        if (typeof value === 'undefined') {
             return new Bool(false);
         }
         return new Str(value);
     }));
-    context.setSym('SETENV', new Fun('setenv', ['varname', 'value'], [], (self, args) => {
+    context.setSym('SETENV', new Fun('setenv', ['name', 'value'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('setenv: too few arguments');
         }
         if (args.length > 2) {
             throw new Error('setenv: too many arguments');
         }
-        const name = ensureType('setenv: `varname`', args[0], [Str]);
+        const name = ensureType('setenv: `name`', args[0], [Str]);
         const value = ensureType('setenv: `value`', args[1], [Str]);
         process.env[name.value()] = value.value();
         return value;
