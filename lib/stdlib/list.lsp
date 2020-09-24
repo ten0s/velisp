@@ -35,7 +35,7 @@
   (car (cadr lst)))
 
 (defun cadar (lst)
-  (car (cdar list)))
+  (car (cdar lst)))
 
 ;; > (setq pt (list 1.5 3.2 2.0))
 ;; > (setq z (cadr pt))
@@ -63,13 +63,13 @@
   (car (caaar lst)))
 
 (defun caaadr (lst)
-  (car (caadr list)))
+  (car (caadr lst)))
 
 (defun caadar (lst)
-  (car (cadar list)))
+  (car (cadar lst)))
 
 (defun caaddr (lst)
-  (car (caddr list)))
+  (car (caddr lst)))
 
 (defun cadaar (lst)
   (car (cdaar lst)))
@@ -87,13 +87,13 @@
   (cdr (caaar lst)))
 
 (defun cdaadr (lst)
-  (cdr (caadr list)))
+  (cdr (caadr lst)))
 
 (defun cdadar (lst)
-  (cdr (cadar list)))
+  (cdr (cadar lst)))
 
 (defun cdaddr (lst)
-  (cdr (caddr list)))
+  (cdr (caddr lst)))
 
 (defun cddaar (lst)
   (cdr (cdaar lst)))
