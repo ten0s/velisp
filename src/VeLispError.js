@@ -1,9 +1,15 @@
 function fmtError(name, error) {
     //console.error(error);
-    if (error.path) {
-        return `${name}: ${error.path}: ${perror(error.code)}`;
+    let message = `${name}: `;
+    if (error.path)  {
+        message += `${error.path}: `;
     }
-    return `${name}: ${perror(error.code)}`;
+    if (error.code)  {
+        message += `${perror(error.code)}`;
+    } else {
+        message += `${error.message}`;
+    }
+    return message;
 }
 
 function perror(errCode) {

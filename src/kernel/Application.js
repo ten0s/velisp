@@ -42,6 +42,7 @@ exports.initContext = function (context) {
                 }
                 return args[1];
             }
+            e.path = filename;
             throw new Error(fmtError('load', e));
         }
     }));
