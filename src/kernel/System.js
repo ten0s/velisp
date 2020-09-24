@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
+const {Bool, Int, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
 const {fmtError} = require('../VeLispError.js');
 
@@ -16,6 +16,16 @@ exports.initContext = function (context) {
         }
         return new Str(process.cwd());
     }));
+    context.setSym('EXIT', new Fun('exit', ['[code]'], [], (self, args) => {
+        if (args.length > 1) {
+            throw new Error('exit: too many arguments');
+        }
+        let code = 0;
+        if (args.length === 1) {
+            code = ensureType('exit:', args[0], [Int]).value();
+        }
+        process.exit(code);
+    }));
     context.setSym('GETENV', new Fun('getenv', ['varname'], [], (self, args) => {
         if (args.length == 0) {
             throw new Error('getenv: too few arguments');
@@ -29,6 +39,16 @@ exports.initContext = function (context) {
             return new Bool(false);
         }
         return new Str(value);
+    }));
+    context.setSym('QUIT', new Fun('quit', ['[code]'], [], (self, args) => {
+        if (args.length > 1) {
+            throw new Error('quit: too many arguments');
+        }
+        let code = 0;
+        if (args.length === 1) {
+            code = ensureType('quit:', args[0], [Int]).value();
+        }
+        process.exit(code);
     }));
     context.setSym('SETENV', new Fun('setenv', ['varname', 'value'], [], (self, args) => {
         if (args.length < 2) {
