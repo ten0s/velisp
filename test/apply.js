@@ -13,7 +13,7 @@ const errors = [
     {test: '(apply \'+)', result: new Error('apply: too few arguments')},
     {test: '(apply \'+ (list 1 2) (list 3 4))', result: new Error('apply: too many arguments')},
     {test: '(apply \'+ 1)', result: new Error('apply: `list` expected List')},
-    {test: '(apply \'add (list 1 2 3))', result: new Error('apply: no such function \'ADD')},
+    {test: '(apply \'add (list 1 2 3))', result: new Error('apply: no such function ADD')},
 ];
 
 QUnit.test("apply", assert => {

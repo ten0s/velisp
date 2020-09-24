@@ -40,13 +40,13 @@ QUnit.test("types", assert => {
 
     assert.equal((new Str('2.0')).toString(), '"2.0"');
 
-    assert.equal((new Sym('foo')).toString(), '\'FOO');
+    assert.equal((new Sym('foo')).toString(), 'FOO');
 
     assert.equal((new List([])).toString(), '()');
     assert.equal((new List([new Int(1), new Real(1.0), new Str('2.0')])).toString(),
                  '(1 1.0 "2.0")');
 
-    assert.equal((new Pair(new Int(1), new Sym('a'))).toString(), '(1 . \'A)');
+    assert.equal((new Pair(new Int(1), new Sym('a'))).toString(), '(1 . A)');
 
     assert.equal((new Fun("fun", [], [], () => {})).toString(), '(defun fun ())');
     assert.equal((new Fun("fun", ['x'], [], () => {})).toString(), '(defun fun (x))');

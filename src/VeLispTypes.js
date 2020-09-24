@@ -391,7 +391,7 @@ class Sym {
 
     // :: () -> string
     toString() {
-        return `'${this.sym}`;
+        return `${this.sym}`;
     }
 }
 
