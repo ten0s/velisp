@@ -3,27 +3,31 @@ const {VeLispGlobalContext} = require('./VeLispGlobalContext.js');
 const {evaluate, tree} = require('./VeLispEvaluator.js');
 const config = require('../package.json');
 
-const program = new Command();
-program.version(config.version)
-    .option('-r, --run <command>', 'eval | tree', 'eval')
-    .arguments('[file]')
-    .action((file) => {
-        const action = runAction(program.run);
-        const context = new VeLispGlobalContext();
-        maybeInjectStdLib(action, context);
-        if (file) {
-            //console.log(`Read from ${file}`);
-            const fs = require('fs');
-            readStream(fs.createReadStream(file), action, context);
-        } else if (process.stdin.isTTY) {
-            //console.log('Read from tty');
-            startRepl(config, action, context);
-        } else {
-            //console.log('Read from stdin');
-            readStream(process.stdin, action, context);
-        }
-    })
-    .parse(process.argv);
+main();
+
+function main() {
+    const program = new Command();
+    program.version(config.version)
+        .option('-r, --run <command>', 'eval | tree', 'eval')
+        .arguments('[file]')
+        .action((file) => {
+            const action = runAction(program.run);
+            const context = new VeLispGlobalContext();
+            maybeInjectStdLib(action, context);
+            if (file) {
+                //console.log(`Read from ${file}`);
+                const fs = require('fs');
+                readStream(fs.createReadStream(file), action, context);
+            } else if (process.stdin.isTTY) {
+                //console.log('Read from tty');
+                startRepl(config, action, context);
+            } else {
+                //console.log('Read from stdin');
+                readStream(process.stdin, action, context);
+            }
+        })
+        .parse(process.argv);
+}
 
 function runAction(what, isREPL) {
     switch (what.toLowerCase()) {
