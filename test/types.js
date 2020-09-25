@@ -48,8 +48,13 @@ QUnit.test("types", assert => {
 
     assert.equal((new Pair(new Int(1), new Sym('a'))).toString(), '(1 . A)');
 
-    assert.equal((new Fun("fun", [], [], () => {})).toString(), '(defun fun ())');
-    assert.equal((new Fun("fun", ['x'], [], () => {})).toString(), '(defun fun (x))');
-    assert.equal((new Fun("fun", ['x'], ['y'], () => {})).toString(), '(defun fun (x / y))');
-    assert.equal((new Fun("fun", [], ['x'], () => {})).toString(), '(defun fun ( / x))');
+    assert.equal((new Fun("name", [], [], () => {})).toString(), '(defun name ())');
+    assert.equal((new Fun("name", ['x'], [], () => {})).toString(), '(defun name (x))');
+    assert.equal((new Fun("name", ['x'], ['y'], () => {})).toString(), '(defun name (x / y))');
+    assert.equal((new Fun("name", [], ['x'], () => {})).toString(), '(defun name ( / x))');
+
+    assert.equal((new Fun("", [], [], () => {})).toString(), '(lambda ())');
+    assert.equal((new Fun("", ['x'], [], () => {})).toString(), '(lambda (x))');
+    assert.equal((new Fun("", ['x'], ['y'], () => {})).toString(), '(lambda (x / y))');
+    assert.equal((new Fun("", [], ['x'], () => {})).toString(), '(lambda ( / x))');
 });

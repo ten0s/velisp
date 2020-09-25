@@ -9,8 +9,6 @@ class VeLispEvalVisitor extends VeLispVisitor {
         this.contexts = [context];
     }
 
-    // Special Forms (AutoCAD 2013 AutoLISP Developer's Guild p.37)
-
     visitAnd(ctx) {
         for (let i = 0; i < ctx.expr().length; i++) {
             const result = this.getValue(this.visit(ctx.expr(i)));
@@ -38,40 +36,9 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitDefun(ctx) {
-        let name = this.visit(ctx.defunName().ID()).toUpperCase();
-        //console.error(`(defun ${name} ...)`);
-        let params = [];
-        let locals = [];
-        for (let i = 0; i < ctx.defunParam().length; i++) {
-            const param = this.visit(ctx.defunParam(i).ID()).toUpperCase();
-            // Workaround (defun ... (/) ...) case
-            if (param !== '/') {
-                params.push(param);
-            }
-        }
-        for (let i = 0; i < ctx.defunLocal().length; i++) {
-            const local = this.visit(ctx.defunLocal(i).ID()).toUpperCase();
-            locals.push(local);
-        }
-        this.contexts[this.contexts.length-1].setSym(name, new Fun(name, params, locals, (self, args) => {
-            if (args.length < params.length) {
-                throw new Error(`${name}: too few arguments`);
-            } else if (args.length > params.length) {
-                throw new Error(`${name}: too many arguments`);
-            }
-            // Since locals with the same names as params will reset the values, init locals first.
-            for (let i = 0; i < locals.length; i++) {
-                self.contexts[self.contexts.length-1].initVar(locals[i], new Bool(false));
-            }
-            for (let i = 0; i < params.length; i++) {
-                self.contexts[self.contexts.length-1].initVar(params[i], args[i]);
-            }
-            let result = new Bool(false);
-            for (let i = 0; i < ctx.expr().length; i++) {
-                result = self.visit(ctx.expr(i));
-            }
-            return result;
-        }));
+        const name = this.visit(ctx.funName().ID()).toUpperCase();
+        const fun = this.makeFun(name, ctx);
+        this.contexts[this.contexts.length-1].setSym(name, fun);
         return new Sym(name);
     }
 
@@ -114,6 +81,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 return new Bool(false);
             }
         }
+    }
+
+    visitLambda(ctx) {
+        return this.makeFun('', ctx);
     }
 
     visitOr(ctx) {
@@ -247,6 +218,41 @@ class VeLispEvalVisitor extends VeLispVisitor {
             return this.getValue(expr[0]);
         }
         return expr;
+    }
+
+    makeFun(name, ctx) {
+        const params = [];
+        const locals = [];
+        for (let i = 0; i < ctx.funParam().length; i++) {
+            const param = this.visit(ctx.funParam(i).ID()).toUpperCase();
+            // Workaround (defun | lambda ... (/) ...) case
+            if (param !== '/') {
+                params.push(param);
+            }
+        }
+        for (let i = 0; i < ctx.funLocal().length; i++) {
+            const local = this.visit(ctx.funLocal(i).ID()).toUpperCase();
+            locals.push(local);
+        }
+        return new Fun(name, params, locals, (self, args) => {
+            if (args.length < params.length) {
+                throw new Error(`${name}: too few arguments`);
+            } else if (args.length > params.length) {
+                throw new Error(`${name}: too many arguments`);
+            }
+            // Since locals with the same names as params will reset the values, init locals first.
+            for (let i = 0; i < locals.length; i++) {
+                self.contexts[self.contexts.length-1].initVar(locals[i], new Bool(false));
+            }
+            for (let i = 0; i < params.length; i++) {
+                self.contexts[self.contexts.length-1].initVar(params[i], args[i]);
+            }
+            let result = new Bool(false);
+            for (let i = 0; i < ctx.expr().length; i++) {
+                result = self.visit(ctx.expr(i));
+            }
+            return result;
+        });
     }
 }
 

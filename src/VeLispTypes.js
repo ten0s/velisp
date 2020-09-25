@@ -549,10 +549,15 @@ class Fun {
 
     // :: () -> string
     toString() {
-        const name = this.name;
+        let prefix;
+        if (this.name) {
+            prefix = `defun ${this.name}`;
+        } else {
+            prefix = 'lambda';
+        }
         const params = this.params.join(' ');
         const locals = this.locals.join(' ');
-        return `(defun ${name} (${params}${locals.length > 0 ? ' / ' : ''}${locals}))`;
+        return `(${prefix} (${params}${locals.length > 0 ? ' / ' : ''}${locals}))`;
     }
 }
 

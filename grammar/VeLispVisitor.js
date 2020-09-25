@@ -48,6 +48,12 @@ VeLispVisitor.prototype.visitIf = function(ctx) {
 };
 
 
+// Visit a parse tree produced by VeLispParser#lambda.
+VeLispVisitor.prototype.visitLambda = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by VeLispParser#or.
 VeLispVisitor.prototype.visitOr = function(ctx) {
   return this.visitChildren(ctx);
@@ -144,20 +150,20 @@ VeLispVisitor.prototype.visitCondResult = function(ctx) {
 };
 
 
-// Visit a parse tree produced by VeLispParser#defunName.
-VeLispVisitor.prototype.visitDefunName = function(ctx) {
+// Visit a parse tree produced by VeLispParser#funName.
+VeLispVisitor.prototype.visitFunName = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by VeLispParser#defunParam.
-VeLispVisitor.prototype.visitDefunParam = function(ctx) {
+// Visit a parse tree produced by VeLispParser#funParam.
+VeLispVisitor.prototype.visitFunParam = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by VeLispParser#defunLocal.
-VeLispVisitor.prototype.visitDefunLocal = function(ctx) {
+// Visit a parse tree produced by VeLispParser#funLocal.
+VeLispVisitor.prototype.visitFunLocal = function(ctx) {
   return this.visitChildren(ctx);
 };
 

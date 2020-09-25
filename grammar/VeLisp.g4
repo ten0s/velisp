@@ -7,10 +7,10 @@ file : expr* ;
 expr :
        '(' AND expr* ')'                                                          # and
      | '(' COND condTestResult* ')'                                               # cond
-     | '(' DEFUN defunName '(' defunParam* ( ' / ' defunLocal* )? ')' expr+ ')'   # defun
+     | '(' DEFUN funName '(' funParam* ( ' / ' funLocal* )? ')' expr+ ')'         # defun
      | '(' FOREACH foreachName foreachList expr* ')'                              # foreach
      | '(' IF ifTest ifThen ifElse? ')'                                           # if
-     //                                                                           # lambda
+     | '(' LAMBDA '(' funParam* ( ' / ' funLocal* )? ')' expr+ ')'                # lambda
      | '(' OR expr* ')'                                                           # or
      | '(' PROGN expr* ')'                                                        # progn
      //                                                                           # quote
@@ -33,9 +33,9 @@ condTestResult : '(' condTest condResult* ')' ;
 condTest : expr ;
 condResult : expr ;
 
-defunName : ID ;
-defunParam : ID ;
-defunLocal : ID ;
+funName : ID ;
+funParam : ID ;
+funLocal : ID ;
 
 foreachName : ID ;
 foreachList : expr ;
@@ -59,6 +59,7 @@ COND : C O N D ;
 DEFUN : D E F U N ;
 FOREACH : F O R E A C H ;
 IF : I F ;
+LAMBDA : L A M B D A ;
 OR : O R ;
 PROGN : P R O G N ;
 REPEAT : R E P E A T ;
