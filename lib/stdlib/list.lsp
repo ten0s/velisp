@@ -2,25 +2,16 @@
 ;;
 ;;
 
-;; > (caar (list (list 1 2 3) (list 4 5 6)))
-;; 1
 (defun caar (lst)
   ;; TODO: check length is at least 2
   (car (car lst)))
 
-;; > (setq pt (list 1.5 3.2 2.0))
-;; > (setq y (cadr pt))
-;; 3.2
 (defun cadr (lst)
   (car (cdr lst)))
 
-;; > (cdar (list (list 1 2 3) (list 4 5 6)))
-;; (2 3)
 (defun cdar (lst)
   (cdr (car lst)))
 
-;; > (cddr (list (list 1 2 3) (list 4 5 6)))
-;; ()
 (defun cddr (lst)
   (cdr (cdr lst)))
 
@@ -37,9 +28,6 @@
 (defun cadar (lst)
   (car (cdar lst)))
 
-;; > (setq pt (list 1.5 3.2 2.0))
-;; > (setq z (cadr pt))
-;; 2.0
 (defun caddr (lst)
   (car (cddr lst)))
 
