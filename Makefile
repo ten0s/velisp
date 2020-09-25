@@ -16,7 +16,7 @@ tree:
 
 test:
 	npx qunit
-	node src/main lib/stdlib/test.lsp
+	node src/main lib/test.lsp
 
 rollPatch:
 	npm --no-git-tag-version version patch

@@ -125,7 +125,7 @@ function replEval(repl, input, action, context, callback) {
                 return callback(null, result);
             }
         } catch (e) {
-            if (isRecoverable(input, e) {
+            if (isRecoverable(input, e)) {
                 return callback(new repl.Recoverable(e));
             } else {
                 console.error(e.message);
