@@ -29,7 +29,7 @@ Type ".help" for more information
 55
 55
 > (defun add (a b) (+ a b))
-'ADD
+ADD
 > .type 'add
 Sym { sym: 'ADD' }
 > .type add
