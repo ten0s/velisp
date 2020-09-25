@@ -3,7 +3,7 @@ const {VeLispVisitor} = require('../grammar/VeLispVisitor.js');
 const {VeLispContext} = require('./VeLispContext.js');
 const {Bool, Int, Real, Str, Sym, List, Fun} = require('./VeLispTypes.js');
 
-class EvalVisitor extends VeLispVisitor {
+class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
         super();
         this.contexts = [context];
@@ -250,4 +250,4 @@ class EvalVisitor extends VeLispVisitor {
     }
 }
 
-exports.EvalVisitor = EvalVisitor;
+exports.VeLispEvalVisitor = VeLispEvalVisitor;

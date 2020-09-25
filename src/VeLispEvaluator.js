@@ -2,12 +2,13 @@ const antlr4 = require('antlr4');
 const {VeLispLexer} = require('../grammar/VeLispLexer.js');
 const {VeLispParser} = require('../grammar/VeLispParser.js');
 const {VeLispGlobalContext} = require('./VeLispGlobalContext.js');
-const {EvalVisitor} = require('./VeLispEvalVisitor.js');
+const {VeLispEvalVisitor} = require('./VeLispEvalVisitor.js');
+const {VeLispErrorListener} = require('./VeLispErrorListener.js');
 
 function evaluate(input, context = new VeLispGlobalContext()) {
     input = preprocess(input);
     const {tree} = parseInput(input);
-    const allResults = tree.accept(new EvalVisitor(context));
+    const allResults = tree.accept(new VeLispEvalVisitor(context));
     //console.log('allResults:', allResults);
     const result = lastResult(allResults);
     //console.log('result:', result);
@@ -26,7 +27,8 @@ function parseInput(input) {
     //lexer.strictMode = false;
     const tokens = new antlr4.CommonTokenStream(lexer);
     const parser = new VeLispParser(tokens);
-    //parser.buildParseTrees = true;
+    parser.removeErrorListeners();
+    parser.addErrorListener(new VeLispErrorListener());
     return {
         lexer,
         tokens,

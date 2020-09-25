@@ -125,8 +125,12 @@ function replEval(repl, input, action, context, callback) {
                 return callback(null, result);
             }
         } catch (e) {
-            console.error(e.message);
-            // fall through
+            if (isRecoverable(input, e) {
+                return callback(new repl.Recoverable(e));
+            } else {
+                console.error(e.message);
+                // fall through
+            }
         }
     }
     callback(null);
@@ -135,4 +139,9 @@ function replEval(repl, input, action, context, callback) {
 function replWriter(repl, output) {
     // TODO: Types come in, color them appropriately
     return output;
+}
+
+function isRecoverable(input, error) {
+    // TODO
+    return false;
 }
