@@ -43,7 +43,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitForeach(ctx) {
-        let name = this.visit(ctx.foreachName().ID()).toUpperCase();
+        const name = this.visit(ctx.foreachName().ID()).toUpperCase();
         const list = this.getValue(this.visit(ctx.foreachList()));
         //console.error(`foreach: ${name} ${list}`);
         if (list instanceof List) {
@@ -107,7 +107,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
 
     visitRepeat(ctx) {
         let result = new Bool(false);
-        let count = this.getValue(this.visit(ctx.repeatNum()));
+        const count = this.getValue(this.visit(ctx.repeatNum()));
         //console.error('repeat count:', count);
         if (count instanceof Int && count.value() > 0) {
             for (let i = 0; i < count.value(); i++) {
@@ -150,7 +150,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitFunCall(ctx) {
-        let name = this.visit(ctx.ID()).toUpperCase();
+        const name = this.visit(ctx.ID()).toUpperCase();
         //console.log(`funName: ${name}`);
         let fun = null;
         // Try to get symbol out of variable
@@ -165,7 +165,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
         if (fun instanceof Fun) {
             // Evaluate args eagerly
-            let args = [];
+            const args = [];
             for (let i = 0; i < ctx.funArg().length; i++) {
                 args.push(this.getValue(this.visit(ctx.funArg(i))));
             }
