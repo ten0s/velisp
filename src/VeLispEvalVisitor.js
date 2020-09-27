@@ -1,7 +1,7 @@
 const {VeLispParser} = require('../grammar/VeLispParser.js');
 const {VeLispVisitor} = require('../grammar/VeLispVisitor.js');
 const {VeLispContext} = require('./VeLispContext.js');
-const {Bool, Int, Real, Str, Sym, List, Fun} = require('./VeLispTypes.js');
+const {Bool, Int, Real, Str, Sym, List, Pair, Fun} = require('./VeLispTypes.js');
 
 class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
@@ -105,6 +105,62 @@ class VeLispEvalVisitor extends VeLispVisitor {
         return result;
     }
 
+    visitQuote(ctx) {
+        const str = ctx.expr().getText();
+        if (ctx.expr() instanceof VeLispParser.NilContext) {
+            //console.error('NIL:', str);
+            return new Bool(false);
+        } else if (ctx.expr() instanceof VeLispParser.IntContext) {
+            //console.error('INT:', str);
+            return new Int(Number.parseInt(str));
+        } else if (ctx.expr() instanceof VeLispParser.RealContext) {
+            //console.error('REAL:', str);
+            return new Real(Number.parseFloat(str));
+        } else if (ctx.expr() instanceof VeLispParser.StrContext) {
+            //console.error('STR:', str);
+            // Remove first and last double quotes (")
+            return new Str(str.substring(1, str.length-1));
+        } else if (ctx.expr() instanceof VeLispParser.IdContext) {
+            //console.error('ID:', str);
+            return new Sym(str);
+        } else if (ctx.expr() instanceof VeLispParser.DotListContext) {
+            //console.error('DOTLIST:', str);
+            const length = ctx.expr().listExpr().length;
+            let last = this.getValue(this.visitQuote(ctx.expr().listExpr(length-1)));
+            //console.error(last)
+            if (last.isNil()) {
+                last = new List([]);
+            }
+            if (last instanceof List) {
+                for (let i = length - 2; i >= 0; i--) {
+                    const value = this.getValue(this.visitQuote(ctx.expr().listExpr(i)));
+                    last = last.cons(value);
+                }
+                return last;
+            }
+            const prelast = this.getValue(this.visitQuote(ctx.expr().listExpr(length-2)));
+            let result = new Pair(prelast, last);
+            for (let i = length - 3; i >= 0; i--) {
+                const value = this.getValue(this.visitQuote(ctx.expr().listExpr(i)));
+                result = result.cons(value);
+            }
+            return result;
+        } else if (ctx.expr() instanceof VeLispParser.ListContext) {
+            //console.error('LIST:', str);
+            const length = ctx.expr().listExpr().length;
+            const values = [];
+            for (let i = 0; i < length; i++) {
+                const value = this.getValue(this.visitQuote(ctx.expr().listExpr(i)));
+                values.push(value);
+            }
+            return new List(values);
+        } else {
+            //console.error(str);
+            //console.error(ctx.expr());
+            return new Sym(str);
+        }
+    }
+
     visitRepeat(ctx) {
         let result = new Bool(false);
         const count = this.getValue(this.visit(ctx.repeatNum()));
@@ -149,27 +205,33 @@ class VeLispEvalVisitor extends VeLispVisitor {
         return result;
     }
 
-    visitFunCall(ctx) {
-        const name = this.visit(ctx.ID()).toUpperCase();
-        //console.log(`funName: ${name}`);
-        let fun = null;
-        // Try to get symbol out of variable
-        const local = this.contexts[this.contexts.length-1].getVar(name);
-        // If there's such a variable and it's a symbol, try to find the function
-        if (!local.isNil() && local instanceof Sym) {
-            fun = this.contexts[this.contexts.length-1].getSym(local.value());
+    visitTick(ctx) {
+        return this.visitQuote(ctx);
+    }
+
+    visitDotList(ctx) {
+        // Must be call in the quoted context only,
+        // otherwise evaluate as a list
+        return this.visitList(ctx);
+    }
+
+    visitList(ctx) {
+        if (ctx.listExpr().length === 0) {
+            return new List([]);
         }
-        // If the above failed, try to find the function directly by name
-        if (!fun || fun.isNil()) {
-            fun = this.contexts[this.contexts.length-1].getSym(name);
+        let fun = this.getValue(this.visit(ctx.listExpr(0).expr()));
+        //console.log(fun);
+        // Try to get function out of symbol
+        if (!fun.isNil() && fun instanceof Sym) {
+            fun = this.contexts[this.contexts.length-1].getSym(fun.value());
         }
         if (fun instanceof Fun) {
             // Evaluate args eagerly
             const args = [];
-            for (let i = 0; i < ctx.funArg().length; i++) {
-                args.push(this.getValue(this.visit(ctx.funArg(i))));
+            for (let i = 1; i < ctx.listExpr().length; i++) {
+                args.push(this.getValue(this.visit(ctx.listExpr(i).expr())));
             }
-            //console.error(`(${name} ${args.join(' ')})`);
+            //console.error(`(${fun} ${args.join(' ')})`);
             // Push new context
             this.contexts.push(new VeLispContext(this.contexts[this.contexts.length-1]));
             const result = fun.apply(this, args);
@@ -177,7 +239,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop();
             return result;
         }
-        throw new Error(`${name}: function not defined`);
+        throw new Error(`${fun}: function not defined`);
     }
 
     visitTerminal(ctx) {
@@ -198,10 +260,6 @@ class VeLispEvalVisitor extends VeLispVisitor {
             //console.error('STR:', str);
             // Remove first and last double quotes (")
             return new Str(str.substring(1, str.length-1));
-        } else if (ctx.parentCtx instanceof VeLispParser.SymContext) {
-            //console.error('SYM:', str);
-            // Remove first single quote (')
-            return new Sym(str.replace(/\'/g, ''));
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
             return this.contexts[this.contexts.length-1].getVar(str.toUpperCase());

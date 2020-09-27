@@ -4,10 +4,10 @@ const {Bool} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(vl-symbolp \'t)', result: new Bool(true)},
-    {test: '(vl-symbolp \'nil)', result: new Bool(true)},
+    {test: '(vl-symbolp \'nil)', result: new Bool(false)},
     {test: '(vl-symbolp \'foo)', result: new Bool(true)},
     {test: '(vl-symbolp t)', result: new Bool(false)},   // TODO: ?
-    {test: '(vl-symbolp nil)', result: new Bool(false)}, // TODO: ?
+    {test: '(vl-symbolp nil)', result: new Bool(false)},
     {test: '(vl-symbolp 1)', result: new Bool(false)},
     {test: '(vl-symbolp (list 1))', result: new Bool(false)},
 ];

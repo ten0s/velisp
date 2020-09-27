@@ -18,6 +18,9 @@ const tests = [
 
     {test: '\'foo', result: new Sym('foo')},
 
+    {test: '()', result: new List([])}, // TODO: or nil
+    {test: '\'()', result: new List([])}, // TODO: or nil
+
     {test: '(list)', result: new List([])},
     {test: '(list 1 2 3)', result: new List([
         new Int(1), new Int(2), new Int(3)
@@ -46,7 +49,9 @@ QUnit.test("types", assert => {
     assert.equal((new List([new Int(1), new Real(1.0), new Str('2.0')])).toString(),
                  '(1 1.0 "2.0")');
 
-    assert.equal((new Pair(new Int(1), new Sym('a'))).toString(), '(1 . A)');
+    assert.equal((new Pair(new Int(1), new Sym('z'))).toString(), '(1 . Z)');
+    assert.equal((new List([new Int(1), new Pair(new Int(2), new Sym('z'))])).toString(),
+                 '(1 2 . Z)');
 
     assert.equal((new Fun("name", [], [], () => {})).toString(), '(defun name ())');
     assert.equal((new Fun("name", ['x'], [], () => {})).toString(), '(defun name (x))');

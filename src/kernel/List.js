@@ -34,10 +34,7 @@ exports.initContext = function (context) {
         }
         const fst = args[0];
         const snd = args[1];
-        // TODO: (cons 1 (cons 2 3))?
-        // Now: (1 . (2 . 3))
-        // Exp: (1 2 . 3)
-        if (snd instanceof List) {
+        if (snd instanceof List || snd instanceof Pair) {
             return snd.cons(fst);
         } else if (snd.isNil()) {
             return new List([fst]);

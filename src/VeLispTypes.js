@@ -424,7 +424,7 @@ class List {
         return this.arr;
     }
 
-    // :: (List) -> List
+    // :: (Any) -> List
     cons(first) {
         return new List([first, ...this.arr]);
     }
@@ -471,7 +471,8 @@ class List {
 
     // :: () -> string
     toString() {
-        return `(${this.arr.join(' ')})`;
+        const arr = this.arr.map(item => item.toString(true));
+        return `(${arr.join(' ')})`;
     }
 }
 
@@ -485,6 +486,11 @@ class Pair {
     // :: () -> false
     isNil() {
         return false;
+    }
+
+    // :: (Any) -> List
+    cons(first) {
+        return new List([first, this]);
     }
 
     // :: (Pair) -> Any
@@ -511,8 +517,12 @@ class Pair {
     }
 
     // :: () -> string
-    toString() {
-        return `(${this.fst} . ${this.snd})`;
+    toString(insideList) {
+        if (insideList) {
+            return `${this.fst} . ${this.snd}`;
+        } else {
+            return `(${this.fst} . ${this.snd})`;
+        }
     }
 }
 

@@ -66,6 +66,12 @@ VeLispVisitor.prototype.visitProgn = function(ctx) {
 };
 
 
+// Visit a parse tree produced by VeLispParser#quote.
+VeLispVisitor.prototype.visitQuote = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by VeLispParser#repeat.
 VeLispVisitor.prototype.visitRepeat = function(ctx) {
   return this.visitChildren(ctx);
@@ -84,8 +90,14 @@ VeLispVisitor.prototype.visitWhile = function(ctx) {
 };
 
 
-// Visit a parse tree produced by VeLispParser#funCall.
-VeLispVisitor.prototype.visitFunCall = function(ctx) {
+// Visit a parse tree produced by VeLispParser#dotList.
+VeLispVisitor.prototype.visitDotList = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by VeLispParser#list.
+VeLispVisitor.prototype.visitList = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -126,8 +138,8 @@ VeLispVisitor.prototype.visitId = function(ctx) {
 };
 
 
-// Visit a parse tree produced by VeLispParser#sym.
-VeLispVisitor.prototype.visitSym = function(ctx) {
+// Visit a parse tree produced by VeLispParser#tick.
+VeLispVisitor.prototype.visitTick = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -212,6 +224,12 @@ VeLispVisitor.prototype.visitSetqNameExpr = function(ctx) {
 
 // Visit a parse tree produced by VeLispParser#whileTest.
 VeLispVisitor.prototype.visitWhileTest = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by VeLispParser#listExpr.
+VeLispVisitor.prototype.visitListExpr = function(ctx) {
   return this.visitChildren(ctx);
 };
 

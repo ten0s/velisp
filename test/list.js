@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
 const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Real, Str, List} = require('../src/VeLispTypes.js');
+const {Bool, Int, Real, Str, List, Pair} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(list)', result: new List([])},
@@ -26,6 +26,10 @@ const tests = [
     ])},
     {test: '(cons (list 1) (list 2 3))', result: new List([
         new List([new Int(1)]), new Int(2), new Int(3)
+    ])},
+
+    {test: '(cons 1 (cons 2 3))', result: new List([
+        new Int(1), new Pair(new Int(2), new Int(3))
     ])},
 
     {test: '(car (list 1 2 3))', result: new Int(1)},

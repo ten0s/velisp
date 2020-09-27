@@ -13,12 +13,13 @@ expr :
      | '(' LAMBDA '(' funParam* ( ' / ' funLocal* )? ')' expr+ ')'                # lambda
      | '(' OR expr* ')'                                                           # or
      | '(' PROGN expr* ')'                                                        # progn
-     //                                                                           # quote
+     | '(' QUOTE expr ')'                                                         # quote
      | '(' REPEAT repeatNum expr* ')'                                             # repeat
      | '(' SETQ setqNameExpr* ')'                                                 # setQ
      | '(' WHILE whileTest expr+ ')'                                              # while
 
-     | '(' ID funArg* ')'                                                         # funCall
+     | '(' listExpr+ '.' listExpr ')'                                             # dotList
+     | '(' listExpr* ')'                                                          # list
 
      | NIL                                                                        # nil
      | TRU                                                                        # tru
@@ -26,7 +27,8 @@ expr :
      | REAL                                                                       # real
      | STR                                                                        # str
      | ID                                                                         # id
-     | SYM                                                                        # sym
+
+     | '\'' expr                                                                  # tick
      ;
 
 condTestResult : '(' condTest condResult* ')' ;
@@ -50,6 +52,8 @@ setqNameExpr : ID expr ;
 
 whileTest : expr ;
 
+listExpr : expr ;
+
 funArg : expr ;
 
 // Lexer rules
@@ -62,6 +66,7 @@ IF : I F ;
 LAMBDA : L A M B D A ;
 OR : O R ;
 PROGN : P R O G N ;
+QUOTE : Q U O T E ;
 REPEAT : R E P E A T ;
 SETQ : S E T Q ;
 WHILE : W H I L E ;
@@ -71,7 +76,6 @@ TRU : T ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' CHAR* '"' ;
-SYM : '\''ID ;
 ID : [a-zA-Z0-9!$%*/\-+=<>~:]+ ; // TODO: can't have only numeric chars
 
 INLINE_COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
