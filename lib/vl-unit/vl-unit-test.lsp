@@ -7,14 +7,14 @@
   (vlu-assert-true (equal nil nil))
   (vlu-assert-false (equal nil t))
   (vlu-assert-equal nil nil)
-  (vlu-assert-equal (list 'a) (list 'a))))
+  (vlu-assert-equal '(a) '(a))))
 
 (vlu-add-test (defun true-tests ()
   (vlu-assert-true t)
   (vlu-assert-true 0)
   (vlu-assert-true 1)
   (vlu-assert-true 'one)
-  (vlu-assert-true (list 'a))))
+  (vlu-assert-true '(a))))
 
 (vlu-add-test (defun false-tests ()
   (vlu-assert-false nil)))

@@ -30,7 +30,7 @@
 ;;; Globals
 ;;;
 
-(setq *vlu-tests* (list))
+(setq *vlu-tests* '())
 
 (setq *vlu-test-count* 0)
 (setq *vlu-test-pass-count* 0)
@@ -54,7 +54,7 @@
 
 (defun vlu-remove-tests ()
   (cond ((null *vlu-tests*) nil)
-	(t (setq *vlu-tests* (list)) t)))
+	(t (setq *vlu-tests* '()) t)))
 
 (defun vlu-get-tests () 
   *vlu-tests*)
@@ -64,7 +64,7 @@
   (%vlu-reset-assert-count)
   (%vlu-reset-assert-pass-count)
   (%vlu-reset-assert-fail-count)
-  (apply test-fn (list))
+  (apply test-fn '())
   (setq result (%vlu-get-test-result))
   (if result
       (%vlu-inc-test-pass-count)
