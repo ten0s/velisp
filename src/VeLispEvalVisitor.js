@@ -154,6 +154,19 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 values.push(value);
             }
             return new List(values);
+        } else if (ctx.expr() instanceof VeLispParser.AndContext ||
+                   ctx.expr() instanceof VeLispParser.CondContext ||
+                   ctx.expr() instanceof VeLispParser.DefunContext ||
+                   ctx.expr() instanceof VeLispParser.ForeachContext ||
+                   ctx.expr() instanceof VeLispParser.IfContext ||
+                   ctx.expr() instanceof VeLispParser.LambdaContext ||
+                   ctx.expr() instanceof VeLispParser.OrContext ||
+                   ctx.expr() instanceof VeLispParser.PrognContext ||
+                   ctx.expr() instanceof VeLispParser.QuoteContext ||
+                   ctx.expr() instanceof VeLispParser.RepeatContext ||
+                   ctx.expr() instanceof VeLispParser.SetQContext ||
+                   ctx.expr() instanceof VeLispParser.WhileContext) {
+            throw new Error('Special form quote not supported');
         } else {
             //console.error(str);
             //console.error(ctx.expr());

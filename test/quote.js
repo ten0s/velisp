@@ -62,8 +62,27 @@ const tests = [
     ])},
 ];
 
+const errors = [
+    {test: '\'(and)', result: new Error('Special form quote not supported')},
+    {test: '\'(cond)', result: new Error('Special form quote not supported')},
+    {test: '\'(defun id (x) x)', result: new Error('Special form quote not supported')},
+    {test: '\'(foreach x \'())', result: new Error('Special form quote not supported')},
+    {test: '\'(if T T)', result: new Error('Special form quote not supported')},
+    {test: '\'(lambda (x) x))', result: new Error('Special form quote not supported')},
+    {test: '\'(or)', result: new Error('Special form quote not supported')},
+    {test: '\'(progn)', result: new Error('Special form quote not supported')},
+    {test: '\'(quote 1)', result: new Error('Special form quote not supported')},
+    {test: '\'(repeat 1)', result: new Error('Special form quote not supported')},
+    {test: '\'(setq)', result: new Error('Special form quote not supported')},
+    {test: '\'(while nil nil)', result: new Error('Special form quote not supported')},
+]
+
 QUnit.test("quote", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });

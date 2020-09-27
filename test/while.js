@@ -10,6 +10,9 @@ const tests = [
     {test: '(WHILe nil "done")', result: new Bool(false)},
     {test: '(WHILE nil "done")', result: new Bool(false)},
 
+    // TODO
+    {test: '(WHILE nil)', result: new Bool(false)},
+
     {test: `(setq test 1)
             (while (<= test 10)
               (setq test (+ 1 test)))`, result: new Int(11)},
