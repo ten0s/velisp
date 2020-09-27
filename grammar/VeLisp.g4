@@ -54,8 +54,6 @@ whileTest : expr ;
 
 listExpr : expr ;
 
-funArg : expr ;
-
 // Lexer rules
 
 AND : A N D ;

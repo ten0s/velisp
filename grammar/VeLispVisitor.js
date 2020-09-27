@@ -234,11 +234,5 @@ VeLispVisitor.prototype.visitListExpr = function(ctx) {
 };
 
 
-// Visit a parse tree produced by VeLispParser#funArg.
-VeLispVisitor.prototype.visitFunArg = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 
 exports.VeLispVisitor = VeLispVisitor;
