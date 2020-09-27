@@ -15,14 +15,13 @@ $ make
 
 ```
 $ make test
-$ node src/main.js lib/stdlib/test.lsp
 ```
 
 ## Run REPL (Read–Eval–Print Loop)
 
 ```
 $ npm start
-VeLisp 0.0.6 on linux
+VeLisp 0.0.7 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -67,11 +66,11 @@ $ make pkgMacOS
 
 ```
 $ ls velisp*
-velisp-0.0.6-linux-x64 velisp-0.0.6-macos-x64 velisp-0.0.6-win-x64.exe velisp-0.0.6-win-x86.exe
+velisp-0.0.7-linux-x64 velisp-0.0.7-macos-x64 velisp-0.0.7-win-x64.exe velisp-0.0.7-win-x86.exe
 ```
 
 ```
-$ ./velisp-0.0.6-linux-x64 examples/fib.lsp
+$ ./velisp-0.0.7-linux-x64 examples/fib.lsp
 55
 ```
 
@@ -79,7 +78,7 @@ $ ./velisp-0.0.6-linux-x64 examples/fib.lsp
 
 ```
 $ npm start -- --run tree
-VeLisp 0.0.6 on linux
+VeLisp 0.0.7 on linux
 Type ".help" for more information
 >
 > (+ 1 2)
