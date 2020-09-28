@@ -6,7 +6,9 @@ const tests = [
     {test: '(apply (defun foo () "foo") (list))', result: new Str('foo')},
     {test: '(apply (defun foo () "foo") nil)', result: new Str('foo')},
     {test: '(apply (lambda () "foo") (list))', result: new Str('foo')},
+    {test: '(apply \'(lambda () "foo") (list))', result: new Str('foo')},
     {test: '(apply (lambda (x) (* x x)) (list 3))', result: new Int(9)},
+    {test: '(apply \'(lambda (x) (* x x)) (list 3))', result: new Int(9)},
     {test: '(apply \'+ (list 1 2 3))', result: new Int(6)},
 ];
 

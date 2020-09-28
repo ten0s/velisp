@@ -4,7 +4,9 @@ const {Int, Str, Sym, List} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(apply (lambda () "foo") (list))', result: new Str('foo')},
+    {test: '(apply \'(lambda () "foo") (list))', result: new Str('foo')},
     {test: '(apply (lambda (x) x) (list "me"))', result: new Str('me')},
+    {test: '(apply \'(lambda (x) x) (list "me"))', result: new Str('me')},
 
     {test: `(defun map-apply (fn lst)
               (cond ((null lst) nil)
