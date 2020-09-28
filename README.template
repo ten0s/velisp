@@ -36,7 +36,7 @@ Sym { sym: 'ADD' }
 Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
 > .type (add 1 2)
 Int { int: 3 }
-> (mapcar (lambda (x) (* x x)) (list 1 2 3))
+> (mapcar '(lambda (x) (* x x)) '(1 2 3))
 (1 4 9)
 ```
 
@@ -50,7 +50,7 @@ $ npm start -- examples/fib.lsp
 ## Run code from standard input
 
 ```
-$ cat examples/fib.lsp npm start
+$ cat examples/fib.lsp | npm start
 55
 ```
 
