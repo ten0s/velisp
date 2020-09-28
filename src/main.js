@@ -51,7 +51,9 @@ function runAction(what, isREPL) {
 function maybeInjectLib(action, context) {
     if (action === evaluate) {
         const path = require('path');
-        const rootdir = path.join(__dirname, '..');
+        let rootdir = path.join(__dirname, '..');
+        // Win32 workaround
+        rootdir = rootdir.split('\\').join('/');
         process.env['VELISP_ROOT'] = rootdir;
         evaluate(`(load "${rootdir}/lib/main.lsp")`, context);
     }

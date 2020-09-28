@@ -4,6 +4,7 @@ const {Bool, Int, Str, Sym} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(load "examples/fib.lsp")', result: new Int(55)},
+    {test: '(load "examples\\\\fib.lsp")', result: new Int(55)},
     // Add .lsp extension
     {test: '(load "examples/fib")', result: new Int(55)},
     // Handle with nil

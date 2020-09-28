@@ -21,7 +21,9 @@ exports.initContext = function (context) {
         if (!(args[0] instanceof Str)) {
             throw new Error('load: `filename` expected Str');
         }
-        const filename = maybeAddExt(args[0].value());
+        let filename = maybeAddExt(args[0].value());
+        // Win32 workaround
+        filename = filename.split('\\').join('/');
         try {
             const data = fs.readFileSync(filename).toString();
             // FunCall pushes new context just before the call
