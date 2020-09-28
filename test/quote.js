@@ -60,21 +60,23 @@ const tests = [
     {test: '\'(1 2 . z)', result: new List([
         new Int(1), new Pair(new Int(2), new Sym('z'))
     ])},
+
+    {test: '(apply (quote (lambda (x) x)) (quote (z)))', result: new Sym('z')},
+    {test: '(apply \'(lambda (x) x) \'(z))', result: new Sym('z')},
 ];
 
 const errors = [
-    {test: '\'(and)', result: new Error('Special form quote not supported')},
-    {test: '\'(cond)', result: new Error('Special form quote not supported')},
-    {test: '\'(defun id (x) x)', result: new Error('Special form quote not supported')},
-    {test: '\'(foreach x \'())', result: new Error('Special form quote not supported')},
-    {test: '\'(if T T)', result: new Error('Special form quote not supported')},
-    {test: '\'(lambda (x) x))', result: new Error('Special form quote not supported')},
-    {test: '\'(or)', result: new Error('Special form quote not supported')},
-    {test: '\'(progn)', result: new Error('Special form quote not supported')},
-    {test: '\'(quote 1)', result: new Error('Special form quote not supported')},
-    {test: '\'(repeat 1)', result: new Error('Special form quote not supported')},
-    {test: '\'(setq)', result: new Error('Special form quote not supported')},
-    {test: '\'(while nil nil)', result: new Error('Special form quote not supported')},
+    {test: '\'(and)', result: new Error('quote: `and` not supported')},
+    {test: '\'(cond)', result: new Error('quote: `cond` not supported')},
+    {test: '\'(defun id (x) x)', result: new Error('quote: `defun` not supported')},
+    {test: '\'(foreach x \'())', result: new Error('quote: `foreach` not supported')},
+    {test: '\'(if T T)', result: new Error('quote: `if` not supported')},
+    {test: '\'(or)', result: new Error('quote: `or` not supported')},
+    {test: '\'(progn)', result: new Error('quote: `progn` not supported')},
+    {test: '\'(quote 1)', result: new Error('quote: `quote` not supported')},
+    {test: '\'(repeat 1)', result: new Error('quote: `repeat` not supported')},
+    {test: '\'(setq)', result: new Error('quote: `setq` not supported')},
+    {test: '\'(while nil nil)', result: new Error('quote: `while` not supported')},
 ]
 
 QUnit.test("quote", assert => {

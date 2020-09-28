@@ -106,69 +106,70 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitQuote(ctx) {
-        const str = ctx.expr().getText();
-        if (ctx.expr() instanceof VeLispParser.NilContext) {
+        const expr = ctx.expr();
+        const str = expr.getText();
+        if (expr instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
             return new Bool(false);
-        } else if (ctx.expr() instanceof VeLispParser.IntContext) {
+        } else if (expr instanceof VeLispParser.IntContext) {
             //console.error('INT:', str);
             return new Int(Number.parseInt(str));
-        } else if (ctx.expr() instanceof VeLispParser.RealContext) {
+        } else if (expr instanceof VeLispParser.RealContext) {
             //console.error('REAL:', str);
             return new Real(Number.parseFloat(str));
-        } else if (ctx.expr() instanceof VeLispParser.StrContext) {
+        } else if (expr instanceof VeLispParser.StrContext) {
             //console.error('STR:', str);
             // Remove first and last double quotes (")
             return new Str(str.substring(1, str.length-1));
-        } else if (ctx.expr() instanceof VeLispParser.IdContext) {
+        } else if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
             return new Sym(str);
-        } else if (ctx.expr() instanceof VeLispParser.DotListContext) {
+        } else if (expr instanceof VeLispParser.DotListContext) {
             //console.error('DOTLIST:', str);
-            const length = ctx.expr().listExpr().length;
-            let last = this.getValue(this.visitQuote(ctx.expr().listExpr(length-1)));
+            const length = expr.listExpr().length;
+            let last = this.getValue(this.visitQuote(expr.listExpr(length-1)));
             //console.error(last)
             if (last.isNil()) {
                 last = new List([]);
             }
             if (last instanceof List) {
                 for (let i = length - 2; i >= 0; i--) {
-                    const value = this.getValue(this.visitQuote(ctx.expr().listExpr(i)));
+                    const value = this.getValue(this.visitQuote(expr.listExpr(i)));
                     last = last.cons(value);
                 }
                 return last;
             }
-            const prelast = this.getValue(this.visitQuote(ctx.expr().listExpr(length-2)));
+            const prelast = this.getValue(this.visitQuote(expr.listExpr(length-2)));
             let result = new Pair(prelast, last);
             for (let i = length - 3; i >= 0; i--) {
-                const value = this.getValue(this.visitQuote(ctx.expr().listExpr(i)));
+                const value = this.getValue(this.visitQuote(expr.listExpr(i)));
                 result = result.cons(value);
             }
             return result;
-        } else if (ctx.expr() instanceof VeLispParser.ListContext) {
+        } else if (expr instanceof VeLispParser.ListContext) {
             //console.error('LIST:', str);
-            const length = ctx.expr().listExpr().length;
+            const length = expr.listExpr().length;
             const values = [];
             for (let i = 0; i < length; i++) {
-                const value = this.getValue(this.visitQuote(ctx.expr().listExpr(i)));
+                const value = this.getValue(this.visitQuote(expr.listExpr(i)));
                 values.push(value);
             }
             return new List(values);
-        } else if (ctx.expr() instanceof VeLispParser.LambdaContext) {
-            return this.visitLambda(ctx.expr());
-        } else if (ctx.expr() instanceof VeLispParser.AndContext ||
-                   ctx.expr() instanceof VeLispParser.CondContext ||
-                   ctx.expr() instanceof VeLispParser.DefunContext ||
-                   ctx.expr() instanceof VeLispParser.ForeachContext ||
-                   ctx.expr() instanceof VeLispParser.IfContext ||
-
-                   ctx.expr() instanceof VeLispParser.OrContext ||
-                   ctx.expr() instanceof VeLispParser.PrognContext ||
-                   ctx.expr() instanceof VeLispParser.QuoteContext ||
-                   ctx.expr() instanceof VeLispParser.RepeatContext ||
-                   ctx.expr() instanceof VeLispParser.SetQContext ||
-                   ctx.expr() instanceof VeLispParser.WhileContext) {
-            throw new Error('Special form quote not supported');
+        } else if (expr instanceof VeLispParser.LambdaContext) {
+            return this.visitLambda(expr);
+        } else if (expr instanceof VeLispParser.AndContext ||
+                   expr instanceof VeLispParser.CondContext ||
+                   expr instanceof VeLispParser.DefunContext ||
+                   expr instanceof VeLispParser.ForeachContext ||
+                   expr instanceof VeLispParser.IfContext ||
+                   expr instanceof VeLispParser.OrContext ||
+                   expr instanceof VeLispParser.PrognContext ||
+                   expr instanceof VeLispParser.QuoteContext ||
+                   expr instanceof VeLispParser.RepeatContext ||
+                   expr instanceof VeLispParser.SetQContext ||
+                   expr instanceof VeLispParser.WhileContext) {
+            const name = expr.children[1].getText();
+            throw new Error(`quote: \`${name}\` not supported`);
         } else {
             //console.error(str);
             //console.error(ctx.expr());
