@@ -63,6 +63,9 @@ const tests = [
 
     {test: '(apply (quote (lambda (x) x)) (quote (z)))', result: new Sym('z')},
     {test: '(apply \'(lambda (x) x) \'(z))', result: new Sym('z')},
+
+    {test: '(quote (quote foo))', result: new List([new Sym('quote'), new Sym('foo')])},
+    {test: '\'(quote foo)', result: new List([new Sym('quote'), new Sym('foo')])},
 ];
 
 const errors = [
@@ -73,7 +76,6 @@ const errors = [
     {test: '\'(if T T)', result: new Error('quote: `if` not supported')},
     {test: '\'(or)', result: new Error('quote: `or` not supported')},
     {test: '\'(progn)', result: new Error('quote: `progn` not supported')},
-    {test: '\'(quote 1)', result: new Error('quote: `quote` not supported')},
     {test: '\'(repeat 1)', result: new Error('quote: `repeat` not supported')},
     {test: '\'(setq)', result: new Error('quote: `setq` not supported')},
     {test: '\'(while nil nil)', result: new Error('quote: `while` not supported')},

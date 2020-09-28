@@ -157,6 +157,16 @@ class VeLispEvalVisitor extends VeLispVisitor {
             return new List(values);
         } else if (expr instanceof VeLispParser.LambdaContext) {
             return this.visitLambda(expr);
+        } else if (expr instanceof VeLispParser.QuoteContext) {
+            const name = new Sym(expr.children[1].getText());
+            const values = [name];
+            for (let i = 2; i < expr.children.length-1; i++) {
+                // Fake expr() function returning itself
+                expr.children[i].expr = () => expr.children[i];
+                const value = this.getValue(this.visitQuote(expr.children[i]));
+                values.push(value);
+            }
+            return new List(values);
         } else if (expr instanceof VeLispParser.AndContext ||
                    expr instanceof VeLispParser.CondContext ||
                    expr instanceof VeLispParser.DefunContext ||
@@ -164,7 +174,6 @@ class VeLispEvalVisitor extends VeLispVisitor {
                    expr instanceof VeLispParser.IfContext ||
                    expr instanceof VeLispParser.OrContext ||
                    expr instanceof VeLispParser.PrognContext ||
-                   expr instanceof VeLispParser.QuoteContext ||
                    expr instanceof VeLispParser.RepeatContext ||
                    expr instanceof VeLispParser.SetQContext ||
                    expr instanceof VeLispParser.WhileContext) {
