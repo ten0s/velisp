@@ -355,7 +355,7 @@ class Str {
     }
 
     // :: () -> string
-    toEscapedString()  {
+    toUnescapedString()  {
         // TODO: FIXME
         // Poor man's replaceAll
         return this.str
@@ -364,6 +364,11 @@ class Str {
             .split('\\r').join('\r')
             .split('\\n').join('\n')
             .split('\\t').join('\t')
+    }
+
+    // :: () -> string
+    toEscapedString()  {
+        return `\\"${this.str}\\"`;
     }
 
     // :: () -> string

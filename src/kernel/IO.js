@@ -14,7 +14,13 @@ exports.initContext = function (context) {
             throw new Error('prompt: too many arguments');
         }
         const arg = ensureType('prompt:', args[0], [Str]);
-        console.log(arg.toEscapedString());
+        let msg;
+        if (arg instanceof Str) {
+            msg = arg.toUnescapedString();
+        } else {
+            msg = arg.toString();
+        }
+        console.log(msg);
         return new Bool(false);
     }));
     context.setSym('PRIN1', new Fun('prin1', ['[expr [file-desc]]'], [], (self, args) => {
@@ -26,8 +32,14 @@ exports.initContext = function (context) {
             return new Str('');
         }
         const arg = args[0];
+        let msg;
         // TODO: file-desc
-        console.log(arg.toString());
+        if (arg instanceof Str) {
+            msg = arg.toEscapedString();
+        } else {
+            msg = arg.toString();
+        }
+        console.log(msg);
         return arg;
     }));
     context.setSym('PRINC', new Fun('princ', ['[expr [file-desc]]'], [], (self, args) => {
@@ -39,12 +51,14 @@ exports.initContext = function (context) {
             return new Str('');
         }
         const arg = args[0];
+        let msg;
         // TODO: file-desc
         if (arg instanceof Str) {
-            console.log(arg.toEscapedString());
+            msg = arg.toUnescapedString();
         } else {
-            console.log(arg.toString());
+            msg = arg.toString();
         }
+        console.log(msg);
         return arg;
     }));
     context.setSym('PRINT', new Fun('print', ['[expr [file-desc]]'], [], (self, args) => {
@@ -56,8 +70,14 @@ exports.initContext = function (context) {
             return new Str('');
         }
         const arg = args[0];
+        let msg;
         // TODO: file-desc
-        console.log('\n' + arg.toString() + ' ');
+        if (arg instanceof Str) {
+            msg = arg.toEscapedString();
+        } else {
+            msg = arg.toString();
+        }
+        console.log('\n' + msg + ' ');
         return arg;
     }));
     context.setSym('GETENV', new Fun('getenv', ['name'], [], (self, args) => {

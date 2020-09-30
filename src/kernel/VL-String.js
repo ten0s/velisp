@@ -14,6 +14,9 @@ exports.initContext = function (context) {
             throw new Error('vl-prin1-to-string: too many arguments');
         }
         const arg = args[0];
+        if (arg instanceof Str) {
+            return new Str(arg.toEscapedString());
+        }
         return new Str(arg.toString());
     }));
     context.setSym('VL-PRINC-TO-STRING', new Fun('vl-princ-to-string', ['data'], [], (self, args) => {
@@ -25,9 +28,8 @@ exports.initContext = function (context) {
         }
         const arg = args[0];
         if (arg instanceof Str) {
-            return new Str(arg.toEscapedString());
-        } else {
-            return new Str(arg.toString());
+            return new Str(arg.toUnescapedString());
         }
+        return new Str(arg.toString());
     }));
 }
