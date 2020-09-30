@@ -1,24 +1,6 @@
 const {Bool, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
-    context.setSym('NOT', new Fun('not', ['item'], [], (self, args) => {
-        if (args.length == 0) {
-            throw new Error('not: too few arguments');
-        }
-        if (args.length > 1) {
-            throw new Error('not: too many arguments');
-        }
-        return new Bool(args[0].isNil());
-    }));
-    context.setSym('NULL', new Fun('null', ['item'], [], (self, args) => {
-        if (args.length == 0) {
-            throw new Error('null: too few arguments');
-        }
-        if (args.length > 1) {
-            throw new Error('null: too many arguments');
-        }
-        return new Bool(args[0].isNil());
-    }));
     context.setSym('SET', new Fun('set', ['sym', 'expr'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('set: too few arguments');
