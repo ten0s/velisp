@@ -1,10 +1,6 @@
 const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
 
-//
-// I/O Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('VL-PRIN1-TO-STRING', new Fun('vl-print1-to-string', ['data'], [], (self, args) => {
         if (args.length === 0) {

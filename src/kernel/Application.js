@@ -5,10 +5,6 @@ const {Bool, Str, Sym, Fun} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
 const {fmtError} = require('../VeLispError.js');
 
-//
-// Application-Handling Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
         //console.log('load args:', args);

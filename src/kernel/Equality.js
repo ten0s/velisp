@@ -1,9 +1,5 @@
 const {Bool, Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js');
 
-//
-// Equality Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('=', new Fun('=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length == 0) {

@@ -1,9 +1,5 @@
 const {Bool, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 
-//
-// Symbol-Handling Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('NOT', new Fun('not', ['item'], [], (self, args) => {
         if (args.length == 0) {

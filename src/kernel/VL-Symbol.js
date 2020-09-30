@@ -1,9 +1,5 @@
 const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 
-//
-// Symbol-Handling Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('VL-SYMBOL-NAME', new Fun('vl-symbol-name', ['sym'], [], (self, args) => {
         if (args.length == 0) {

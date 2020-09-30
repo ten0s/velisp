@@ -4,10 +4,6 @@ const path = require('path');
 const {Bool, Int, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
 
-//
-// System Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('CWD', new Fun('cwd', [], [], (self, args) => {
         if (args.length > 0) {

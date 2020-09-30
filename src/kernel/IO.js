@@ -1,10 +1,6 @@
 const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
 
-//
-// I/O Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
         if (args.length == 0) {

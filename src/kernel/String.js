@@ -1,9 +1,5 @@
 const {Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js');
 
-//
-// String-Handling Functions
-//
-
 exports.initContext = function (context) {
     context.setSym('ITOA', new Fun('itoa', ['int'], [], (self, args) => {
         if (args.length == 0) {
