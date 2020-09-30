@@ -116,6 +116,23 @@ class Int {
         throw new Error(`Not implemented (/ ${this} ${that})`);
     }
 
+    // :: (Int | Real) -> Int | Real
+    remainder(that) {
+        if (that instanceof Int) {
+            if (that.int === 0) {
+                throw new Error('rem: division by zero');
+            }
+            return new Int(this.int % that.int);
+        }
+        if (that instanceof Real) {
+            if (that.real === 0) {
+                throw new Error('rem: division by zero');
+            }
+            return new Real(this.int % that.real);
+        }
+        throw new Error(`Not implemented (rem ${this} ${that})`);
+    }
+
     add(that) {
         if (that instanceof Int) {
             return new Int(this.int + that.int);
@@ -230,6 +247,23 @@ class Real {
             return new Real(this.real / that.real);
         }
         throw new Error(`Not implemented (/ ${this} ${that})`);
+    }
+
+    // :: (Int | Real) -> Int | Real
+    remainder(that) {
+        if (that instanceof Int) {
+            if (that.int === 0) {
+                throw new Error('rem: division by zero');
+            }
+            return new Real(this.real % that.int);
+        }
+        if (that instanceof Real) {
+            if (that.real === 0) {
+                throw new Error('rem: division by zero');
+            }
+            return new Real(this.real % that.real);
+        }
+        throw new Error(`Not implemented (rem ${this} ${that})`);
     }
 
     add(that) {

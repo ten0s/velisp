@@ -84,3 +84,26 @@
    (vlu-assert-equal -1.0 (1- 0.0))
    (vlu-assert-equal  0.0 (1- 1.0))
    (vlu-assert-equal  1.0 (1- 2.0))))
+
+(vlu-add-test
+ (defun abs-test ()
+   (vlu-assert-equal   1 (abs -1))
+   (vlu-assert-equal   0 (abs 0))
+   (vlu-assert-equal   1 (abs 1))
+   (vlu-assert-equal 1.0 (abs -1.0))
+   (vlu-assert-equal 0.0 (abs 0.0))
+   (vlu-assert-equal 1.0 (abs 1.0))))
+
+(vlu-add-test
+ (defun float-test ()
+   (vlu-assert-equal -1.0 (float -1))
+   (vlu-assert-equal  0.0 (float 0))
+   (vlu-assert-equal  1.0 (float 1))
+   (vlu-assert-equal -1.0 (float -1.0))
+   (vlu-assert-equal  0.0 (float 0.0))
+   (vlu-assert-equal  1.0 (float 1.0))))
+
+(vlu-add-test
+ (defun gcd-test ()
+   (vlu-assert-equal 3 (gcd 81 57))
+   (vlu-assert-equal 4 (gcd 12 20))))

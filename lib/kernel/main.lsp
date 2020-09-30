@@ -25,3 +25,14 @@
 
 (defun 1- (num)
   (- num 1))
+
+(defun abs (num)
+  (if (< num 0) (* -1 num)
+    num))
+
+(defun float (num)
+  (* num 1.0))
+
+(defun gcd (a b)
+  (if (= b 0) (abs a)
+    (gcd b (rem a b))))
