@@ -6,3 +6,6 @@
 
 (defun null (item)
   (not item))
+
+(defun listp (item)
+  (or (not item) (not (atom item))))

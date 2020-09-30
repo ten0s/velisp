@@ -11,11 +11,6 @@ const tests = [
         new Int(1), new Str('2'), new Real(3.0), new List([new Int(4)])
     ])},
 
-    {test: '(listp (list \'a \'b \'b))', result: new Bool(true)},
-    {test: '(listp \'a)', result: new Bool(false)},
-    {test: '(listp 4.343)', result: new Bool(false)},
-    {test: '(listp nil)', result: new Bool(true)},
-
     {test: '(cons 1 (list))', result: new List([new Int(1)])},
     {test: '(cons 1 nil)', result: new List([new Int(1)])},
     {test: '(cons 1 (list 2 3))', result: new List([
@@ -42,9 +37,6 @@ const tests = [
 ];
 
 const errors = [
-    {test: '(listp)', result: new Error('listp: too few arguments')},
-    {test: '(listp 1 2)', result: new Error('listp: too many arguments')},
-
     {test: '(cons)', result: new Error('cons: too few arguments')},
     {test: '(cons 1)', result: new Error('cons: too few arguments')},
     {test: '(cons 1 2 3)', result: new Error('cons: too many arguments')},

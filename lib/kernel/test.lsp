@@ -31,3 +31,11 @@
    (vlu-assert     (null '()))
    (vlu-assert-not (null '(1 2 3)))
    (vlu-assert-not (null '(1 . 2)))))
+
+(vlu-add-test
+ (defun listp-test ()
+   (vlu-assert     (listp nil))
+   (vlu-assert     (listp '(a b c)))
+   (vlu-assert     (listp '(a . b)))
+   (vlu-assert-not (listp 'a))
+   (vlu-assert-not (listp 4.343))))
