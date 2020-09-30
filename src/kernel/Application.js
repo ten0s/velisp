@@ -8,7 +8,7 @@ const {fmtError} = require('../VeLispError.js');
 exports.initContext = function (context) {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
         //console.log('load args:', args);
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('load: too few arguments');
         }
         if (args.length > 2) {
@@ -29,7 +29,7 @@ exports.initContext = function (context) {
             const context = self.contexts[self.contexts.length-2];
             return Evaluator.evaluate(data, context);
         } catch (e) {
-            if (args.length == 2) {
+            if (args.length === 2) {
                 let onfailure = args[1];
                 if (onfailure instanceof Sym) {
                     // Try resolving symbol to function

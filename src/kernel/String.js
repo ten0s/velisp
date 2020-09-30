@@ -2,7 +2,7 @@ const {Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
     context.setSym('ITOA', new Fun('itoa', ['int'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('itoa: too few arguments');
         }
         if (args.length > 1) {
@@ -11,7 +11,7 @@ exports.initContext = function (context) {
         return new Str(ensureType('itoa:', args[0], [Int]).toString());
     }));
     context.setSym('ATOI', new Fun('atoi', ['str'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('atoi: too few arguments');
         }
         if (args.length > 1) {
@@ -27,7 +27,7 @@ exports.initContext = function (context) {
         throw new Error('atoi: conversion impossible');
     }));
     context.setSym('ATOF', new Fun('atof', ['str'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('atof: too few arguments');
         }
         if (args.length > 1) {
@@ -43,7 +43,7 @@ exports.initContext = function (context) {
         throw new Error('atof: conversion impossible');
     }));
     context.setSym('STRCASE', new Fun('strcase', ['str [which]'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('strcase: too few arguments');
         }
         if (args.length > 2) {

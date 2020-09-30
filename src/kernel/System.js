@@ -22,7 +22,7 @@ exports.initContext = function (context) {
         process.exit(code);
     }));
     context.setSym('GETENV', new Fun('getenv', ['name'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('getenv: too few arguments');
         }
         if (args.length > 1) {

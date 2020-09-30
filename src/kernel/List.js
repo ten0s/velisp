@@ -26,7 +26,7 @@ exports.initContext = function (context) {
         }
     }));
     context.setSym('CAR', new Fun('car', ['listorpair'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('car: too few arguments');
         }
         if (args.length > 1) {
@@ -42,7 +42,7 @@ exports.initContext = function (context) {
         throw new Error('car: expected non-empty List, Pair');
     }));
     context.setSym('CDR', new Fun('cdr', ['listorpair'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('cdr: too few arguments');
         }
         if (args.length > 1) {

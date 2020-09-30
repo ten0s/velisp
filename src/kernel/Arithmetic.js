@@ -2,7 +2,7 @@ const {Int, Real, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
     context.setSym('*', new Fun('*', ['[num] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             return new Int(0);
         }
         let result = new Int(1);
@@ -12,7 +12,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('/', new Fun('/', ['[num] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             return new Int(0);
         }
         let result = ensureType('/:', args[0], [Int, Real]);
@@ -29,11 +29,11 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('-', new Fun('-', ['[num] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             return new Int(0);
         }
         let result = ensureType('-:', args[0], [Int, Real]);
-        if (args.length == 1) {
+        if (args.length === 1) {
             return result.multiply(new Int(-1));
         }
         for (let i = 1; i < args.length; i++) {
@@ -42,7 +42,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('~', new Fun('~', ['int'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('~: too few arguments');
         }
         if (args.length > 1) {

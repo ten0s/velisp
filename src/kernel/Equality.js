@@ -2,7 +2,7 @@ const {Bool, Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
     context.setSym('=', new Fun('=', ['numstr [numstr] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('=: too few arguments');
         }
         let result = new Bool(true);
@@ -16,7 +16,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('/=', new Fun('/=', ['numstr [numstr] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('/=: too few arguments');
         }
         let result = new Bool(true);
@@ -30,7 +30,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('<', new Fun('<', ['numstr [numstr] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('<: too few arguments');
         }
         let result = new Bool(true);
@@ -44,7 +44,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('<=', new Fun('<=', ['numstr [numstr] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('<=: too few arguments');
         }
         let result = new Bool(true);
@@ -58,7 +58,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('>', new Fun('>', ['numstr [numstr] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('>: too few arguments');
         }
         let result = new Bool(true);
@@ -72,7 +72,7 @@ exports.initContext = function (context) {
         return result;
     }));
     context.setSym('>=', new Fun('>=', ['numstr [numstr] ...'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('>=: too few arguments');
         }
         let result = new Bool(true);

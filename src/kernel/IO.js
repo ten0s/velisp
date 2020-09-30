@@ -3,7 +3,7 @@ const Evaluator = require('../VeLispEvaluator.js');
 
 exports.initContext = function (context) {
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('prompt: too few arguments');
         }
         if (args.length > 1) {
@@ -23,7 +23,7 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('prin1: too many arguments');
         }
-        if (args.length == 0) {
+        if (args.length === 0) {
             // TODO: should return some null symbol
             return new Str('');
         }
@@ -42,7 +42,7 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('princ: too many arguments');
         }
-        if (args.length == 0) {
+        if (args.length === 0) {
             // TODO: should return some null symbol
             return new Str('');
         }
@@ -61,7 +61,7 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('print: too many arguments');
         }
-        if (args.length == 0) {
+        if (args.length === 0) {
             // TODO: should return some null symbol
             return new Str('');
         }
@@ -77,7 +77,7 @@ exports.initContext = function (context) {
         return arg;
     }));
     context.setSym('GETENV', new Fun('getenv', ['name'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('getenv: too few arguments');
         }
         if (args.length > 1) {

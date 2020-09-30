@@ -2,7 +2,7 @@ const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
     context.setSym('VL-SYMBOL-NAME', new Fun('vl-symbol-name', ['sym'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('vl-symbol-name: too few arguments');
         }
         if (args.length > 1) {
@@ -12,7 +12,7 @@ exports.initContext = function (context) {
         return new Str(arg.toString());
     }));
     context.setSym('VL-SYMBOL-VALUE', new Fun('vl-symbol-value', ['sym'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('vl-symbol-value: too few arguments');
         }
         if (args.length > 1) {
@@ -22,7 +22,7 @@ exports.initContext = function (context) {
         return self.contexts[self.contexts.length-1].getSym(arg.value());
     }));
     context.setSym('VL-SYMBOLP', new Fun('vl-symbolp', ['obj'], [], (self, args) => {
-        if (args.length == 0) {
+        if (args.length === 0) {
             throw new Error('vl-symbolp: too few arguments');
         }
         if (args.length > 1) {
