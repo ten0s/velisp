@@ -244,8 +244,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
         if (ctx.listExpr().length === 0) {
             return new List([]);
         }
+        const name = ctx.listExpr(0).expr().getText();
+        //console.error(name);
         let fun = this.getValue(this.visit(ctx.listExpr(0).expr()));
-        //console.log(fun);
+        //console.error(fun);
         // Try to get function out of symbol
         if (!fun.isNil() && fun instanceof Sym) {
             fun = this.contexts[this.contexts.length-1].getSym(fun.value());
@@ -256,7 +258,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             for (let i = 1; i < ctx.listExpr().length; i++) {
                 args.push(this.getValue(this.visit(ctx.listExpr(i).expr())));
             }
-            //console.error(`(${fun} ${args.join(' ')})`);
+            //console.error(`(${name} ${args.join(' ')})`);
             // Push new context
             this.contexts.push(new VeLispContext(this.contexts[this.contexts.length-1]));
             const result = fun.apply(this, args);
@@ -264,7 +266,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop();
             return result;
         }
-        throw new Error(`${fun}: function not defined`);
+        throw new Error(`${name}: function not defined`);
     }
 
     visitTerminal(ctx) {

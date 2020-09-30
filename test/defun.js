@@ -87,8 +87,16 @@ const tests = [
      result: new List([new Int(2), new Int(3), new Int(4)])},
 ];
 
+const errors = [
+    {test: '(unknown)', result: new Error('unknown: function not defined')},
+];
+
 QUnit.test("defun", assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
+    });
+
+    errors.forEach(t => {
+        assert.throws(() => evaluate(t.test), t.result, t.test)
     });
 });
