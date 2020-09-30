@@ -80,7 +80,7 @@
   (%vlu-show-tests-result-message)
   (%vlu-get-tests-result))
 
-(defun vlu-assert-true (actual)
+(defun vlu-assert (actual)
   (%vlu-inc-assert-count)
   (cond ((and actual)
 	 (%vlu-inc-assert-pass-count) t)
@@ -88,7 +88,7 @@
 	 (%vlu-show-assert-fail-message t actual)
 	 (%vlu-inc-assert-fail-count) nil)))
 
-(defun vlu-assert-false (actual)
+(defun vlu-assert-not (actual)
   (%vlu-inc-assert-count)
   (cond ((and (not actual))
 	 (%vlu-inc-assert-pass-count) t)
