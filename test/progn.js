@@ -14,8 +14,8 @@ const tests = [
     {test: '(progn 1 2 (+ 1 2))', result: new Int(3)},
     {test: `(setq a 0)
             (progn
-              (setq a (1- a))
-              (setq a (1- a)))`,
+              (setq a (- a 1))
+              (setq a (- a 1)))`,
      result: new Int(-2)},
 ];
 

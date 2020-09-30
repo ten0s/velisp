@@ -34,13 +34,13 @@ const tests = [
     {test: '(if (/= 2 (+ 1 1)) "yes")', result: new Bool(false)}, // no else
 
     {test: `(setq a 0 b 0)
-            (if T (progn (setq a (1- a)) (setq a (1- a)) (setq a (1- a)))
-                  (progn (setq b (1- b)) (setq b (1- b)) (setq b (1- b))))
+            (if T (progn (setq a (- a 1)) (setq a (- a 1)) (setq a (- a 1)))
+                  (progn (setq b (- b 1)) (setq b (- b 1)) (setq b (- b 1))))
             (cons a b)`,
      result: new Pair(new Int(-3), new Int(0))},
     {test: `(setq a 0 b 0)
-            (if nil (progn (setq a (1- a)) (setq a (1- a)) (setq a (1- a)))
-                  (progn (setq b (1- b)) (setq b (1- b)) (setq b (1- b))))
+            (if nil (progn (setq a (- a 1)) (setq a (- a 1)) (setq a (- a 1)))
+                  (progn (setq b (- b 1)) (setq b (- b 1)) (setq b (- b 1))))
             (cons a b)`,
      result: new Pair(new Int(0), new Int(-3))},
 ];

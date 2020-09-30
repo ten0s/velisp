@@ -66,3 +66,21 @@
    (vlu-assert-not (numberp t))
    (vlu-assert-not (numberp nil))
    (vlu-assert-not (numberp '(1 2 3)))))
+
+(vlu-add-test
+ (defun inc-test ()
+   (vlu-assert-equal   0 (1+ -1))
+   (vlu-assert-equal   1 (1+ 0))
+   (vlu-assert-equal   2 (1+ 1))
+   (vlu-assert-equal 0.0 (1+ -1.0))
+   (vlu-assert-equal 1.0 (1+ 0.0))
+   (vlu-assert-equal 2.0 (1+ 1.0))))
+
+(vlu-add-test
+ (defun dec-test ()
+   (vlu-assert-equal   -1  (1- 0))
+   (vlu-assert-equal    0 (1- 1))
+   (vlu-assert-equal    1 (1- 2))
+   (vlu-assert-equal -1.0 (1- 0.0))
+   (vlu-assert-equal  0.0 (1- 1.0))
+   (vlu-assert-equal  1.0 (1- 2.0))))

@@ -19,7 +19,7 @@ const tests = [
               (cond ((equal lst nil) nil)
                     (T (cons (fn (car lst))
                              (map fn (cdr lst))))))
-            (map (lambda (x) (1+ x)) (list 1 2 3))`,
+            (map (lambda (x) (+ x 1)) (list 1 2 3))`,
      result: new List([new Int(2), new Int(3), new Int(4)])},
 ];
 

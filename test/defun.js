@@ -30,11 +30,11 @@ const tests = [
     {test: '(defun id (x) x) (id (+ 1 2))', result: new Int(3)},
 
     // The a param is in the local context
-    {test: '(defun a (a) (1+ a)) (a 1)', result: new Int(2)},
+    {test: '(defun a (a) (+ a 1)) (a 1)', result: new Int(2)},
     // The a fun and a param are in the local contexts
     {test: `(defun a (x)
               (defun a (a)
-                (1+ a))
+                (+ a 1))
               (a x))
             (a 1)`,
      result: new Int(2)},
@@ -79,7 +79,8 @@ const tests = [
             (map-apply 'double (list 1 2 3))`,
      result: new List([new Int(2), new Int(4), new Int(6)])},
 
-    {test: `(defun map (fn lst)
+    {test: `(defun 1+ (num) (+ num 1))
+            (defun map (fn lst)
               (cond ((equal lst nil) nil)
                     (T (cons (fn (car lst))
                              (map fn (cdr lst))))))

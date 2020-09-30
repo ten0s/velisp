@@ -50,12 +50,4 @@ exports.initContext = function (context) {
         }
         return ensureType('~:', args[0], [Int]).bitwiseNot();
     }));
-    // TODO: re-impl in lisp
-    context.setSym('1+', new Fun('1+', ['num'], [], (self, args) => {
-        return args[0].add(new Int(1));
-    }));
-    // TODO: re-impl in lisp
-    context.setSym('1-', new Fun('1-', ['num'], [], (self, args) => {
-        return args[0].subtract(new Int(1));
-    }));
 }

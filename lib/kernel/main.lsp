@@ -19,3 +19,9 @@
 (defun numberp (item / typ)
   (setq typ (type item))
   (or (equal typ 'int) (equal typ 'real)))
+
+(defun 1+ (num)
+  (+ num 1))
+
+(defun 1- (num)
+  (- num 1))
