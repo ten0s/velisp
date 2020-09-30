@@ -7,6 +7,7 @@ exports.initContext = function (context) {
         require('./Function.js'),
         require('./IO.js'),
         require('./List.js'),
+        require('./Math.js'),
         require('./String.js'),
         require('./Symbol.js'),
         require('./System.js'),
