@@ -21,7 +21,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.0.8 on linux
+VeLisp 0.0.9 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -36,7 +36,7 @@ Sym { sym: 'ADD' }
 Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
 > .type (add 1 2)
 Int { int: 3 }
-> (mapcar (lambda (x) (* x x)) (list 1 2 3))
+> (mapcar '(lambda (x) (* x x)) '(1 2 3))
 (1 4 9)
 ```
 
@@ -50,7 +50,7 @@ $ npm start -- examples/fib.lsp
 ## Run code from standard input
 
 ```
-$ cat examples/fib.lsp npm start
+$ cat examples/fib.lsp | npm start
 55
 ```
 
@@ -66,11 +66,11 @@ $ make pkgMacOS
 
 ```
 $ ls velisp*
-velisp-0.0.8-linux-x64 velisp-0.0.8-macos-x64 velisp-0.0.8-win-x64.exe velisp-0.0.8-win-x86.exe
+velisp-0.0.9-linux-x64 velisp-0.0.9-macos-x64 velisp-0.0.9-win-x64.exe velisp-0.0.9-win-x86.exe
 ```
 
 ```
-$ ./velisp-0.0.8-linux-x64 examples/fib.lsp
+$ ./velisp-0.0.9-linux-x64 examples/fib.lsp
 55
 ```
 
@@ -78,7 +78,7 @@ $ ./velisp-0.0.8-linux-x64 examples/fib.lsp
 
 ```
 $ npm start -- --run tree
-VeLisp 0.0.8 on linux
+VeLisp 0.0.9 on linux
 Type ".help" for more information
 >
 > (+ 1 2)
