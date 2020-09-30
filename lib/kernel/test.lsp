@@ -2,15 +2,19 @@
  (defun atom-test ( / a b)
    (setq a '(x y z))
    (setq b 'a)
+   (vlu-assert     (atom nil))
+   (vlu-assert     (atom ()))
    (vlu-assert     (atom 'a))
    (vlu-assert-not (atom a))
    (vlu-assert     (atom 'b))
    (vlu-assert     (atom b))
-   (vlu-assert-not (atom '(a b c)))))
+   (vlu-assert-not (atom '(a b c)))
+   (vlu-assert-not (atom '(a . b)))))
 
 (vlu-add-test
  (defun not-test ()
    (vlu-assert     (not nil))
+   (vlu-assert     (not ()))
    (vlu-assert-not (not t))
    (vlu-assert-not (not 0))
    (vlu-assert-not (not 0.0))
@@ -23,6 +27,7 @@
 (vlu-add-test
  (defun null-test ()
    (vlu-assert     (null nil))
+   (vlu-assert     (null ()))
    (vlu-assert-not (null t))
    (vlu-assert-not (null 0))
    (vlu-assert-not (null 0.0))
@@ -35,6 +40,7 @@
 (vlu-add-test
  (defun listp-test ()
    (vlu-assert     (listp nil))
+   (vlu-assert     (listp ()))
    (vlu-assert     (listp '(a b c)))
    (vlu-assert     (listp '(a . b)))
    (vlu-assert-not (listp 'a))

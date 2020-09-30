@@ -18,8 +18,8 @@ const tests = [
 
     {test: '\'foo', result: new Sym('foo')},
 
-    {test: '()', result: new List([])}, // TODO: or nil
-    {test: '\'()', result: new List([])}, // TODO: or nil
+    {test: '()', result: new Bool(false)},
+    {test: '\'()', result: new List([])},
 
     {test: '(list)', result: new List([])},
     {test: '(list 1 2 3)', result: new List([

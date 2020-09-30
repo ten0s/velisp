@@ -242,7 +242,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
 
     visitList(ctx) {
         if (ctx.listExpr().length === 0) {
-            return new List([]);
+            return new Bool(false);
         }
         const name = ctx.listExpr(0).expr().getText();
         //console.error(name);
