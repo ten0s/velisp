@@ -39,3 +39,30 @@
    (vlu-assert     (listp '(a . b)))
    (vlu-assert-not (listp 'a))
    (vlu-assert-not (listp 4.343))))
+
+(vlu-add-test
+ (defun minusp-test ()
+   (vlu-assert     (minusp -1))
+   (vlu-assert     (minusp -1.0))
+   (vlu-assert-not (minusp 0))
+   (vlu-assert-not (minusp 0.0))
+   (vlu-assert-not (minusp 1))
+   (vlu-assert-not (minusp 1.0))))
+
+(vlu-add-test
+ (defun zerop-test ()
+   (vlu-assert-not (zerop -1))
+   (vlu-assert-not (zerop -1.0))
+   (vlu-assert     (zerop 0))
+   (vlu-assert     (zerop 0.0))
+   (vlu-assert-not (zerop 1))
+   (vlu-assert-not (zerop 1.0))))
+
+(vlu-add-test
+ (defun numberp-test ()
+   (vlu-assert     (numberp 1))
+   (vlu-assert     (numberp 1.0))
+   (vlu-assert-not (numberp "0"))
+   (vlu-assert-not (numberp t))
+   (vlu-assert-not (numberp nil))
+   (vlu-assert-not (numberp '(1 2 3)))))
