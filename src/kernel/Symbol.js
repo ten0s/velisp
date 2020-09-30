@@ -32,4 +32,13 @@ exports.initContext = function (context) {
         self.contexts[self.contexts.length-1].setVar(name, value);
         return value;
     }));
+    context.setSym('TYPE', new Fun('type', ['item'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('type: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('type: too many arguments');
+        }
+        return args[0].type();
+    }));
 }

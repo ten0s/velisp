@@ -4,6 +4,14 @@ class Bool {
         this.bool = bool;
     }
 
+    // :: () -> Sym | nil
+    type() {
+        if (this.bool) {
+            return new Sym('sym');
+        }
+        return new Bool(false);
+    }
+
     // :: () -> bool
     isNil() {
         return !this.bool;
@@ -61,6 +69,11 @@ class Int {
     // :: (int)
     constructor(int) {
         this.int = int;
+    }
+
+    // :: () -> Sym
+    type() {
+        return new Sym('int');
     }
 
     // :: () -> false
@@ -178,6 +191,11 @@ class Real {
         this.real = real;
     }
 
+    // :: () -> Sym
+    type() {
+        return new Sym('real');
+    }
+
     // :: () -> false
     isNil() {
         return false;
@@ -287,6 +305,11 @@ class Str {
         this.str = str;
     }
 
+    // :: () -> Sym
+    type() {
+        return new Sym('str');
+    }
+
     // :: () -> false
     isNil() {
         return false;
@@ -383,6 +406,11 @@ class Sym {
         this.sym = sym.toUpperCase();
     }
 
+    // :: () -> Sym
+    type() {
+        return new Sym('sym');
+    }
+
     // :: () -> false
     isNil() {
         return false;
@@ -417,6 +445,11 @@ class List {
     constructor(arr) {
         // TODO: who should make copy, see cdr
         this.arr = [...arr];
+    }
+
+    // :: () -> Sym
+    type() {
+        return new Sym('list');
     }
 
     // :: () -> true | false
@@ -488,6 +521,11 @@ class Pair {
         this.snd = snd;
     }
 
+    // :: () -> Sym
+    type() {
+        return new Sym('list');
+    }
+
     // :: () -> false
     isNil() {
         return false;
@@ -538,6 +576,12 @@ class Fun {
         this.params = params;
         this.locals = locals;
         this.fun = fun;
+    }
+
+    // :: () -> Sym
+    type() {
+        // TODO: subclass KFun (kernel) & UFun (user) and add 'usubr'
+        return new Sym('subr');
     }
 
     // :: () -> false
