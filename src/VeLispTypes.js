@@ -517,6 +517,17 @@ class List {
         return this.arr.length;
     }
 
+    // :: (List) -> List
+    concat(that) {
+        if (that.isNil()) {
+            return this;
+        }
+        if (that instanceof List) {
+            return new List(this.arr.concat(that.arr));
+        }
+        throw new Error(`Not implemented (append ${this} ${that})`);
+    }
+
     // :: (Any) -> Bool
     eq(that) {
         return new Bool(this === that);

@@ -1,6 +1,20 @@
-const {List, Pair, Fun} = require('../VeLispTypes.js');
+const {Bool, List, Pair, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
+    context.setSym('APPEND', new Fun('append', ['[list ...]'], [], (self, args) => {
+        if (args.length === 0) {
+            return new Bool(false);
+        }
+        let result = new List([]);
+        for (let i = 0; i < args.length; i++) {
+            if (args[i].isNil()) {
+                continue;
+            }
+            const list = ensureType('append:', args[i], [List]);
+            result = result.concat(list);
+        }
+        return result;
+    }));
     context.setSym('LIST', new Fun('list', ['[expr ...]'], [], (self, args) => {
         const result = [];
         for (let i = 0; i < args.length; i++) {
