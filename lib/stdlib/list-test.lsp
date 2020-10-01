@@ -153,3 +153,13 @@
  (defun mapcar-test ()
    (vlu-assert-equal nil (mapcar '1+ (list)))
    (vlu-assert-equal (list 2 3 4) (mapcar '1+ (list 1 2 3)))))
+
+(vlu-add-test
+ (defun assoc-test ()
+   (vlu-assert-equal nil (assoc 'one '()))
+   (vlu-assert-equal '(one 1) (assoc 'one '((one 1) (two 2) (three 3))))
+   (vlu-assert-equal '(three 3) (assoc 'three '((one 1) (two 2) (three 3))))
+   (vlu-assert-equal nil (assoc 'four '((one 1) (two 2) (three 3))))
+   (vlu-assert-equal '(one . 1) (assoc 'one '((one . 1) (two . 2) (three . 3))))
+   (vlu-assert-equal '(three . 3) (assoc 'three '((one . 1) (two . 2) (three . 3))))
+   (vlu-assert-equal nil (assoc 'four '((one . 1) (two . 2) (three . 3)))))))
