@@ -36,8 +36,8 @@ Sym { sym: 'ADD' }
 Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
 > .type (add 1 2)
 Int { int: 3 }
-> (mapcar '(lambda (x) (* x x)) '(1 2 3))
-(1 4 9)
+> (mapcar '(lambda (x y) (itoa (+ x y))) '(1 2 3) '(9 8 7))
+("10" "10" "10")
 ```
 
 ## Run code from file

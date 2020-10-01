@@ -1,4 +1,4 @@
-const {Bool, List, Pair, Fun, ensureType} = require('../VeLispTypes.js');
+const {Bool, List, Pair, Sym, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
     context.setSym('APPEND', new Fun('append', ['[list ...]'], [], (self, args) => {
@@ -70,5 +70,45 @@ exports.initContext = function (context) {
             result.push(args[i]);
         }
         return new List(result);
+    }));
+    context.setSym('MAPCAR', new Fun('mapcar', ['function list [list ...]'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('mapcar: too few arguments');
+        }
+        let fun = args[0];
+        if (fun instanceof Sym) {
+            // Try resolving symbol to function
+            fun = self.contexts[self.contexts.length-1].getSym(fun.value());
+        }
+        if (fun instanceof Fun) {
+            // Prepare lists
+            const lists = [];
+            let minLen = null;
+            for (let i = 1; i < args.length; i++) {
+                // If any list is nil, return empty list immediately,
+                // since minLen == 0 anyway
+                if (args[i].isNil()) {
+                    return new List([]);
+                }
+                const list = ensureType('mapcar: `list`', args[i], [List]);
+                if (!minLen) {
+                    minLen = list.length();
+                } else {
+                    minLen = Math.min(minLen, list.length());
+                }
+                lists.push(list);
+            }
+            // Map lists
+            const result = [];
+            for (let i = 0; i < minLen; i++) {
+                const vector = [];
+                for (let j = 0; j < lists.length; j++) {
+                    vector.push(lists[j].arr[i]);
+                }
+                result.push(fun.apply(self, vector));
+            }
+            return new List(result);
+        }
+        throw new Error(`mapcar: no such function ${args[0]}`);
     }));
 }

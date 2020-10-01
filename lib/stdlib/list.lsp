@@ -122,11 +122,6 @@
     (if (equal val (car lst)) lst
       (member val (cdr lst)))))
 
-(defun mapcar (fn lst)
-  (if (null lst) nil
-    (cons (fn (car lst))
-          (mapcar fn (cdr lst)))))
-
 (defun assoc (elm alst)
   (cond ((null alst) nil)
         ((equal elm (caar alst)) (car alst))
