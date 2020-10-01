@@ -21,7 +21,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.0.10 on linux
+VeLisp 0.1.0 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -36,8 +36,8 @@ Sym { sym: 'ADD' }
 Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
 > .type (add 1 2)
 Int { int: 3 }
-> (mapcar '(lambda (x) (* x x)) '(1 2 3))
-(1 4 9)
+> (mapcar '(lambda (x y) (itoa (+ x y))) '(1 2 3) '(9 8 7))
+("10" "10" "10")
 ```
 
 ## Run code from file
@@ -66,11 +66,11 @@ $ make pkgMacOS
 
 ```
 $ ls velisp*
-velisp-0.0.10-linux-x64 velisp-0.0.10-macos-x64 velisp-0.0.10-win-x64.exe velisp-0.0.10-win-x86.exe
+velisp-0.1.0-linux-x64 velisp-0.1.0-macos-x64 velisp-0.1.0-win-x64.exe velisp-0.1.0-win-x86.exe
 ```
 
 ```
-$ ./velisp-0.0.10-linux-x64 examples/fib.lsp
+$ ./velisp-0.1.0-linux-x64 examples/fib.lsp
 55
 ```
 
@@ -78,9 +78,9 @@ $ ./velisp-0.0.10-linux-x64 examples/fib.lsp
 
 ```
 $ npm start -- --run tree
-VeLisp 0.0.10 on linux
+VeLisp 0.1.0 on linux
 Type ".help" for more information
 >
 > (+ 1 2)
-(file (expr ( + (funArg (expr 1)) (funArg (expr 2)) )))
+(file (expr ( (listExpr (expr +)) (listExpr (expr 1)) (listExpr (expr 2)) )))
 ```
