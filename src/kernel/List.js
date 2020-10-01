@@ -15,30 +15,6 @@ exports.initContext = function (context) {
         }
         return result;
     }));
-    context.setSym('LIST', new Fun('list', ['[expr ...]'], [], (self, args) => {
-        const result = [];
-        for (let i = 0; i < args.length; i++) {
-            result.push(args[i]);
-        }
-        return new List(result);
-    }));
-    context.setSym('CONS', new Fun('cons', ['first', 'listoratom'], [], (self, args) => {
-        if (args.length < 2) {
-            throw new Error('cons: too few arguments');
-        }
-        if (args.length > 2) {
-            throw new Error('cons: too many arguments');
-        }
-        const fst = args[0];
-        const snd = args[1];
-        if (snd instanceof List || snd instanceof Pair) {
-            return snd.cons(fst);
-        } else if (snd.isNil()) {
-            return new List([fst]);
-        } else {
-            return new Pair(fst, snd);
-        }
-    }));
     context.setSym('CAR', new Fun('car', ['listorpair'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('car: too few arguments');
@@ -70,5 +46,29 @@ exports.initContext = function (context) {
             return listOrPair.cdr();
         }
         throw new Error('cdr: expected non-empty List, Pair');
+    }));
+    context.setSym('CONS', new Fun('cons', ['first', 'listoratom'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('cons: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('cons: too many arguments');
+        }
+        const fst = args[0];
+        const snd = args[1];
+        if (snd instanceof List || snd instanceof Pair) {
+            return snd.cons(fst);
+        } else if (snd.isNil()) {
+            return new List([fst]);
+        } else {
+            return new Pair(fst, snd);
+        }
+    }));
+    context.setSym('LIST', new Fun('list', ['[expr ...]'], [], (self, args) => {
+        const result = [];
+        for (let i = 0; i < args.length; i++) {
+            result.push(args[i]);
+        }
+        return new List(result);
     }));
 }
