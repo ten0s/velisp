@@ -82,5 +82,5 @@ VeLisp {{version}} on linux
 Type ".help" for more information
 >
 > (+ 1 2)
-(file (expr ( + (funArg (expr 1)) (funArg (expr 2)) )))
+(file (expr ( (listExpr (expr +)) (listExpr (expr 1)) (listExpr (expr 2)) )))
 ```

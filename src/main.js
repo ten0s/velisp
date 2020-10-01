@@ -123,7 +123,7 @@ function replEval(repl, input, action, context, callback) {
     if (input.trim()) {
         try {
             const result = action(input, context);
-            if (result !== null) {
+            if (result !== null && result !== undefined) {
                 return callback(null, result);
             }
         } catch (e) {
