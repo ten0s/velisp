@@ -18,8 +18,15 @@ test:
 	npx qunit
 	node src/main.js lib/test.lsp
 
+rollMinor:
+	npm --no-git-tag-version version minor
+	$(MAKE) roll
+
 rollPatch:
 	npm --no-git-tag-version version patch
+	$(MAKE) roll
+
+roll:
 	sed -E "s/\{\{version\}\}/`jq -r .version package.json`/g" README.template > README.md
 	git add package.json package-lock.json README.md
 	git commit -m "Roll `jq -r .version package.json`"
