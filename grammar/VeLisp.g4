@@ -74,7 +74,7 @@ TRU : T ;
 INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' CHAR* '"' ;
-ID : [a-zA-Z0-9!$%*/\-+=<>~:]+ ;
+ID : [a-zA-Z0-9!$%*/\-+=<>~:_]+ ;
 
 INLINE_COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
 LINE_COMMENT : ';'+ .*? NEWLINE -> skip ;
