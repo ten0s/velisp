@@ -10,7 +10,8 @@
     "license": "",
     "dependencies": {
         "antlr4": "^4.8.0",
-        "commander": "^6.1.0"
+        "commander": "^6.1.0",
+        "node-gtk": "^0.4.0"
     },
     "devDependencies": {
         "pkg": "^4.4.9",
