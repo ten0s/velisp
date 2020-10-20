@@ -4,13 +4,14 @@ const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
 
 gi.startLoop();
-Gtk.init();
 
 exports.initContext = function (context) {
     context.setSym('START_DIALOG', new Fun('start_dialog', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments');
         }
+
+        Gtk.init();
 
         const win = new Gtk.Window();
         win.on('destroy', () => Gtk.mainQuit());
