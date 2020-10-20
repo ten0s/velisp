@@ -1,4 +1,5 @@
-const {Bool, Sym, List, Fun} = require('../VeLispTypes.js');
+const {Bool, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
+const VeDclGtkDialogs = require('../VeDclGtkDialogs.js');
 
 const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
@@ -6,6 +7,17 @@ const Gtk = gi.require('Gtk', '3.0');
 gi.startLoop();
 
 exports.initContext = function (context) {
+    context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dclfile'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('load_dialog: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('load_dialog: too many arguments');
+        }
+        const dclfile = ensureType('load_dialog:', args[0], [Str]);
+        const gtkXml = VeDclGtkDialogs.parse(dclfile.value());
+        return new Str(gtkXml);
+    }));
     context.setSym('START_DIALOG', new Fun('start_dialog', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments');

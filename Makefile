@@ -7,6 +7,7 @@ install:
 
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
+	antlr4 -Dlanguage=JavaScript -lib grammar -no-visitor -listener grammar/VeDcl.g4
 
 run:
 	node src/main.js
@@ -51,16 +52,26 @@ cleanPkg:
 
 compileJava:
 	antlr4 -lib grammar -no-visitor -no-listener grammar/VeLisp.g4
+	antlr4 -lib grammar -no-visitor -no-listener grammar/VeDcl.g4
 	javac grammar/*.java
 
-tokens: compileJava
+tokensLisp: compileJava
 	(cd grammar; grun VeLisp file -tokens)
 
-gui: compileJava
+tokensDcl: compileJava
+	(cd grammar; grun VeDcl file -tokens)
+
+guiLisp: compileJava
 	(cd grammar; grun VeLisp file -gui)
 
-treeJava: compileJava
+guiDcl: compileJava
+	(cd grammar; grun VeDcl file -gui)
+
+treeLispJava: compileJava
 	(cd grammar; grun VeLisp file -tree)
+
+treeDclJava: compileJava
+	(cd grammar; grun VeDcl file -tree)
 
 cleanJava:
 	rm -f grammar/*.class grammar/*.java
