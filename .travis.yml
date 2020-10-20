@@ -1,6 +1,9 @@
+dist: bionic
 language: node_js
 node_js:
   - 10
+before_install:
+    sudo apt-get install gobject-introspection libgirepository1.0-dev libcairo2 libcairo2-dev
 install:
     make install
 script:
