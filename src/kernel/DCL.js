@@ -1,5 +1,6 @@
 const {Bool, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
-const VeDclGtkDialogs = require('../VeDclGtkDialogs.js');
+const VeDclDialogsLoader = require('../VeDclDialogsLoader.js');
+const {VeDclGtkDialog} = require('../VeDclGtkDialog.js');
 
 const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
@@ -15,8 +16,11 @@ exports.initContext = function (context) {
             throw new Error('load_dialog: too many arguments');
         }
         const dclfile = ensureType('load_dialog:', args[0], [Str]);
-        const gtkXml = VeDclGtkDialogs.parse(dclfile.value());
-        return new Str(gtkXml);
+        // TODO: store to context.setDialogs(...)?
+        const dialogs = VeDclDialogsLoader.load(dclfile.value());
+        // TODO: should be called from (new_dialog ...) and (start_dialog)
+        const gtkDialog = new VeDclGtkDialog(null);
+        return new Str(gtkDialog);
     }));
     context.setSym('START_DIALOG', new Fun('start_dialog', [], [], (self, args) => {
         if (args.length > 0) {

@@ -4,23 +4,16 @@ const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
 
-class VeDclGtkDialogs extends VeDclListener {
+class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
         super();
-        this.xml = '';
-    }
-
-    xml() {
-        return this.xml;
+        this.dialogs = [];
     }
 
     enterFile(ctx) {
-        this.xml = '<?xml version="1.0" encoding="UTF-8"?>';
-        this.xml += '<interface>';        
     };
 
     exitFile(ctx) {
-        this.xml += '</interface>';
     };
 
     enterDialog(ctx) {
@@ -58,13 +51,13 @@ class VeDclGtkDialogs extends VeDclListener {
     }
 }
 
-function parse(dclfile) {
+function load(dclfile) {
     const dcl = readFile(dclfile);
     const {tree} = parseDcl(dcl);
-    const dialogs = new VeDclGtkDialogs();
+    const loader = new VeDclDialogsLoader();
     const walker = new antlr4.tree.ParseTreeWalker();
-    walker.walk(dialogs, tree);
-    return dialogs.xml;
+    walker.walk(loader, tree);
+    return loader.dialogs;
 }
 
 function tree(dclfile) {
@@ -93,5 +86,5 @@ function parseDcl(dcl) {
     };
 }
 
-exports.parse = parse;
+exports.load = load;
 exports.tree = tree;
