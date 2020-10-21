@@ -4,7 +4,11 @@ grammar VeDcl;
 
 file : dialog* ;
 
-dialog: ID ':' 'dialog' '{' (attribute | control)* '}' ';'? ;
+dialog : ID ':' 'dialog' '{' entry* '}' ';'? ;
+
+entry : attribute
+      | control
+      ;
 
 control : ID? ':' CONTROL_NAME '{' attribute* '}' ';'? ;
 

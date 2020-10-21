@@ -29,6 +29,15 @@ VeDclListener.prototype.exitDialog = function(ctx) {
 };
 
 
+// Enter a parse tree produced by VeDclParser#entry.
+VeDclListener.prototype.enterEntry = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#entry.
+VeDclListener.prototype.exitEntry = function(ctx) {
+};
+
+
 // Enter a parse tree produced by VeDclParser#control.
 VeDclListener.prototype.enterControl = function(ctx) {
 };

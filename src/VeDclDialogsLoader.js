@@ -3,11 +3,13 @@ const antlr4 = require('antlr4');
 const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
+const {Dialog, Text, Button} = require('./VeDclControls.js');
 
 class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
         super();
         this.dialogs = [];
+        this.current = null;
     }
 
     enterFile(ctx) {
@@ -17,9 +19,14 @@ class VeDclDialogsLoader extends VeDclListener {
     };
 
     enterDialog(ctx) {
+        const id = ctx.ID().getText();
+        const dialog = new Dialog(id);
+        this.dialogs.push(dialog);
+        this.current = dialog;
     };
 
     exitDialog(ctx) {
+        this.current = null;
     };
 
     enterControl(ctx) {
