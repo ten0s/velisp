@@ -9,7 +9,7 @@ class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
         super();
         this.dialogs = [];
-        this.current = null;
+        this.controls = [];
     }
 
     enterFile(ctx) {
@@ -19,23 +19,57 @@ class VeDclDialogsLoader extends VeDclListener {
     };
 
     enterDialog(ctx) {
+        console.log('enterDialog');
         const id = ctx.ID().getText();
         const dialog = new Dialog(id);
         this.dialogs.push(dialog);
-        this.current = dialog;
+        this.controls.push(dialog);
     };
 
     exitDialog(ctx) {
-        this.current = null;
+        console.log('exitDialog');
+        this.controls.pop();
+    };
+
+    enterText(ctx) {
+        console.log('enterText');
+        const id = ctx.ID() ? ctx.ID().getText() : '';
+        const text = new Text(id);
+        this.controls.push(text);
+    };
+
+    exitText(ctx) {
+        console.log('exitText');
+        this.dialogs[this.dialogs.length-1].addControl(this.controls.pop());
+    };
+
+    enterButton(ctx) {
+        console.log('enterButton');
+        const id = ctx.ID() ? ctx.ID().getText() : '';
+        const button = new Button(id);
+        this.controls.push(button);
+    };
+
+    exitButton(ctx) {
+        console.log('exitButton');
+        this.dialogs[this.dialogs.length-1].addButton(this.controls.pop());
     };
 
     enterControl(ctx) {
+        //this.controls.push(null);
     };
 
     exitControl(ctx) {
+        //this.controls.pop();
     };
 
     enterAttribute(ctx) {
+        const current = this.controls[this.controls.length-1];
+        if (current) {
+            const name = ctx.attributeName().ID().getText();
+            const value = ctx.attributeValue().STRING().getText();
+            current.addAttribute(name, value);
+        }
     };
 
     exitAttribute(ctx) {

@@ -10,15 +10,16 @@ entry : attribute
       | control
       ;
 
-control : ID? ':' CONTROL_NAME '{' attribute* '}' ';'? ;
+control : ID? ':' 'text'   '{' attribute* '}' ';'?           # text
+        | ID? ':' 'button' '{' attribute* '}' ';'?           # button
+        ;
 
-attribute : ID '=' STRING ';' ;
+attribute : attributeName '=' attributeValue ';' ;
+
+attributeName : ID ;
+attributeValue : STRING ;
 
 // Lexer rules
-
-CONTROL_NAME : 'text'
-             | 'button'
-             ;
 
 ID : LETTER+(DIGIT | LETTER | '_')* ;
 

@@ -38,12 +38,21 @@ VeDclListener.prototype.exitEntry = function(ctx) {
 };
 
 
-// Enter a parse tree produced by VeDclParser#control.
-VeDclListener.prototype.enterControl = function(ctx) {
+// Enter a parse tree produced by VeDclParser#text.
+VeDclListener.prototype.enterText = function(ctx) {
 };
 
-// Exit a parse tree produced by VeDclParser#control.
-VeDclListener.prototype.exitControl = function(ctx) {
+// Exit a parse tree produced by VeDclParser#text.
+VeDclListener.prototype.exitText = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#button.
+VeDclListener.prototype.enterButton = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#button.
+VeDclListener.prototype.exitButton = function(ctx) {
 };
 
 
@@ -53,6 +62,24 @@ VeDclListener.prototype.enterAttribute = function(ctx) {
 
 // Exit a parse tree produced by VeDclParser#attribute.
 VeDclListener.prototype.exitAttribute = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#attributeName.
+VeDclListener.prototype.enterAttributeName = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#attributeName.
+VeDclListener.prototype.exitAttributeName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#attributeValue.
+VeDclListener.prototype.enterAttributeValue = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#attributeValue.
+VeDclListener.prototype.exitAttributeValue = function(ctx) {
 };
 
 

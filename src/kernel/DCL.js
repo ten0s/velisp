@@ -1,6 +1,5 @@
 const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
 const VeDclDialogsLoader = require('../VeDclDialogsLoader.js');
-const {VeDclGtkDialog} = require('../VeDclGtkDialog.js');
 
 const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
@@ -45,8 +44,7 @@ exports.initContext = function (context) {
             throw new Error('start_dialog: too many arguments');
         }
 
-        const gtkDialog = new VeDclGtkDialog(_dialog);
-        const gtkXml = gtkDialog.toString();
+        const gtkXml = _dialog.toGtkXml();
 
         const builder = new Gtk.Builder();
         builder.addFromString(gtkXml, gtkXml.length);

@@ -6,42 +6,55 @@ var grammarFileName = "VeDcl.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\r:\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
-    "\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0003\u0002\u0007\u0002\u000e",
-    "\n\u0002\f\u0002\u000e\u0002\u0011\u000b\u0002\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u0003\u0018\n\u0003\f\u0003",
-    "\u000e\u0003\u001b\u000b\u0003\u0003\u0003\u0003\u0003\u0005\u0003\u001f",
-    "\n\u0003\u0003\u0004\u0003\u0004\u0005\u0004#\n\u0004\u0003\u0005\u0005",
-    "\u0005&\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0007",
-    "\u0005,\n\u0005\f\u0005\u000e\u0005/\u000b\u0005\u0003\u0005\u0003\u0005",
-    "\u0005\u00053\n\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006",
-    "\u0003\u0006\u0003\u0006\u0002\u0002\u0007\u0002\u0004\u0006\b\n\u0002",
-    "\u0002\u0002;\u0002\u000f\u0003\u0002\u0002\u0002\u0004\u0012\u0003",
-    "\u0002\u0002\u0002\u0006\"\u0003\u0002\u0002\u0002\b%\u0003\u0002\u0002",
-    "\u0002\n4\u0003\u0002\u0002\u0002\f\u000e\u0005\u0004\u0003\u0002\r",
-    "\f\u0003\u0002\u0002\u0002\u000e\u0011\u0003\u0002\u0002\u0002\u000f",
-    "\r\u0003\u0002\u0002\u0002\u000f\u0010\u0003\u0002\u0002\u0002\u0010",
-    "\u0003\u0003\u0002\u0002\u0002\u0011\u000f\u0003\u0002\u0002\u0002\u0012",
-    "\u0013\u0007\n\u0002\u0002\u0013\u0014\u0007\u0003\u0002\u0002\u0014",
-    "\u0015\u0007\u0004\u0002\u0002\u0015\u0019\u0007\u0005\u0002\u0002\u0016",
-    "\u0018\u0005\u0006\u0004\u0002\u0017\u0016\u0003\u0002\u0002\u0002\u0018",
-    "\u001b\u0003\u0002\u0002\u0002\u0019\u0017\u0003\u0002\u0002\u0002\u0019",
-    "\u001a\u0003\u0002\u0002\u0002\u001a\u001c\u0003\u0002\u0002\u0002\u001b",
-    "\u0019\u0003\u0002\u0002\u0002\u001c\u001e\u0007\u0006\u0002\u0002\u001d",
-    "\u001f\u0007\u0007\u0002\u0002\u001e\u001d\u0003\u0002\u0002\u0002\u001e",
-    "\u001f\u0003\u0002\u0002\u0002\u001f\u0005\u0003\u0002\u0002\u0002 ",
-    "#\u0005\n\u0006\u0002!#\u0005\b\u0005\u0002\" \u0003\u0002\u0002\u0002",
-    "\"!\u0003\u0002\u0002\u0002#\u0007\u0003\u0002\u0002\u0002$&\u0007\n",
-    "\u0002\u0002%$\u0003\u0002\u0002\u0002%&\u0003\u0002\u0002\u0002&\'",
-    "\u0003\u0002\u0002\u0002\'(\u0007\u0003\u0002\u0002()\u0007\t\u0002",
-    "\u0002)-\u0007\u0005\u0002\u0002*,\u0005\n\u0006\u0002+*\u0003\u0002",
-    "\u0002\u0002,/\u0003\u0002\u0002\u0002-+\u0003\u0002\u0002\u0002-.\u0003",
-    "\u0002\u0002\u0002.0\u0003\u0002\u0002\u0002/-\u0003\u0002\u0002\u0002",
-    "02\u0007\u0006\u0002\u000213\u0007\u0007\u0002\u000221\u0003\u0002\u0002",
-    "\u000223\u0003\u0002\u0002\u00023\t\u0003\u0002\u0002\u000245\u0007",
-    "\n\u0002\u000256\u0007\b\u0002\u000267\u0007\u000b\u0002\u000278\u0007",
-    "\u0007\u0002\u00028\u000b\u0003\u0002\u0002\u0002\t\u000f\u0019\u001e",
-    "\"%-2"].join("");
+    "\u0003\u000eT\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
+    "\b\t\b\u0003\u0002\u0007\u0002\u0012\n\u0002\f\u0002\u000e\u0002\u0015",
+    "\u000b\u0002\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0007\u0003\u001c\n\u0003\f\u0003\u000e\u0003\u001f\u000b\u0003\u0003",
+    "\u0003\u0003\u0003\u0005\u0003#\n\u0003\u0003\u0004\u0003\u0004\u0005",
+    "\u0004\'\n\u0004\u0003\u0005\u0005\u0005*\n\u0005\u0003\u0005\u0003",
+    "\u0005\u0003\u0005\u0003\u0005\u0007\u00050\n\u0005\f\u0005\u000e\u0005",
+    "3\u000b\u0005\u0003\u0005\u0003\u0005\u0005\u00057\n\u0005\u0003\u0005",
+    "\u0005\u0005:\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
+    "\u0007\u0005@\n\u0005\f\u0005\u000e\u0005C\u000b\u0005\u0003\u0005\u0003",
+    "\u0005\u0005\u0005G\n\u0005\u0005\u0005I\n\u0005\u0003\u0006\u0003\u0006",
+    "\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007\u0003\u0007\u0003\b",
+    "\u0003\b\u0003\b\u0002\u0002\t\u0002\u0004\u0006\b\n\f\u000e\u0002\u0002",
+    "\u0002W\u0002\u0013\u0003\u0002\u0002\u0002\u0004\u0016\u0003\u0002",
+    "\u0002\u0002\u0006&\u0003\u0002\u0002\u0002\bH\u0003\u0002\u0002\u0002",
+    "\nJ\u0003\u0002\u0002\u0002\fO\u0003\u0002\u0002\u0002\u000eQ\u0003",
+    "\u0002\u0002\u0002\u0010\u0012\u0005\u0004\u0003\u0002\u0011\u0010\u0003",
+    "\u0002\u0002\u0002\u0012\u0015\u0003\u0002\u0002\u0002\u0013\u0011\u0003",
+    "\u0002\u0002\u0002\u0013\u0014\u0003\u0002\u0002\u0002\u0014\u0003\u0003",
+    "\u0002\u0002\u0002\u0015\u0013\u0003\u0002\u0002\u0002\u0016\u0017\u0007",
+    "\u000b\u0002\u0002\u0017\u0018\u0007\u0003\u0002\u0002\u0018\u0019\u0007",
+    "\u0004\u0002\u0002\u0019\u001d\u0007\u0005\u0002\u0002\u001a\u001c\u0005",
+    "\u0006\u0004\u0002\u001b\u001a\u0003\u0002\u0002\u0002\u001c\u001f\u0003",
+    "\u0002\u0002\u0002\u001d\u001b\u0003\u0002\u0002\u0002\u001d\u001e\u0003",
+    "\u0002\u0002\u0002\u001e \u0003\u0002\u0002\u0002\u001f\u001d\u0003",
+    "\u0002\u0002\u0002 \"\u0007\u0006\u0002\u0002!#\u0007\u0007\u0002\u0002",
+    "\"!\u0003\u0002\u0002\u0002\"#\u0003\u0002\u0002\u0002#\u0005\u0003",
+    "\u0002\u0002\u0002$\'\u0005\n\u0006\u0002%\'\u0005\b\u0005\u0002&$\u0003",
+    "\u0002\u0002\u0002&%\u0003\u0002\u0002\u0002\'\u0007\u0003\u0002\u0002",
+    "\u0002(*\u0007\u000b\u0002\u0002)(\u0003\u0002\u0002\u0002)*\u0003\u0002",
+    "\u0002\u0002*+\u0003\u0002\u0002\u0002+,\u0007\u0003\u0002\u0002,-\u0007",
+    "\b\u0002\u0002-1\u0007\u0005\u0002\u0002.0\u0005\n\u0006\u0002/.\u0003",
+    "\u0002\u0002\u000203\u0003\u0002\u0002\u00021/\u0003\u0002\u0002\u0002",
+    "12\u0003\u0002\u0002\u000224\u0003\u0002\u0002\u000231\u0003\u0002\u0002",
+    "\u000246\u0007\u0006\u0002\u000257\u0007\u0007\u0002\u000265\u0003\u0002",
+    "\u0002\u000267\u0003\u0002\u0002\u00027I\u0003\u0002\u0002\u00028:\u0007",
+    "\u000b\u0002\u000298\u0003\u0002\u0002\u00029:\u0003\u0002\u0002\u0002",
+    ":;\u0003\u0002\u0002\u0002;<\u0007\u0003\u0002\u0002<=\u0007\t\u0002",
+    "\u0002=A\u0007\u0005\u0002\u0002>@\u0005\n\u0006\u0002?>\u0003\u0002",
+    "\u0002\u0002@C\u0003\u0002\u0002\u0002A?\u0003\u0002\u0002\u0002AB\u0003",
+    "\u0002\u0002\u0002BD\u0003\u0002\u0002\u0002CA\u0003\u0002\u0002\u0002",
+    "DF\u0007\u0006\u0002\u0002EG\u0007\u0007\u0002\u0002FE\u0003\u0002\u0002",
+    "\u0002FG\u0003\u0002\u0002\u0002GI\u0003\u0002\u0002\u0002H)\u0003\u0002",
+    "\u0002\u0002H9\u0003\u0002\u0002\u0002I\t\u0003\u0002\u0002\u0002JK",
+    "\u0005\f\u0007\u0002KL\u0007\n\u0002\u0002LM\u0005\u000e\b\u0002MN\u0007",
+    "\u0007\u0002\u0002N\u000b\u0003\u0002\u0002\u0002OP\u0007\u000b\u0002",
+    "\u0002P\r\u0003\u0002\u0002\u0002QR\u0007\f\u0002\u0002R\u000f\u0003",
+    "\u0002\u0002\u0002\r\u0013\u001d\"&)169AFH"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -50,12 +63,14 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "':'", "'dialog'", "'{'", "'}'", "';'", "'='" ];
+var literalNames = [ null, "':'", "'dialog'", "'{'", "'}'", "';'", "'text'", 
+                     "'button'", "'='" ];
 
-var symbolicNames = [ null, null, null, null, null, null, null, "CONTROL_NAME", 
+var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
                       "ID", "STRING", "NEWLINE", "WHITESPACE" ];
 
-var ruleNames =  [ "file", "dialog", "entry", "control", "attribute" ];
+var ruleNames =  [ "file", "dialog", "entry", "control", "attribute", "attributeName", 
+                   "attributeValue" ];
 
 function VeDclParser (input) {
 	antlr4.Parser.call(this, input);
@@ -82,17 +97,20 @@ VeDclParser.T__2 = 3;
 VeDclParser.T__3 = 4;
 VeDclParser.T__4 = 5;
 VeDclParser.T__5 = 6;
-VeDclParser.CONTROL_NAME = 7;
-VeDclParser.ID = 8;
-VeDclParser.STRING = 9;
-VeDclParser.NEWLINE = 10;
-VeDclParser.WHITESPACE = 11;
+VeDclParser.T__6 = 7;
+VeDclParser.T__7 = 8;
+VeDclParser.ID = 9;
+VeDclParser.STRING = 10;
+VeDclParser.NEWLINE = 11;
+VeDclParser.WHITESPACE = 12;
 
 VeDclParser.RULE_file = 0;
 VeDclParser.RULE_dialog = 1;
 VeDclParser.RULE_entry = 2;
 VeDclParser.RULE_control = 3;
 VeDclParser.RULE_attribute = 4;
+VeDclParser.RULE_attributeName = 5;
+VeDclParser.RULE_attributeValue = 6;
 
 
 function FileContext(parser, parent, invokingState) {
@@ -146,13 +164,13 @@ VeDclParser.prototype.file = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 13;
+        this.state = 17;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while(_la===VeDclParser.ID) {
-            this.state = 10;
+            this.state = 14;
             this.dialog();
-            this.state = 15;
+            this.state = 19;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
@@ -226,31 +244,31 @@ VeDclParser.prototype.dialog = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 16;
+        this.state = 20;
         this.match(VeDclParser.ID);
-        this.state = 17;
+        this.state = 21;
         this.match(VeDclParser.T__0);
-        this.state = 18;
+        this.state = 22;
         this.match(VeDclParser.T__1);
-        this.state = 19;
-        this.match(VeDclParser.T__2);
         this.state = 23;
+        this.match(VeDclParser.T__2);
+        this.state = 27;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while(_la===VeDclParser.T__0 || _la===VeDclParser.ID) {
-            this.state = 20;
+            this.state = 24;
             this.entry();
-            this.state = 25;
+            this.state = 29;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 26;
+        this.state = 30;
         this.match(VeDclParser.T__3);
-        this.state = 28;
+        this.state = 32;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===VeDclParser.T__4) {
-            this.state = 27;
+            this.state = 31;
             this.match(VeDclParser.T__4);
         }
 
@@ -315,19 +333,19 @@ VeDclParser.prototype.entry = function() {
     var localctx = new EntryContext(this, this._ctx, this.state);
     this.enterRule(localctx, 4, VeDclParser.RULE_entry);
     try {
-        this.state = 32;
+        this.state = 36;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
-            this.state = 30;
+            this.state = 34;
             this.attribute();
             break;
 
         case 2:
             this.enterOuterAlt(localctx, 2);
-            this.state = 31;
+            this.state = 35;
             this.control();
             break;
 
@@ -363,15 +381,29 @@ function ControlContext(parser, parent, invokingState) {
 ControlContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 ControlContext.prototype.constructor = ControlContext;
 
-ControlContext.prototype.CONTROL_NAME = function() {
-    return this.getToken(VeDclParser.CONTROL_NAME, 0);
+
+ 
+ControlContext.prototype.copyFrom = function(ctx) {
+    antlr4.ParserRuleContext.prototype.copyFrom.call(this, ctx);
 };
 
-ControlContext.prototype.ID = function() {
+
+function ButtonContext(parser, ctx) {
+	ControlContext.call(this, parser);
+    ControlContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+ButtonContext.prototype = Object.create(ControlContext.prototype);
+ButtonContext.prototype.constructor = ButtonContext;
+
+VeDclParser.ButtonContext = ButtonContext;
+
+ButtonContext.prototype.ID = function() {
     return this.getToken(VeDclParser.ID, 0);
 };
 
-ControlContext.prototype.attribute = function(i) {
+ButtonContext.prototype.attribute = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -381,19 +413,55 @@ ControlContext.prototype.attribute = function(i) {
         return this.getTypedRuleContext(AttributeContext,i);
     }
 };
-
-ControlContext.prototype.enterRule = function(listener) {
+ButtonContext.prototype.enterRule = function(listener) {
     if(listener instanceof VeDclListener ) {
-        listener.enterControl(this);
+        listener.enterButton(this);
 	}
 };
 
-ControlContext.prototype.exitRule = function(listener) {
+ButtonContext.prototype.exitRule = function(listener) {
     if(listener instanceof VeDclListener ) {
-        listener.exitControl(this);
+        listener.exitButton(this);
 	}
 };
 
+
+function TextContext(parser, ctx) {
+	ControlContext.call(this, parser);
+    ControlContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+TextContext.prototype = Object.create(ControlContext.prototype);
+TextContext.prototype.constructor = TextContext;
+
+VeDclParser.TextContext = TextContext;
+
+TextContext.prototype.ID = function() {
+    return this.getToken(VeDclParser.ID, 0);
+};
+
+TextContext.prototype.attribute = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(AttributeContext);
+    } else {
+        return this.getTypedRuleContext(AttributeContext,i);
+    }
+};
+TextContext.prototype.enterRule = function(listener) {
+    if(listener instanceof VeDclListener ) {
+        listener.enterText(this);
+	}
+};
+
+TextContext.prototype.exitRule = function(listener) {
+    if(listener instanceof VeDclListener ) {
+        listener.exitText(this);
+	}
+};
 
 
 
@@ -405,41 +473,89 @@ VeDclParser.prototype.control = function() {
     this.enterRule(localctx, 6, VeDclParser.RULE_control);
     var _la = 0; // Token type
     try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 35;
+        this.state = 70;
         this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        if(_la===VeDclParser.ID) {
-            this.state = 34;
-            this.match(VeDclParser.ID);
-        }
-
-        this.state = 37;
-        this.match(VeDclParser.T__0);
-        this.state = 38;
-        this.match(VeDclParser.CONTROL_NAME);
-        this.state = 39;
-        this.match(VeDclParser.T__2);
-        this.state = 43;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        while(_la===VeDclParser.ID) {
-            this.state = 40;
-            this.attribute();
-            this.state = 45;
+        var la_ = this._interp.adaptivePredict(this._input,10,this._ctx);
+        switch(la_) {
+        case 1:
+            localctx = new TextContext(this, localctx);
+            this.enterOuterAlt(localctx, 1);
+            this.state = 39;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-        }
-        this.state = 46;
-        this.match(VeDclParser.T__3);
-        this.state = 48;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        if(_la===VeDclParser.T__4) {
-            this.state = 47;
-            this.match(VeDclParser.T__4);
-        }
+            if(_la===VeDclParser.ID) {
+                this.state = 38;
+                this.match(VeDclParser.ID);
+            }
 
+            this.state = 41;
+            this.match(VeDclParser.T__0);
+            this.state = 42;
+            this.match(VeDclParser.T__5);
+            this.state = 43;
+            this.match(VeDclParser.T__2);
+            this.state = 47;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+            while(_la===VeDclParser.ID) {
+                this.state = 44;
+                this.attribute();
+                this.state = 49;
+                this._errHandler.sync(this);
+                _la = this._input.LA(1);
+            }
+            this.state = 50;
+            this.match(VeDclParser.T__3);
+            this.state = 52;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+            if(_la===VeDclParser.T__4) {
+                this.state = 51;
+                this.match(VeDclParser.T__4);
+            }
+
+            break;
+
+        case 2:
+            localctx = new ButtonContext(this, localctx);
+            this.enterOuterAlt(localctx, 2);
+            this.state = 55;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+            if(_la===VeDclParser.ID) {
+                this.state = 54;
+                this.match(VeDclParser.ID);
+            }
+
+            this.state = 57;
+            this.match(VeDclParser.T__0);
+            this.state = 58;
+            this.match(VeDclParser.T__6);
+            this.state = 59;
+            this.match(VeDclParser.T__2);
+            this.state = 63;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+            while(_la===VeDclParser.ID) {
+                this.state = 60;
+                this.attribute();
+                this.state = 65;
+                this._errHandler.sync(this);
+                _la = this._input.LA(1);
+            }
+            this.state = 66;
+            this.match(VeDclParser.T__3);
+            this.state = 68;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+            if(_la===VeDclParser.T__4) {
+                this.state = 67;
+                this.match(VeDclParser.T__4);
+            }
+
+            break;
+
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -471,12 +587,12 @@ function AttributeContext(parser, parent, invokingState) {
 AttributeContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 AttributeContext.prototype.constructor = AttributeContext;
 
-AttributeContext.prototype.ID = function() {
-    return this.getToken(VeDclParser.ID, 0);
+AttributeContext.prototype.attributeName = function() {
+    return this.getTypedRuleContext(AttributeNameContext,0);
 };
 
-AttributeContext.prototype.STRING = function() {
-    return this.getToken(VeDclParser.STRING, 0);
+AttributeContext.prototype.attributeValue = function() {
+    return this.getTypedRuleContext(AttributeValueContext,0);
 };
 
 AttributeContext.prototype.enterRule = function(listener) {
@@ -502,14 +618,134 @@ VeDclParser.prototype.attribute = function() {
     this.enterRule(localctx, 8, VeDclParser.RULE_attribute);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 50;
-        this.match(VeDclParser.ID);
-        this.state = 51;
-        this.match(VeDclParser.T__5);
-        this.state = 52;
-        this.match(VeDclParser.STRING);
-        this.state = 53;
+        this.state = 72;
+        this.attributeName();
+        this.state = 73;
+        this.match(VeDclParser.T__7);
+        this.state = 74;
+        this.attributeValue();
+        this.state = 75;
         this.match(VeDclParser.T__4);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function AttributeNameContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = VeDclParser.RULE_attributeName;
+    return this;
+}
+
+AttributeNameContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+AttributeNameContext.prototype.constructor = AttributeNameContext;
+
+AttributeNameContext.prototype.ID = function() {
+    return this.getToken(VeDclParser.ID, 0);
+};
+
+AttributeNameContext.prototype.enterRule = function(listener) {
+    if(listener instanceof VeDclListener ) {
+        listener.enterAttributeName(this);
+	}
+};
+
+AttributeNameContext.prototype.exitRule = function(listener) {
+    if(listener instanceof VeDclListener ) {
+        listener.exitAttributeName(this);
+	}
+};
+
+
+
+
+VeDclParser.AttributeNameContext = AttributeNameContext;
+
+VeDclParser.prototype.attributeName = function() {
+
+    var localctx = new AttributeNameContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 10, VeDclParser.RULE_attributeName);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 77;
+        this.match(VeDclParser.ID);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function AttributeValueContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = VeDclParser.RULE_attributeValue;
+    return this;
+}
+
+AttributeValueContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+AttributeValueContext.prototype.constructor = AttributeValueContext;
+
+AttributeValueContext.prototype.STRING = function() {
+    return this.getToken(VeDclParser.STRING, 0);
+};
+
+AttributeValueContext.prototype.enterRule = function(listener) {
+    if(listener instanceof VeDclListener ) {
+        listener.enterAttributeValue(this);
+	}
+};
+
+AttributeValueContext.prototype.exitRule = function(listener) {
+    if(listener instanceof VeDclListener ) {
+        listener.exitAttributeValue(this);
+	}
+};
+
+
+
+
+VeDclParser.AttributeValueContext = AttributeValueContext;
+
+VeDclParser.prototype.attributeValue = function() {
+
+    var localctx = new AttributeValueContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 12, VeDclParser.RULE_attributeValue);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 79;
+        this.match(VeDclParser.STRING);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
