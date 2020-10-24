@@ -26,12 +26,14 @@ exports.initContext = function (context) {
         const str = ensureType('alert:', args[0], [Str]);
         // TODO: Doesn't work reliably w/o parent
         const dlg = new Gtk.MessageDialog({
-            transient_for: _gtkDialog,
             title: "Alert",
             text: str.value(),
             message_type: Gtk.MessageType.INFO,
             buttons: Gtk.ButtonsType.OK
         });
+        if (_gtkDialog) {
+            dlg.transientFor = _gtkDialog;
+        }
         dlg.run();
         dlg.destroy();
         return new Bool(false);

@@ -14,7 +14,7 @@ node ${opts[@]} src/main.js <<EOF
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
       (exit 1)))
   (new_dialog dlg_id dcl_id)
-  (setq msg "Hi from Alert")
+  (setq msg "Hi from\nAlert!!!")
   (action_tile "accept" "(alert msg)")
   (action_tile "cancel" "(done_dialog)")
   (setq ret (start_dialog))
