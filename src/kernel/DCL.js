@@ -13,6 +13,26 @@ let _gtkBuilder = null;
 let _gtkDialog = null;
 
 exports.initContext = function (context) {
+    context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('alert: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('alert: too many arguments');
+        }
+        const str = ensureType('alert:', args[0], [Str]);
+        // TODO: Doesn't work reliably w/o parent
+        const dlg = new Gtk.MessageDialog({
+            transient_for: _gtkDialog,
+            title: "Alert",
+            text: str.value(),
+            message_type: Gtk.MessageType.INFO,
+            buttons: Gtk.ButtonsType.OK
+        });
+        dlg.run();
+        dlg.destroy();
+        return new Bool(false);
+    }));
     context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dcl_file'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('load_dialog: too few arguments');
