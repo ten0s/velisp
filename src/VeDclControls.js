@@ -1,9 +1,6 @@
-class Dialog {
+class Control {
     constructor(id) {
         this.id = id;
-        this.label = 'Title';
-        this.controls = [];
-        this.buttons = [];
     }
 
     addAttribute(name, value) {
@@ -12,6 +9,23 @@ class Dialog {
             return true;
         }
         return false;
+    }
+
+    _child(xml) {
+        return `<child>${xml}</child>`;
+    }
+
+    toGtkXml() {
+        throw new Error('Not implemented');
+    }
+}
+
+class Dialog extends Control {
+    constructor(id) {
+        super(id);
+        this.label = 'Title';
+        this.controls = [];
+        this.buttons = [];
     }
 
     addControl(control) {
@@ -24,8 +38,8 @@ class Dialog {
 
     toGtkXml() {
         const id = this.id ? `id="${this.id}"` : '';
-        const controls = this.controls.map(c => c.toGtkXml()).join('\n');
-        const buttons = this.buttons.map(b => b.toGtkXml()).join('\n');
+        const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
+        const buttons = this.buttons.map(b => this._child(b.toGtkXml())).join('\n');
         return `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -46,9 +60,7 @@ class Dialog {
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
-            <child>
-              ${buttons}
-            </child>
+            ${buttons}
           </object>
           <packing>
             <property name="expand">False</property>
@@ -56,9 +68,7 @@ class Dialog {
             <property name="position">0</property>
           </packing>
         </child>
-        <child>
-          ${controls}
-        </child>
+        ${controls}
       </object>
     </child>
   </object>
@@ -67,18 +77,10 @@ class Dialog {
     }
 }
 
-class Text {
+class Text extends Control {
     constructor(id) {
-        this.id = id;
+        super(id);
         this.label = "Text";
-    }
-
-    addAttribute(name, value) {
-        if (this.hasOwnProperty(name)) {
-            this[name] = value;
-            return true;
-        }
-        return false;
     }
 
     toGtkXml() {
@@ -93,18 +95,10 @@ class Text {
     }
 }
 
-class Button {
+class Button extends Control {
     constructor(id) {
-        this.id = id;
+        super(id);
         this.label = "Button";
-    }
-
-    addAttribute(name, value) {
-        if (this.hasOwnProperty(name)) {
-            this[name] = value;
-            return true;
-        }
-        return false;
     }
 
     toGtkXml() {

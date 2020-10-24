@@ -1,10 +1,17 @@
 dlg1 : dialog {
   label = "Title";
   : text {
-    label = "Message";
+    label = "Text 1";
+  }
+  : text {
+    label = "Text 2";
   }
   : button {
-    key = "accept";
-    label = "Close";
+    key = "ok";
+    label = "Ok";
+  }
+  : button {
+    key = "cancel";
+    label = "Cancel";
   }
 }
