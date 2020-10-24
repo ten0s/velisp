@@ -9,7 +9,7 @@ gi.startLoop();
 Gtk.init();
 
 // global dclId index
-let _dclId = 1;
+let _dclId = 0;
 const _dclFiles = {};
 
 let _gtkBuilder = null;
