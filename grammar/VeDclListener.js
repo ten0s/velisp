@@ -56,6 +56,15 @@ VeDclListener.prototype.exitButton = function(ctx) {
 };
 
 
+// Enter a parse tree produced by VeDclParser#editBox.
+VeDclListener.prototype.enterEditBox = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#editBox.
+VeDclListener.prototype.exitEditBox = function(ctx) {
+};
+
+
 // Enter a parse tree produced by VeDclParser#attribute.
 VeDclListener.prototype.enterAttribute = function(ctx) {
 };

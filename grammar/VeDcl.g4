@@ -10,8 +10,9 @@ entry : attribute
       | control
       ;
 
-control : ID? ':' 'text'   '{' attribute* '}' ';'?           # text
-        | ID? ':' 'button' '{' attribute* '}' ';'?           # button
+control : ID? ':' 'text'     '{' attribute* '}' ';'?           # text
+        | ID? ':' 'button'   '{' attribute* '}' ';'?           # button
+        | ID? ':' 'edit_box' '{' attribute* '}' ';'?           # editBox
         ;
 
 attribute : attributeName '=' attributeValue ';' ;

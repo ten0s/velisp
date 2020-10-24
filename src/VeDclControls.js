@@ -137,6 +137,31 @@ class Button extends Control {
     }
 }
 
+class EditBox extends Control {
+    constructor(id) {
+        super(id);
+        this.label = 'EditBox';
+        this.is_default = false;
+    }
+
+    toGtkXml() {
+        let id = '';
+        if (this.id) {
+            id = `id="${this.id}"`;
+        } else if (this.key) {
+            id = `id="${this.key}"`;
+        }
+        return `
+              <object class="GtkEntry" ${id}>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text">${this.label}</property>
+              </object>
+`;
+    }
+}
+
 exports.Dialog = Dialog;
 exports.Text = Text;
 exports.Button = Button;
+exports.EditBox = EditBox;

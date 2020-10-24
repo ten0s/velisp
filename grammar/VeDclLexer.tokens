@@ -6,11 +6,12 @@ T__4=5
 T__5=6
 T__6=7
 T__7=8
-STRING=9
-BOOL=10
-ID=11
-NEWLINE=12
-WHITESPACE=13
+T__8=9
+STRING=10
+BOOL=11
+ID=12
+NEWLINE=13
+WHITESPACE=14
 ':'=1
 'dialog'=2
 '{'=3
@@ -18,4 +19,5 @@ WHITESPACE=13
 ';'=5
 'text'=6
 'button'=7
-'='=8
+'edit_box'=8
+'='=9

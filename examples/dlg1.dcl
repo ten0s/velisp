@@ -1,5 +1,5 @@
 dlg_1 : dialog {
-  label = "Title";
+  label = "Dialog 1";
   : text {
     label = "Text 1";
   }
@@ -19,7 +19,15 @@ dlg_1 : dialog {
 }
 
 dlg_2 : dialog {
-  label = "Title";
+  label = "Dialog 2";
+  : edit_box {
+    key = "name";
+    label = "Enter Your Name :";
+    mnemonic = "N";
+    alignment = centered;
+    edit_limit = 30;
+    edit_width = 30;
+  }
   : text {
     label = "Text 1";
   }

@@ -3,7 +3,7 @@ const antlr4 = require('antlr4');
 const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
-const {Dialog, Text, Button} = require('./VeDclControls.js');
+const {Dialog, Text, Button, EditBox} = require('./VeDclControls.js');
 
 class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
@@ -40,6 +40,18 @@ class VeDclDialogsLoader extends VeDclListener {
 
     exitText(ctx) {
         console.log('exitText');
+        this.dialogs[this.dialogs.length-1].addControl(this.controls.pop());
+    };
+
+    enterEditBox(ctx) {
+        console.log('enterEditBox');
+        const id = ctx.ID() ? ctx.ID().getText() : '';
+        const editbox = new EditBox(id);
+        this.controls.push(editbox);
+    };
+
+    exitEditBox(ctx) {
+        console.log('exitEditBox');
         this.dialogs[this.dialogs.length-1].addControl(this.controls.pop());
     };
 
