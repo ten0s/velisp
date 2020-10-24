@@ -8,8 +8,7 @@ const Gtk = gi.require('Gtk', '3.0');
 gi.startLoop();
 Gtk.init();
 
-let _jsDialogs = null;
-let _jsDialog = null;
+const _dclFiles = {};
 let _gtkBuilder = null;
 let _gtkDialog = null;
 
@@ -22,12 +21,15 @@ exports.initContext = function (context) {
             throw new Error('load_dialog: too many arguments');
         }
         const dclFile = ensureType('load_dialog:', args[0], [Str]);
-        // TODO: store to context.setDialogs(...)?
-        // TODO: dialogs should be a {"dlg1": Dialog(), "dlg2", Dialog}
-        const dialogs = VeDclDialogsLoader.load(dclFile.value());
-        console.log(dialogs);
-        _jsDialogs = dialogs;
-        return new Sym(dclFile);
+        const jsDialogs = VeDclDialogsLoader.load(dclFile.value());
+        console.log(jsDialogs);
+        const dclMap = {};
+        for (const jsDialog of jsDialogs) {
+            dclMap[jsDialog.id] = jsDialog;
+        }
+        const dclId = new Sym(dclFile.value());
+        _dclFiles[dclId.value()] = dclMap;
+        return dclId;
     }));
     context.setSym('NEW_DIALOG', new Fun('new_dialog', ['dlg_id', 'dcl_id'], [], (self, args) => {
         if (args.length < 2) {
@@ -36,20 +38,35 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('new_dialog: too many arguments');
         }
-        // TODO: lookup dcl_id first
-        // TODO: lookup dlg_id then
-        const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
-        // TODO: put on top of some stack that (start_dialog) will run
-        _jsDialog = _jsDialogs[0];
-        const gtkXml = _jsDialog.toGtkXml();
-        _gtkBuilder = new Gtk.Builder();
-        _gtkBuilder.addFromString(gtkXml, gtkXml.length);
-        try {
-            _gtkDialog = _gtkBuilder.getObject(dlgId.value());
-            return new Bool(true);
-        } catch {
-            return new Bool(false);
+        debugger;
+        const dclId = ensureType('new_dialog: `dcl_id`', args[1], [Sym]);
+        const dclFile = _dclFiles[dclId.value()];
+        if (dclFile) {
+            const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
+            const jsDialog = dclFile[dlgId.value()];
+            if (jsDialog) {
+                const gtkDialogXml = jsDialog.toGtkXml();
+                const gtkXml = `
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+${gtkDialogXml}
+</interface>
+`;
+                _gtkBuilder = new Gtk.Builder();
+                _gtkBuilder.addFromString(gtkXml, gtkXml.length);
+                try {
+                    _gtkDialog = _gtkBuilder.getObject(dlgId.value());
+                    return new Bool(true);
+                } catch {
+                    // Should never happen since dialog ID is mandatory
+                }
+            } else {
+                // TODO: No dlg_id found in DCL file
+            }
+        } else {
+            // TODO: No dcl_id found
         }
+        return new Bool(false);
     }));
     context.setSym('START_DIALOG', new Fun('start_dialog', [], [], (self, args) => {
         if (args.length > 0) {
@@ -77,9 +94,12 @@ exports.initContext = function (context) {
             throw new Error('unload_dialog: too many arguments');
         }
         const dclId = ensureType('unload_dialog:', args[0], [Sym]);
-        // TODO: unregister dialogs
-        // TODO: return nil if there's no such dlg_id
-        return new Bool(true);
+        const dclFile = _dclFiles[dclId.value()];
+        if (dclFile) {
+            delete _dclFiles[dclId.value()];
+            return new Bool(true);
+        }
+        return new Bool(false);
     }));
     context.setSym('ACTION_TILE', new Fun('action_tile', ['tile_id', 'handler'], [], (self, args) => {
         if (args.length < 2) {

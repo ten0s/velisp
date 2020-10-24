@@ -50,8 +50,6 @@ class Dialog extends Control {
         const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
         const buttons = this.buttons.map(b => this._child(b.toGtkXml())).join('\n');
         return `
-<?xml version="1.0" encoding="UTF-8"?>
-<interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkDialog" ${id}>
     <property name="can_focus">False</property>
@@ -85,7 +83,6 @@ class Dialog extends Control {
       </object>
     </child>
   </object>
-</interface>
 `;
     }
 }

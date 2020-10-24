@@ -1,4 +1,4 @@
-dlg_id : dialog {
+dlg_1 : dialog {
   label = "Title";
   : text {
     label = "Text 1";
@@ -15,5 +15,17 @@ dlg_id : dialog {
     key = "btn_cancel";
     label = "Cancel";
     is_default = false;
+  }
+}
+
+dlg_2 : dialog {
+  label = "Title";
+  : text {
+    label = "Text 1";
+  }
+  : button {
+    key = "btn_ok";
+    label = "OK";
+    is_default = true;
   }
 }
