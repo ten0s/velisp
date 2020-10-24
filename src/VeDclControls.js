@@ -1,8 +1,9 @@
 class Control {
     constructor(id) {
         this.id = id;
-        this.key = '';
+        this.key = null;
         this.label = '';
+        this.value = null;
     }
 
     addAttribute(name, value) {
@@ -32,7 +33,6 @@ class Control {
 class Dialog extends Control {
     constructor(id) {
         super(id);
-        this.label = 'Title';
         this.controls = [];
         this.buttons = [];
     }

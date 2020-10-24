@@ -2,6 +2,8 @@ const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js'
 const Evaluator = require('../VeLispEvaluator.js');
 const VeDclDialogsLoader = require('../VeDclDialogsLoader.js');
 
+const util = require('util');
+
 const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
 
@@ -50,7 +52,7 @@ exports.initContext = function (context) {
         // TODO: ensure file exists and loads,
         // return a positive integer, or a negative integer on error
         const jsDialogs = VeDclDialogsLoader.load(dclFile.value());
-        console.log(jsDialogs);
+        console.log(util.inspect(jsDialogs, {showHidden: false, depth: null}));
         const dclMap = {};
         for (const jsDialog of jsDialogs) {
             dclMap[jsDialog.id] = jsDialog;
@@ -79,6 +81,8 @@ exports.initContext = function (context) {
 ${gtkDialogXml}
 </interface>
 `;
+                debugger;
+                console.log(gtkXml);
                 _gtkBuilder = new Gtk.Builder();
                 _gtkBuilder.addFromString(gtkXml, gtkXml.length);
                 try {
@@ -138,14 +142,54 @@ ${gtkDialogXml}
         // TODO: ensure current dialog
         const key = ensureType('action_tile: `key`', args[0], [Str]);
         const handler = ensureType('action_tile: `handler`', args[1], [Str]);
+        console.log(handler.toUnescapedString());
         try {
-            const button = _gtkBuilder.getObject(key.value());
-            button.on('clicked', () => {
-                Evaluator.evaluate(handler.value(), context);
+            const tile = _gtkBuilder.getObject(key.value());
+            // TODO: support other events depending on tile type
+            tile.on('clicked', () => {
+                Evaluator.evaluate(handler.toUnescapedString(), context);
             });
             return new Bool(true);
         } catch {
             return new Bool(false);
+        }
+    }));
+    context.setSym('GET_TILE', new Fun('get_tile', ['key'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('get_tile: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('get_tile: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('get_tile:', args[0], [Str]);
+        try {
+            const tile = _gtkBuilder.getObject(key.value());
+            return new Str(tile.getText());
+        } catch {
+            // TODO: How to handle error?
+            console.error(`Error: no tile found for '${key.value()}'`);
+            return new Bool(false);
+        }
+    }));
+    context.setSym('SET_TILE', new Fun('get_tile', ['key', 'value'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('set_tile: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('set_tile: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('set_tile:', args[0], [Str]);
+        const value = ensureType('set_tile:', args[1], [Str]);
+        try {
+            const tile = _gtkBuilder.getObject(key.value());
+            tile.setText(value.value());
+            return value;
+        } catch {
+            // TODO: How to handle error?
+            console.error(`Error: no tile found for '${key.value()}'`);
+            return new Str('');
         }
     }));
 }

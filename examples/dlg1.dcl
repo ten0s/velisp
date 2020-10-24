@@ -21,19 +21,22 @@ dlg_1 : dialog {
 dlg_2 : dialog {
   label = "Dialog 2";
   : edit_box {
-    key = "name";
-    label = "Enter Your Name :";
-    mnemonic = "N";
-    alignment = centered;
+    key = "edit_id";
+    label = "Enter Text: ";
     edit_limit = 30;
     edit_width = 30;
   }
   : text {
-    label = "Text 1";
+    key = "text_id"
+    label = "Text";
   }
   : button {
     key = "accept";
     label = "OK";
     is_default = true;
+  }
+  : button {
+    key = "cancel";
+    label = "Cancel";
   }
 }

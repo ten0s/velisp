@@ -13,8 +13,10 @@ node ${opts[@]} src/main.js <<EOF
     (progn
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
       (exit 1)))
-  (new_dialog dlg_id dcl_id)
-  (action_tile "accept" "(done_dialog)")
+;  (action_tile "accept" "(princ (get_tile \"edit_id\"))")
+  (action_tile "accept" "(set_tile \"text_id\" (get_tile \"edit_id\"))")
+; (action_tile "edit" (set_tile "text_id" $value))
+  (action_tile "cancel" "(done_dialog)")
   (setq ret (start_dialog))
   (princ (strcat "dialog done w/ " (itoa ret)))
   (unload_dialog dcl_id)
