@@ -90,7 +90,6 @@ class Dialog extends Control {
 class Text extends Control {
     constructor(id) {
         super(id);
-        this.label = 'Text';
     }
 
     toGtkXml() {
@@ -113,7 +112,6 @@ class Text extends Control {
 class Button extends Control {
     constructor(id) {
         super(id);
-        this.label = 'Button';
         this.is_default = false;
     }
 
@@ -140,7 +138,6 @@ class Button extends Control {
 class EditBox extends Control {
     constructor(id) {
         super(id);
-        this.label = 'EditBox';
         this.is_default = false;
     }
 

@@ -81,7 +81,6 @@ exports.initContext = function (context) {
 ${gtkDialogXml}
 </interface>
 `;
-                debugger;
                 console.log(gtkXml);
                 _gtkBuilder = new Gtk.Builder();
                 _gtkBuilder.addFromString(gtkXml, gtkXml.length);
@@ -145,8 +144,20 @@ ${gtkDialogXml}
         console.log(handler.toUnescapedString());
         try {
             const tile = _gtkBuilder.getObject(key.value());
+            debugger;
+            console.log(tile);
+            // TODO: is it possible to put property like name="event" to gtkXml?
+            let event = null;
+            if (tile instanceof Gtk.Button) {
+                event = 'clicked';
+            } else if (tile instanceof Gtk.Entry) {
+                event = 'changed';
+            } else {
+                console.error(`Error: not event found for '${tile}'`);
+                return new Bool(false);
+            }
             // TODO: support other events depending on tile type
-            tile.on('clicked', () => {
+            tile.on(event, () => {
                 Evaluator.evaluate(handler.toUnescapedString(), context);
             });
             return new Bool(true);
