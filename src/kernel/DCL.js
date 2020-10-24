@@ -158,6 +158,12 @@ ${gtkDialogXml}
             }
             // TODO: support other events depending on tile type
             tile.on(event, () => {
+                context.setVar('$KEY', key);
+                context.setVar('$VALUE', new Str(tile.getText ? tile.getText() : ''));
+                // TODO: add $REASON
+                // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-0473B723-1CD5-4228-AB25-D88B6930372F
+                // TODO: add $DATA (client_data_tile ...)
+                // TODO: add $X, $Y for image_button
                 Evaluator.evaluate(handler.toUnescapedString(), context);
             });
             return new Bool(true);
