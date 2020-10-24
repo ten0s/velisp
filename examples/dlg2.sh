@@ -12,8 +12,7 @@ node ${opts[@]} src/main.js <<EOF
   (if (not (new_dialog dlg_id dcl_id))
     (progn
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
-      (exit 1)
-     ))
+      (exit 1)))
   (new_dialog dlg_id dcl_id)
   (action_tile "accept" "(done_dialog)")
   (setq ret (start_dialog))
