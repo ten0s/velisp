@@ -67,7 +67,9 @@ class VeDclDialogsLoader extends VeDclListener {
         const current = this.controls[this.controls.length-1];
         if (current) {
             const name = ctx.attributeName().ID().getText();
-            const value = ctx.attributeValue().STRING().getText();
+            // Remove first and last double quotes (")
+            const str = ctx.attributeValue().STRING().getText();
+            const value = str.substring(1, str.length-1);
             current.addAttribute(name, value);
         }
     };

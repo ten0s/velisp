@@ -1,4 +1,5 @@
 const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
+const Evaluator = require('../VeLispEvaluator.js');
 const VeDclDialogsLoader = require('../VeDclDialogsLoader.js');
 
 const gi = require('node-gtk');
@@ -7,8 +8,10 @@ const Gtk = gi.require('Gtk', '3.0');
 gi.startLoop();
 Gtk.init();
 
-let _dialogs = null;
-let _dialog = null;
+let _jsDialogs = null;
+let _jsDialog = null;
+let _gtkBuilder = null;
+let _gtkDialog = null;
 
 exports.initContext = function (context) {
     context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dcl_file'], [], (self, args) => {
@@ -23,7 +26,7 @@ exports.initContext = function (context) {
         // TODO: dialogs should be a {"dlg1": Dialog(), "dlg2", Dialog}
         const dialogs = VeDclDialogsLoader.load(dclFile.value());
         console.log(dialogs);
-        _dialogs = dialogs;
+        _jsDialogs = dialogs;
         return new Sym(dclFile);
     }));
     context.setSym('NEW_DIALOG', new Fun('new_dialog', ['dlg_id', 'dcl_id'], [], (self, args) => {
@@ -35,35 +38,36 @@ exports.initContext = function (context) {
         }
         // TODO: lookup dcl_id first
         // TODO: lookup dlg_id then
+        const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
         // TODO: put on top of some stack that (start_dialog) will run
-        _dialog = _dialogs[0];
-        return new Bool(true);
+        _jsDialog = _jsDialogs[0];
+        const gtkXml = _jsDialog.toGtkXml();
+        _gtkBuilder = new Gtk.Builder();
+        _gtkBuilder.addFromString(gtkXml, gtkXml.length);
+        try {
+            _gtkDialog = _gtkBuilder.getObject(dlgId.value());
+            return new Bool(true);
+        } catch {
+            return new Bool(false);
+        }
     }));
     context.setSym('START_DIALOG', new Fun('start_dialog', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments');
         }
-
-        const gtkXml = _dialog.toGtkXml();
-
-        const builder = new Gtk.Builder();
-        builder.addFromString(gtkXml, gtkXml.length);
-        const dlg = builder.getObject(_dialog.id)
-        const ret = dlg.run();
+        // TODO: ensure _gtkDialog
+        const ret = _gtkDialog.run();
         console.log(ret);
         return new Int(ret);
-
-        /*
-        const win = new Gtk.Window();
-        win.on('destroy', () => Gtk.mainQuit());
-        win.on('delete-event', () => false);
-
-        win.setDefaultSize(200, 80);
-        win.add(new Gtk.Label({ label: 'Hello Gtk+' }));
-
-        win.showAll();
-        Gtk.main();
-        */
+    }));
+    context.setSym('DONE_DIALOG', new Fun('done_dialog', [], [], (self, args) => {
+        if (args.length > 0) {
+            throw new Error('done_dialog: too many arguments');
+        }
+        // TODO: check there's current
+        // TODO: what it should return?
+        _gtkDialog.destroy();
+        return new Bool(true);
     }));
     context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {
         if (args.length < 1) {
@@ -76,5 +80,25 @@ exports.initContext = function (context) {
         // TODO: unregister dialogs
         // TODO: return nil if there's no such dlg_id
         return new Bool(true);
+    }));
+    context.setSym('ACTION_TILE', new Fun('action_tile', ['tile_id', 'handler'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('action_tile: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('action_tile: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const tileId = ensureType('action_tile: `tile_id`', args[0], [Str]);
+        const handler = ensureType('action_tile: `handler`', args[1], [Str]);
+        try {
+            const button = _gtkBuilder.getObject(tileId.value());
+            button.on('clicked', () => {
+                Evaluator.evaluate(handler.value(), context);
+            });
+            return new Bool(true);
+        } catch {
+            return new Bool(false);
+        }
     }));
 }

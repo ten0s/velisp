@@ -1,4 +1,4 @@
-dlg1 : dialog {
+dlg_id : dialog {
   label = "Title";
   : text {
     label = "Text 1";
@@ -7,11 +7,11 @@ dlg1 : dialog {
     label = "Text 2";
   }
   : button {
-    key = "ok";
+    key = "btn_ok";
     label = "Ok";
   }
   : button {
-    key = "cancel";
+    key = "btn_cancel";
     label = "Cancel";
   }
 }

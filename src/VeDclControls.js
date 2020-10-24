@@ -1,6 +1,8 @@
 class Control {
     constructor(id) {
         this.id = id;
+        this.key = '';
+        this.label = '';
     }
 
     addAttribute(name, value) {
@@ -84,11 +86,16 @@ class Dialog extends Control {
 class Text extends Control {
     constructor(id) {
         super(id);
-        this.label = "Text";
+        this.label = 'Text';
     }
 
     toGtkXml() {
-        const id = this.id ? `id="${this.id}"` : '';
+        let id = '';
+        if (this.id) {
+            id = `id="${this.id}"`;
+        } else if (this.key) {
+            id = `id="${this.key}"`;
+        }
         return `
           <object class="GtkLabel" ${id}>
             <property name="visible">True</property>
@@ -102,11 +109,16 @@ class Text extends Control {
 class Button extends Control {
     constructor(id) {
         super(id);
-        this.label = "Button";
+        this.label = 'Button';
     }
 
     toGtkXml() {
-        const id = this.id ? `id="${this.id}"` : '';
+        let id = '';
+        if (this.id) {
+            id = `id="${this.id}"`;
+        } else if (this.key) {
+            id = `id="${this.key}"`;
+        }
         return `
               <object class="GtkButton" ${id}>
                 <property name="label" translatable="yes">${this.label}</property>
