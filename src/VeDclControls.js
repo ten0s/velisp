@@ -56,11 +56,16 @@ class Dialog extends Control {
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
+        <!-- BEGIN CONTROLS -->
+        ${controls}
+        <!-- END CONTROLS -->
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
+            <!-- BEGIN BUTTONS -->
             ${buttons}
+            <!-- END BUTTONS -->
           </object>
           <packing>
             <property name="expand">False</property>
@@ -68,7 +73,6 @@ class Dialog extends Control {
             <property name="position">0</property>
           </packing>
         </child>
-        ${controls}
       </object>
     </child>
   </object>
