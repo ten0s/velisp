@@ -8,7 +8,10 @@ const Gtk = gi.require('Gtk', '3.0');
 gi.startLoop();
 Gtk.init();
 
+// global dclId index
+let _dclId = 1;
 const _dclFiles = {};
+
 let _gtkBuilder = null;
 let _gtkDialog = null;
 
@@ -33,7 +36,7 @@ exports.initContext = function (context) {
         dlg.destroy();
         return new Bool(false);
     }));
-    context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dcl_file'], [], (self, args) => {
+    context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dclfile'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('load_dialog: too few arguments');
         }
@@ -41,13 +44,16 @@ exports.initContext = function (context) {
             throw new Error('load_dialog: too many arguments');
         }
         const dclFile = ensureType('load_dialog:', args[0], [Str]);
+        // TODO: add .dcl extension if not provided
+        // TODO: ensure file exists and loads,
+        // return a positive integer, or a negative integer on error
         const jsDialogs = VeDclDialogsLoader.load(dclFile.value());
         console.log(jsDialogs);
         const dclMap = {};
         for (const jsDialog of jsDialogs) {
             dclMap[jsDialog.id] = jsDialog;
         }
-        const dclId = new Sym(dclFile.value());
+        const dclId = new Int(_dclId++);
         _dclFiles[dclId.value()] = dclMap;
         return dclId;
     }));
@@ -58,8 +64,7 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('new_dialog: too many arguments');
         }
-        debugger;
-        const dclId = ensureType('new_dialog: `dcl_id`', args[1], [Sym]);
+        const dclId = ensureType('new_dialog: `dcl_id`', args[1], [Int]);
         const dclFile = _dclFiles[dclId.value()];
         if (dclFile) {
             const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
@@ -97,12 +102,16 @@ ${gtkDialogXml}
         console.log(ret);
         return new Int(ret);
     }));
-    context.setSym('DONE_DIALOG', new Fun('done_dialog', [], [], (self, args) => {
-        if (args.length > 0) {
+    context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
+        if (args.length > 1) {
             throw new Error('done_dialog: too many arguments');
         }
-        // TODO: check there's current
-        // TODO: what it should return?
+        if (args.length == 1) {
+            const status = ensureType('done_dialog:', args[0], [Int]);
+            // TODO: where to put it?
+        }
+        // TODO: check there's current dialog
+        // TODO: what it should return? some (X, Y) point of the dialog
         _gtkDialog.destroy();
         return new Bool(true);
     }));
@@ -113,15 +122,11 @@ ${gtkDialogXml}
         if (args.length > 1) {
             throw new Error('unload_dialog: too many arguments');
         }
-        const dclId = ensureType('unload_dialog:', args[0], [Sym]);
-        const dclFile = _dclFiles[dclId.value()];
-        if (dclFile) {
-            delete _dclFiles[dclId.value()];
-            return new Bool(true);
-        }
+        const dclId = ensureType('unload_dialog:', args[0], [Int]);
+        delete _dclFiles[dclId.value()];
         return new Bool(false);
     }));
-    context.setSym('ACTION_TILE', new Fun('action_tile', ['tile_id', 'handler'], [], (self, args) => {
+    context.setSym('ACTION_TILE', new Fun('action_tile', ['key', 'handler'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('action_tile: too few arguments');
         }
@@ -129,10 +134,10 @@ ${gtkDialogXml}
             throw new Error('action_tile: too many arguments');
         }
         // TODO: ensure current dialog
-        const tileId = ensureType('action_tile: `tile_id`', args[0], [Str]);
+        const key = ensureType('action_tile: `key`', args[0], [Str]);
         const handler = ensureType('action_tile: `handler`', args[1], [Str]);
         try {
-            const button = _gtkBuilder.getObject(tileId.value());
+            const button = _gtkBuilder.getObject(key.value());
             button.on('clicked', () => {
                 Evaluator.evaluate(handler.value(), context);
             });

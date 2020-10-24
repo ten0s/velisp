@@ -7,12 +7,12 @@ dlg_1 : dialog {
     label = "Text 2";
   }
   : button {
-    key = "btn_ok";
+    key = "accept";
     label = "OK";
     is_default = true;
   }
   : button {
-    key = "btn_cancel";
+    key = "cancel";
     label = "Cancel";
     is_default = false;
   }
@@ -32,7 +32,7 @@ dlg_2 : dialog {
     label = "Text 1";
   }
   : button {
-    key = "btn_ok";
+    key = "accept";
     label = "OK";
     is_default = true;
   }
