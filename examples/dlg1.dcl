@@ -8,10 +8,12 @@ dlg_id : dialog {
   }
   : button {
     key = "btn_ok";
-    label = "Ok";
+    label = "OK";
+    is_default = true;
   }
   : button {
     key = "btn_cancel";
     label = "Cancel";
+    is_default = false;
   }
 }

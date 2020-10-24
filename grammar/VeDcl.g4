@@ -17,13 +17,18 @@ control : ID? ':' 'text'   '{' attribute* '}' ';'?           # text
 attribute : attributeName '=' attributeValue ';' ;
 
 attributeName : ID ;
-attributeValue : STRING ;
+attributeValue : STRING
+               | BOOL
+               ;
 
 // Lexer rules
 
-ID : LETTER+(DIGIT | LETTER | '_')* ;
-
 STRING : '"' CHAR* '"' ;
+BOOL : 'true'
+     | 'false'
+     ;
+
+ID : LETTER+(DIGIT | LETTER | '_')* ;
 
 NEWLINE : '\r'? '\n' -> skip ;
 WHITESPACE : [ \t]+ -> skip ;

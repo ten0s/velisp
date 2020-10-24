@@ -17,6 +17,13 @@ class Control {
         return `<child>${xml}</child>`;
     }
 
+    _bool(value) {
+        if (value) {
+            return 'True';
+        }
+        return 'False';
+    }
+
     toGtkXml() {
         throw new Error('Not implemented');
     }
@@ -48,7 +55,7 @@ class Dialog extends Control {
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkDialog" ${id}>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">${this.label}</property>
+    <property name="title">${this.label}</property>
     <property name="type_hint">dialog</property>
     <child>
       <placeholder/>
@@ -100,7 +107,7 @@ class Text extends Control {
           <object class="GtkLabel" ${id}>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">${this.label}</property>
+            <property name="label">${this.label}</property>
           </object>
 `;
     }
@@ -110,6 +117,7 @@ class Button extends Control {
     constructor(id) {
         super(id);
         this.label = 'Button';
+        this.is_default = false;
     }
 
     toGtkXml() {
@@ -124,7 +132,9 @@ class Button extends Control {
                 <property name="label" translatable="yes">${this.label}</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <!-- <property name="receives_default">True</property> -->
+                <property name="can_default">True</property>
+                <property name="has_default">${this._bool(this.is_default)}</property>
+                <property name="receives_default">True</property>
               </object>
 `;
     }
