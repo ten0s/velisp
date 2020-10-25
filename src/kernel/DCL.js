@@ -17,6 +17,14 @@ const _dclFiles = {};
 let _gtkBuilder = null;
 let _gtkDialog = null;
 
+const TileMode = {
+    ENABLE_TILE: 0,
+    DISABLE_TILE: 1,
+    FOCUS_TILE: 2,
+    SELECT_EDITBOX: 3,
+    FLIP_IMAGE: 4
+};
+
 exports.initContext = function (context) {
     context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
         if (args.length < 1) {
@@ -86,6 +94,8 @@ ${gtkDialogXml}
                 _gtkBuilder.addFromString(gtkXml, gtkXml.length);
                 try {
                     _gtkDialog = _gtkBuilder.getObject(dlgId.value());
+                    // TODO: for each controls/buttons in jsDialog
+                    //       if any .action
                     return new Bool(true);
                 } catch {
                     // Should never happen since dialog ID is mandatory
@@ -144,7 +154,7 @@ ${gtkDialogXml}
         console.log(handler.toUnescapedString());
         try {
             const tile = _gtkBuilder.getObject(key.value());
-            debugger;
+            //debugger;
             console.log(tile);
             // TODO: is it possible to put property like name="event" to gtkXml?
             let event = null;
@@ -157,6 +167,7 @@ ${gtkDialogXml}
                 return new Bool(false);
             }
             // TODO: support other events depending on tile type
+            // TODO: how to unregister registered in DCL action = "(...)"?
             tile.on(event, () => {
                 context.setVar('$KEY', key);
                 context.setVar('$VALUE', new Str(tile.getText ? tile.getText() : ''));
@@ -182,7 +193,13 @@ ${gtkDialogXml}
         const key = ensureType('get_tile:', args[0], [Str]);
         try {
             const tile = _gtkBuilder.getObject(key.value());
-            return new Str(tile.getText());
+            if (tile instanceof Gtk.Entry || tile instanceof Gtk.Label) {
+                return new Str(tile.getText());
+            } else if (tile instanceof Gtk.Button) {
+                return new Str(tile.getLabel());
+            } else {
+                console.error(`Error: not implemented get_tile for ${typeof tile}`);
+            }
         } catch {
             // TODO: How to handle error?
             console.error(`Error: no tile found for '${key.value()}'`);
@@ -201,12 +218,52 @@ ${gtkDialogXml}
         const value = ensureType('set_tile:', args[1], [Str]);
         try {
             const tile = _gtkBuilder.getObject(key.value());
-            tile.setText(value.value());
+            if (tile instanceof Gtk.Entry || tile instanceof Gtk.Label) {
+                tile.setText(value.value());
+            } else if (tile instanceof Gtk.Button) {
+                return new Str(tile.setLabel(value.value()));
+            } else {
+                console.error(`Error: not implemented set_tile for ${typeof tile}`);
+            }
             return value;
         } catch {
             // TODO: How to handle error?
             console.error(`Error: no tile found for '${key.value()}'`);
             return new Str('');
         }
+    }));
+    context.setSym('MODE_TILE', new Fun('mode_tile', ['key', 'mode'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('mode_tile: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('mode_tile: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('mode_tile: `key`', args[0], [Str]);
+        const mode = ensureType('mode_tile: `mode`', args[1], [Int]);
+        try {
+            const tile = _gtkBuilder.getObject(key.value());
+            switch (mode.value()) {
+            case TileMode.ENABLE_TILE:
+                tile.setSensitive(true);
+                break;
+            case TileMode.DISABLE_TILE:
+                tile.setSensitive(false);
+                break;
+            case TileMode.FOCUS_TILE:
+                _gtkDialog.setFocus(tile);
+                break;
+            case TileMode.FLIP_IMAGE:
+                console.error(`Error: not implemented tile mode '${mode.value()}'`);
+                break;
+            default:
+                console.error(`Error: unknown tile mode '${mode.value()}'`);
+            }
+        } catch {
+            // TODO: How to handle error?
+            console.error(`Error: no tile found for '${key.value()}'`);
+        }
+        return new Bool(false);
     }));
 }

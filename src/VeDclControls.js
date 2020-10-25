@@ -4,6 +4,7 @@ class Control {
         this.key = null;
         this.label = '';
         this.value = null;
+        this.action = null;
     }
 
     addAttribute(name, value) {
@@ -153,6 +154,7 @@ class EditBox extends Control {
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="text">${this.label}</property>
+                <signal name="changed" handler="on_changed"/>
               </object>
 `;
     }
