@@ -6,7 +6,7 @@ var grammarFileName = "VeDcl.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u0010d\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u0012d\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0003\u0002\u0007\u0002\u0012\n\u0002\f\u0002\u000e\u0002\u0015",
     "\u000b\u0002\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
@@ -77,7 +77,8 @@ var literalNames = [ null, "':'", "'dialog'", "'{'", "'}'", "';'", "'text'",
                      "'button'", "'edit_box'", "'='" ];
 
 var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
-                      null, "STRING", "BOOL", "ID", "NEWLINE", "WHITESPACE" ];
+                      null, "STRING", "BOOL", "ID", "COMMENT", "LINE_COMMENT", 
+                      "NEWLINE", "WHITESPACE" ];
 
 var ruleNames =  [ "file", "dialog", "entry", "control", "attribute", "attributeName", 
                    "attributeValue" ];
@@ -113,8 +114,10 @@ VeDclParser.T__8 = 9;
 VeDclParser.STRING = 10;
 VeDclParser.BOOL = 11;
 VeDclParser.ID = 12;
-VeDclParser.NEWLINE = 13;
-VeDclParser.WHITESPACE = 14;
+VeDclParser.COMMENT = 13;
+VeDclParser.LINE_COMMENT = 14;
+VeDclParser.NEWLINE = 15;
+VeDclParser.WHITESPACE = 16;
 
 VeDclParser.RULE_file = 0;
 VeDclParser.RULE_dialog = 1;

@@ -261,7 +261,7 @@ VeLispLexer.INT = 20;
 VeLispLexer.REAL = 21;
 VeLispLexer.STR = 22;
 VeLispLexer.ID = 23;
-VeLispLexer.INLINE_COMMENT = 24;
+VeLispLexer.COMMENT = 24;
 VeLispLexer.LINE_COMMENT = 25;
 VeLispLexer.NEWLINE = 26;
 VeLispLexer.WHITESPACE = 27;
@@ -278,20 +278,19 @@ VeLispLexer.prototype.symbolicNames = [ null, null, null, null, null, null,
                                         "IF", "LAMBDA", "OR", "PROGN", "QUOTE", 
                                         "REPEAT", "SETQ", "WHILE", "NIL", 
                                         "TRU", "INT", "REAL", "STR", "ID", 
-                                        "INLINE_COMMENT", "LINE_COMMENT", 
-                                        "NEWLINE", "WHITESPACE" ];
+                                        "COMMENT", "LINE_COMMENT", "NEWLINE", 
+                                        "WHITESPACE" ];
 
 VeLispLexer.prototype.ruleNames = [ "T__0", "T__1", "T__2", "T__3", "T__4", 
                                     "AND", "COND", "DEFUN", "FOREACH", "IF", 
                                     "LAMBDA", "OR", "PROGN", "QUOTE", "REPEAT", 
                                     "SETQ", "WHILE", "NIL", "TRU", "INT", 
-                                    "REAL", "STR", "ID", "INLINE_COMMENT", 
-                                    "LINE_COMMENT", "NEWLINE", "WHITESPACE", 
-                                    "CHAR", "ESCAPE_SEQ", "A", "B", "C", 
-                                    "D", "E", "F", "G", "H", "I", "J", "K", 
-                                    "L", "M", "N", "O", "P", "Q", "R", "S", 
-                                    "T", "U", "V", "W", "X", "Y", "Z", "LETTER", 
-                                    "DIGIT" ];
+                                    "REAL", "STR", "ID", "COMMENT", "LINE_COMMENT", 
+                                    "NEWLINE", "WHITESPACE", "CHAR", "ESCAPE_SEQ", 
+                                    "A", "B", "C", "D", "E", "F", "G", "H", 
+                                    "I", "J", "K", "L", "M", "N", "O", "P", 
+                                    "Q", "R", "S", "T", "U", "V", "W", "X", 
+                                    "Y", "Z", "LETTER", "DIGIT" ];
 
 VeLispLexer.prototype.grammarFileName = "VeLisp.g4";
 

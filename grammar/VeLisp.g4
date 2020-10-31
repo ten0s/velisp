@@ -76,7 +76,7 @@ REAL : '-'?DIGIT+'.'DIGIT+ ;
 STR : '"' CHAR* '"' ;
 ID : [a-zA-Z0-9!$%*/\-+=<>~:_]+ ;
 
-INLINE_COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
+COMMENT : ';|' .*? '|;' -> skip ; // TODO: inline inside expr doesn't work
 LINE_COMMENT : ';'+ .*? NEWLINE -> skip ;
 
 NEWLINE : '\r'? '\n' -> skip ;

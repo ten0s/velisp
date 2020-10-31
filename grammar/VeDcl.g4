@@ -31,6 +31,9 @@ BOOL : 'true'
 
 ID : LETTER+(DIGIT | LETTER | '_')* ;
 
+COMMENT : '/*' .*? '*/' -> skip ;
+LINE_COMMENT : '//'+ .*? NEWLINE -> skip ;
+
 NEWLINE : '\r'? '\n' -> skip ;
 WHITESPACE : [ \t]+ -> skip ;
 

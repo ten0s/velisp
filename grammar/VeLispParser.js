@@ -189,7 +189,7 @@ var literalNames = [ null, "'('", "')'", "' / '", "'.'", "'''" ];
 var symbolicNames = [ null, null, null, null, null, null, "AND", "COND", 
                       "DEFUN", "FOREACH", "IF", "LAMBDA", "OR", "PROGN", 
                       "QUOTE", "REPEAT", "SETQ", "WHILE", "NIL", "TRU", 
-                      "INT", "REAL", "STR", "ID", "INLINE_COMMENT", "LINE_COMMENT", 
+                      "INT", "REAL", "STR", "ID", "COMMENT", "LINE_COMMENT", 
                       "NEWLINE", "WHITESPACE" ];
 
 var ruleNames =  [ "file", "expr", "condTestResult", "condTest", "condResult", 
@@ -239,7 +239,7 @@ VeLispParser.INT = 20;
 VeLispParser.REAL = 21;
 VeLispParser.STR = 22;
 VeLispParser.ID = 23;
-VeLispParser.INLINE_COMMENT = 24;
+VeLispParser.COMMENT = 24;
 VeLispParser.LINE_COMMENT = 25;
 VeLispParser.NEWLINE = 26;
 VeLispParser.WHITESPACE = 27;
