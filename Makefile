@@ -1,5 +1,8 @@
 .PHONY: test
 
+BRANCH := ${shell git branch --no-color | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'}
+VERSION := ${shell jq -r .version package.json}
+
 all: install compile
 
 install:
@@ -28,24 +31,27 @@ rollPatch:
 	$(MAKE) roll
 
 roll:
-	sed -E "s/\{\{version\}\}/`jq -r .version package.json`/g" README.template > README.md
+	$(MAKE) readme
 	git add package.json package-lock.json README.md
-	git commit -m "Roll `jq -r .version package.json`"
-	# git tag -a "`jq -r .version package.json`" -m "Roll `jq -r .version package.json`"
+	git commit -m "Roll ${VERSION}"
+	# git tag -a "${VERSION}" -m "Roll ${VERSION}"
 	echo git push origin master # --tags
 
+readme:
+	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
+
 pkgLinux:
-	npx pkg -c package.json -t node10-linux-x64 -o velisp-`jq -r .version package.json`-linux-x64 src/main.js
+	npx pkg -c package.json -t node10-linux-x64 -o velisp-${VERSION}-linux-x64 src/main.js
 
 pkgWin86:
 	# https://github.com/vercel/pkg-fetch/issues/68
-	npx pkg -c package.json -t node10-win-x86 -o velisp-`jq -r .version package.json`-win-x86 --no-bytecode --public --public-packages '*' src/main.js
+	npx pkg -c package.json -t node10-win-x86 -o velisp-${VERSION}-win-x86 --no-bytecode --public --public-packages '*' src/main.js
 
 pkgWin64:
-	npx pkg -c package.json -t node10-win-x64 -o velisp-`jq -r .version package.json`-win-x64 src/main.js
+	npx pkg -c package.json -t node10-win-x64 -o velisp-${VERSION}-win-x64 src/main.js
 
 pkgMacOS:
-	npx pkg -c package.json -t node10-macos -o velisp-`jq -r .version package.json`-macos-x64 src/main.js
+	npx pkg -c package.json -t node10-macos -o velisp-${VERSION}-macos-x64 src/main.js
 
 cleanPkg:
 	rm -f velisp*
