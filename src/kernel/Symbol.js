@@ -1,4 +1,4 @@
-const {Bool, Sym, Fun, ensureType} = require('../VeLispTypes.js');
+const {Sym, Fun, ensureType} = require('../VeLispTypes.js');
 
 exports.initContext = function (context) {
     context.setSym('SET', new Fun('set', ['sym', 'expr'], [], (self, args) => {

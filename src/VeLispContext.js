@@ -41,23 +41,18 @@ class VeLispContext {
         return new Bool(false);
     }
 
-    // Set/Init variable in the current context only.
+    // Set symbol into the current context, if defined.
+    // If not defined, set into the parent context, if available.
+    // Otherwise, set into the current (global) context.
     setSym(name, value) {
-        this.symbols[name] = value;
+        this.setVar(name, value);
     }
 
     // Get symbol from the current context, if defined.
     // If not defined, get symbol from the parent context, if available.
     // Otherwise, return nil.
     getSym(name) {
-        let value = this.symbols[name];
-        if (value) {
-            return value;
-        }
-        if (this.parent) {
-            return this.parent.getSym(name);
-        }
-        return new Bool(false);
+        return this.getVar(name);
     }
 }
 
