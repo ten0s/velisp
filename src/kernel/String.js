@@ -24,7 +24,7 @@ exports.initContext = function (context) {
                 return new Int(val);
             }
         } catch (e) {}
-        throw new Error('atoi: conversion impossible');
+        return new Int(0);
     }));
     context.setSym('ATOF', new Fun('atof', ['str'], [], (self, args) => {
         if (args.length === 0) {
@@ -40,7 +40,7 @@ exports.initContext = function (context) {
                 return new Real(val);
             }
         } catch (e) {}
-        throw new Error('atof: conversion impossible');
+        return new Real(0.0);
     }));
     context.setSym('STRCASE', new Fun('strcase', ['str [which]'], [], (self, args) => {
         if (args.length === 0) {
