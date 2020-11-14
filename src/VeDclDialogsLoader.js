@@ -86,6 +86,12 @@ class VeDclDialogsLoader extends VeDclListener {
                 value = str.substring(1, str.length-1);
             } else if (ctx.attributeValue().BOOL()) {
                 value = ctx.attributeValue().BOOL().getText() === 'true';
+            } else if (ctx.attributeValue().INTEGER()) {
+                value = Number.parseInt(ctx.attributeValue().INTEGER().getText());
+            } else if (ctx.attributeValue().REAL()) {
+                value = Number.parseFloat(ctx.attributeValue().REAL().getText());
+            } else {
+                throw new Error(`Unhandled: ${name} = ${ctx.attributeValue().getText()}`);
             }
             current.addAttribute(name, value);
         }

@@ -3,7 +3,7 @@ class Control {
         this.id = id;
         this.key = null;
         this.label = '';
-        this.value = null;
+        this.value = '';
         this.action = null;
     }
 
@@ -140,6 +140,8 @@ class EditBox extends Control {
     constructor(id) {
         super(id);
         this.is_default = false;
+        this.edit_limit = 132;
+        this.edit_width = 0;
     }
 
     toGtkXml() {
@@ -149,12 +151,45 @@ class EditBox extends Control {
         } else if (this.key) {
             id = `id="${this.key}"`;
         }
+        let expandEntry = 'True';
+        if (this.edit_width > 0) {
+            expandEntry = 'False';
+        }
         return `
-              <object class="GtkEntry" ${id}>
+              <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="text">${this.label}</property>
-                <signal name="changed" handler="on_changed"/>
+                <property name="can_focus">False</property>
+                <property name="spacing">0</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label">${this.label}</property>
+                    <property name="justify">left</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="pack_type">start</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" ${id}>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="max_length">${this.edit_limit}</property>
+                    <property name="width_chars">${this.edit_width}</property>
+                    <property name="text">${this.value}</property>
+                    <signal name="changed" handler="on_changed"/>
+                  </object>
+                  <packing>
+                    <property name="expand">${expandEntry}</property>
+                    <property name="fill">True</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
 `;
     }

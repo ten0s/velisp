@@ -20,6 +20,8 @@ attribute : attributeName '=' attributeValue ';' ;
 attributeName : ID ;
 attributeValue : STRING
                | BOOL
+               | INTEGER
+               | REAL
                ;
 
 // Lexer rules
@@ -28,6 +30,8 @@ STRING : '"' CHAR* '"' ;
 BOOL : 'true'
      | 'false'
      ;
+INTEGER : '-'?DIGIT+ ;
+REAL : '-'?DIGIT+'.'DIGIT+ ;
 
 ID : LETTER+(DIGIT | LETTER | '_')* ;
 
