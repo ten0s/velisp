@@ -164,6 +164,14 @@ class Text extends Control {
     }
 }
 
+class ErrTile extends Text {
+    constructor(id) {
+        super(id);
+        this.key = 'error';
+        this.alignment = 'left';
+    }
+}
+
 class Button extends Control {
     constructor(id) {
         super(id);
@@ -255,5 +263,6 @@ exports.Dialog = Dialog;
 exports.Row = Row;
 exports.Column = Column;
 exports.Text = Text;
+exports.ErrTile = ErrTile;
 exports.Button = Button;
 exports.EditBox = EditBox;

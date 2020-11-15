@@ -15,6 +15,7 @@ control : ID? ':' 'row'      '{' entry* '}' ';'?               # row
         | ID? ':' 'text'     '{' attribute* '}' ';'?           # text
         | ID? ':' 'button'   '{' attribute* '}' ';'?           # button
         | ID? ':' 'edit_box' '{' attribute* '}' ';'?           # editBox
+        | ID? ':' 'errtile'  '{' attribute* '}' ';'?           # errTile
         ;
 
 attribute : attributeName '=' attributeValue ';' ;

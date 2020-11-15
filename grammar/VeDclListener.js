@@ -83,6 +83,15 @@ VeDclListener.prototype.exitEditBox = function(ctx) {
 };
 
 
+// Enter a parse tree produced by VeDclParser#errTile.
+VeDclListener.prototype.enterErrTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#errTile.
+VeDclListener.prototype.exitErrTile = function(ctx) {
+};
+
+
 // Enter a parse tree produced by VeDclParser#attribute.
 VeDclListener.prototype.enterAttribute = function(ctx) {
 };
