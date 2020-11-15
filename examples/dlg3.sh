@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ ${DEBUG} != "" ]] && opts[k++]=--inspect
+[[ ${DEBUG} != "" ]] && opts[k++]=--inspect-brk
 
 node ${opts[@]} src/main.js <<EOF
   (setq dcl_file "examples/dlg1.dcl")

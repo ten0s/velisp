@@ -4,6 +4,7 @@ class Control {
         this.key = null;
         this.label = '';
         this.value = '';
+        this.alignment = 'centered';
         this.action = null;
     }
 
@@ -26,64 +27,115 @@ class Control {
         return 'False';
     }
 
+    _hor_align(value) {
+        switch (value) {
+        case 'left':
+            return 'start';
+        case 'right':
+            return 'end';
+        case 'centered':
+            return 'center';
+        default:
+            return 'fill';
+        }
+    }
+
+    _ver_align(value) {
+        switch (value) {
+        case 'top':
+            return 'start';
+        case 'bottom':
+            return 'end';
+        case 'centered':
+            return 'center';
+        default:
+            return 'fill';
+        }
+    }
+
     toGtkXml() {
         throw new Error('Not implemented');
     }
 }
 
-class Dialog extends Control {
+class TileCluster extends Control {
     constructor(id) {
         super(id);
         this.controls = [];
-        this.buttons = [];
     }
 
     addControl(control) {
         this.controls.push(control);
     }
+}
 
-    addButton(button) {
-        this.buttons.push(button);
+class Dialog extends TileCluster {
+    constructor(id) {
+        super(id);
     }
 
     toGtkXml() {
         const id = this.id ? `id="${this.id}"` : '';
         const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
-        const buttons = this.buttons.map(b => this._child(b.toGtkXml())).join('\n');
         return `
-  <requires lib="gtk+" version="3.20"/>
-  <object class="GtkDialog" ${id}>
+  <object class="GtkWindow" ${id}>
     <property name="can_focus">False</property>
     <property name="title">${this.label}</property>
-    <property name="type_hint">dialog</property>
     <child>
-      <placeholder/>
-    </child>
-    <child internal-child="vbox">
       <object class="GtkBox">
+        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <!-- BEGIN CONTROLS -->
         ${controls}
         <!-- END CONTROLS -->
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <!-- BEGIN BUTTONS -->
-            ${buttons}
-            <!-- END BUTTONS -->
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
       </object>
     </child>
   </object>
+`;
+    }
+}
+
+class Row extends TileCluster {
+    constructor() {
+        super();
+    }
+
+    toGtkXml() {
+        const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
+        return `
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">2</property>
+            <property name="homogeneous">True</property> <!-- children_fixed_width? -->
+            <!-- BEGIN CONTROLS -->
+            ${controls}
+            <!-- END CONTROLS -->
+          </object>
+`;
+    }
+}
+
+class Column extends TileCluster {
+    constructor() {
+        super();
+    }
+
+    toGtkXml() {
+        const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
+        return `
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">2</property>
+            <!-- BEGIN CONTROLS -->
+            ${controls}
+            <!-- END CONTROLS -->
+          </object>
 `;
     }
 }
@@ -100,11 +152,13 @@ class Text extends Control {
         } else if (this.key) {
             id = `id="${this.key}"`;
         }
+        // TODO: also support this.value
         return `
           <object class="GtkLabel" ${id}>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label">${this.label}</property>
+            <property name="halign">${this._hor_align(this.alignment)}</property>
           </object>
 `;
     }
@@ -126,12 +180,18 @@ class Button extends Control {
         return `
               <object class="GtkButton" ${id}>
                 <property name="label">${this.label}</property>
+                <property name="halign">${this._hor_align(this.alignment)}</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">${this._bool(this.is_default)}</property>
                 <property name="receives_default">True</property>
               </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+<!--                <property name="position">0</property> -->
+              </packing>
 `;
     }
 }
@@ -192,6 +252,8 @@ class EditBox extends Control {
 }
 
 exports.Dialog = Dialog;
+exports.Row = Row;
+exports.Column = Column;
 exports.Text = Text;
 exports.Button = Button;
 exports.EditBox = EditBox;

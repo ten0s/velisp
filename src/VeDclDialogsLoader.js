@@ -3,12 +3,13 @@ const antlr4 = require('antlr4');
 const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
-const {Dialog, Text, Button, EditBox} = require('./VeDclControls.js');
+const {Dialog, Row, Column, Text, Button, EditBox} = require('./VeDclControls.js');
 
 class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
         super();
         this.dialogs = [];
+        this.clusters = [];
         this.controls = [];
     }
 
@@ -23,13 +24,41 @@ class VeDclDialogsLoader extends VeDclListener {
         const id = ctx.ID().getText();
         const dialog = new Dialog(id);
         this.dialogs.push(dialog);
-        this.controls.push(dialog);
+        this.clusters.push(dialog);
+        this.controls.push(dialog); // why?
     };
 
     exitDialog(ctx) {
         console.log('exitDialog');
+        this.clusters.pop();
         this.controls.pop();
     };
+
+    enterRow(ctx) {
+        console.log('enterRow');
+        const row = new Row();
+        this.clusters.push(row);
+        this.controls.push(row);
+    }
+
+    exitRow(ctx) {
+        console.log('exitRow');
+        const cluster = this.clusters.pop();
+        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
+    }
+
+    enterColumn(ctx) {
+        console.log('enterColumn');
+        const col = new Column();
+        this.clusters.push(col);
+        this.controls.push(col);
+    }
+
+    exitColumn(ctx) {
+        console.log('exitColumn');
+        const cluster = this.clusters.pop();
+        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
+    }
 
     enterText(ctx) {
         console.log('enterText');
@@ -40,7 +69,7 @@ class VeDclDialogsLoader extends VeDclListener {
 
     exitText(ctx) {
         console.log('exitText');
-        this.dialogs[this.dialogs.length-1].addControl(this.controls.pop());
+        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
     };
 
     enterEditBox(ctx) {
@@ -52,7 +81,7 @@ class VeDclDialogsLoader extends VeDclListener {
 
     exitEditBox(ctx) {
         console.log('exitEditBox');
-        this.dialogs[this.dialogs.length-1].addControl(this.controls.pop());
+        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
     };
 
     enterButton(ctx) {
@@ -64,7 +93,7 @@ class VeDclDialogsLoader extends VeDclListener {
 
     exitButton(ctx) {
         console.log('exitButton');
-        this.dialogs[this.dialogs.length-1].addButton(this.controls.pop());
+        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
     };
 
     enterControl(ctx) {
@@ -80,16 +109,18 @@ class VeDclDialogsLoader extends VeDclListener {
         if (current) {
             const name = ctx.attributeName().ID().getText();
             let value = null;
-            if (ctx.attributeValue().STRING()) {
-                // Remove first and last double quotes (")
-                const str = ctx.attributeValue().STRING().getText();
-                value = str.substring(1, str.length-1);
-            } else if (ctx.attributeValue().BOOL()) {
+            if (ctx.attributeValue().BOOL()) {
                 value = ctx.attributeValue().BOOL().getText() === 'true';
-            } else if (ctx.attributeValue().INTEGER()) {
-                value = Number.parseInt(ctx.attributeValue().INTEGER().getText());
+            } else if (ctx.attributeValue().INT()) {
+                value = Number.parseInt(ctx.attributeValue().INT().getText());
             } else if (ctx.attributeValue().REAL()) {
                 value = Number.parseFloat(ctx.attributeValue().REAL().getText());
+            } else if (ctx.attributeValue().STR()) {
+                // Remove first and last double quotes (")
+                const str = ctx.attributeValue().STR().getText();
+                value = str.substring(1, str.length-1);
+            } else if (ctx.attributeValue().ALIGN()) {
+                value = ctx.attributeValue().ALIGN().getText();
             } else {
                 throw new Error(`Unhandled: ${name} = ${ctx.attributeValue().getText()}`);
             }

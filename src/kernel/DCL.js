@@ -86,7 +86,8 @@ exports.initContext = function (context) {
                 const gtkXml = `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-${gtkDialogXml}
+  <requires lib="gtk+" version="3.20"/>
+  ${gtkDialogXml}
 </interface>
 `;
                 console.log(gtkXml);
@@ -113,9 +114,16 @@ ${gtkDialogXml}
             throw new Error('start_dialog: too many arguments');
         }
         // TODO: ensure _gtkDialog
-        const ret = _gtkDialog.run();
-        console.log(ret);
-        return new Int(ret);
+        _gtkDialog.setModal(true);
+        _gtkDialog.setResizable(false);
+        // TODO: calculate using both length and font
+        console.log(_gtkDialog.getTitle().length);
+        const fixMeWidth = Math.max(200, _gtkDialog.getTitle().length * 16);
+        _gtkDialog.setSizeRequest(fixMeWidth, -1);
+        _gtkDialog.on('show', Gtk.main);
+        _gtkDialog.on('destroy', Gtk.mainQuit);
+        _gtkDialog.showAll();
+        return new Int(-1);
     }));
     context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
         if (args.length > 1) {
@@ -127,7 +135,7 @@ ${gtkDialogXml}
         }
         // TODO: check there's current dialog
         // TODO: what it should return? some (X, Y) point of the dialog
-        _gtkDialog.destroy();
+        Gtk.mainQuit();
         return new Bool(true);
     }));
     context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {

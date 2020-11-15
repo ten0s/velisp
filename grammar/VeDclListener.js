@@ -38,6 +38,24 @@ VeDclListener.prototype.exitEntry = function(ctx) {
 };
 
 
+// Enter a parse tree produced by VeDclParser#row.
+VeDclListener.prototype.enterRow = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#row.
+VeDclListener.prototype.exitRow = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#column.
+VeDclListener.prototype.enterColumn = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#column.
+VeDclListener.prototype.exitColumn = function(ctx) {
+};
+
+
 // Enter a parse tree produced by VeDclParser#text.
 VeDclListener.prototype.enterText = function(ctx) {
 };

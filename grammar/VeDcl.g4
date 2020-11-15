@@ -10,7 +10,9 @@ entry : attribute
       | control
       ;
 
-control : ID? ':' 'text'     '{' attribute* '}' ';'?           # text
+control : ID? ':' 'row'      '{' entry* '}' ';'?               # row
+        | ID? ':' 'column'   '{' entry* '}' ';'?               # column
+        | ID? ':' 'text'     '{' attribute* '}' ';'?           # text
         | ID? ':' 'button'   '{' attribute* '}' ';'?           # button
         | ID? ':' 'edit_box' '{' attribute* '}' ';'?           # editBox
         ;
@@ -18,20 +20,29 @@ control : ID? ':' 'text'     '{' attribute* '}' ';'?           # text
 attribute : attributeName '=' attributeValue ';' ;
 
 attributeName : ID ;
-attributeValue : STRING
-               | BOOL
-               | INTEGER
+attributeValue : BOOL
+               | INT
                | REAL
+               | STR
+               | ALIGN
                ;
 
 // Lexer rules
 
-STRING : '"' CHAR* '"' ;
 BOOL : 'true'
      | 'false'
      ;
-INTEGER : '-'?DIGIT+ ;
+
+INT : '-'?DIGIT+ ;
 REAL : '-'?DIGIT+'.'DIGIT+ ;
+STR : '"' CHAR* '"' ;
+
+ALIGN : 'left'
+      | 'right'
+      | 'top'
+      | 'bottom'
+      | 'centered'
+      ;
 
 ID : LETTER+(DIGIT | LETTER | '_')* ;
 

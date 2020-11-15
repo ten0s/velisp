@@ -1,20 +1,36 @@
 dlg_1 : dialog {
   label = "Dialog 1";
   : text {
-    label = "Text 1";
+    label = "Left";
+    alignment = left;
   }
   : text {
-    label = "Text 2";
+    label = "Center";
+    alignment = centered;
   }
-  : button {
-    key = "accept";
-    label = "OK";
-    is_default = true;
+  : text {
+    label = "Right";
+    alignment = right;
   }
-  : button {
-    key = "cancel";
-    label = "Cancel";
-    is_default = false;
+  : row {
+    : button {
+      key = "accept";
+      label = "OK";
+      alignment = left;
+      is_default = true;
+    }
+    : button {
+      key = "cancel";
+      label = "Cancel";
+      alignment = centered;
+      is_default = false;
+    }
+    : button {
+      key = "help";
+      label = "Help";
+      alignment = right;
+      is_default = false;
+    }
   }
 }
 
@@ -35,21 +51,23 @@ dlg_2 : dialog {
     edit_width = 15;
   }
   : text {
-    key = "text1"
+    key = "text1";
     label = "Change me";
   }
   : text {
-    key = "text2"
+    key = "text2";
     label = "Change me too";
   }
-  : button {
-    key = "accept";
-    label = "Concat";
-    is_default = true;
-  }
-  : button {
-    key = "cancel";
-    label = "Cancel";
+  : row {
+    : button {
+      key = "accept";
+      label = "Concat";
+      is_default = true;
+    }
+    : button {
+      key = "cancel";
+      label = "Cancel";
+    }
   }
 }
 
@@ -62,12 +80,14 @@ dlg_3 : dialog {
     edit_limit = 5;
     edit_width = 5;
   }
-  : button {
-    key = "toggle";
-    label = "Disable";
-  }
-  : button {
-    key = "cancel";
-    label = "Cancel";
+  : row {
+    : button {
+      key = "toggle";
+      label = "Disable";
+    }
+    : button {
+      key = "cancel";
+      label = "Cancel";
+    }
   }
 }
