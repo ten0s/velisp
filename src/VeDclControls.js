@@ -125,7 +125,7 @@ class Button extends Control {
         }
         return `
               <object class="GtkButton" ${id}>
-                <property name="label" translatable="yes">${this.label}</property>
+                <property name="label">${this.label}</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -150,10 +150,6 @@ class EditBox extends Control {
             id = `id="${this.id}"`;
         } else if (this.key) {
             id = `id="${this.key}"`;
-        }
-        let expandEntry = 'True';
-        if (this.edit_width > 0) {
-            expandEntry = 'False';
         }
         return `
               <object class="GtkBox">
@@ -184,7 +180,7 @@ class EditBox extends Control {
                     <signal name="changed" handler="on_changed"/>
                   </object>
                   <packing>
-                    <property name="expand">${expandEntry}</property>
+                    <property name="expand">${this._bool(!this.edit_width > 0)}</property>
                     <property name="fill">True</property>
                     <property name="pack_type">end</property>
                     <property name="position">1</property>
