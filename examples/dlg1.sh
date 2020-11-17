@@ -8,7 +8,7 @@ node ${opts[@]} src/main.js <<EOF
     (progn
       (princ (strcat "Error: dcl file '" dcl_file "' not loaded"))
       (exit 1)))
-  (setq dlg_id "dlg_1")
+  (setq dlg_id "dlg1")
   (if (not (new_dialog dlg_id dcl_id))
     (progn
       (princ (strcat "Error: dialog '" dlg_id "' not found"))

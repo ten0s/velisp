@@ -3,12 +3,12 @@
 [[ ${DEBUG} != "" ]] && opts[k++]=--inspect-brk
 
 node ${opts[@]} src/main.js <<EOF
-  (setq dcl_file "examples/dlg1.dcl")
+  (setq dcl_file "examples/dlg3.dcl")
   (if (< (setq dcl_id (load_dialog dcl_file)) 0)
     (progn
       (princ (strcat "Error: dcl file '" dcl_file "' not loaded"))
       (exit 1)))
-  (setq dlg_id "dlg_3")
+  (setq dlg_id "dlg3")
   (if (not (new_dialog dlg_id dcl_id))
     (progn
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
