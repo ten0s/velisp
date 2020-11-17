@@ -72,6 +72,9 @@ class TileCluster extends Control {
 class Dialog extends TileCluster {
     constructor(id) {
         super(id);
+        delete this.key;
+        delete this.action;
+        delete this.alignment;
     }
 
     toGtkXml() {
@@ -161,14 +164,6 @@ class Text extends Control {
             <property name="halign">${this._hor_align(this.alignment)}</property>
           </object>
 `;
-    }
-}
-
-class ErrTile extends Text {
-    constructor(id) {
-        super(id);
-        this.key = 'error';
-        this.alignment = 'left';
     }
 }
 
@@ -263,6 +258,5 @@ exports.Dialog = Dialog;
 exports.Row = Row;
 exports.Column = Column;
 exports.Text = Text;
-exports.ErrTile = ErrTile;
 exports.Button = Button;
 exports.EditBox = EditBox;

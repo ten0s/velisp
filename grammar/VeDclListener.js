@@ -20,12 +20,75 @@ VeDclListener.prototype.exitFile = function(ctx) {
 };
 
 
-// Enter a parse tree produced by VeDclParser#dialog.
-VeDclListener.prototype.enterDialog = function(ctx) {
+// Enter a parse tree produced by VeDclParser#defineClusterTile.
+VeDclListener.prototype.enterDefineClusterTile = function(ctx) {
 };
 
-// Exit a parse tree produced by VeDclParser#dialog.
-VeDclListener.prototype.exitDialog = function(ctx) {
+// Exit a parse tree produced by VeDclParser#defineClusterTile.
+VeDclListener.prototype.exitDefineClusterTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#defineSimpleTile.
+VeDclListener.prototype.enterDefineSimpleTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#defineSimpleTile.
+VeDclListener.prototype.exitDefineSimpleTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#innerClusterTile.
+VeDclListener.prototype.enterInnerClusterTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#innerClusterTile.
+VeDclListener.prototype.exitInnerClusterTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#innerSimpleTile.
+VeDclListener.prototype.enterInnerSimpleTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#innerSimpleTile.
+VeDclListener.prototype.exitInnerSimpleTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#innerDeriveTile.
+VeDclListener.prototype.enterInnerDeriveTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#innerDeriveTile.
+VeDclListener.prototype.exitInnerDeriveTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#clusterTile.
+VeDclListener.prototype.enterClusterTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#clusterTile.
+VeDclListener.prototype.exitClusterTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#simpleTile.
+VeDclListener.prototype.enterSimpleTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#simpleTile.
+VeDclListener.prototype.exitSimpleTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#deriveTile.
+VeDclListener.prototype.enterDeriveTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#deriveTile.
+VeDclListener.prototype.exitDeriveTile = function(ctx) {
 };
 
 
@@ -35,60 +98,6 @@ VeDclListener.prototype.enterEntry = function(ctx) {
 
 // Exit a parse tree produced by VeDclParser#entry.
 VeDclListener.prototype.exitEntry = function(ctx) {
-};
-
-
-// Enter a parse tree produced by VeDclParser#row.
-VeDclListener.prototype.enterRow = function(ctx) {
-};
-
-// Exit a parse tree produced by VeDclParser#row.
-VeDclListener.prototype.exitRow = function(ctx) {
-};
-
-
-// Enter a parse tree produced by VeDclParser#column.
-VeDclListener.prototype.enterColumn = function(ctx) {
-};
-
-// Exit a parse tree produced by VeDclParser#column.
-VeDclListener.prototype.exitColumn = function(ctx) {
-};
-
-
-// Enter a parse tree produced by VeDclParser#text.
-VeDclListener.prototype.enterText = function(ctx) {
-};
-
-// Exit a parse tree produced by VeDclParser#text.
-VeDclListener.prototype.exitText = function(ctx) {
-};
-
-
-// Enter a parse tree produced by VeDclParser#button.
-VeDclListener.prototype.enterButton = function(ctx) {
-};
-
-// Exit a parse tree produced by VeDclParser#button.
-VeDclListener.prototype.exitButton = function(ctx) {
-};
-
-
-// Enter a parse tree produced by VeDclParser#editBox.
-VeDclListener.prototype.enterEditBox = function(ctx) {
-};
-
-// Exit a parse tree produced by VeDclParser#editBox.
-VeDclListener.prototype.exitEditBox = function(ctx) {
-};
-
-
-// Enter a parse tree produced by VeDclParser#errTile.
-VeDclListener.prototype.enterErrTile = function(ctx) {
-};
-
-// Exit a parse tree produced by VeDclParser#errTile.
-VeDclListener.prototype.exitErrTile = function(ctx) {
 };
 
 

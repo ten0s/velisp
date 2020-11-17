@@ -3,14 +3,33 @@ const antlr4 = require('antlr4');
 const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
-const {Dialog, Row, Column, Text, Button, EditBox, ErrTile} = require('./VeDclControls.js');
+const {Dialog, Row, Column, Text, Button, EditBox} = require('./VeDclControls.js');
+
+const tileCtors = {
+    'dialog'  : (id) => new Dialog(id),
+    'row'     : () => new Row(),
+    'column'  : () => new Column(),
+    'text'    : () => new Text(),
+    'button'  : () => new Button(),
+    'edit_box': () => new EditBox(),
+};
 
 class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
         super();
-        this.dialogs = [];
+        this.defines = {};
         this.clusters = [];
         this.controls = [];
+    }
+
+    get dialogs() {
+        const dialogs = [];
+        for (const obj of Object.values(this.defines)) {
+            if (obj instanceof Dialog) {
+                dialogs.push(obj);
+            }
+        }
+        return dialogs;
     }
 
     enterFile(ctx) {
@@ -19,102 +38,83 @@ class VeDclDialogsLoader extends VeDclListener {
     exitFile(ctx) {
     };
 
-    enterDialog(ctx) {
-        console.log('enterDialog');
-        const id = ctx.ID().getText();
-        const dialog = new Dialog(id);
-        this.dialogs.push(dialog);
-        this.clusters.push(dialog);
-        this.controls.push(dialog); // why?
+    enterDefineClusterTile(ctx) {
+        console.log('enterDefineClusterTile');
+        const tileId = ctx.ID().getText();
+        const tileName = ctx.clusterTile().getText();
+        const tileCtor = tileCtors[tileName];
+        // TODO: tileCtor == null
+        const tile = tileCtor(tileId);
+        this.defines[tileId] = tile;
+        this.clusters.push(tile);
+        this.controls.push(tile);
     };
 
-    exitDialog(ctx) {
-        console.log('exitDialog');
+    exitDefineClusterTile(ctx) {
+        console.log('exitDefineClusterTile');
         this.clusters.pop();
         this.controls.pop();
     };
 
-    enterRow(ctx) {
-        console.log('enterRow');
-        const row = new Row();
-        this.clusters.push(row);
-        this.controls.push(row);
+    enterDefineSimpleTile(ctx) {
+        console.log('enterDefineSimpleTile');
+        const tileId = ctx.ID().getText();
+        const tileName = ctx.simpleTile().getText();
+        const tileCtor = tileCtors[tileName];
+        // TODO: tileCtor == null
+        const tile = tileCtor(tileId);
+        this.defines[tileId] = tile;
+        this.controls.push(tile);
+    };
+
+    exitDefineSimpleTile(ctx) {
+        console.log('exitDefineSimpleTile');
+        this.controls.pop();
+    };
+
+    enterInnerClusterTile(ctx) {
+        console.log('enterInnerClusterTile');
+        const tileName = ctx.clusterTile().getText();
+        const tileCtor = tileCtors[tileName];
+        // TODO: tileCtor == null
+        const tile = tileCtor();
+        this.clusters.push(tile);
+        this.controls.push(tile);
     }
 
-    exitRow(ctx) {
-        console.log('exitRow');
+    exitInnerClusterTile(ctx) {
+        console.log('exitInnerClusterTile');
         const cluster = this.clusters.pop();
         this.clusters[this.clusters.length-1].addControl(this.controls.pop());
     }
 
-    enterColumn(ctx) {
-        console.log('enterColumn');
-        const col = new Column();
-        this.clusters.push(col);
-        this.controls.push(col);
+    enterInnerSimpleTile(ctx) {
+        console.log('enterInnerSimpleTile');
+        const tileName = ctx.simpleTile().getText();
+        const tileCtor = tileCtors[tileName];
+        // TODO: tileCtor == null
+        const tile = tileCtor();
+        this.controls.push(tile);
     }
 
-    exitColumn(ctx) {
-        console.log('exitColumn');
-        const cluster = this.clusters.pop();
+    exitInnerSimpleTile(ctx) {
+        console.log('exitInnerSimpleTile');
         this.clusters[this.clusters.length-1].addControl(this.controls.pop());
     }
 
-    enterText(ctx) {
-        console.log('enterText');
-        const id = ctx.ID() ? ctx.ID().getText() : '';
-        const text = new Text(id);
-        this.controls.push(text);
-    };
+    enterInnerDeriveTile(ctx) {
+        console.log('enterInnerDeriveTile');
+        const tileName = ctx.deriveTile().ID().getText();
+        const tile = this.defines[tileName];
+        // TODO: clone tile
+        // TODO: tile == null
+        this.controls.push(tile);
+    }
 
-    exitText(ctx) {
-        console.log('exitText');
+    exitInnerDeriveTile(ctx) {
+        console.log('exitInnerDeriveTile');
         this.clusters[this.clusters.length-1].addControl(this.controls.pop());
-    };
-
-    enterEditBox(ctx) {
-        console.log('enterEditBox');
-        const id = ctx.ID() ? ctx.ID().getText() : '';
-        const editbox = new EditBox(id);
-        this.controls.push(editbox);
-    };
-
-    exitEditBox(ctx) {
-        console.log('exitEditBox');
-        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
-    };
-
-    enterButton(ctx) {
-        console.log('enterButton');
-        const id = ctx.ID() ? ctx.ID().getText() : '';
-        const button = new Button(id);
-        this.controls.push(button);
-    };
-
-    exitButton(ctx) {
-        console.log('exitButton');
-        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
-    };
-
-    enterErrTile(ctx) {
-        console.log('enterErrTile');
-        const id = ctx.ID() ? ctx.ID().getText() : '';
-        const errtile = new ErrTile(id);
-        this.controls.push(errtile);
-    };
-
-    exitErrTile(ctx) {
-        console.log('exitErrTile');
-        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
-    };
-
-    enterControl(ctx) {
-        //this.controls.push(null);
-    };
-
-    exitControl(ctx) {
-        //this.controls.pop();
-    };
+    }
 
     enterAttribute(ctx) {
         const current = this.controls[this.controls.length-1];

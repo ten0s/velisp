@@ -2,21 +2,32 @@ grammar VeDcl;
 
 // Parser rules
 
-file : dialog* ;
+file : defineTile* ;
 
-dialog : ID ':' 'dialog' '{' entry* '}' ';'? ;
+defineTile : ID ':' clusterTile '{' entry* '}' ';'?                # defineClusterTile
+           | ID ':' simpleTile  '{' attribute* '}' ';'?            # defineSimpleTile
+           ;
+
+innerTile : ':' clusterTile    '{' entry* '}' ';'?                 # innerClusterTile
+          | ':' simpleTile     '{' attribute* '}' ';'?             # innerSimpleTile
+          | ':' deriveTile     '{' attribute* '}' ';'?             # innerDeriveTile
+          ;
+
+clusterTile : 'dialog'
+            | 'row'
+            | 'column'
+            ;
+
+simpleTile : 'text'
+           | 'button'
+           | 'edit_box'
+           ;
+
+deriveTile : ID ;
 
 entry : attribute
-      | control
+      | innerTile
       ;
-
-control : ID? ':' 'row'      '{' entry* '}' ';'?               # row
-        | ID? ':' 'column'   '{' entry* '}' ';'?               # column
-        | ID? ':' 'text'     '{' attribute* '}' ';'?           # text
-        | ID? ':' 'button'   '{' attribute* '}' ';'?           # button
-        | ID? ':' 'edit_box' '{' attribute* '}' ';'?           # editBox
-        | ID? ':' 'errtile'  '{' attribute* '}' ';'?           # errTile
-        ;
 
 attribute : attributeName '=' attributeValue ';' ;
 
