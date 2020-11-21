@@ -1,3 +1,7 @@
+//
+// Basic tile definitions
+//
+
 errtile : text {
   key = "error";
   alignment = left;
