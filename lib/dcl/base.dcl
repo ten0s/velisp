@@ -80,7 +80,7 @@ on_cancel_help_info : row {
   }
   : button {
     key = "info";
-    label = "Info";
+    label = "Info...";
     alignment = right;
     is_default = false;
   }

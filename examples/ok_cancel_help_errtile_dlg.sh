@@ -19,7 +19,7 @@ node ${opts[@]} src/main.js <<EOF
   ; TODO: remove once default action in dcl is implemented
   (action_tile "accept" "(done_dialog)")
   (action_tile "cancel" "(done_dialog)")
-  (set_tile "error" "This is errtile")
+  (set_tile "error" "Error messages here")
   (setq ret (start_dialog))
   (princ (strcat "dialog done w/ " (itoa ret)))
   (unload_dialog dcl_id)
