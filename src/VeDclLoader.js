@@ -14,7 +14,7 @@ const tileCtors = {
     'edit_box': () => new EditBox(),
 };
 
-class VeDclDialogsLoader extends VeDclListener {
+class VeDclLoader extends VeDclListener {
     constructor(context) {
         super();
         this.context = context;
@@ -48,7 +48,9 @@ class VeDclDialogsLoader extends VeDclListener {
         const tileId = ctx.ID().getText();
         const tileName = ctx.clusterTile().getText();
         const tileCtor = tileCtors[tileName];
-        // TODO: tileCtor == null
+        if (!tileCtor) {
+            throw new Error(`Unknown tile constructor: ${tileName}`);
+        }
         const tile = tileCtor(tileId);
         this.context.defines[tileId] = tile;
         this.context.clusters.push(tile);
@@ -66,7 +68,9 @@ class VeDclDialogsLoader extends VeDclListener {
         const tileId = ctx.ID().getText();
         const tileName = ctx.simpleTile().getText();
         const tileCtor = tileCtors[tileName];
-        // TODO: tileCtor == null
+        if (!tileCtor) {
+            throw new Error(`Unknown tile constructor: ${tileName}`);
+        }
         const tile = tileCtor(tileId);
         this.context.defines[tileId] = tile;
         this.context.controls.push(tile);
@@ -81,7 +85,9 @@ class VeDclDialogsLoader extends VeDclListener {
         console.log('enterInnerClusterTile');
         const tileName = ctx.clusterTile().getText();
         const tileCtor = tileCtors[tileName];
-        // TODO: tileCtor == null
+        if (!tileCtor) {
+            throw new Error(`Unknown tile constructor: ${tileName}`);
+        }
         const tile = tileCtor();
         this.context.clusters.push(tile);
         this.context.controls.push(tile);
@@ -97,7 +103,9 @@ class VeDclDialogsLoader extends VeDclListener {
         console.log('enterInnerSimpleTile');
         const tileName = ctx.simpleTile().getText();
         const tileCtor = tileCtors[tileName];
-        // TODO: tileCtor == null
+        if (!tileCtor) {
+            throw new Error(`Unknown tile constructor: ${tileName}`);
+        }
         const tile = tileCtor();
         this.context.controls.push(tile);
     }
@@ -111,7 +119,9 @@ class VeDclDialogsLoader extends VeDclListener {
         console.log('enterInnerDeriveTile');
         const tileName = ctx.deriveTile().ID().getText();
         const tile = this.context.defines[tileName];
-        // TODO: tile == null
+        if (!tile) {
+            throw new Error(`Unknown tile: ${tileName}`);
+        }
         // TODO: clone tile
         this.context.controls.push(tile);
     }
@@ -125,7 +135,9 @@ class VeDclDialogsLoader extends VeDclListener {
         console.log('enterInnerAliasTile');
         const tileName = ctx.aliasTile().ID().getText();
         const tile = this.context.defines[tileName];
-        // TODO: tile == null
+        if (!tile) {
+            throw new Error(`Unknown tile: ${tileName}`);
+        }
         this.context.controls.push(tile);
     }
 
@@ -181,7 +193,7 @@ class VeDclDialogsLoader extends VeDclListener {
 function load(dclfile, context) {
     const dcl = readFile(dclfile);
     const {tree} = parseDcl(dcl);
-    const loader = new VeDclDialogsLoader(context);
+    const loader = new VeDclLoader(context);
     const walker = new antlr4.tree.ParseTreeWalker();
     walker.walk(loader, tree);
     return loader.dialogs;
