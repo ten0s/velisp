@@ -13,6 +13,7 @@ defineTile : ID ':' clusterTile '{' entry* '}'     ';'?             # defineClus
 innerTile :     ':' clusterTile '{' entry* '}'     ';'?             # innerClusterTile
           |     ':' simpleTile  '{' attribute* '}' ';'?             # innerSimpleTile
           |     ':' deriveTile  '{' attribute* '}' ';'?             # innerDeriveTile
+          |         aliasTile                      ';'              # innerAliasTile
           ;
 
 clusterTile : 'dialog'
@@ -26,6 +27,8 @@ simpleTile : 'text'
            ;
 
 deriveTile : ID ;
+
+aliasTile : ID ;
 
 entry : attribute
       | innerTile

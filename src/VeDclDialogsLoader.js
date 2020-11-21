@@ -111,13 +111,26 @@ class VeDclDialogsLoader extends VeDclListener {
         console.log('enterInnerDeriveTile');
         const tileName = ctx.deriveTile().ID().getText();
         const tile = this.context.defines[tileName];
-        // TODO: clone tile
         // TODO: tile == null
+        // TODO: clone tile
         this.context.controls.push(tile);
     }
 
     exitInnerDeriveTile(ctx) {
         console.log('exitInnerDeriveTile');
+        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
+    }
+
+    enterInnerAliasTile(ctx) {
+        console.log('enterInnerAliasTile');
+        const tileName = ctx.aliasTile().ID().getText();
+        const tile = this.context.defines[tileName];
+        // TODO: tile == null
+        this.context.controls.push(tile);
+    }
+
+    exitInnerAliasTile(ctx) {
+        console.log('exitInnerAliasTile');
         this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
     }
 

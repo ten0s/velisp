@@ -74,6 +74,15 @@ VeDclListener.prototype.exitInnerDeriveTile = function(ctx) {
 };
 
 
+// Enter a parse tree produced by VeDclParser#innerAliasTile.
+VeDclListener.prototype.enterInnerAliasTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#innerAliasTile.
+VeDclListener.prototype.exitInnerAliasTile = function(ctx) {
+};
+
+
 // Enter a parse tree produced by VeDclParser#clusterTile.
 VeDclListener.prototype.enterClusterTile = function(ctx) {
 };
@@ -98,6 +107,15 @@ VeDclListener.prototype.enterDeriveTile = function(ctx) {
 
 // Exit a parse tree produced by VeDclParser#deriveTile.
 VeDclListener.prototype.exitDeriveTile = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#aliasTile.
+VeDclListener.prototype.enterAliasTile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#aliasTile.
+VeDclListener.prototype.exitAliasTile = function(ctx) {
 };
 
 
