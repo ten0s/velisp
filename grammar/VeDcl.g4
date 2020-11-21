@@ -6,13 +6,13 @@ file : (includeFile | defineTile)* ;
 
 includeFile : '@include' fileName ';'? ;
 
-defineTile : ID ':' clusterTile '{' entry* '}' ';'?                # defineClusterTile
-           | ID ':' simpleTile  '{' attribute* '}' ';'?            # defineSimpleTile
+defineTile : ID ':' clusterTile '{' entry* '}'     ';'?             # defineClusterTile
+           | ID ':' simpleTile  '{' attribute* '}' ';'?             # defineSimpleTile
            ;
 
-innerTile : ':' clusterTile    '{' entry* '}' ';'?                 # innerClusterTile
-          | ':' simpleTile     '{' attribute* '}' ';'?             # innerSimpleTile
-          | ':' deriveTile     '{' attribute* '}' ';'?             # innerDeriveTile
+innerTile :     ':' clusterTile '{' entry* '}'     ';'?             # innerClusterTile
+          |     ':' simpleTile  '{' attribute* '}' ';'?             # innerSimpleTile
+          |     ':' deriveTile  '{' attribute* '}' ';'?             # innerDeriveTile
           ;
 
 clusterTile : 'dialog'
