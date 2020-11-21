@@ -23,13 +23,7 @@ class VeDclDialogsLoader extends VeDclListener {
     }
 
     get dialogs() {
-        const dialogs = [];
-        for (const obj of Object.values(this.defines)) {
-            if (obj instanceof Dialog) {
-                dialogs.push(obj);
-            }
-        }
-        return dialogs;
+        return Object.values(this.defines).filter(obj => obj instanceof Dialog);
     }
 
     enterFile(ctx) {
