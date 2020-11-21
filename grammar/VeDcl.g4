@@ -2,7 +2,9 @@ grammar VeDcl;
 
 // Parser rules
 
-file : defineTile* ;
+file : (includeFile | defineTile)* ;
+
+includeFile : '@include' fileName ';'? ;
 
 defineTile : ID ':' clusterTile '{' entry* '}' ';'?                # defineClusterTile
            | ID ':' simpleTile  '{' attribute* '}' ';'?            # defineSimpleTile
@@ -28,6 +30,8 @@ deriveTile : ID ;
 entry : attribute
       | innerTile
       ;
+
+fileName : STR ;
 
 attribute : attributeName '=' attributeValue ';' ;
 

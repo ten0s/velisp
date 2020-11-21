@@ -20,6 +20,15 @@ VeDclListener.prototype.exitFile = function(ctx) {
 };
 
 
+// Enter a parse tree produced by VeDclParser#includeFile.
+VeDclListener.prototype.enterIncludeFile = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#includeFile.
+VeDclListener.prototype.exitIncludeFile = function(ctx) {
+};
+
+
 // Enter a parse tree produced by VeDclParser#defineClusterTile.
 VeDclListener.prototype.enterDefineClusterTile = function(ctx) {
 };
@@ -98,6 +107,15 @@ VeDclListener.prototype.enterEntry = function(ctx) {
 
 // Exit a parse tree produced by VeDclParser#entry.
 VeDclListener.prototype.exitEntry = function(ctx) {
+};
+
+
+// Enter a parse tree produced by VeDclParser#fileName.
+VeDclListener.prototype.enterFileName = function(ctx) {
+};
+
+// Exit a parse tree produced by VeDclParser#fileName.
+VeDclListener.prototype.exitFileName = function(ctx) {
 };
 
 

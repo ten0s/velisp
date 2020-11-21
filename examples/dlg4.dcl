@@ -1,7 +1,4 @@
-errtile : text {
-    key = "error";
-    alignment = left;
-}
+@include "lib/dcl/base.dcl"
 
 dlg4 : dialog {
   label = "Dialog 4";

@@ -17,13 +17,11 @@ const tileCtors = {
 class VeDclDialogsLoader extends VeDclListener {
     constructor(context) {
         super();
-        this.defines = {};
-        this.clusters = [];
-        this.controls = [];
+        this.context = context;
     }
 
     get dialogs() {
-        return Object.values(this.defines).filter(obj => obj instanceof Dialog);
+        return Object.values(this.context.defines).filter(obj => obj instanceof Dialog);
     }
 
     enterFile(ctx) {
@@ -32,6 +30,19 @@ class VeDclDialogsLoader extends VeDclListener {
     exitFile(ctx) {
     };
 
+    enterIncludeFile(ctx) {
+        console.log('enterIncludeFile');
+        // Remove first and last double quotes (")
+        const str = ctx.fileName().STR().getText();
+        const filename = str.substring(1, str.length-1);
+        load(filename, this.context);
+    }
+
+    exitIncludeFile(ctx) {
+        console.log('exitIncludeFile');
+        console.log(this.context);
+    }
+
     enterDefineClusterTile(ctx) {
         console.log('enterDefineClusterTile');
         const tileId = ctx.ID().getText();
@@ -39,15 +50,15 @@ class VeDclDialogsLoader extends VeDclListener {
         const tileCtor = tileCtors[tileName];
         // TODO: tileCtor == null
         const tile = tileCtor(tileId);
-        this.defines[tileId] = tile;
-        this.clusters.push(tile);
-        this.controls.push(tile);
+        this.context.defines[tileId] = tile;
+        this.context.clusters.push(tile);
+        this.context.controls.push(tile);
     };
 
     exitDefineClusterTile(ctx) {
         console.log('exitDefineClusterTile');
-        this.clusters.pop();
-        this.controls.pop();
+        this.context.clusters.pop();
+        this.context.controls.pop();
     };
 
     enterDefineSimpleTile(ctx) {
@@ -57,13 +68,13 @@ class VeDclDialogsLoader extends VeDclListener {
         const tileCtor = tileCtors[tileName];
         // TODO: tileCtor == null
         const tile = tileCtor(tileId);
-        this.defines[tileId] = tile;
-        this.controls.push(tile);
+        this.context.defines[tileId] = tile;
+        this.context.controls.push(tile);
     };
 
     exitDefineSimpleTile(ctx) {
         console.log('exitDefineSimpleTile');
-        this.controls.pop();
+        this.context.controls.pop();
     };
 
     enterInnerClusterTile(ctx) {
@@ -72,14 +83,14 @@ class VeDclDialogsLoader extends VeDclListener {
         const tileCtor = tileCtors[tileName];
         // TODO: tileCtor == null
         const tile = tileCtor();
-        this.clusters.push(tile);
-        this.controls.push(tile);
+        this.context.clusters.push(tile);
+        this.context.controls.push(tile);
     }
 
     exitInnerClusterTile(ctx) {
         console.log('exitInnerClusterTile');
-        const cluster = this.clusters.pop();
-        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
+        const cluster = this.context.clusters.pop();
+        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
     }
 
     enterInnerSimpleTile(ctx) {
@@ -88,30 +99,30 @@ class VeDclDialogsLoader extends VeDclListener {
         const tileCtor = tileCtors[tileName];
         // TODO: tileCtor == null
         const tile = tileCtor();
-        this.controls.push(tile);
+        this.context.controls.push(tile);
     }
 
     exitInnerSimpleTile(ctx) {
         console.log('exitInnerSimpleTile');
-        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
+        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
     }
 
     enterInnerDeriveTile(ctx) {
         console.log('enterInnerDeriveTile');
         const tileName = ctx.deriveTile().ID().getText();
-        const tile = this.defines[tileName];
+        const tile = this.context.defines[tileName];
         // TODO: clone tile
         // TODO: tile == null
-        this.controls.push(tile);
+        this.context.controls.push(tile);
     }
 
     exitInnerDeriveTile(ctx) {
         console.log('exitInnerDeriveTile');
-        this.clusters[this.clusters.length-1].addControl(this.controls.pop());
+        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
     }
 
     enterAttribute(ctx) {
-        const current = this.controls[this.controls.length-1];
+        const current = this.context.controls[this.context.controls.length-1];
         if (current) {
             const name = ctx.attributeName().ID().getText();
             let value = null;
@@ -154,10 +165,10 @@ class VeDclDialogsLoader extends VeDclListener {
     }
 }
 
-function load(dclfile) {
+function load(dclfile, context) {
     const dcl = readFile(dclfile);
     const {tree} = parseDcl(dcl);
-    const loader = new VeDclDialogsLoader();
+    const loader = new VeDclDialogsLoader(context);
     const walker = new antlr4.tree.ParseTreeWalker();
     walker.walk(loader, tree);
     return loader.dialogs;

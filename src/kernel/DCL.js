@@ -1,5 +1,6 @@
 const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
 const Evaluator = require('../VeLispEvaluator.js');
+const {VeDclContext} = require('../VeDclContext.js');
 const VeDclDialogsLoader = require('../VeDclDialogsLoader.js');
 
 const util = require('util');
@@ -59,7 +60,8 @@ exports.initContext = function (context) {
         // TODO: add .dcl extension if not provided
         // TODO: ensure file exists and loads,
         // return a positive integer, or a negative integer on error
-        const jsDialogs = VeDclDialogsLoader.load(dclFile.value());
+        const context = new VeDclContext();
+        const jsDialogs = VeDclDialogsLoader.load(dclFile.value(), context);
         console.log(util.inspect(jsDialogs, {showHidden: false, depth: null}));
         const dclMap = {};
         for (const jsDialog of jsDialogs) {
