@@ -1,5 +1,5 @@
-dlg3 : dialog {
-  label = "Dialog 3";
+mode_tile_dlg : dialog {
+  label = "Mode Tile Example";
   : edit_box {
     key = "edit1";
     label = "Enter text:";

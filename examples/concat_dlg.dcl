@@ -1,5 +1,5 @@
-dlg2 : dialog {
-  label = "Dialog 2";
+concat_dlg : dialog {
+  label = "Concat Example";
   : edit_box {
     key = "edit1";
     label = "Enter text:";

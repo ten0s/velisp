@@ -1,7 +1,7 @@
 @include "lib/dcl/base.dcl"
 
-dlg4 : dialog {
-  label = "Dialog 4";
+errtile_dlg : dialog {
+  label = "ErrTile Example";
   : edit_box {
     key = "edit";
     label = "Enter integer:";
@@ -21,6 +21,5 @@ dlg4 : dialog {
       label = "Cancel";
     }
   }
-  : errtile { }
-  // errtile;
+  errtile;
 }

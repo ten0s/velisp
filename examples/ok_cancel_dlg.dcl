@@ -1,10 +1,10 @@
 @include "lib/dcl/base.dcl"
 
-dlg0 : dialog {
-  label = "Dialog";
+ok_cancel_dlg : dialog {
+  label = "OK/Cancel";
   : text {
     label = "Hello";
     alignment = centered;
   }
-  ok_only;
+  on_cancel;
 }
