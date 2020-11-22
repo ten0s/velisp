@@ -21,5 +21,5 @@ errtile_dlg : dialog {
       label = "Cancel";
     }
   }
-  errtile;
+  : errtile { };
 }

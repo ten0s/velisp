@@ -122,8 +122,8 @@ class VeDclLoader extends VeDclListener {
         if (!tile) {
             throw new Error(`Unknown tile: ${tileName}`);
         }
-        // TODO: clone tile
-        this.context.controls.push(tile);
+        const clone = tile.clone();
+        this.context.controls.push(clone);
     }
 
     exitInnerDeriveTile(ctx) {

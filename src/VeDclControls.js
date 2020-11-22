@@ -16,6 +16,10 @@ class Control {
         return false;
     }
 
+    clone() {
+        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    }
+
     _child(xml) {
         return `<child>${xml}</child>`;
     }
