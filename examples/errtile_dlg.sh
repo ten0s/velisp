@@ -31,7 +31,7 @@ node ${opts[@]} src/main.js <<EOF
         (mode_tile "edit" 2))))
 
   (action_tile "getint" "(getint)")
-  (action_tile "cancel" "(done_dialog)")
+  (action_tile "cancel" "(done_dialog 0)")
   (setq ret (start_dialog))
   (princ (strcat "dialog done: " (itoa ret)))
   (unload_dialog dcl_id)

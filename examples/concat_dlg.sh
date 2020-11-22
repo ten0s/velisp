@@ -22,7 +22,7 @@ node ${opts[@]} src/main.js <<EOF
   (defun concat ()
     (strcat (get_tile "edit1") " " (get_tile "edit2")))
   (action_tile "accept" "(set_tile \"text1\" (concat)) (set_tile \"text2\" (concat))")
-  (action_tile "cancel" "(done_dialog)")
+  (action_tile "cancel" "(done_dialog 0)")
   (setq ret (start_dialog))
   (princ (strcat "dialog done w/ " (itoa ret)))
   (unload_dialog dcl_id)

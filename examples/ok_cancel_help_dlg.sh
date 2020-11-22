@@ -17,8 +17,8 @@ node ${opts[@]} src/main.js <<EOF
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
       (exit 1)))
   ; TODO: remove once default action in dcl is implemented
-  (action_tile "accept" "(done_dialog)")
-  (action_tile "cancel" "(done_dialog)")
+  (action_tile "accept" "(done_dialog 1)")
+  (action_tile "cancel" "(done_dialog 0)")
   (setq ret (start_dialog))
   (princ (strcat "dialog done w/ " (itoa ret)))
   (unload_dialog dcl_id)

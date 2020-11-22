@@ -125,19 +125,22 @@ exports.initContext = function (context) {
         _gtkDialog.on('show', Gtk.main);
         _gtkDialog.on('destroy', Gtk.mainQuit);
         _gtkDialog.showAll();
-        return new Int(-1);
+        // See done_dialog for dialogStatus
+        const status = _gtkDialog.dialogStatus ? _gtkDialog.dialogStatus : 0;
+        return new Int(status);
     }));
     context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('done_dialog: too many arguments');
         }
         if (args.length == 1) {
-            const status = ensureType('done_dialog:', args[0], [Int]);
-            // TODO: where to put it?
+            status = ensureType('done_dialog:', args[0], [Int]);
         }
         // TODO: check there's current dialog
-        // TODO: what it should return? some (X, Y) point of the dialog
+        // See start_dialog for dialogStatus
+        _gtkDialog.dialogStatus = status;
         Gtk.mainQuit();
+        // TODO: what it should return? some (X, Y) point of the dialog
         return new Bool(true);
     }));
     context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {

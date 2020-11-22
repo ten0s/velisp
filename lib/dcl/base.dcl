@@ -11,7 +11,7 @@ ok_only : row {
   : button {
     key = "accept";
     label = "OK";
-    action = "(done_dialog)";
+    action = "(done_dialog 1)";
     alignment = centered;
     is_default = true;
   }
@@ -21,14 +21,14 @@ on_cancel : row {
   : button {
     key = "accept";
     label = "OK";
-    action = "(done_dialog)";
+    action = "(done_dialog 1)";
     alignment = left;
     is_default = true;
   }
   : button {
     key = "cancel";
     label = "Cancel";
-    action = "(done_dialog)";
+    action = "(done_dialog 0)";
     alignment = right;
     is_default = false;
   }
@@ -38,14 +38,14 @@ on_cancel_help : row {
   : button {
     key = "accept";
     label = "OK";
-    action = "(done_dialog)";
+    action = "(done_dialog 1)";
     alignment = left;
     is_default = true;
   }
   : button {
     key = "cancel";
     label = "Cancel";
-    action = "(done_dialog)";
+    action = "(done_dialog 0)";
     alignment = centered;
     is_default = false;
   }
@@ -61,14 +61,14 @@ on_cancel_help_info : row {
   : button {
     key = "accept";
     label = "OK";
-    action = "(done_dialog)";
+    action = "(done_dialog 1)";
     alignment = left;
     is_default = true;
   }
   : button {
     key = "cancel";
     label = "Cancel";
-    action = "(done_dialog)";
+    action = "(done_dialog 0)";
     alignment = centered;
     is_default = false;
   }
@@ -91,14 +91,14 @@ on_cancel_help_errtile : column {
     : button {
       key = "accept";
       label = "OK";
-      action = "(done_dialog)";
+      action = "(done_dialog 1)";
       alignment = left;
       is_default = true;
     }
     : button {
       key = "cancel";
       label = "Cancel";
-      action = "(done_dialog)";
+      action = "(done_dialog 0)";
       alignment = centered;
       is_default = false;
     }

@@ -30,7 +30,7 @@ node ${opts[@]} src/main.js <<EOF
               (set_tile "toggle" "Disable"))))
 
   (action_tile "toggle" "(toggle)")
-  (action_tile "cancel" "(done_dialog)")
+  (action_tile "cancel" "(done_dialog 0)")
   (setq ret (start_dialog))
   (princ (strcat "dialog done: " (itoa ret)))
   (unload_dialog dcl_id)
