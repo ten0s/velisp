@@ -97,8 +97,11 @@ exports.initContext = function (context) {
                 _gtkBuilder.addFromString(gtkXml, gtkXml.length);
                 try {
                     _gtkDialog = _gtkBuilder.getObject(dlgId.value());
-                    // TODO: for each controls/buttons in jsDialog
-                    //       if any .action
+                    for (let [key, handler] of jsDialog.getActions()) {
+                        const tile = _gtkBuilder.getObject(key);
+                        console.log(tile);
+                        attachAction(tile, new Str(key), new Str(handler), context);
+                    }
                     return new Bool(true);
                 } catch {
                     // Should never happen since dialog ID is mandatory
@@ -169,27 +172,7 @@ exports.initContext = function (context) {
             const tile = _gtkBuilder.getObject(key.value());
             //debugger;
             console.log(tile);
-            // TODO: is it possible to put property like name="event" to gtkXml?
-            let event = null;
-            if (tile instanceof Gtk.Button) {
-                event = 'clicked';
-            } else if (tile instanceof Gtk.Entry) {
-                event = 'changed';
-            } else {
-                console.error(`Error: not event found for '${tile}'`);
-                return new Bool(false);
-            }
-            // TODO: support other events depending on tile type
-            // TODO: how to unregister registered in DCL action = "(...)"?
-            tile.on(event, () => {
-                context.setVar('$KEY', key);
-                context.setVar('$VALUE', new Str(tile.getText ? tile.getText() : ''));
-                // TODO: add $REASON
-                // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-0473B723-1CD5-4228-AB25-D88B6930372F
-                // TODO: add $DATA (client_data_tile ...)
-                // TODO: add $X, $Y for image_button
-                Evaluator.evaluate(handler.toUnescapedString(), context);
-            });
+            attachAction(tile, key, handler, context);
             return new Bool(true);
         } catch {
             return new Bool(false);
@@ -279,4 +262,26 @@ exports.initContext = function (context) {
         }
         return new Bool(false);
     }));
+}
+
+const attachAction = (tile, key, handler, context) => {
+    let event = null;
+    if (tile instanceof Gtk.Button) {
+        event = 'clicked';
+    } else if (tile instanceof Gtk.Entry) {
+        event = 'changed';
+    } else {
+        throw new Error(`Error: not event found for '${tile}'`);
+    }
+    // TODO: support other events depending on tile type
+    // TODO: how to unregister registered in DCL action = "(...)"?
+    tile.on(event, () => {
+        context.setVar('$KEY', key);
+        context.setVar('$VALUE', new Str(tile.getText ? tile.getText() : ''));
+        // TODO: add $REASON
+        // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-0473B723-1CD5-4228-AB25-D88B6930372F
+        // TODO: add $DATA (client_data_tile ...)
+        // TODO: add $X, $Y for image_button
+        Evaluator.evaluate(handler.toUnescapedString(), context);
+    });
 }

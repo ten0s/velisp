@@ -5,7 +5,6 @@ class Control {
         this.label = '';
         this.value = '';
         this.alignment = 'centered';
-        this.action = null;
     }
 
     addAttribute(name, value) {
@@ -71,13 +70,26 @@ class TileCluster extends Control {
     addControl(control) {
         this.controls.push(control);
     }
+
+    getActions() {
+        let list = [];
+        for (let c of this.controls) {
+            if (c instanceof TileCluster) {
+                list = list.concat(c.getActions());
+            } else {
+                if (c.action && c.key) {
+                    list.push([c.key, c.action]);
+                }
+            }
+        }
+        return list;
+    }
 }
 
 class Dialog extends TileCluster {
     constructor(id) {
         super(id);
         delete this.key;
-        delete this.action;
         delete this.alignment;
     }
 
@@ -174,6 +186,7 @@ class Text extends Control {
 class Button extends Control {
     constructor(id) {
         super(id);
+        this.action = '';
         this.is_default = false;
     }
 
@@ -206,6 +219,7 @@ class Button extends Control {
 class EditBox extends Control {
     constructor(id) {
         super(id);
+        this.action = '';
         this.is_default = false;
         this.edit_limit = 132;
         this.edit_width = 0;
@@ -244,7 +258,6 @@ class EditBox extends Control {
                     <property name="max_length">${this.edit_limit}</property>
                     <property name="width_chars">${this.edit_width}</property>
                     <property name="text">${this.value}</property>
-                    <signal name="changed" handler="on_changed"/>
                   </object>
                   <packing>
                     <property name="expand">${this._bool(!this.edit_width > 0)}</property>
