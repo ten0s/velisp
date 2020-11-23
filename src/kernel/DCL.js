@@ -61,6 +61,15 @@ exports.initContext = function (context) {
         // TODO: ensure file exists and loads,
         // return a positive integer, or a negative integer on error
         const context = new VeDclContext();
+
+        // Inject lib/dcl/{base,acad}.dcl
+        const path = require('path');
+        let rootdir = path.join(__dirname, '../..');
+        // Win32 workaround
+        rootdir = rootdir.split('\\').join('/');
+        VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context);
+        VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context);
+
         const jsDialogs = VeDclLoader.load(dclFile.value(), context);
         console.log(util.inspect(jsDialogs, {showHidden: false, depth: null}));
         const dclMap = {};

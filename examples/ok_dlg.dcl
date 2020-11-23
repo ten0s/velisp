@@ -1,5 +1,3 @@
-@include "lib/dcl/base.dcl"
-
 ok_dlg : dialog {
   label = "OK Dialog";
   : text {

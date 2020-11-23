@@ -1,5 +1,3 @@
-@include "lib/dcl/base.dcl"
-
 text_alignment : dialog {
   label = "Text Alignment";
   : text {

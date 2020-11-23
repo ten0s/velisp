@@ -1,5 +1,3 @@
-@include "lib/dcl/base.dcl"
-
 errtile_dlg : dialog {
   label = "ErrTile Example";
   : edit_box {
