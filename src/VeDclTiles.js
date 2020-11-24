@@ -155,6 +155,9 @@ class Column extends Cluster {
     }
 }
 
+class Concatenation extends Column {
+}
+
 class Spacer extends Tile {
     constructor() {
         super();
@@ -295,6 +298,7 @@ class EditBox extends Tile {
 exports.Dialog = Dialog;
 exports.Row = Row;
 exports.Column = Column;
+exports.Concatenation = Concatenation;
 exports.Spacer = Spacer;
 exports.Text = Text;
 exports.Button = Button;

@@ -4,23 +4,29 @@ const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
 const {
+    // Clusters
     Dialog,
     Row,
     Column,
-    Spacer,
-    Text,
+    Concatenation,
+    // Tiles
     Button,
     EditBox,
+    Spacer,
+    Text,
 } = require('./VeDclTiles.js');
 
 const tileCtors = {
-    'dialog'  : (id) => new Dialog(id),
-    'row'     : () => new Row(),
-    'column'  : () => new Column(),
-    'text'    : () => new Text(),
-    'button'  : () => new Button(),
-    'edit_box': () => new EditBox(),
-    'spacer'  : () => new Spacer(),
+    // Clusters
+    'dialog'       : (id) => new Dialog(id),
+    'row'          : () => new Row(),
+    'column'       : () => new Column(),
+    'concatenation': () => new Concatenation(),
+    // Tiles
+    'button'       : () => new Button(),
+    'edit_box'     : () => new EditBox(),
+    'spacer'       : () => new Spacer(),
+    'text'         : () => new Text(),
 };
 
 class VeDclLoader extends VeDclListener {

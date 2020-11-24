@@ -6,7 +6,7 @@ var grammarFileName = "VeDcl.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u0019\u008a\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u0003\u001a\u008a\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0003\u0002\u0003\u0002\u0007\u0002",
@@ -28,7 +28,7 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003",
     "\r\u0003\r\u0003\u000e\u0003\u000e\u0003\u000e\u0002\u0002\u000f\u0002",
     "\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u0002\u0005",
-    "\u0003\u0002\b\n\u0003\u0002\u000b\u000e\u0003\u0002\u0010\u0014\u0002",
+    "\u0003\u0002\b\u000b\u0003\u0002\f\u000f\u0003\u0002\u0011\u0015\u0002",
     "\u008e\u0002 \u0003\u0002\u0002\u0002\u0004#\u0003\u0002\u0002\u0002",
     "\u0006D\u0003\u0002\u0002\u0002\bp\u0003\u0002\u0002\u0002\nr\u0003",
     "\u0002\u0002\u0002\ft\u0003\u0002\u0002\u0002\u000ev\u0003\u0002\u0002",
@@ -41,13 +41,13 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002\u0002\u0002!\u0003\u0003\u0002\u0002\u0002\" \u0003\u0002\u0002",
     "\u0002#$\u0007\u0003\u0002\u0002$&\u0005\u0014\u000b\u0002%\'\u0007",
     "\u0004\u0002\u0002&%\u0003\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002",
-    "\'\u0005\u0003\u0002\u0002\u0002()\u0007\u0015\u0002\u0002)*\u0007\u0005",
+    "\'\u0005\u0003\u0002\u0002\u0002()\u0007\u0016\u0002\u0002)*\u0007\u0005",
     "\u0002\u0002*+\u0005\n\u0006\u0002+/\u0007\u0006\u0002\u0002,.\u0005",
     "\u0012\n\u0002-,\u0003\u0002\u0002\u0002.1\u0003\u0002\u0002\u0002/",
     "-\u0003\u0002\u0002\u0002/0\u0003\u0002\u0002\u000202\u0003\u0002\u0002",
     "\u00021/\u0003\u0002\u0002\u000224\u0007\u0007\u0002\u000235\u0007\u0004",
     "\u0002\u000243\u0003\u0002\u0002\u000245\u0003\u0002\u0002\u00025E\u0003",
-    "\u0002\u0002\u000267\u0007\u0015\u0002\u000278\u0007\u0005\u0002\u0002",
+    "\u0002\u0002\u000267\u0007\u0016\u0002\u000278\u0007\u0005\u0002\u0002",
     "89\u0005\f\u0007\u00029=\u0007\u0006\u0002\u0002:<\u0005\u0016\f\u0002",
     ";:\u0003\u0002\u0002\u0002<?\u0003\u0002\u0002\u0002=;\u0003\u0002\u0002",
     "\u0002=>\u0003\u0002\u0002\u0002>@\u0003\u0002\u0002\u0002?=\u0003\u0002",
@@ -75,14 +75,14 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "pS\u0003\u0002\u0002\u0002p`\u0003\u0002\u0002\u0002pm\u0003\u0002\u0002",
     "\u0002q\t\u0003\u0002\u0002\u0002rs\t\u0002\u0002\u0002s\u000b\u0003",
     "\u0002\u0002\u0002tu\t\u0003\u0002\u0002u\r\u0003\u0002\u0002\u0002",
-    "vw\u0007\u0015\u0002\u0002w\u000f\u0003\u0002\u0002\u0002xy\u0007\u0015",
+    "vw\u0007\u0016\u0002\u0002w\u000f\u0003\u0002\u0002\u0002xy\u0007\u0016",
     "\u0002\u0002y\u0011\u0003\u0002\u0002\u0002z}\u0005\u0016\f\u0002{}",
     "\u0005\b\u0005\u0002|z\u0003\u0002\u0002\u0002|{\u0003\u0002\u0002\u0002",
-    "}\u0013\u0003\u0002\u0002\u0002~\u007f\u0007\u0013\u0002\u0002\u007f",
+    "}\u0013\u0003\u0002\u0002\u0002~\u007f\u0007\u0014\u0002\u0002\u007f",
     "\u0015\u0003\u0002\u0002\u0002\u0080\u0081\u0005\u0018\r\u0002\u0081",
-    "\u0082\u0007\u000f\u0002\u0002\u0082\u0083\u0005\u001a\u000e\u0002\u0083",
+    "\u0082\u0007\u0010\u0002\u0002\u0082\u0083\u0005\u001a\u000e\u0002\u0083",
     "\u0084\u0007\u0004\u0002\u0002\u0084\u0017\u0003\u0002\u0002\u0002\u0085",
-    "\u0086\u0007\u0015\u0002\u0002\u0086\u0019\u0003\u0002\u0002\u0002\u0087",
+    "\u0086\u0007\u0016\u0002\u0002\u0086\u0019\u0003\u0002\u0002\u0002\u0087",
     "\u0088\t\u0004\u0002\u0002\u0088\u001b\u0003\u0002\u0002\u0002\u0012",
     "\u001e &/4=BDLQY^fkp|"].join("");
 
@@ -94,13 +94,13 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ null, "'@include'", "';'", "':'", "'{'", "'}'", "'dialog'", 
-                     "'row'", "'column'", "'text'", "'button'", "'edit_box'", 
-                     "'spacer'", "'='" ];
+                     "'row'", "'column'", "'concatenation'", "'button'", 
+                     "'edit_box'", "'spacer'", "'text'", "'='" ];
 
 var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, "BOOL", "INT", "REAL", 
-                      "STR", "ALIGN", "ID", "COMMENT", "LINE_COMMENT", "NEWLINE", 
-                      "WHITESPACE" ];
+                      null, null, null, null, null, null, "BOOL", "INT", 
+                      "REAL", "STR", "ALIGN", "ID", "COMMENT", "LINE_COMMENT", 
+                      "NEWLINE", "WHITESPACE" ];
 
 var ruleNames =  [ "file", "includeFile", "defineTile", "innerTile", "clusterTile", 
                    "simpleTile", "deriveTile", "aliasTile", "entry", "fileName", 
@@ -138,16 +138,17 @@ VeDclParser.T__9 = 10;
 VeDclParser.T__10 = 11;
 VeDclParser.T__11 = 12;
 VeDclParser.T__12 = 13;
-VeDclParser.BOOL = 14;
-VeDclParser.INT = 15;
-VeDclParser.REAL = 16;
-VeDclParser.STR = 17;
-VeDclParser.ALIGN = 18;
-VeDclParser.ID = 19;
-VeDclParser.COMMENT = 20;
-VeDclParser.LINE_COMMENT = 21;
-VeDclParser.NEWLINE = 22;
-VeDclParser.WHITESPACE = 23;
+VeDclParser.T__13 = 14;
+VeDclParser.BOOL = 15;
+VeDclParser.INT = 16;
+VeDclParser.REAL = 17;
+VeDclParser.STR = 18;
+VeDclParser.ALIGN = 19;
+VeDclParser.ID = 20;
+VeDclParser.COMMENT = 21;
+VeDclParser.LINE_COMMENT = 22;
+VeDclParser.NEWLINE = 23;
+VeDclParser.WHITESPACE = 24;
 
 VeDclParser.RULE_file = 0;
 VeDclParser.RULE_includeFile = 1;
@@ -874,7 +875,7 @@ VeDclParser.prototype.clusterTile = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 112;
         _la = this._input.LA(1);
-        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeDclParser.T__5) | (1 << VeDclParser.T__6) | (1 << VeDclParser.T__7))) !== 0))) {
+        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeDclParser.T__5) | (1 << VeDclParser.T__6) | (1 << VeDclParser.T__7) | (1 << VeDclParser.T__8))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -939,7 +940,7 @@ VeDclParser.prototype.simpleTile = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 114;
         _la = this._input.LA(1);
-        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeDclParser.T__8) | (1 << VeDclParser.T__9) | (1 << VeDclParser.T__10) | (1 << VeDclParser.T__11))) !== 0))) {
+        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeDclParser.T__9) | (1 << VeDclParser.T__10) | (1 << VeDclParser.T__11) | (1 << VeDclParser.T__12))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -1269,7 +1270,7 @@ VeDclParser.prototype.attribute = function() {
         this.state = 126;
         this.attributeName();
         this.state = 127;
-        this.match(VeDclParser.T__12);
+        this.match(VeDclParser.T__13);
         this.state = 128;
         this.attributeValue();
         this.state = 129;

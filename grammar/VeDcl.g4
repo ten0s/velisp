@@ -19,12 +19,13 @@ innerTile :     ':' clusterTile '{' entry* '}'     ';'?             # innerClust
 clusterTile : 'dialog'
             | 'row'
             | 'column'
+            | 'concatenation'
             ;
 
-simpleTile : 'text'
-           | 'button'
+simpleTile : 'button'
            | 'edit_box'
            | 'spacer'
+           | 'text'
            ;
 
 deriveTile : ID ;
