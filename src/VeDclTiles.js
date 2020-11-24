@@ -1,4 +1,4 @@
-class Control {
+class Tile {
     constructor(id) {
         this.id = id;
         this.key = null;
@@ -63,24 +63,24 @@ class Control {
     }
 }
 
-class TileCluster extends Control {
+class Cluster extends Tile {
     constructor(id) {
         super(id);
-        this.controls = [];
+        this.tiles = [];
     }
 
-    addControl(control) {
-        this.controls.push(control);
+    addTile(tile) {
+        this.tiles.push(tile);
     }
 
     getActions() {
         let list = [];
-        for (let c of this.controls) {
-            if (c instanceof TileCluster) {
-                list = list.concat(c.getActions());
+        for (let tile of this.tiles) {
+            if (tile instanceof Cluster) {
+                list = list.concat(tile.getActions());
             } else {
-                if (c.action && c.key) {
-                    list.push([c.key, c.action]);
+                if (tile.action && tile.key) {
+                    list.push([tile.key, tile.action]);
                 }
             }
         }
@@ -88,7 +88,7 @@ class TileCluster extends Control {
     }
 }
 
-class Dialog extends TileCluster {
+class Dialog extends Cluster {
     constructor(id) {
         super(id);
         delete this.key;
@@ -97,7 +97,7 @@ class Dialog extends TileCluster {
 
     toGtkXml() {
         const id = this.id ? `id="${this.id}"` : '';
-        const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
+        const tiles = this.tiles.map(tile => this._child(tile.toGtkXml())).join('\n');
         return `
   <object class="GtkWindow" ${id}>
     <property name="can_focus">False</property>
@@ -108,9 +108,7 @@ class Dialog extends TileCluster {
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
-        <!-- BEGIN CONTROLS -->
-        ${controls}
-        <!-- END CONTROLS -->
+        ${tiles}
       </object>
     </child>
   </object>
@@ -118,13 +116,13 @@ class Dialog extends TileCluster {
     }
 }
 
-class Row extends TileCluster {
+class Row extends Cluster {
     constructor() {
         super();
     }
 
     toGtkXml() {
-        const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
+        const tiles = this.tiles.map(tile => this._child(tile.toGtkXml())).join('\n');
         return `
           <object class="GtkBox">
             <property name="visible">True</property>
@@ -132,36 +130,32 @@ class Row extends TileCluster {
             <property name="orientation">horizontal</property>
             <property name="spacing">2</property>
             <property name="homogeneous">True</property> <!-- children_fixed_width? -->
-            <!-- BEGIN CONTROLS -->
-            ${controls}
-            <!-- END CONTROLS -->
+            ${tiles}
           </object>
 `;
     }
 }
 
-class Column extends TileCluster {
+class Column extends Cluster {
     constructor() {
         super();
     }
 
     toGtkXml() {
-        const controls = this.controls.map(c => this._child(c.toGtkXml())).join('\n');
+        const tiles = this.tiles.map(tile => this._child(tile.toGtkXml())).join('\n');
         return `
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="spacing">2</property>
-            <!-- BEGIN CONTROLS -->
-            ${controls}
-            <!-- END CONTROLS -->
+            ${tiles}
           </object>
 `;
     }
 }
 
-class Text extends Control {
+class Text extends Tile {
     constructor(id) {
         super(id);
     }
@@ -187,7 +181,7 @@ class Text extends Control {
     }
 }
 
-class Button extends Control {
+class Button extends Tile {
     constructor(id) {
         super(id);
         this.action = '';
@@ -222,7 +216,7 @@ class Button extends Control {
     }
 }
 
-class EditBox extends Control {
+class EditBox extends Tile {
     constructor(id) {
         super(id);
         this.action = '';

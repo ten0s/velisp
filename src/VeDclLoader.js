@@ -3,7 +3,7 @@ const antlr4 = require('antlr4');
 const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
-const {Dialog, Row, Column, Text, Button, EditBox} = require('./VeDclControls.js');
+const {Dialog, Row, Column, Text, Button, EditBox} = require('./VeDclTiles.js');
 
 const tileCtors = {
     'dialog'  : (id) => new Dialog(id),
@@ -54,13 +54,13 @@ class VeDclLoader extends VeDclListener {
         const tile = tileCtor(tileId);
         this.context.defines[tileId] = tile;
         this.context.clusters.push(tile);
-        this.context.controls.push(tile);
+        this.context.tiles.push(tile);
     };
 
     exitDefineClusterTile(ctx) {
         console.log('exitDefineClusterTile');
         this.context.clusters.pop();
-        this.context.controls.pop();
+        this.context.tiles.pop();
     };
 
     enterDefineSimpleTile(ctx) {
@@ -73,12 +73,12 @@ class VeDclLoader extends VeDclListener {
         }
         const tile = tileCtor(tileId);
         this.context.defines[tileId] = tile;
-        this.context.controls.push(tile);
+        this.context.tiles.push(tile);
     };
 
     exitDefineSimpleTile(ctx) {
         console.log('exitDefineSimpleTile');
-        this.context.controls.pop();
+        this.context.tiles.pop();
     };
 
     enterInnerClusterTile(ctx) {
@@ -90,13 +90,13 @@ class VeDclLoader extends VeDclListener {
         }
         const tile = tileCtor();
         this.context.clusters.push(tile);
-        this.context.controls.push(tile);
+        this.context.tiles.push(tile);
     }
 
     exitInnerClusterTile(ctx) {
         console.log('exitInnerClusterTile');
         const cluster = this.context.clusters.pop();
-        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
+        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterInnerSimpleTile(ctx) {
@@ -107,12 +107,12 @@ class VeDclLoader extends VeDclListener {
             throw new Error(`Unknown tile constructor: ${tileName}`);
         }
         const tile = tileCtor();
-        this.context.controls.push(tile);
+        this.context.tiles.push(tile);
     }
 
     exitInnerSimpleTile(ctx) {
         console.log('exitInnerSimpleTile');
-        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
+        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterInnerDeriveTile(ctx) {
@@ -123,12 +123,12 @@ class VeDclLoader extends VeDclListener {
             throw new Error(`Unknown tile: ${tileName}`);
         }
         const clone = tile.clone();
-        this.context.controls.push(clone);
+        this.context.tiles.push(clone);
     }
 
     exitInnerDeriveTile(ctx) {
         console.log('exitInnerDeriveTile');
-        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
+        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterInnerAliasTile(ctx) {
@@ -138,16 +138,16 @@ class VeDclLoader extends VeDclListener {
         if (!tile) {
             throw new Error(`Unknown tile: ${tileName}`);
         }
-        this.context.controls.push(tile);
+        this.context.tiles.push(tile);
     }
 
     exitInnerAliasTile(ctx) {
         console.log('exitInnerAliasTile');
-        this.context.clusters[this.context.clusters.length-1].addControl(this.context.controls.pop());
+        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterAttribute(ctx) {
-        const current = this.context.controls[this.context.controls.length-1];
+        const current = this.context.tiles[this.context.tiles.length-1];
         if (current) {
             const name = ctx.attributeName().ID().getText();
             let value = null;
