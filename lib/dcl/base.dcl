@@ -111,3 +111,13 @@ on_cancel_help_errtile : column {
   }
   errtile;
 }
+
+spacer_0 : spacer {
+  width = 0;
+  height = 0;
+}
+
+spacer_1 : spacer {
+  width = 1;
+  height = 1;
+}

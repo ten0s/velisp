@@ -155,6 +155,25 @@ class Column extends Cluster {
     }
 }
 
+class Spacer extends Tile {
+    constructor() {
+        super();
+    }
+
+    toGtkXml() {
+        return `
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label"></property>
+            <property name="width_request">${this.width}</property>
+            <property name="height_request">${this.height}</property>
+            <property name="halign">${this._hor_align(this.alignment)}</property>
+          </object>
+`;
+    }
+}
+
 class Text extends Tile {
     constructor(id) {
         super(id);
@@ -276,6 +295,7 @@ class EditBox extends Tile {
 exports.Dialog = Dialog;
 exports.Row = Row;
 exports.Column = Column;
+exports.Spacer = Spacer;
 exports.Text = Text;
 exports.Button = Button;
 exports.EditBox = EditBox;

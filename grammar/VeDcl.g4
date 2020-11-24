@@ -24,6 +24,7 @@ clusterTile : 'dialog'
 simpleTile : 'text'
            | 'button'
            | 'edit_box'
+           | 'spacer'
            ;
 
 deriveTile : ID ;
