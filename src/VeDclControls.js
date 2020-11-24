@@ -4,6 +4,8 @@ class Control {
         this.key = null;
         this.label = '';
         this.value = '';
+        this.width = -1;
+        this.height = -1;
         this.alignment = 'centered';
     }
 
@@ -177,6 +179,8 @@ class Text extends Control {
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label">${this.label}</property>
+            <property name="width_request">${this.width}</property>
+            <property name="height_request">${this.height}</property>
             <property name="halign">${this._hor_align(this.alignment)}</property>
           </object>
 `;
@@ -200,6 +204,8 @@ class Button extends Control {
         return `
               <object class="GtkButton" ${id}>
                 <property name="label">${this.label}</property>
+                <property name="width_request">${this.width}</property>
+                <property name="height_request">${this.height}</property>
                 <property name="halign">${this._hor_align(this.alignment)}</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -208,7 +214,7 @@ class Button extends Control {
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">True</property> <!-- fixed_width=false -->
                 <property name="fill">True</property>
 <!--                <property name="position">0</property> -->
               </packing>
@@ -237,6 +243,8 @@ class EditBox extends Control {
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="spacing">0</property>
+                <property name="width_request">${this.width}</property>
+                <property name="height_request">${this.height}</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
