@@ -183,12 +183,7 @@ class Text extends Tile {
     }
 
     toGtkXml() {
-        let id = '';
-        if (this.id) {
-            id = `id="${this.id}"`;
-        } else if (this.key) {
-            id = `id="${this.key}"`;
-        }
+        const id = this.key ? `id="${this.key}"` : '';
         // TODO: also support this.value
         return `
           <object class="GtkLabel" ${id}>
@@ -204,19 +199,14 @@ class Text extends Tile {
 }
 
 class Button extends Tile {
-    constructor(id) {
-        super(id);
+    constructor() {
+        super();
         this.action = '';
         this.is_default = false;
     }
 
     toGtkXml() {
-        let id = '';
-        if (this.id) {
-            id = `id="${this.id}"`;
-        } else if (this.key) {
-            id = `id="${this.key}"`;
-        }
+        const id = this.key ? `id="${this.key}"` : '';
         return `
               <object class="GtkButton" ${id}>
                 <property name="label">${this.label}</property>
@@ -239,8 +229,8 @@ class Button extends Tile {
 }
 
 class EditBox extends Tile {
-    constructor(id) {
-        super(id);
+    constructor() {
+        super();
         this.action = '';
         this.is_default = false;
         this.edit_limit = 132;
@@ -248,12 +238,7 @@ class EditBox extends Tile {
     }
 
     toGtkXml() {
-        let id = '';
-        if (this.id) {
-            id = `id="${this.id}"`;
-        } else if (this.key) {
-            id = `id="${this.key}"`;
-        }
+        const id = this.key ? `id="${this.key}"` : '';
         return `
               <object class="GtkBox">
                 <property name="visible">True</property>
@@ -295,6 +280,87 @@ class EditBox extends Tile {
     }
 }
 
+class RadioRow extends Cluster {
+    constructor() {
+        super();
+    }
+
+    toGtkXml() {
+        let group = '';
+        if (this.tiles.length) {
+            group = this.tiles[0].key;
+        }
+        const tiles = this.tiles.map(tile => this._child(tile.toGtkXml(group))).join('\n');
+        return `
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">2</property>
+            <property name="homogeneous">True</property> <!-- children_fixed_width? -->
+            ${tiles}
+          </object>
+`;
+    }
+}
+
+class RadioColumn extends Cluster {
+    constructor() {
+        super();
+    }
+
+    toGtkXml() {
+        let group = '';
+        if (this.tiles.length) {
+            group = this.tiles[0].key;
+        }
+        const tiles = this.tiles.map(tile => this._child(tile.toGtkXml(group))).join('\n');
+        return `
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">2</property>
+            ${tiles}
+          </object>
+`;
+    }
+}
+
+class RadioButton extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.is_default = false;
+    }
+
+    toGtkXml(radio) {
+        const id = this.key ? `id="${this.key}"` : '';
+        return `
+              <object class="GtkRadioButton" ${id}>
+                <property name="label">${this.label}</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">${radio}</property>
+
+                <property name="width_request">${this.width}</property>
+                <property name="height_request">${this.height}</property>
+                <property name="halign">${this._hor_align(this.alignment)}</property>
+
+                <property name="can_default">True</property>
+                <property name="has_default">${this._bool(this.is_default)}</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property> <!-- fixed_width=false -->
+                <property name="fill">True</property>
+              </packing>
+`;
+    }
+}
+
 exports.Dialog = Dialog;
 exports.Row = Row;
 exports.Column = Column;
@@ -303,3 +369,7 @@ exports.Spacer = Spacer;
 exports.Text = Text;
 exports.Button = Button;
 exports.EditBox = EditBox;
+
+exports.RadioRow = RadioRow;
+exports.RadioColumn = RadioColumn;
+exports.RadioButton = RadioButton;

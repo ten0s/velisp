@@ -9,9 +9,12 @@ const {
     Row,
     Column,
     Concatenation,
+    RadioRow,
+    RadioColumn,
     // Tiles
     Button,
     EditBox,
+    RadioButton,
     Spacer,
     Text,
 } = require('./VeDclTiles.js');
@@ -22,9 +25,12 @@ const tileCtors = {
     'row'          : () => new Row(),
     'column'       : () => new Column(),
     'concatenation': () => new Concatenation(),
+    'radio_row'    : () => new RadioRow(),
+    'radio_column' : () => new RadioColumn(),
     // Tiles
     'button'       : () => new Button(),
     'edit_box'     : () => new EditBox(),
+    'radio_button' : () => new RadioButton(),
     'spacer'       : () => new Spacer(),
     'text'         : () => new Text(),
 };

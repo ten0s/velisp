@@ -20,10 +20,13 @@ clusterTile : 'dialog'
             | 'row'
             | 'column'
             | 'concatenation'
+            | 'radio_row'
+            | 'radio_column'
             ;
 
 simpleTile : 'button'
            | 'edit_box'
+           | 'radio_button'
            | 'spacer'
            | 'text'
            ;
