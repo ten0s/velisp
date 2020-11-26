@@ -52,7 +52,7 @@ class VeDclLoader extends VeDclListener {
     };
 
     enterIncludeFile(ctx) {
-        console.log('enterIncludeFile');
+        //console.log('enterIncludeFile');
         // Remove first and last double quotes (")
         const str = ctx.fileName().STR().getText();
         const filename = str.substring(1, str.length-1);
@@ -60,12 +60,12 @@ class VeDclLoader extends VeDclListener {
     }
 
     exitIncludeFile(ctx) {
-        console.log('exitIncludeFile');
+        //console.log('exitIncludeFile');
         console.log(this.context);
     }
 
     enterDefineClusterTile(ctx) {
-        console.log('enterDefineClusterTile');
+        //console.log('enterDefineClusterTile');
         const tileId = ctx.ID().getText();
         const tileName = ctx.clusterTile().getText();
         const tileCtor = tileCtors[tileName];
@@ -79,13 +79,13 @@ class VeDclLoader extends VeDclListener {
     };
 
     exitDefineClusterTile(ctx) {
-        console.log('exitDefineClusterTile');
+        //console.log('exitDefineClusterTile');
         this.context.clusters.pop();
         this.context.tiles.pop();
     };
 
     enterDefineSimpleTile(ctx) {
-        console.log('enterDefineSimpleTile');
+        //console.log('enterDefineSimpleTile');
         const tileId = ctx.ID().getText();
         const tileName = ctx.simpleTile().getText();
         const tileCtor = tileCtors[tileName];
@@ -98,12 +98,12 @@ class VeDclLoader extends VeDclListener {
     };
 
     exitDefineSimpleTile(ctx) {
-        console.log('exitDefineSimpleTile');
+        //console.log('exitDefineSimpleTile');
         this.context.tiles.pop();
     };
 
     enterInnerClusterTile(ctx) {
-        console.log('enterInnerClusterTile');
+        //console.log('enterInnerClusterTile');
         const tileName = ctx.clusterTile().getText();
         const tileCtor = tileCtors[tileName];
         if (!tileCtor) {
@@ -115,13 +115,13 @@ class VeDclLoader extends VeDclListener {
     }
 
     exitInnerClusterTile(ctx) {
-        console.log('exitInnerClusterTile');
+        //console.log('exitInnerClusterTile');
         const cluster = this.context.clusters.pop();
         this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterInnerSimpleTile(ctx) {
-        console.log('enterInnerSimpleTile');
+        //console.log('enterInnerSimpleTile');
         const tileName = ctx.simpleTile().getText();
         const tileCtor = tileCtors[tileName];
         if (!tileCtor) {
@@ -132,12 +132,12 @@ class VeDclLoader extends VeDclListener {
     }
 
     exitInnerSimpleTile(ctx) {
-        console.log('exitInnerSimpleTile');
+        //console.log('exitInnerSimpleTile');
         this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterInnerDeriveTile(ctx) {
-        console.log('enterInnerDeriveTile');
+        //console.log('enterInnerDeriveTile');
         const tileName = ctx.deriveTile().ID().getText();
         const tile = this.context.defines[tileName];
         if (!tile) {
@@ -148,12 +148,12 @@ class VeDclLoader extends VeDclListener {
     }
 
     exitInnerDeriveTile(ctx) {
-        console.log('exitInnerDeriveTile');
+        //console.log('exitInnerDeriveTile');
         this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
     enterInnerAliasTile(ctx) {
-        console.log('enterInnerAliasTile');
+        //console.log('enterInnerAliasTile');
         const tileName = ctx.aliasTile().ID().getText();
         const tile = this.context.defines[tileName];
         if (!tile) {
@@ -163,7 +163,7 @@ class VeDclLoader extends VeDclListener {
     }
 
     exitInnerAliasTile(ctx) {
-        console.log('exitInnerAliasTile');
+        //console.log('exitInnerAliasTile');
         this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
     }
 
@@ -193,22 +193,6 @@ class VeDclLoader extends VeDclListener {
 
     exitAttribute(ctx) {
     };
-
-    /*
-    visitTerminal(ctx) {
-        const str = ctx.getText();
-        // Also handles ID outside of expr
-        //console.error('TERMINAL:', str);
-        //console.error(ctx);
-    }
-    */
-
-    getValue(expr) {
-        if (expr instanceof Array) {
-            return this.getValue(expr[0]);
-        }
-        return expr;
-    }
 }
 
 function load(dclfile, context) {
