@@ -22,17 +22,17 @@ const {
 const tileCtors = {
     // Clusters
     'dialog'       : (id) => new Dialog(id),
-    'row'          : () => new Row(),
-    'column'       : () => new Column(),
-    'concatenation': () => new Concatenation(),
-    'radio_row'    : () => new RadioRow(),
-    'radio_column' : () => new RadioColumn(),
+    'row'          : (id) => new Row(id),
+    'column'       : (id) => new Column(id),
+    'concatenation': (id) => new Concatenation(id),
+    'radio_row'    : (id) => new RadioRow(id),
+    'radio_column' : (id) => new RadioColumn(id),
     // Tiles
-    'button'       : () => new Button(),
-    'edit_box'     : () => new EditBox(),
-    'radio_button' : () => new RadioButton(),
-    'spacer'       : () => new Spacer(),
-    'text'         : () => new Text(),
+    'button'       : (id) => new Button(id),
+    'edit_box'     : (id) => new EditBox(id),
+    'radio_button' : (id) => new RadioButton(id),
+    'spacer'       : (id) => new Spacer(id),
+    'text'         : (id) => new Text(id),
 };
 
 class VeDclLoader extends VeDclListener {

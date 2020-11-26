@@ -93,14 +93,7 @@ exports.initContext = function (context) {
             const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
             const jsDialog = dclFile[dlgId.value()];
             if (jsDialog) {
-                const gtkDialogXml = jsDialog.toGtkXml();
-                const gtkXml = `
-<?xml version="1.0" encoding="UTF-8"?>
-<interface>
-  <requires lib="gtk+" version="3.20"/>
-  ${gtkDialogXml}
-</interface>
-`;
+                const gtkXml = jsDialog.toGtkXml();
                 console.log(gtkXml);
                 _gtkBuilder = new Gtk.Builder();
                 _gtkBuilder.addFromString(gtkXml, gtkXml.length);
@@ -112,8 +105,9 @@ exports.initContext = function (context) {
                         attachAction(tile, new Str(key), new Str(handler), context);
                     }
                     return new Bool(true);
-                } catch {
+                } catch (e) {
                     // Should never happen since dialog ID is mandatory
+                    console.error(e);
                 }
             } else {
                 // TODO: No dlg_id found in DCL file
@@ -284,7 +278,6 @@ const attachAction = (tile, key, handler, context) => {
         throw new Error(`Error: not event found for '${tile}'`);
     }
     // TODO: support other events depending on tile type
-    // TODO: how to unregister registered in DCL action = "(...)"?
     tile.on(event, () => {
         context.setVar('$KEY', key);
         context.setVar('$VALUE', new Str(tile.getText ? tile.getText() : ''));
