@@ -1,30 +1,14 @@
 const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
-const Evaluator = require('../VeLispEvaluator.js');
 const {VeDclContext} = require('../VeDclContext.js');
 const VeDclLoader = require('../VeDclLoader.js');
 
 const util = require('util');
 
-const gi = require('node-gtk');
-const Gtk = gi.require('Gtk', '3.0');
-
-gi.startLoop();
-Gtk.init();
-
 // global dclId index
 let _dclId = 0;
 const _dclFiles = {};
 
-let _gtkBuilder = null;
 let _gtkDialog = null;
-
-const TileMode = {
-    ENABLE_TILE: 0,
-    DISABLE_TILE: 1,
-    FOCUS_TILE: 2,
-    SELECT_EDITBOX: 3,
-    FLIP_IMAGE: 4
-};
 
 exports.initContext = function (context) {
     context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
@@ -35,6 +19,7 @@ exports.initContext = function (context) {
             throw new Error('alert: too many arguments');
         }
         const str = ensureType('alert:', args[0], [Str]);
+        // TODO: Re-implement alert in acad.dcl
         // TODO: Doesn't work reliably w/o parent
         const dlg = new Gtk.MessageDialog({
             title: "Alert",
@@ -91,19 +76,12 @@ exports.initContext = function (context) {
         const dclFile = _dclFiles[dclId.value()];
         if (dclFile) {
             const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
-            const jsDialog = dclFile[dlgId.value()];
+            // TODO: Move clone to initWidget?
+            const jsDialog = dclFile[dlgId.value()].clone();
             if (jsDialog) {
-                const gtkXml = jsDialog.toGtkXml();
-                console.log(gtkXml);
-                _gtkBuilder = new Gtk.Builder();
-                _gtkBuilder.addFromString(gtkXml, gtkXml.length);
                 try {
-                    _gtkDialog = _gtkBuilder.getObject(dlgId.value());
-                    for (let [key, handler] of jsDialog.getActions()) {
-                        const tile = _gtkBuilder.getObject(key);
-                        console.log(tile);
-                        attachAction(tile, new Str(key), new Str(handler), context);
-                    }
+                    jsDialog.initWidget(context);
+                    _gtkDialog = jsDialog;
                     return new Bool(true);
                 } catch (e) {
                     // Should never happen since dialog ID is mandatory
@@ -122,17 +100,7 @@ exports.initContext = function (context) {
             throw new Error('start_dialog: too many arguments');
         }
         // TODO: ensure _gtkDialog
-        _gtkDialog.setModal(true);
-        _gtkDialog.setResizable(false);
-        // TODO: calculate using both length and font
-        console.log(_gtkDialog.getTitle().length);
-        const fixMeWidth = Math.max(200, _gtkDialog.getTitle().length * 16);
-        _gtkDialog.setSizeRequest(fixMeWidth, -1);
-        _gtkDialog.on('show', Gtk.main);
-        _gtkDialog.on('destroy', Gtk.mainQuit);
-        _gtkDialog.showAll();
-        // See done_dialog for dialogStatus
-        const status = _gtkDialog.dialogStatus ? _gtkDialog.dialogStatus : 0;
+        const status = _gtkDialog.startDialog();
         return new Int(status);
     }));
     context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
@@ -144,9 +112,7 @@ exports.initContext = function (context) {
             status = ensureType('done_dialog:', args[0], [Int]);
         }
         // TODO: check there's current dialog
-        // See start_dialog for dialogStatus
-        _gtkDialog.dialogStatus = status;
-        Gtk.mainQuit();
+        _gtkDialog.doneDialog(status);
         // TODO: what it should return? some (X, Y) point of the dialog
         return new Bool(true);
     }));
@@ -173,10 +139,7 @@ exports.initContext = function (context) {
         const handler = ensureType('action_tile: `handler`', args[1], [Str]);
         console.log(handler.toUnescapedString());
         try {
-            const tile = _gtkBuilder.getObject(key.value());
-            //debugger;
-            console.log(tile);
-            attachAction(tile, key, handler, context);
+            _gtkDialog.actionTile(key.value(), handler.value(), context);
             return new Bool(true);
         } catch {
             return new Bool(false);
@@ -191,20 +154,8 @@ exports.initContext = function (context) {
         }
         // TODO: ensure current dialog
         const key = ensureType('get_tile:', args[0], [Str]);
-        try {
-            const tile = _gtkBuilder.getObject(key.value());
-            if (tile instanceof Gtk.Entry || tile instanceof Gtk.Label) {
-                return new Str(tile.getText());
-            } else if (tile instanceof Gtk.Button) {
-                return new Str(tile.getLabel());
-            } else {
-                console.error(`Error: not implemented get_tile for ${typeof tile}`);
-            }
-        } catch {
-            // TODO: How to handle error?
-            console.error(`Error: no tile found for '${key.value()}'`);
-            return new Bool(false);
-        }
+        const str = _gtkDialog.getTile(key.value());
+        return new Str(str);
     }));
     context.setSym('SET_TILE', new Fun('get_tile', ['key', 'value'], [], (self, args) => {
         if (args.length < 2) {
@@ -216,21 +167,8 @@ exports.initContext = function (context) {
         // TODO: ensure current dialog
         const key = ensureType('set_tile:', args[0], [Str]);
         const value = ensureType('set_tile:', args[1], [Str]);
-        try {
-            const tile = _gtkBuilder.getObject(key.value());
-            if (tile instanceof Gtk.Entry || tile instanceof Gtk.Label) {
-                tile.setText(value.value());
-            } else if (tile instanceof Gtk.Button) {
-                return new Str(tile.setLabel(value.value()));
-            } else {
-                console.error(`Error: not implemented set_tile for ${typeof tile}`);
-            }
-            return value;
-        } catch {
-            // TODO: How to handle error?
-            console.error(`Error: no tile found for '${key.value()}'`);
-            return new Str('');
-        }
+        _gtkDialog.setTile(key.value(), value.value());
+        return value;
     }));
     context.setSym('MODE_TILE', new Fun('mode_tile', ['key', 'mode'], [], (self, args) => {
         if (args.length < 2) {
@@ -242,49 +180,7 @@ exports.initContext = function (context) {
         // TODO: ensure current dialog
         const key = ensureType('mode_tile: `key`', args[0], [Str]);
         const mode = ensureType('mode_tile: `mode`', args[1], [Int]);
-        try {
-            const tile = _gtkBuilder.getObject(key.value());
-            switch (mode.value()) {
-            case TileMode.ENABLE_TILE:
-                tile.setSensitive(true);
-                break;
-            case TileMode.DISABLE_TILE:
-                tile.setSensitive(false);
-                break;
-            case TileMode.FOCUS_TILE:
-                _gtkDialog.setFocus(tile);
-                break;
-            case TileMode.FLIP_IMAGE:
-                console.error(`Error: not implemented tile mode '${mode.value()}'`);
-                break;
-            default:
-                console.error(`Error: unknown tile mode '${mode.value()}'`);
-            }
-        } catch {
-            // TODO: How to handle error?
-            console.error(`Error: no tile found for '${key.value()}'`);
-        }
+        _gtkDialog.setMode(key.value(), mode.value());
         return new Bool(false);
     }));
-}
-
-const attachAction = (tile, key, handler, context) => {
-    let event = null;
-    if (tile instanceof Gtk.Button) {
-        event = 'clicked';
-    } else if (tile instanceof Gtk.Entry) {
-        event = 'changed';
-    } else {
-        throw new Error(`Error: not event found for '${tile}'`);
-    }
-    // TODO: support other events depending on tile type
-    tile.on(event, () => {
-        context.setVar('$KEY', key);
-        context.setVar('$VALUE', new Str(tile.getText ? tile.getText() : ''));
-        // TODO: add $REASON
-        // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-0473B723-1CD5-4228-AB25-D88B6930372F
-        // TODO: add $DATA (client_data_tile ...)
-        // TODO: add $X, $Y for image_button
-        Evaluator.evaluate(handler.toUnescapedString(), context);
-    });
 }

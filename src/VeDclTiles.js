@@ -1,3 +1,20 @@
+const {Str} = require('./VeLispTypes.js');
+const Evaluator = require('./VeLispEvaluator.js');
+
+const gi = require('node-gtk');
+const Gtk = gi.require('Gtk', '3.0');
+
+gi.startLoop();
+Gtk.init();
+
+const TileMode = {
+    ENABLE_TILE: 0,
+    DISABLE_TILE: 1,
+    FOCUS_TILE: 2,
+    SELECT_EDITBOX: 3,
+    FLIP_IMAGE: 4
+};
+
 class Tile {
     constructor(id) {
         this.id = id;
@@ -52,8 +69,28 @@ class Tile {
         }
     }
 
+    gtkActionTile(gtkWidget, handler, context) {
+        throw new Error(
+            `Not implemented gtkActionTile for ${this.contructor.name}`
+        );
+    }
+
+    gtkGetTile(gtkWidget) {
+        throw new Error(
+            `Not implemented gtkGetTile for ${this.constructor.name}`
+        );
+    }
+
+    gtkSetTile(gtkWidget, _value) {
+        throw new Error(
+            `Not implemented gtkSetTile for ${this.constructor.name}`
+        );
+    }
+
     toGtkXml() {
-        throw new Error('Not implemented');
+        throw new Error(
+            'Not implemented toGtkXml for ${this.constructor.name}'
+        );
     }
 }
 
@@ -80,6 +117,24 @@ class Cluster extends Tile {
         }
         return list;
     }
+
+    findTile(key) {
+        if (this.key === key) {
+            return this;
+        }
+        for (let tile of this._tiles) {
+            if (tile.key === key) {
+                return tile;
+            }
+            if (tile instanceof Cluster) {
+                const found = tile.findTile(key);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+        return null;
+    }
 }
 
 class Dialog extends Cluster {
@@ -92,6 +147,80 @@ class Dialog extends Cluster {
         delete this._tiles;
         this._column = new Column();
         this._column.alignment = 'centered';
+        this._gtkBuilder = null;
+        this._gtkWindow = null;
+    }
+
+    initWidget(context) {
+        const gtkXml = this.toGtkXml();
+        console.log(gtkXml);
+        this._gtkBuilder = new Gtk.Builder();
+        this._gtkBuilder.addFromString(gtkXml, gtkXml.length);
+        this._gtkWindow = this._gtkBuilder.getObject(this.id);
+        for (let [key, handler] of this.getActions()) {
+            this.actionTile(key, handler, context);
+        }
+    }
+
+    actionTile(key, handler, context) {
+        const tile = this.findTile(key);
+        const gtkWidget = this._gtkBuilder.getObject(key);
+        console.log(gtkWidget);
+        tile.gtkActionTile(gtkWidget, handler, context);
+    }
+
+    getTile(key) {
+        const tile = this.findTile(key);
+        const gtkWidget = this._gtkBuilder.getObject(key);
+        return tile.gtkGetTile(gtkWidget);
+    }
+
+    setTile(key, value) {
+        const tile = this.findTile(key);
+        const gtkWidget = this._gtkBuilder.getObject(key);
+        return tile.gtkSetTile(gtkWidget, value);
+    }
+
+    setMode(key, mode) {
+        const gtkWidget = this._gtkBuilder.getObject(key);
+        switch (mode) {
+        case TileMode.ENABLE_TILE:
+            gtkWidget.setSensitive(true);
+            break;
+        case TileMode.DISABLE_TILE:
+            gtkWidget.setSensitive(false);
+            break;
+        case TileMode.FOCUS_TILE:
+            this._gtkWindow.setFocus(gtkWidget);
+            break;
+        case TileMode.FLIP_IMAGE:
+            console.error(`Error: not implemented tile mode '${mode}'`);
+            break;
+        default:
+            console.error(`Error: unknown tile mode '${mode}'`);
+        }
+    }
+
+    startDialog() {
+        this._gtkWindow.setModal(true);
+        this._gtkWindow.setResizable(false);
+        // TODO: calculate using both length and font
+        console.log(this._gtkWindow.getTitle().length);
+        const fixMeWidth = Math.max(200, this._gtkWindow.getTitle().length * 16);
+        this._gtkWindow.setSizeRequest(fixMeWidth, -1);
+        this._gtkWindow.on('show', Gtk.main);
+        this._gtkWindow.on('destroy', Gtk.mainQuit);
+        this._gtkWindow.showAll();
+        // See doneDialog for dialogStatus
+        const status = this._dialogStatus ? this._dialogStatus : 0;
+        return status;
+    }
+
+    doneDialog(status) {
+        // See startDialog for dialogStatus
+        this._dialogStatus = status;
+        Gtk.mainQuit();
+        // TODO: what it should return? some (X, Y) point of the dialog
     }
 
     addTile(tile) {
@@ -100,6 +229,13 @@ class Dialog extends Cluster {
 
     getActions() {
         return this._column.getActions();
+    }
+
+    findTile(key) {
+        if (this.key === key) {
+            return this;
+        }
+        return this._column.findTile(key);
     }
 
     toGtkXml() {
@@ -239,6 +375,14 @@ class Text extends Tile {
         this.width = -1;
     }
 
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.getText();
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.setText(value);
+    }
+
     toGtkXml() {
         const id = this.key ? `id="${this.key}"` : '';
         const label = this.label ? this.label : this.value;
@@ -249,6 +393,10 @@ class Text extends Tile {
   <property name="label">${label}</property>
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
 
   <property name="halign">${this._hor_align(this.alignment)}</property>
   <property name="valign">fill</property>
@@ -275,6 +423,24 @@ class Button extends Tile {
         this.width = -1;
     }
 
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('clicked', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(''));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.getLabel();
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.setLabel(value);
+    }
+
+    // TODO: rename gtkXml
     toGtkXml() {
         const id = this.key ? `id="${this.key}"` : '';
         return `
@@ -322,6 +488,23 @@ class EditBox extends Tile {
         this.value = '';
         this.width = -1;
         //this.password_char = '*';
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('changed', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(gtkWidget.getText ? gtkWidget.getText() : ''));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.getText();
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.setText(value);
     }
 
     toGtkXml() {
@@ -480,6 +663,25 @@ class RadioButton extends Tile {
         this.width = -1;
     }
 
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('clicked', () => {
+            if (gtkWidget.active) {
+                context.setVar('$KEY', new Str(this.key));
+                context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+                Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+            }
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.active ? "1" : "0";
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.active = (value === "1");
+    }
+
     toGtkXml(radio) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
@@ -492,6 +694,10 @@ class RadioButton extends Tile {
   <property name="group">${radio}</property>
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
 
   <property name="halign">${this._hor_align(this.alignment)}</property>
   <property name="valign">fill</property>

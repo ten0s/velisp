@@ -19,4 +19,3 @@ radio_column_dlg : dialog {
   }
   ok_only;
 }
-
