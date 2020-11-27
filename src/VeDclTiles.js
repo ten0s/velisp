@@ -87,9 +87,9 @@ class Tile {
         );
     }
 
-    toGtkXml() {
+    gtkXml() {
         throw new Error(
-            'Not implemented toGtkXml for ${this.constructor.name}'
+            'Not implemented gtkXml for ${this.constructor.name}'
         );
     }
 }
@@ -151,38 +151,49 @@ class Dialog extends Cluster {
         this._gtkWindow = null;
     }
 
-    initWidget(context) {
-        const gtkXml = this.toGtkXml();
-        console.log(gtkXml);
-        this._gtkBuilder = new Gtk.Builder();
-        this._gtkBuilder.addFromString(gtkXml, gtkXml.length);
-        this._gtkWindow = this._gtkBuilder.getObject(this.id);
-        for (let [key, handler] of this.getActions()) {
-            this.actionTile(key, handler, context);
-        }
+    // Cluster
+    addTile(tile) {
+        this._column.addTile(tile);
     }
 
+    // Cluster
+    getActions() {
+        return this._column.getActions();
+    }
+
+    // Cluster
+    findTile(key) {
+        if (this.key === key) {
+            return this;
+        }
+        return this._column.findTile(key);
+    }
+
+    // DCL
     actionTile(key, handler, context) {
         const tile = this.findTile(key);
-        const gtkWidget = this._gtkBuilder.getObject(key);
+        const gtkWidget = this.findWidget(key);
         console.log(gtkWidget);
         tile.gtkActionTile(gtkWidget, handler, context);
     }
 
+    // DCL
     getTile(key) {
         const tile = this.findTile(key);
-        const gtkWidget = this._gtkBuilder.getObject(key);
+        const gtkWidget = this.findWidget(key);
         return tile.gtkGetTile(gtkWidget);
     }
 
+    // DCL
     setTile(key, value) {
         const tile = this.findTile(key);
-        const gtkWidget = this._gtkBuilder.getObject(key);
+        const gtkWidget = this.findWidget(key);
         return tile.gtkSetTile(gtkWidget, value);
     }
 
+    // DCL
     setMode(key, mode) {
-        const gtkWidget = this._gtkBuilder.getObject(key);
+        const gtkWidget = this.findWidget(key);
         switch (mode) {
         case TileMode.ENABLE_TILE:
             gtkWidget.setSensitive(true);
@@ -201,6 +212,7 @@ class Dialog extends Cluster {
         }
     }
 
+    // DCL
     startDialog() {
         this._gtkWindow.setModal(true);
         this._gtkWindow.setResizable(false);
@@ -216,6 +228,7 @@ class Dialog extends Cluster {
         return status;
     }
 
+    // DCL
     doneDialog(status) {
         // See startDialog for dialogStatus
         this._dialogStatus = status;
@@ -223,25 +236,27 @@ class Dialog extends Cluster {
         // TODO: what it should return? some (X, Y) point of the dialog
     }
 
-    addTile(tile) {
-        this._column.addTile(tile);
-    }
-
-    getActions() {
-        return this._column.getActions();
-    }
-
-    findTile(key) {
-        if (this.key === key) {
-            return this;
+    // GTK
+    initWidget(context) {
+        const gtkXml = this.gtkXml();
+        console.log(gtkXml);
+        this._gtkBuilder = new Gtk.Builder();
+        this._gtkBuilder.addFromString(gtkXml, gtkXml.length);
+        this._gtkWindow = this.findWidget(this.id);
+        for (let [key, handler] of this.getActions()) {
+            this.actionTile(key, handler, context);
         }
-        return this._column.findTile(key);
     }
 
-    toGtkXml() {
+    // GTK
+    findWidget(key) {
+        return this._gtkBuilder.getObject(key);
+    }
+
+    gtkXml() {
         const id = this.id ? `id="${this.id}"` : '';
         const title = this.label ? this.label : this.value;
-        const child = this._child(this._column.toGtkXml());
+        const child = this._child(this._column.gtkXml());
         return `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -270,8 +285,8 @@ class Row extends Cluster {
         this.width = -1;
     }
 
-    toGtkXml() {
-        const tiles = this._tiles.map(tile => this._child(tile.toGtkXml())).join('\n');
+    gtkXml() {
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
         return `
 <object class="GtkBox">
   <property name="orientation">horizontal</property>
@@ -306,8 +321,8 @@ class Column extends Cluster {
         this.width = -1;
     }
 
-    toGtkXml() {
-        const tiles = this._tiles.map(tile => this._child(tile.toGtkXml())).join('\n');
+    gtkXml() {
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
         return `
 <object class="GtkBox">
   <property name="orientation">vertical</property>
@@ -345,7 +360,7 @@ class Spacer extends Tile {
         this.width = -1;
     }
 
-    toGtkXml() {
+    gtkXml() {
         return `
 <object class="GtkLabel">
   <property name="visible">True</property>
@@ -383,7 +398,7 @@ class Text extends Tile {
         gtkWidget.setText(value);
     }
 
-    toGtkXml() {
+    gtkXml() {
         const id = this.key ? `id="${this.key}"` : '';
         const label = this.label ? this.label : this.value;
         return `
@@ -441,7 +456,7 @@ class Button extends Tile {
     }
 
     // TODO: rename gtkXml
-    toGtkXml() {
+    gtkXml() {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkButton" ${id}>
@@ -507,7 +522,7 @@ class EditBox extends Tile {
         gtkWidget.setText(value);
     }
 
-    toGtkXml() {
+    gtkXml() {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkBox">
@@ -572,7 +587,7 @@ class RadioRow extends Cluster {
         this.width = -1;
     }
 
-    toGtkXml() {
+    gtkXml() {
         let group = '';
         for (let tile of this._tiles) {
             if (tile.key) {
@@ -580,7 +595,7 @@ class RadioRow extends Cluster {
                 break;
             }
         }
-        const tiles = this._tiles.map(tile => this._child(tile.toGtkXml(group))).join('\n');
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
         return `
 <object class="GtkBox">
   <property name="visible">True</property>
@@ -615,7 +630,7 @@ class RadioColumn extends Cluster {
         this.width = -1;
     }
 
-    toGtkXml() {
+    gtkXml() {
         let group = '';
         for (let tile of this._tiles) {
             if (tile.key) {
@@ -623,7 +638,7 @@ class RadioColumn extends Cluster {
                 break;
             }
         }
-        const tiles = this._tiles.map(tile => this._child(tile.toGtkXml(group))).join('\n');
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
         return `
 <object class="GtkBox">
   <property name="visible">True</property>
@@ -682,7 +697,7 @@ class RadioButton extends Tile {
         gtkWidget.active = (value === "1");
     }
 
-    toGtkXml(radio) {
+    gtkXml(radio) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkRadioButton" ${id}>
