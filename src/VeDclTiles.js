@@ -227,14 +227,14 @@ class Dialog extends Cluster {
         this._gtkWindow.on('destroy', Gtk.mainQuit);
         this._gtkWindow.showAll();
         // See doneDialog for dialogStatus
-        const status = this._dialogStatus ? this._dialogStatus : 0;
+        const status = this._status ? this._status : 0;
         return status;
     }
 
     // DCL
     doneDialog(status) {
         // See startDialog for dialogStatus
-        this._dialogStatus = status;
+        this._status = status;
         Gtk.mainQuit();
         // TODO: what it should return? some (X, Y) point of the dialog
     }
