@@ -807,6 +807,72 @@ class RadioButton extends Tile {
     }
 }
 
+class Toggle extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = 'left';
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.is_enabled = true;
+        //this.is_tab_stop = true;
+        this.key = null;
+        this.label = '';
+        //this.mnemonic = '';
+        this.value = '';
+        this.width = -1;
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('clicked', () => {
+            if (gtkWidget.active) {
+                context.setVar('$KEY', new Str(this.key));
+                context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+                Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+            }
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.active ? "1" : "0";
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.active = (value === "1");
+        this.value = value;
+    }
+
+    gtkXml(radio) {
+        const id = this.key ? `id="${this.key}"` : '';
+        return `
+<object class="GtkCheckButton" ${id}>
+  <property name="label">${this.label}</property>
+  <property name="visible">True</property>
+  <property name="sensitive">${this._bool(this.is_enabled)}</property>
+  <property name="can_focus">True</property>
+  <property name="receives_default">False</property>
+  <property name="draw_indicator">True</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+
+  <property name="halign">${this._hor_align(this.alignment)}</property>
+  <property name="valign">fill</property>
+
+</object>
+<packing>
+  <property name="fill">False</property>
+  <property name="expand">False</property>
+</packing>
+`;
+    }
+}
+
 exports.Dialog = Dialog;
 exports.Row = Row;
 exports.Column = Column;
@@ -819,3 +885,5 @@ exports.EditBox = EditBox;
 exports.RadioRow = RadioRow;
 exports.RadioColumn = RadioColumn;
 exports.RadioButton = RadioButton;
+
+exports.Toggle = Toggle;

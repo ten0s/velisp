@@ -29,6 +29,7 @@ simpleTile : 'button'
            | 'radio_button'
            | 'spacer'
            | 'text'
+           | 'toggle'
            ;
 
 deriveTile : ID ;

@@ -17,6 +17,7 @@ const {
     RadioButton,
     Spacer,
     Text,
+    Toggle,
 } = require('./VeDclTiles.js');
 
 const tileCtors = {
@@ -33,6 +34,7 @@ const tileCtors = {
     'radio_button' : (id) => new RadioButton(id),
     'spacer'       : (id) => new Spacer(id),
     'text'         : (id) => new Text(id),
+    'toggle'       : (id) => new Toggle(id),
 };
 
 class VeDclLoader extends VeDclListener {
