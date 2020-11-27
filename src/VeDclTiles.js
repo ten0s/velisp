@@ -71,7 +71,7 @@ class Tile {
 
     gtkActionTile(gtkWidget, handler, context) {
         throw new Error(
-            `Not implemented gtkActionTile for ${this.contructor.name}`
+            `Not implemented gtkActionTile for ${this.constructor.name}`
         );
     }
 
@@ -195,7 +195,7 @@ class Dialog extends Cluster {
     }
 
     // DCL
-    setMode(key, mode) {
+    modeTile(key, mode) {
         const gtkWidget = this.gtkFindWidget(key);
         switch (mode) {
         case TileMode.ENABLE_TILE:
@@ -588,9 +588,56 @@ class EditBox extends Tile {
     }
 }
 
-class RadioRow extends Cluster {
+class RadioCluster extends Cluster {
     constructor(id) {
         super(id);
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        for (let i = 0; i < gtkWidget.getChildren().length; i++) {
+            const child = gtkWidget.getChildren()[i];
+            // Ensure it's radio button and it has not action
+            if (child instanceof Gtk.RadioButton && this._tiles[i].action === '') {
+                child.on('clicked', () => {
+                    if (child.active) {
+                        // Radio Cluster Key
+                        context.setVar('$KEY', new Str(this.key));
+                        // Radio Button Key
+                        context.setVar('$VALUE', new Str(this._tiles[i].key));
+                        Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+                    }
+                });
+            }
+        }
+    }
+
+    gtkGetTile(gtkWidget) {
+        for (let i = 0; i < gtkWidget.getChildren().length; i++) {
+            const child = gtkWidget.getChildren()[i];
+            if (child instanceof Gtk.RadioButton && child.active) {
+                // Brittle, but works.
+                return this._tiles[i].key;
+            }
+        }
+        return "";
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        for (let i = 0; i < gtkWidget.getChildren().length; i++) {
+            const child = gtkWidget.getChildren()[i];
+            if (child instanceof Gtk.RadioButton) {
+                // Brittle, but works.
+                this._tiles[i].gtkSetTile(child, value);
+            }
+        }
+    }
+}
+
+class RadioRow extends RadioCluster {
+    constructor(id) {
+        super(id);
+        this.action = '';
         this.alignment = 'centered';
         //this.children_alignment = 'centered';
         //this.children_fixed_height = false;
@@ -598,11 +645,13 @@ class RadioRow extends Cluster {
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
+        this.key = null;
         //this.label = '';
         this.width = -1;
     }
 
     gtkXml() {
+        const id = this.key ? `id="${this.key}"` : '';
         let group = '';
         for (let tile of this._tiles) {
             if (tile.key) {
@@ -612,11 +661,11 @@ class RadioRow extends Cluster {
         }
         const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
         return `
-<object class="GtkBox">
+<object class="GtkBox" ${id}>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="orientation">horizontal</property>
-  <property name="spacing">2</property>
+  <property name="spacing">0</property>
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
   <property name="valign">${this._ver_align(this.alignment)}</property>
@@ -631,9 +680,10 @@ class RadioRow extends Cluster {
     }
 }
 
-class RadioColumn extends Cluster {
+class RadioColumn extends RadioCluster {
     constructor(id) {
         super(id);
+        this.action = '';
         this.alignment = 'left';
         //this.children_alignment = 'left';
         //this.children_fixed_height = false;
@@ -641,11 +691,13 @@ class RadioColumn extends Cluster {
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
+        this.key = null;
         //this.label = '';
         this.width = -1;
     }
 
     gtkXml() {
+        const id = this.key ? `id="${this.key}"` : '';
         let group = '';
         for (let tile of this._tiles) {
             if (tile.key) {
@@ -655,11 +707,11 @@ class RadioColumn extends Cluster {
         }
         const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
         return `
-<object class="GtkBox">
+<object class="GtkBox" ${id}>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="orientation">vertical</property>
-  <property name="spacing">2</property>
+  <property name="spacing">0</property>
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
 
@@ -710,6 +762,7 @@ class RadioButton extends Tile {
 
     gtkSetTile(gtkWidget, value) {
         gtkWidget.active = (value === "1");
+        this.value = value;
     }
 
     gtkXml(radio) {

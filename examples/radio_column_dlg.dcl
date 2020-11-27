@@ -1,20 +1,35 @@
 radio_column_dlg : dialog {
   label = "Radio Column";
+  : row {
+    : text {
+      label = "Current: ";
+    }
+    : text {
+      key = "current";
+      value = "";
+    }
+  }
   : radio_column {
+    key = "radio_group";
     : radio_button {
       label = "radio #1";
       key = "radio1";
-      action = "(princ $key)";
+      action = "(set_tile \"current\" $key)";
     }
     : radio_button{
       label = "radio #2";
       key = "radio2";
-      action = "(princ $key)";
+      action = "(set_tile \"current\" $key)";
     }
     : radio_button{
       label = "radio #3";
       key = "radio3";
-      action = "(princ $key)";
+      action = "(set_tile \"current\" $key)";
+    }
+    : radio_button{
+      label = "radio #4";
+      key = "radio4";
+      action = "(set_tile \"current\" $key)";
     }
   }
   ok_only;

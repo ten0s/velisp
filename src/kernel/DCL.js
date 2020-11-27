@@ -143,7 +143,8 @@ exports.initContext = function (context) {
         try {
             _dclDialog.actionTile(key.value(), handler.value(), context);
             return new Bool(true);
-        } catch {
+        } catch (e) {
+            console.error(e);
             return new Bool(false);
         }
     }));
@@ -182,7 +183,7 @@ exports.initContext = function (context) {
         // TODO: ensure current dialog
         const key = ensureType('mode_tile: `key`', args[0], [Str]);
         const mode = ensureType('mode_tile: `mode`', args[1], [Int]);
-        _dclDialog.setMode(key.value(), mode.value());
+        _dclDialog.modeTile(key.value(), mode.value());
         return new Bool(false);
     }));
 }
