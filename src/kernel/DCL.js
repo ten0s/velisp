@@ -109,12 +109,12 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('done_dialog: too many arguments');
         }
-        let status = undefined;
+        let status = 0;
         if (args.length == 1) {
             status = ensureType('done_dialog:', args[0], [Int]);
         }
         // TODO: check there's current dialog
-        _dclDialog.doneDialog(status);
+        _dclDialog.doneDialog(status.value());
         // TODO: what it should return? some (X, Y) point of the dialog
         return new Bool(true);
     }));
