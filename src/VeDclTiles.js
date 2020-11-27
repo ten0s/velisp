@@ -354,10 +354,6 @@ class Column extends Cluster {
   <property name="homogeneous">False</property>
   ${tiles}
 </object>
-<packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
-</packing>
 `;
     }
 }
@@ -547,16 +543,17 @@ class EditBox extends Tile {
   <property name="spacing">0</property>
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
   <child>
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="label">${this.label}</property>
       <property name="justify">left</property>
-      <property name="margin_left">5</property>
       <property name="margin_right">5</property>
-      <property name="margin_top">5</property>
-      <property name="margin_bottom">5</property>
     </object>
     <packing>
       <property name="fill">True</property>
@@ -573,10 +570,6 @@ class EditBox extends Tile {
       <property name="max_length">${this.edit_limit}</property>
       <property name="width_chars">${this.edit_width}</property>
       <property name="text">${this.value}</property>
-      <property name="margin_left">5</property>
-      <property name="margin_right">5</property>
-      <property name="margin_top">5</property>
-      <property name="margin_bottom">5</property>
     </object>
     <packing>
       <property name="fill">True</property>
