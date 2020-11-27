@@ -445,7 +445,7 @@ class Button extends Tile {
         this.height = -1;
         //this.is_cancel = false;
         this.is_default = false;
-        //this.is_enabled = true;
+        this.is_enabled = true;
         //this.is_tab_stop = true;
         this.key = null;
         this.label = '';
@@ -479,6 +479,7 @@ class Button extends Tile {
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
   <property name="visible">True</property>
+  <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">True</property>
   <property name="can_default">True</property>
   <property name="has_default">${this._bool(this.is_default)}</property>
@@ -510,7 +511,7 @@ class EditBox extends Tile {
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
-        //this.is_enabled = true;
+        this.is_enabled = true;
         //this.is_tab_stop = true;
         this.key = null;
         this.label = '';
@@ -567,6 +568,7 @@ class EditBox extends Tile {
   <child>
     <object class="GtkEntry" ${id}>
       <property name="visible">True</property>
+      <property name="sensitive">${this._bool(this.is_enabled)}</property>
       <property name="can_focus">True</property>
       <property name="max_length">${this.edit_limit}</property>
       <property name="width_chars">${this.edit_width}</property>
@@ -616,7 +618,6 @@ class RadioCluster extends Cluster {
         for (let i = 0; i < gtkWidget.getChildren().length; i++) {
             const child = gtkWidget.getChildren()[i];
             if (child instanceof Gtk.RadioButton && child.active) {
-                // Brittle, but works.
                 return this._tiles[i].key;
             }
         }
@@ -627,7 +628,6 @@ class RadioCluster extends Cluster {
         for (let i = 0; i < gtkWidget.getChildren().length; i++) {
             const child = gtkWidget.getChildren()[i];
             if (child instanceof Gtk.RadioButton) {
-                // Brittle, but works.
                 this._tiles[i].gtkSetTile(child, value);
             }
         }
@@ -736,7 +736,7 @@ class RadioButton extends Tile {
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
-        //this.is_enabled = true;
+        this.is_enabled = true;
         //this.is_tab_stop = true;
         this.key = null;
         this.label = '';
@@ -771,6 +771,7 @@ class RadioButton extends Tile {
 <object class="GtkRadioButton" ${id}>
   <property name="label">${this.label}</property>
   <property name="visible">True</property>
+  <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">True</property>
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>

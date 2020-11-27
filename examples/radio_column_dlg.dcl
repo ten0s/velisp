@@ -30,6 +30,7 @@ radio_column_dlg : dialog {
       label = "radio #4";
       key = "radio4";
       action = "(set_tile \"current\" $key)";
+      is_enabled = false;
     }
   }
   ok_only;

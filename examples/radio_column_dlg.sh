@@ -18,7 +18,6 @@ node ${opts[@]} src/main.js <<EOF
       (exit 1)))
 
   (set_tile "radio2" "1")
-  (mode_tile "radio4" 1)
   (set_tile "current" (get_tile "radio_group"))
 
   (setq ret (start_dialog))
