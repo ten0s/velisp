@@ -11,6 +11,7 @@ radio_column_dlg : dialog {
   }
   : radio_column {
     key = "radio_group";
+    alignment = centered;
     : radio_button {
       label = "radio #1";
       key = "radio1";

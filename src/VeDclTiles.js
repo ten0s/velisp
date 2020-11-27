@@ -146,7 +146,7 @@ class Dialog extends Cluster {
         this.value = '';
         delete this._tiles;
         this._column = new Column();
-        this._column.alignment = 'centered';
+        this._column.alignment = 'filled';
         this._gtkBuilder = null;
         this._gtkWindow = null;
     }
@@ -221,7 +221,7 @@ class Dialog extends Cluster {
         this._gtkWindow.setResizable(false);
         // TODO: calculate using both length and font
         console.log(this._gtkWindow.getTitle().length);
-        const fixMeWidth = Math.max(200, this._gtkWindow.getTitle().length * 16);
+        const fixMeWidth = Math.max(260, this._gtkWindow.getTitle().length * 23);
         this._gtkWindow.setSizeRequest(fixMeWidth, -1);
         this._gtkWindow.on('show', Gtk.main);
         this._gtkWindow.on('destroy', Gtk.mainQuit);
@@ -661,7 +661,8 @@ class RadioRow extends RadioCluster {
   <property name="spacing">0</property>
   <property name="width_request">${this.width}</property>
   <property name="height_request">${this.height}</property>
-  <property name="valign">${this._ver_align(this.alignment)}</property>
+  <property name="halign">${this._hor_align(this.alignment)}</property>
+<!--  <property name="valign">${this._ver_align(this.alignment)}</property> -->
   <property name="homogeneous">True</property>
   ${tiles}
 </object>

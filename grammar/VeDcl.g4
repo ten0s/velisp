@@ -66,6 +66,7 @@ ALIGN : 'left'
       | 'top'
       | 'bottom'
       | 'centered'
+      | 'filled'
       ;
 
 ID : LETTER+(DIGIT | LETTER | '_')* ;
