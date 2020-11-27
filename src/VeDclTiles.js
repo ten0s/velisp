@@ -69,6 +69,24 @@ class Tile {
         }
     }
 
+    _width(value) {
+        if (value === -1) {
+            return value;
+        }
+        // TODO: Calculate based on font
+        // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-F5ACFAA1-4528-4BC5-B45E-0F7C114AFEDE
+        return 7.5 * value;
+    }
+
+    _height(value) {
+        if (value === -1) {
+            return value;
+        }
+        // TODO: Calculate based on font
+        // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-DD0E03A8-D2EB-4D79-9BF7-D49EFD3820D4
+        return 15 * value;
+    }
+
     gtkActionTile(gtkWidget, handler, context) {
         throw new Error(
             `Not implemented gtkActionTile for ${this.constructor.name}`
@@ -221,7 +239,7 @@ class Dialog extends Cluster {
         this._gtkWindow.setResizable(false);
         // TODO: calculate using both length and font
         console.log(this._gtkWindow.getTitle().length);
-        const fixMeWidth = Math.max(260, this._gtkWindow.getTitle().length * 23);
+        const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
         this._gtkWindow.setSizeRequest(fixMeWidth, -1);
         this._gtkWindow.on('show', Gtk.main);
         this._gtkWindow.on('destroy', Gtk.mainQuit);
@@ -308,8 +326,8 @@ class Row extends Cluster {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 
   <property name="halign">fill</property>
   <property name="valign">${this._ver_align(this.alignment)}</property>
@@ -344,8 +362,8 @@ class Column extends Cluster {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 
   <property name="halign">${this._hor_align(this.alignment)}</property>
   <property name="valign">fill</property>
@@ -377,8 +395,8 @@ class Spacer extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="label"></property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 
   <property name="halign">${this._hor_align(this.alignment)}</property>
   <property name="valign">fill</property>
@@ -417,8 +435,8 @@ class Text extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="label">${label}</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <property name="margin_left">5</property>
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
@@ -472,8 +490,8 @@ class Button extends Tile {
         return `
 <object class="GtkButton" ${id}>
   <property name="label">${this.label}</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">True</property>
@@ -541,8 +559,8 @@ class EditBox extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <property name="margin_left">5</property>
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
@@ -659,8 +677,8 @@ class RadioRow extends RadioCluster {
   <property name="can_focus">False</property>
   <property name="orientation">horizontal</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <property name="halign">${this._hor_align(this.alignment)}</property>
 <!--  <property name="valign">${this._ver_align(this.alignment)}</property> -->
   <property name="homogeneous">True</property>
@@ -706,8 +724,8 @@ class RadioColumn extends RadioCluster {
   <property name="can_focus">False</property>
   <property name="orientation">vertical</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 
   <property name="halign">${this._hor_align(this.alignment)}</property>
   <property name="valign">fill</property>
@@ -770,8 +788,8 @@ class RadioButton extends Tile {
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
   <property name="group">${radio}</property>
-  <property name="width_request">${this.width}</property>
-  <property name="height_request">${this.height}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <property name="margin_left">5</property>
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
