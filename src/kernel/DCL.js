@@ -8,7 +8,7 @@ const util = require('util');
 let _dclId = 0;
 const _dclFiles = {};
 
-let _gtkDialog = null;
+let _dclDialog = null;
 
 exports.initContext = function (context) {
     context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
@@ -21,14 +21,17 @@ exports.initContext = function (context) {
         const str = ensureType('alert:', args[0], [Str]);
         // TODO: Re-implement alert in acad.dcl
         // TODO: Doesn't work reliably w/o parent
+        const gi = require('node-gtk');
+        const Gtk = gi.require('Gtk', '3.0');
         const dlg = new Gtk.MessageDialog({
             title: "Alert",
             text: str.value(),
             message_type: Gtk.MessageType.INFO,
             buttons: Gtk.ButtonsType.OK
         });
-        if (_gtkDialog) {
-            dlg.transientFor = _gtkDialog;
+        if (_dclDialog) {
+            // FIXME: get rid of internal knowledge
+            dlg.transientFor = _dclDialog._gtkWindow;
         }
         dlg.run();
         dlg.destroy();
@@ -55,11 +58,11 @@ exports.initContext = function (context) {
         VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context);
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context);
 
-        const jsDialogs = VeDclLoader.load(dclFile.value(), context);
-        console.log(util.inspect(jsDialogs, {showHidden: false, depth: null}));
+        const dclDialogs = VeDclLoader.load(dclFile.value(), context);
+        console.log(util.inspect(dclDialogs, {showHidden: false, depth: null}));
         const dclMap = {};
-        for (const jsDialog of jsDialogs) {
-            dclMap[jsDialog.id] = jsDialog;
+        for (const dclDialog of dclDialogs) {
+            dclMap[dclDialog.id] = dclDialog;
         }
         const dclId = new Int(_dclId++);
         _dclFiles[dclId.value()] = dclMap;
@@ -76,12 +79,11 @@ exports.initContext = function (context) {
         const dclFile = _dclFiles[dclId.value()];
         if (dclFile) {
             const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
-            // TODO: Move clone to initWidget?
-            const jsDialog = dclFile[dlgId.value()].clone();
-            if (jsDialog) {
+            const dclDialog = dclFile[dlgId.value()];
+            if (dclDialog) {
                 try {
-                    jsDialog.initWidget(context);
-                    _gtkDialog = jsDialog;
+                    _dclDialog = dclDialog.clone();
+                    _dclDialog.gtkInitWidget(context);
                     return new Bool(true);
                 } catch (e) {
                     // Should never happen since dialog ID is mandatory
@@ -99,8 +101,8 @@ exports.initContext = function (context) {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments');
         }
-        // TODO: ensure _gtkDialog
-        const status = _gtkDialog.startDialog();
+        // TODO: ensure _dclDialog
+        const status = _dclDialog.startDialog();
         return new Int(status);
     }));
     context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
@@ -112,7 +114,7 @@ exports.initContext = function (context) {
             status = ensureType('done_dialog:', args[0], [Int]);
         }
         // TODO: check there's current dialog
-        _gtkDialog.doneDialog(status);
+        _dclDialog.doneDialog(status);
         // TODO: what it should return? some (X, Y) point of the dialog
         return new Bool(true);
     }));
@@ -139,7 +141,7 @@ exports.initContext = function (context) {
         const handler = ensureType('action_tile: `handler`', args[1], [Str]);
         console.log(handler.toUnescapedString());
         try {
-            _gtkDialog.actionTile(key.value(), handler.value(), context);
+            _dclDialog.actionTile(key.value(), handler.value(), context);
             return new Bool(true);
         } catch {
             return new Bool(false);
@@ -154,7 +156,7 @@ exports.initContext = function (context) {
         }
         // TODO: ensure current dialog
         const key = ensureType('get_tile:', args[0], [Str]);
-        const str = _gtkDialog.getTile(key.value());
+        const str = _dclDialog.getTile(key.value());
         return new Str(str);
     }));
     context.setSym('SET_TILE', new Fun('get_tile', ['key', 'value'], [], (self, args) => {
@@ -167,7 +169,7 @@ exports.initContext = function (context) {
         // TODO: ensure current dialog
         const key = ensureType('set_tile:', args[0], [Str]);
         const value = ensureType('set_tile:', args[1], [Str]);
-        _gtkDialog.setTile(key.value(), value.value());
+        _dclDialog.setTile(key.value(), value.value());
         return value;
     }));
     context.setSym('MODE_TILE', new Fun('mode_tile', ['key', 'mode'], [], (self, args) => {
@@ -180,7 +182,7 @@ exports.initContext = function (context) {
         // TODO: ensure current dialog
         const key = ensureType('mode_tile: `key`', args[0], [Str]);
         const mode = ensureType('mode_tile: `mode`', args[1], [Int]);
-        _gtkDialog.setMode(key.value(), mode.value());
+        _dclDialog.setMode(key.value(), mode.value());
         return new Bool(false);
     }));
 }

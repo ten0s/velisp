@@ -163,37 +163,40 @@ class Dialog extends Cluster {
 
     // Cluster
     findTile(key) {
-        if (this.key === key) {
-            return this;
-        }
         return this._column.findTile(key);
     }
 
     // DCL
     actionTile(key, handler, context) {
         const tile = this.findTile(key);
-        const gtkWidget = this.findWidget(key);
+        const gtkWidget = this.gtkFindWidget(key);
         console.log(gtkWidget);
         tile.gtkActionTile(gtkWidget, handler, context);
     }
 
     // DCL
     getTile(key) {
+        if (this.key === key) {
+            return this.gtkGetTile(this._gtkWindow);
+        }
         const tile = this.findTile(key);
-        const gtkWidget = this.findWidget(key);
+        const gtkWidget = this.gtkFindWidget(key);
         return tile.gtkGetTile(gtkWidget);
     }
 
     // DCL
     setTile(key, value) {
+        if (this.key === key) {
+            return this.gtkSetTile(this._gtkWindow, value);
+        }
         const tile = this.findTile(key);
-        const gtkWidget = this.findWidget(key);
+        const gtkWidget = this.gtkFindWidget(key);
         return tile.gtkSetTile(gtkWidget, value);
     }
 
     // DCL
     setMode(key, mode) {
-        const gtkWidget = this.findWidget(key);
+        const gtkWidget = this.gtkFindWidget(key);
         switch (mode) {
         case TileMode.ENABLE_TILE:
             gtkWidget.setSensitive(true);
@@ -237,20 +240,32 @@ class Dialog extends Cluster {
     }
 
     // GTK
-    initWidget(context) {
+    gtkInitWidget(context) {
         const gtkXml = this.gtkXml();
         console.log(gtkXml);
         this._gtkBuilder = new Gtk.Builder();
         this._gtkBuilder.addFromString(gtkXml, gtkXml.length);
-        this._gtkWindow = this.findWidget(this.id);
+        this._gtkWindow = this.gtkFindWidget(this.id);
         for (let [key, handler] of this.getActions()) {
             this.actionTile(key, handler, context);
         }
     }
 
-    // GTK
-    findWidget(key) {
+    gtkFindWidget(key) {
+        if (this.key === key) {
+            return this._gtkWindow;
+        }
         return this._gtkBuilder.getObject(key);
+    }
+
+    gtkGetTile(gtkWidget) {
+        // MUST BE gtkWidget === this._gtkWindow
+        return gtkWidget.getTitle();
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        // MUST BE gtkWidget === this._gtkWindow
+        gtkWidget.setTitle(value);
     }
 
     gtkXml() {
