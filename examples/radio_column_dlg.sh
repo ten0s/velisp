@@ -17,7 +17,6 @@ node ${opts[@]} src/main.js <<EOF
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
       (exit 1)))
 
-  (set_tile "radio2" "1")
   (set_tile "current" (get_tile "radio_group"))
 
   (setq ret (start_dialog))

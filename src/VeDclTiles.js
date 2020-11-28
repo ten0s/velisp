@@ -753,7 +753,7 @@ class RadioButton extends Tile {
         this.key = null;
         this.label = '';
         //this.mnemonic = '';
-        this.value = '';
+        this.value = '0';
         this.width = -1;
     }
 
@@ -788,6 +788,7 @@ class RadioButton extends Tile {
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
   <property name="group">${radio}</property>
+  <property name="active">${this._bool(this.value === '1')}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
   <property name="margin_left">5</property>
@@ -820,7 +821,7 @@ class Toggle extends Tile {
         this.key = null;
         this.label = '';
         //this.mnemonic = '';
-        this.value = '';
+        this.value = '0';
         this.width = -1;
     }
 
@@ -854,6 +855,7 @@ class Toggle extends Tile {
   <property name="can_focus">True</property>
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
+  <property name="active">${this._bool(this.value === '1')}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
   <property name="margin_left">5</property>

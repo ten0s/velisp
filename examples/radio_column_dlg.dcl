@@ -20,6 +20,7 @@ radio_column_dlg : dialog {
     : radio_button{
       label = "radio #2";
       key = "radio2";
+      value = "1";
       action = "(set_tile \"current\" $key)";
     }
     : radio_button{
