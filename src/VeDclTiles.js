@@ -828,11 +828,9 @@ class Toggle extends Tile {
     gtkActionTile(gtkWidget, handler, context) {
         this.action = handler;
         gtkWidget.on('clicked', () => {
-            if (gtkWidget.active) {
-                context.setVar('$KEY', new Str(this.key));
-                context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
-                Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-            }
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
 
