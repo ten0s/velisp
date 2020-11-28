@@ -19,9 +19,13 @@ innerTile :     ':' clusterTile '{' entry* '}'     ';'?             # innerClust
 clusterTile : 'dialog'
             | 'row'
             | 'column'
+            | 'boxed_row'
+            | 'boxed_column'
             | 'concatenation'
             | 'radio_row'
             | 'radio_column'
+            | 'boxed_radio_row'
+            | 'boxed_radio_column'
             ;
 
 simpleTile : 'button'

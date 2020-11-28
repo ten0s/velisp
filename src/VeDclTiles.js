@@ -376,6 +376,122 @@ class Column extends Cluster {
     }
 }
 
+class BoxedRow extends Cluster {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = 'centered';
+        //this.children_alignment = 'centered';
+        //this.children_fixed_height = false;
+        //this.children_fixed_width = false;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.key = null;
+        this.label = '';
+        this.width = -1;
+    }
+
+    gtkXml() {
+        const id = this.key ? `id="${this.key}"` : '';
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
+        return `
+<object class="GtkFrame">
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+  <property name="label_xalign">0.029999999329447746</property>
+  <child>
+    <object class="GtkBox" ${id}>
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="orientation">horizontal</property>
+      <property name="spacing">0</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
+
+      <property name="halign">fill</property>
+      <property name="valign">${this._ver_align(this.alignment)}</property>
+      ${tiles}
+    </object>
+  </child>
+  <child type="label">
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
+</object>
+<packing>
+  <property name="fill">False</property>
+  <property name="expand">False</property>
+</packing>
+`;
+    }
+}
+
+class BoxedColumn extends Cluster {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = 'left';
+        //this.children_alignment = 'left';
+        //this.children_fixed_height = false;
+        //this.children_fixed_width = false;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.key = null;
+        this.label = '';
+        this.width = -1;
+    }
+
+    gtkXml() {
+        const id = this.key ? `id="${this.key}"` : '';
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
+        return `
+<object class="GtkFrame">
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+  <property name="label_xalign">0.029999999329447746</property>
+  <child>
+    <object class="GtkBox" ${id}>
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="orientation">vertical</property>
+      <property name="spacing">0</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
+
+      <property name="halign">${this._hor_align(this.alignment)}</property>
+      <property name="valign">fill</property>
+      ${tiles}
+    </object>
+  </child>
+  <child type="label">
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
+</object>
+<packing>
+  <property name="fill">False</property>
+  <property name="expand">False</property>
+</packing>
+`;
+    }
+}
+
 class Concatenation extends Column {
 }
 
@@ -740,6 +856,136 @@ class RadioColumn extends RadioCluster {
     }
 }
 
+class BoxedRadioRow extends RadioCluster {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = 'centered';
+        //this.children_alignment = 'centered';
+        //this.children_fixed_height = false;
+        //this.children_fixed_width = false;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.key = null;
+        this.label = '';
+        this.width = -1;
+    }
+
+    gtkXml() {
+        const id = this.key ? `id="${this.key}"` : '';
+        let group = '';
+        for (let tile of this._tiles) {
+            if (tile.key) {
+                group = tile.key;
+                break;
+            }
+        }
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
+        return `
+<object class="GtkFrame">
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+  <property name="label_xalign">0.029999999329447746</property>
+  <child>
+    <object class="GtkBox" ${id}>
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="orientation">horizontal</property>
+      <property name="spacing">0</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
+
+      <property name="halign">fill</property>
+      <property name="valign">${this._ver_align(this.alignment)}</property>
+      ${tiles}
+    </object>
+  </child>
+  <child type="label">
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
+</object>
+<packing>
+  <property name="fill">False</property>
+  <property name="expand">False</property>
+</packing>
+`;
+    }
+}
+
+class BoxedRadioColumn extends RadioCluster {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = 'left';
+        //this.children_alignment = 'left';
+        //this.children_fixed_height = false;
+        //this.children_fixed_width = false;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.key = null;
+        this.label = '';
+        this.width = -1;
+    }
+
+    gtkXml() {
+        const id = this.key ? `id="${this.key}"` : '';
+        let group = '';
+        for (let tile of this._tiles) {
+            if (tile.key) {
+                group = tile.key;
+                break;
+            }
+        }
+        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
+        return `
+<object class="GtkFrame">
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+  <property name="label_xalign">0.029999999329447746</property>
+  <child>
+    <object class="GtkBox" ${id}>
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="orientation">vertical</property>
+      <property name="spacing">0</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
+
+      <property name="halign">${this._hor_align(this.alignment)}</property>
+      <property name="valign">fill</property>
+      ${tiles}
+    </object>
+  </child>
+  <child type="label">
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
+</object>
+<packing>
+  <property name="fill">False</property>
+  <property name="expand">False</property>
+</packing>
+`;
+    }
+}
+
 class RadioButton extends Tile {
     constructor(id) {
         super(id);
@@ -874,8 +1120,12 @@ class Toggle extends Tile {
 }
 
 exports.Dialog = Dialog;
+
 exports.Row = Row;
 exports.Column = Column;
+exports.BoxedRow = BoxedRow;
+exports.BoxedColumn = BoxedColumn;
+
 exports.Concatenation = Concatenation;
 exports.Spacer = Spacer;
 exports.Text = Text;
@@ -885,5 +1135,7 @@ exports.EditBox = EditBox;
 exports.RadioRow = RadioRow;
 exports.RadioColumn = RadioColumn;
 exports.RadioButton = RadioButton;
+exports.BoxedRadioRow = BoxedRadioRow;
+exports.BoxedRadioColumn = BoxedRadioColumn;
 
 exports.Toggle = Toggle;

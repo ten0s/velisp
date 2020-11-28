@@ -8,9 +8,13 @@ const {
     Dialog,
     Row,
     Column,
+    BoxedRow,
+    BoxedColumn,
     Concatenation,
     RadioRow,
     RadioColumn,
+    BoxedRadioRow,
+    BoxedRadioColumn,
     // Tiles
     Button,
     EditBox,
@@ -22,19 +26,23 @@ const {
 
 const tileCtors = {
     // Clusters
-    'dialog'       : (id) => new Dialog(id),
-    'row'          : (id) => new Row(id),
-    'column'       : (id) => new Column(id),
-    'concatenation': (id) => new Concatenation(id),
-    'radio_row'    : (id) => new RadioRow(id),
-    'radio_column' : (id) => new RadioColumn(id),
+    'dialog'            : (id) => new Dialog(id),
+    'row'               : (id) => new Row(id),
+    'column'            : (id) => new Column(id),
+    'boxed_row'         : (id) => new BoxedRow(id),
+    'boxed_column'      : (id) => new BoxedColumn(id),
+    'concatenation'     : (id) => new Concatenation(id),
+    'radio_row'         : (id) => new RadioRow(id),
+    'radio_column'      : (id) => new RadioColumn(id),
+    'boxed_radio_row'   : (id) => new BoxedRadioRow(id),
+    'boxed_radio_column': (id) => new BoxedRadioColumn(id),
     // Tiles
-    'button'       : (id) => new Button(id),
-    'edit_box'     : (id) => new EditBox(id),
-    'radio_button' : (id) => new RadioButton(id),
-    'spacer'       : (id) => new Spacer(id),
-    'text'         : (id) => new Text(id),
-    'toggle'       : (id) => new Toggle(id),
+    'button'            : (id) => new Button(id),
+    'edit_box'          : (id) => new EditBox(id),
+    'radio_button'      : (id) => new RadioButton(id),
+    'spacer'            : (id) => new Spacer(id),
+    'text'              : (id) => new Text(id),
+    'toggle'            : (id) => new Toggle(id),
 };
 
 class VeDclLoader extends VeDclListener {
