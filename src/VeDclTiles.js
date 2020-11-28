@@ -632,7 +632,7 @@ class RadioCluster extends Cluster {
                 return this._tiles[i].key;
             }
         }
-        return "";
+        return '';
     }
 
     gtkSetTile(gtkWidget, value) {
@@ -769,11 +769,11 @@ class RadioButton extends Tile {
     }
 
     gtkGetTile(gtkWidget) {
-        return gtkWidget.active ? "1" : "0";
+        return gtkWidget.active ? '1' : '0';
     }
 
     gtkSetTile(gtkWidget, value) {
-        gtkWidget.active = (value === "1");
+        gtkWidget.active = (value === '1');
         this.value = value;
     }
 
@@ -836,11 +836,11 @@ class Toggle extends Tile {
     }
 
     gtkGetTile(gtkWidget) {
-        return gtkWidget.active ? "1" : "0";
+        return gtkWidget.active ? '1' : '0';
     }
 
     gtkSetTile(gtkWidget, value) {
-        gtkWidget.active = (value === "1");
+        gtkWidget.active = (value === '1');
         this.value = value;
     }
 
