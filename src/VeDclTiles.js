@@ -777,7 +777,7 @@ class RadioButton extends Tile {
         this.value = value;
     }
 
-    gtkXml(radio) {
+    gtkXml(group) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkRadioButton" ${id}>
@@ -787,7 +787,7 @@ class RadioButton extends Tile {
   <property name="can_focus">True</property>
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
-  <property name="group">${radio}</property>
+  <property name="group">${group}</property>
   <property name="active">${this._bool(this.value === '1')}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
@@ -845,7 +845,7 @@ class Toggle extends Tile {
         this.value = value;
     }
 
-    gtkXml(radio) {
+    gtkXml() {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkCheckButton" ${id}>
