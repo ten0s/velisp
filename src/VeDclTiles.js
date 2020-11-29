@@ -379,7 +379,6 @@ class Column extends Cluster {
 class BoxedRow extends Cluster {
     constructor(id) {
         super(id);
-        this.action = '';
         this.alignment = 'centered';
         //this.children_alignment = 'centered';
         //this.children_fixed_height = false;
@@ -403,7 +402,7 @@ class BoxedRow extends Cluster {
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
-  <property name="label_xalign">0.029999999329447746</property>
+  <property name="label_xalign">0.03</property>
   <child>
     <object class="GtkBox" ${id}>
       <property name="visible">True</property>
@@ -415,6 +414,9 @@ class BoxedRow extends Cluster {
 
       <property name="halign">fill</property>
       <property name="valign">${this._ver_align(this.alignment)}</property>
+
+      <!-- Whether the children should all be the same size -->
+      <property name="homogeneous">True</property>
       ${tiles}
     </object>
   </child>
@@ -437,7 +439,6 @@ class BoxedRow extends Cluster {
 class BoxedColumn extends Cluster {
     constructor(id) {
         super(id);
-        this.action = '';
         this.alignment = 'left';
         //this.children_alignment = 'left';
         //this.children_fixed_height = false;
@@ -892,6 +893,7 @@ class BoxedRadioRow extends RadioCluster {
   <property name="margin_bottom">5</property>
   <property name="label_xalign">0.029999999329447746</property>
   <child>
+    <!-- Since it's a radio group, id must be here -->
     <object class="GtkBox" ${id}>
       <property name="visible">True</property>
       <property name="can_focus">False</property>
@@ -955,8 +957,9 @@ class BoxedRadioColumn extends RadioCluster {
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
-  <property name="label_xalign">0.029999999329447746</property>
+  <property name="label_xalign">0.03</property>
   <child>
+    <!-- Since it's a radio group, id must be here -->
     <object class="GtkBox" ${id}>
       <property name="visible">True</property>
       <property name="can_focus">False</property>

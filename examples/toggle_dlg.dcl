@@ -1,7 +1,9 @@
 toggle_dlg : dialog {
   label = "Toggle";
-  : row {
-    : column {
+  : boxed_row {
+    label = "Boxed Row";
+    : boxed_column {
+      label = "1"
       : text {
         key = "toggle1-value";
         value = "";
@@ -13,7 +15,8 @@ toggle_dlg : dialog {
         action = "(set_tile \"toggle1-value\" (if (= $value \"1\") \"on\" \"off\"))";
       }
     }
-    : column {
+    : boxed_column {
+      label = "2";
       : text {
         key = "toggle2-value";
         value = "";
