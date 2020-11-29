@@ -4,5 +4,5 @@ ok_cancel_dlg : dialog {
     label = "Hello";
     alignment = centered;
   }
-  on_cancel;
+  ok_cancel;
 }

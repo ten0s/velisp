@@ -4,5 +4,5 @@ ok_cancel_help_info_dlg : dialog {
     label = "Hello";
     alignment = centered;
   }
-  on_cancel_help_info;
+  ok_cancel_help_info;
 }

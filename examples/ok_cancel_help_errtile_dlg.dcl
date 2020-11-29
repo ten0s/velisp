@@ -4,5 +4,5 @@ ok_cancel_help_errtile_dlg : dialog {
     label = "Hello";
     alignment = centered;
   }
-  on_cancel_help_errtile;
+  ok_cancel_help_errtile;
 }

@@ -8,13 +8,16 @@ mode_tile_dlg : dialog {
     edit_width = 5;
   }
   : row {
+    alignment = centered;
     : button {
       key = "toggle";
       label = "Enable";
+      width = 10;
     }
     : button {
       key = "cancel";
       label = "Cancel";
+      width = 10;
     }
   }
 }

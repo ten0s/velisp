@@ -16,7 +16,7 @@ else
     dlg_id=${dlg_id%%.dcl}
 fi
 
-velisp <<EOF
+node ${opts[@]} src/main.js <<EOF
   (setq dcl_file "$dcl_file")
   (if (< (setq dcl_id (load_dialog dcl_file)) 0)
     (progn

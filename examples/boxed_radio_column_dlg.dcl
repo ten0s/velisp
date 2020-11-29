@@ -1,6 +1,7 @@
 boxed_radio_column_dlg : dialog {
   label = "Boxed Radio Column";
   : row {
+    alignment = centered;
     : text {
       label = "Current: ";
     }

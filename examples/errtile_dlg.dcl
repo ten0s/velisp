@@ -8,8 +8,10 @@ errtile_dlg : dialog {
   : text {
     key = "text";
     value = "";
+    alignment = centered;
   }
   : row {
+    alignment = centered;
     : button {
       key = "getint";
       label = "Get Integer";
@@ -19,5 +21,5 @@ errtile_dlg : dialog {
       label = "Cancel";
     }
   }
-  : errtile { };
+  errtile;
 }

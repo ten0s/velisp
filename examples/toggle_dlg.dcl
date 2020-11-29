@@ -3,7 +3,7 @@ toggle_dlg : dialog {
   : boxed_row {
     label = "Boxed Row";
     : boxed_column {
-      label = "1"
+      label = "1";
       : text {
         key = "toggle1-value";
         value = "";

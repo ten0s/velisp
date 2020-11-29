@@ -2,102 +2,108 @@
 // Basic tile definitions
 //
 
+ok_button : button {
+  key = "accept";
+  label = "OK";
+  action = "(done_dialog 1)";
+}
+
+cancel_button : button {
+  key = "cancel";
+  label = "Cancel";
+  action = "(done_dialog 0)";
+}
+
+help_button : button {
+  key = "help";
+  label = "Help";
+}
+
+info_button : button {
+  key = "info";
+  label = "Info...";
+}
+
 errtile : text {
   key = "error";
   alignment = left;
 }
 
-ok_only : row {
-  : button {
-    key = "accept";
-    label = "OK";
-    action = "(done_dialog 1)";
-    is_default = true;
+ok_only : column {
+  alignment = centered;
+  : row {
+    : ok_button {
+      is_default = true;
+      width = 8;
+    }
   }
 }
 
-on_cancel : row {
-  : button {
-    key = "accept";
-    label = "OK";
-    action = "(done_dialog 1)";
-    is_default = true;
-  }
-  : button {
-    key = "cancel";
-    label = "Cancel";
-    action = "(done_dialog 0)";
-    is_default = false;
+ok_cancel : column {
+  alignment = centered;
+  : row {
+    : ok_button {
+      is_default = true;
+      width = 8;
+    }
+    : cancel_button {
+      width = 8;
+    }
   }
 }
 
-on_cancel_help : row {
-  : button {
-    key = "accept";
-    label = "OK";
-    action = "(done_dialog 1)";
-    is_default = true;
-  }
-  : button {
-    key = "cancel";
-    label = "Cancel";
-    action = "(done_dialog 0)";
-    is_default = false;
-  }
-  : button {
-    key = "help";
-    label = "Help";
-    is_default = false;
+ok_cancel_help : column {
+  alignment = centered;
+  : row {
+    : ok_button {
+      is_default = true;
+      width = 8;
+    }
+    : cancel_button {
+      width = 8;
+    }
+    : help_button {
+      width = 8;
+    }
   }
 }
 
-on_cancel_help_info : row {
-  : button {
-    key = "accept";
-    label = "OK";
-    action = "(done_dialog 1)";
-    is_default = true;
-  }
-  : button {
-    key = "cancel";
-    label = "Cancel";
-    action = "(done_dialog 0)";
-    is_default = false;
-  }
-  : button {
-    key = "help";
-    label = "Help";
-    is_default = false;
-  }
-  : button {
-    key = "info";
-    label = "Info...";
-    is_default = false;
+ok_cancel_help_info : column {
+  alignment = centered;
+  : row {
+    : ok_button {
+      is_default = true;
+      width = 8;
+    }
+    : cancel_button {
+      width = 8;
+    }
+    : help_button {
+      width = 8;
+    }
+    : info_button {
+      width = 8;
+    }
   }
 }
 
-on_cancel_help_errtile : column {
+ok_cancel_help_errtile : column {
   alignment = filled;
   : row {
-    : button {
-      key = "accept";
-      label = "OK";
-      action = "(done_dialog 1)";
+    alignment = centered;
+    : ok_button {
       is_default = true;
+      width = 8;
     }
-    : button {
-      key = "cancel";
-      label = "Cancel";
-      action = "(done_dialog 0)";
-      is_default = false;
+    : cancel_button {
+      width = 8;
     }
-    : button {
-      key = "help";
-      label = "Help";
-      is_default = false;
+    : help_button {
+      width = 8;
     }
   }
   : row {
+    alignment = left;
     errtile;
   }
 }

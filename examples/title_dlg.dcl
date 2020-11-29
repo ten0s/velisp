@@ -2,6 +2,7 @@ title_dlg : dialog {
   key = "dialog";
   value = "";
   : row {
+    alignment = centered;
     : text {
       label = "Old Title: ";
     }
@@ -11,6 +12,7 @@ title_dlg : dialog {
     }
   }
   : row {
+    alignment = centered;
     : button {
       key = "change";
       label = "Change Title";

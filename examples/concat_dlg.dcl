@@ -17,12 +17,15 @@ concat_dlg : dialog {
   : text {
     key = "text1";
     label = "Change me";
+    alignment = centered;
   }
   : text {
     key = "text2";
     label = "Change me too";
+    alignment = centered;
   }
   : row {
+    alignment = centered;
     : button {
       key = "accept";
       label = "Concat";

@@ -15,6 +15,20 @@ const TileMode = {
     FLIP_IMAGE: 4
 };
 
+const Layout = {
+    COLUMN: 'column',
+    ROW: 'row',
+};
+
+const Alignment = {
+    LEFT: 'left',
+    RIGHT: 'right',
+    TOP: 'top',
+    BOTTOM: 'bottom',
+    CENTERED: 'centered',
+    FILLED: 'filled', // GTK specific
+}
+
 class Tile {
     constructor(id) {
         this.id = id;
@@ -43,29 +57,44 @@ class Tile {
         return 'False';
     }
 
-    _hor_align(value) {
-        switch (value) {
-        case 'left':
+    _dcl_to_gtk_align(alignment) {
+        switch (alignment) {
+        case Alignment.LEFT:
             return 'start';
-        case 'right':
+        case Alignment.RIGHT:
             return 'end';
-        case 'centered':
+        case Alignment.TOP:
+            return 'start';
+        case Alignment.BOTTOM:
+            return 'end';
+        case Alignment.CENTERED:
             return 'center';
-        default:
+        case Alignment.FILLED:
             return 'fill';
+        default:
+            throw new Error(`Invalid alignment: ${alignment}`);
         }
     }
 
-    _ver_align(value) {
-        switch (value) {
-        case 'top':
-            return 'start';
-        case 'bottom':
-            return 'end';
-        case 'centered':
-            return 'center';
-        default:
+    _halign(alignment, layout) {
+        switch (layout) {
+        case Layout.COLUMN:
+            return this._dcl_to_gtk_align(alignment ? alignment : Alignment.LEFT);
+        case Layout.ROW:
             return 'fill';
+        default:
+            throw new Error(`Invalid layout: ${layout}`);
+        }
+    }
+
+    _valign(alignment, layout) {
+        switch (layout) {
+        case Layout.COLUMN:
+            return 'fill';
+        case Layout.ROW:
+            return this._dcl_to_gtk_align(alignment ? alignment : Alignment.CENTERED);
+        default:
+            throw new Error(`Invalid layout: ${layout}`);
         }
     }
 
@@ -164,7 +193,6 @@ class Dialog extends Cluster {
         this.value = '';
         delete this._tiles;
         this._column = new Column();
-        this._column.alignment = 'filled';
         this._gtkBuilder = null;
         this._gtkWindow = null;
     }
@@ -289,7 +317,7 @@ class Dialog extends Cluster {
     gtkXml() {
         const id = this.id ? `id="${this.id}"` : '';
         const title = this.label ? this.label : this.value;
-        const child = this._child(this._column.gtkXml());
+        const child = this._child(this._column.gtkXml({layout: Layout.COLUMN}));
         return `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -307,8 +335,8 @@ class Dialog extends Cluster {
 class Row extends Cluster {
     constructor(id) {
         super(id);
-        this.alignment = 'centered';
-        //this.children_alignment = 'centered';
+        this.alignment = '';
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -318,8 +346,10 @@ class Row extends Cluster {
         this.width = -1;
     }
 
-    gtkXml() {
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
+    gtkXml({layout}) {
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.ROW}))
+        ).join('\n');
         return `
 <object class="GtkBox">
   <property name="orientation">horizontal</property>
@@ -329,11 +359,12 @@ class Row extends Cluster {
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
 
-  <property name="halign">fill</property>
-  <property name="valign">${this._ver_align(this.alignment)}</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 
-  <!-- Whether the children should all be the same size -->
+  <!-- Whether the children should all be the same size??? -->
   <property name="homogeneous">True</property>
+
   ${tiles}
 </object>
 `;
@@ -343,8 +374,8 @@ class Row extends Cluster {
 class Column extends Cluster {
     constructor(id) {
         super(id);
-        this.alignment = 'left';
-        //this.children_alignment = 'left';
+        this.alignment = Alignment.FILLED;
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -354,8 +385,10 @@ class Column extends Cluster {
         this.width = -1;
     }
 
-    gtkXml() {
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
+    gtkXml({layout}) {
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.COLUMN}))
+        ).join('\n');
         return `
 <object class="GtkBox">
   <property name="orientation">vertical</property>
@@ -364,12 +397,8 @@ class Column extends Cluster {
   <property name="spacing">0</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
-
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
-
-  <!-- Whether the children should all be the same size -->
-  <property name="homogeneous">False</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
   ${tiles}
 </object>
 `;
@@ -379,8 +408,8 @@ class Column extends Cluster {
 class BoxedRow extends Cluster {
     constructor(id) {
         super(id);
-        this.alignment = 'centered';
-        //this.children_alignment = 'centered';
+        this.alignment = '';
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -391,9 +420,11 @@ class BoxedRow extends Cluster {
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.ROW}))
+        ).join('\n');
         return `
 <object class="GtkFrame">
   <property name="visible">True</property>
@@ -409,14 +440,12 @@ class BoxedRow extends Cluster {
       <property name="can_focus">False</property>
       <property name="orientation">horizontal</property>
       <property name="spacing">0</property>
+
       <property name="width_request">${this._width(this.width)}</property>
       <property name="height_request">${this._height(this.height)}</property>
+      <property name="halign">${this._halign(this.alignment, layout)}</property>
+      <property name="valign">${this._valign(this.alignment, layout)}</property>
 
-      <property name="halign">fill</property>
-      <property name="valign">${this._ver_align(this.alignment)}</property>
-
-      <!-- Whether the children should all be the same size -->
-      <property name="homogeneous">True</property>
       ${tiles}
     </object>
   </child>
@@ -439,8 +468,8 @@ class BoxedRow extends Cluster {
 class BoxedColumn extends Cluster {
     constructor(id) {
         super(id);
-        this.alignment = 'left';
-        //this.children_alignment = 'left';
+        this.alignment = Alignment.FILLED;
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -451,9 +480,11 @@ class BoxedColumn extends Cluster {
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml())).join('\n');
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.COLUMN}))
+        ).join('\n');
         return `
 <object class="GtkFrame">
   <property name="visible">True</property>
@@ -471,9 +502,8 @@ class BoxedColumn extends Cluster {
       <property name="spacing">0</property>
       <property name="width_request">${this._width(this.width)}</property>
       <property name="height_request">${this._height(this.height)}</property>
-
-      <property name="halign">${this._hor_align(this.alignment)}</property>
-      <property name="valign">fill</property>
+      <property name="halign">${this._halign(this.alignment, layout)}</property>
+      <property name="valign">${this._valign(this.alignment, layout)}</property>
       ${tiles}
     </object>
   </child>
@@ -499,14 +529,14 @@ class Concatenation extends Column {
 class Spacer extends Tile {
     constructor(id) {
         super(id);
-        this.alignment = 'centered';
+        this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         return `
 <object class="GtkLabel">
   <property name="visible">True</property>
@@ -514,9 +544,8 @@ class Spacer extends Tile {
   <property name="label"></property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
-
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 </object>
 `;
     }
@@ -525,7 +554,7 @@ class Spacer extends Tile {
 class Text extends Tile {
     constructor(id) {
         super(id);
-        this.alignment = 'centered';
+        this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
@@ -544,7 +573,7 @@ class Text extends Tile {
         gtkWidget.setText(value);
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         const label = this.label ? this.label : this.value;
         return `
@@ -558,9 +587,8 @@ class Text extends Tile {
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
-
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 </object>
 `;
     }
@@ -570,7 +598,7 @@ class Button extends Tile {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'centered';
+        this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
@@ -602,13 +630,11 @@ class Button extends Tile {
     }
 
     // TODO: rename gtkXml
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkButton" ${id}>
   <property name="label">${this.label}</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">True</property>
@@ -619,9 +645,10 @@ class Button extends Tile {
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
-
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 </object>
 <packing>
   <property name="fill">False</property>
@@ -635,7 +662,7 @@ class EditBox extends Tile {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'centered';
+        this.alignment = '';
         //this.allow_accept = false;
         this.edit_limit = 132;
         this.edit_width = 0;
@@ -669,19 +696,23 @@ class EditBox extends Tile {
         gtkWidget.setText(value);
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkBox">
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
   <property name="margin_left">5</property>
   <property name="margin_right">5</property>
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <!-- Not sure for now how it should align
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  -->
   <child>
     <object class="GtkLabel">
       <property name="visible">True</property>
@@ -766,8 +797,8 @@ class RadioRow extends RadioCluster {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'centered';
-        //this.children_alignment = 'centered';
+        this.alignment = '';
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -778,7 +809,7 @@ class RadioRow extends RadioCluster {
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         let group = '';
         for (let tile of this._tiles) {
@@ -787,7 +818,9 @@ class RadioRow extends RadioCluster {
                 break;
             }
         }
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.ROW, group}))
+        ).join('\n');
         return `
 <object class="GtkBox" ${id}>
   <property name="visible">True</property>
@@ -796,9 +829,10 @@ class RadioRow extends RadioCluster {
   <property name="spacing">0</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-<!--  <property name="valign">${this._ver_align(this.alignment)}</property> -->
-  <property name="homogeneous">True</property>
+
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+
   ${tiles}
 </object>
 <packing>
@@ -813,8 +847,8 @@ class RadioColumn extends RadioCluster {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'left';
-        //this.children_alignment = 'left';
+        this.alignment = '';
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -825,7 +859,7 @@ class RadioColumn extends RadioCluster {
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         let group = '';
         for (let tile of this._tiles) {
@@ -834,7 +868,9 @@ class RadioColumn extends RadioCluster {
                 break;
             }
         }
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.COLUMN, group}))
+        ).join('\n');
         return `
 <object class="GtkBox" ${id}>
   <property name="visible">True</property>
@@ -844,8 +880,8 @@ class RadioColumn extends RadioCluster {
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
 
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 
   ${tiles}
 </object>
@@ -861,8 +897,8 @@ class BoxedRadioRow extends RadioCluster {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'centered';
-        //this.children_alignment = 'centered';
+        this.alignment = '';
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -873,7 +909,7 @@ class BoxedRadioRow extends RadioCluster {
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         let group = '';
         for (let tile of this._tiles) {
@@ -882,7 +918,9 @@ class BoxedRadioRow extends RadioCluster {
                 break;
             }
         }
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.ROW, group}))
+        ).join('\n');
         return `
 <object class="GtkFrame">
   <property name="visible">True</property>
@@ -901,9 +939,8 @@ class BoxedRadioRow extends RadioCluster {
       <property name="spacing">0</property>
       <property name="width_request">${this._width(this.width)}</property>
       <property name="height_request">${this._height(this.height)}</property>
-
-      <property name="halign">fill</property>
-      <property name="valign">${this._ver_align(this.alignment)}</property>
+      <property name="halign">${this._halign(this.alignment, layout)}</property>
+      <property name="valign">${this._valign(this.alignment, layout)}</property>
       ${tiles}
     </object>
   </child>
@@ -927,8 +964,8 @@ class BoxedRadioColumn extends RadioCluster {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'left';
-        //this.children_alignment = 'left';
+        this.alignment = Alignment.FILLED;
+        //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
         //this.fixed_height = false;
@@ -939,7 +976,7 @@ class BoxedRadioColumn extends RadioCluster {
         this.width = -1;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         let group = '';
         for (let tile of this._tiles) {
@@ -948,7 +985,9 @@ class BoxedRadioColumn extends RadioCluster {
                 break;
             }
         }
-        const tiles = this._tiles.map(tile => this._child(tile.gtkXml(group))).join('\n');
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.COLUMN, group}))
+        ).join('\n');
         return `
 <object class="GtkFrame">
   <property name="visible">True</property>
@@ -967,9 +1006,8 @@ class BoxedRadioColumn extends RadioCluster {
       <property name="spacing">0</property>
       <property name="width_request">${this._width(this.width)}</property>
       <property name="height_request">${this._height(this.height)}</property>
-
-      <property name="halign">${this._hor_align(this.alignment)}</property>
-      <property name="valign">fill</property>
+      <property name="halign">${this._halign(this.alignment, layout)}</property>
+      <property name="valign">${this._valign(this.alignment, layout)}</property>
       ${tiles}
     </object>
   </child>
@@ -993,7 +1031,7 @@ class RadioButton extends Tile {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'centered';
+        this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
@@ -1026,7 +1064,7 @@ class RadioButton extends Tile {
         this.value = value;
     }
 
-    gtkXml(group) {
+    gtkXml({layout, group}) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkRadioButton" ${id}>
@@ -1045,8 +1083,8 @@ class RadioButton extends Tile {
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
 
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 
 </object>
 <packing>
@@ -1061,7 +1099,7 @@ class Toggle extends Tile {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = 'left';
+        this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
@@ -1092,7 +1130,7 @@ class Toggle extends Tile {
         this.value = value;
     }
 
-    gtkXml() {
+    gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkCheckButton" ${id}>
@@ -1110,8 +1148,8 @@ class Toggle extends Tile {
   <property name="margin_top">5</property>
   <property name="margin_bottom">5</property>
 
-  <property name="halign">${this._hor_align(this.alignment)}</property>
-  <property name="valign">fill</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
 
 </object>
 <packing>
