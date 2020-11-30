@@ -3,7 +3,6 @@ row_alignment : dialog {
 
   : text { label = "No Column"; }
   : row {
-    alignment = filled;
     height = 8;
     : button {
       label = "Top";
@@ -25,7 +24,6 @@ row_alignment : dialog {
   : text { label = "Column"; }
   : column {
     : row {
-      alignment = filled;
       height = 8;
       : button {
         label = "Top";
@@ -47,7 +45,6 @@ row_alignment : dialog {
 
   : boxed_row {
     label = "Boxed Row";
-    alignment = filled;
     height = 8;
     : button {
       label = "Top";
@@ -68,7 +65,6 @@ row_alignment : dialog {
   
   : boxed_radio_row {
     label = "Boxed Radio Row";
-    alignment = filled;
     height = 8;
     : button {
       label = "Top";

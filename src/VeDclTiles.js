@@ -335,7 +335,7 @@ class Dialog extends Cluster {
 class Row extends Cluster {
     constructor(id) {
         super(id);
-        this.alignment = '';
+        this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
@@ -408,7 +408,7 @@ class Column extends Cluster {
 class BoxedRow extends Cluster {
     constructor(id) {
         super(id);
-        this.alignment = '';
+        this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
@@ -797,7 +797,7 @@ class RadioRow extends RadioCluster {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = '';
+        this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
@@ -897,7 +897,7 @@ class BoxedRadioRow extends RadioCluster {
     constructor(id) {
         super(id);
         this.action = '';
-        this.alignment = '';
+        this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
         //this.children_fixed_width = false;
