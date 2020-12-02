@@ -1095,6 +1095,87 @@ class RadioButton extends Tile {
     }
 }
 
+class Slider extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = '';
+        //this.big_increment = integer; // one-tenth of the total range
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.key = '';
+        //this.label = '';
+        this.layout = 'horizontal'; // 'vertical'
+        this.max_value = 10000;  // signed 16-bit integer no greater than 32767
+        this.min_value = 0;      // signed 16-bit integer no less than -32768
+        //this.mnemonic = '';
+        //this.small_increment = integer; // one one-hundredth the total range
+        this.value = 0;
+        this.width = -1;
+        this._index = Slider.index++;
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('value-changed', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        const value = gtkWidget.getValue();
+        return Math.round(value).toString();
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        value = Number.parseInt(value);
+        gtkWidget.setValue(value);
+    }
+
+    gtkXml({layout}) {
+        const id = this.key ? `id="${this.key}"` : '';
+        return `
+<object class="GtkScale" ${id}>
+  <property name="visible">True</property>
+  <property name="can_focus">True</property>
+  <property name="orientation">${this.layout}</property>
+  <property name="adjustment">scale-adj-${this._index}</property> -->
+  <property name="round_digits">0</property>
+  <property name="digits">0</property>
+  <property name="draw_value">False</property>
+  <property name="value_pos">top</property>
+
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <!-- <property name="hexpand">True</property> -->
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+
+</object>
+<packing>
+   <property name="expand">False</property>
+   <property name="fill">False</property>
+</packing>
+ <object class="GtkAdjustment" id="scale-adj-${this._index}">
+    <property name="lower">${this.min_value}</property>
+    <property name="upper">${this.max_value}</property>
+    <property name="value">${this.value}</property>
+    <!-- this.big_increment? -->
+    <property name="step_increment">1</property>
+  </object>
+`;
+    }
+}
+Slider.index = 0;
+
 class Toggle extends Tile {
     constructor(id) {
         super(id);
@@ -1179,4 +1260,5 @@ exports.RadioButton = RadioButton;
 exports.BoxedRadioRow = BoxedRadioRow;
 exports.BoxedRadioColumn = BoxedRadioColumn;
 
+exports.Slider = Slider;
 exports.Toggle = Toggle;

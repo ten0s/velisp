@@ -31,6 +31,7 @@ clusterTile : 'dialog'
 simpleTile : 'button'
            | 'edit_box'
            | 'radio_button'
+           | 'slider'
            | 'spacer'
            | 'text'
            | 'toggle'
@@ -54,6 +55,7 @@ attributeValue : BOOL
                | REAL
                | STR
                | ALIGN
+               | LAYOUT
                ;
 
 // Lexer rules
@@ -73,6 +75,10 @@ ALIGN : 'left'
       | 'centered'
       | 'filled'
       ;
+
+LAYOUT : 'horizontal'
+       | 'vertical'
+       ;
 
 ID : LETTER+(DIGIT | LETTER | '_')* ;
 

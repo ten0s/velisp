@@ -19,6 +19,7 @@ const {
     Button,
     EditBox,
     RadioButton,
+    Slider,
     Spacer,
     Text,
     Toggle,
@@ -40,6 +41,7 @@ const tileCtors = {
     'button'            : (id) => new Button(id),
     'edit_box'          : (id) => new EditBox(id),
     'radio_button'      : (id) => new RadioButton(id),
+    'slider'            : (id) => new Slider(id),
     'spacer'            : (id) => new Spacer(id),
     'text'              : (id) => new Text(id),
     'toggle'            : (id) => new Toggle(id),
@@ -194,6 +196,8 @@ class VeDclLoader extends VeDclListener {
                 value = str.substring(1, str.length-1);
             } else if (ctx.attributeValue().ALIGN()) {
                 value = ctx.attributeValue().ALIGN().getText();
+            } else if (ctx.attributeValue().LAYOUT()) {
+                value = ctx.attributeValue().LAYOUT().getText();
             } else {
                 throw new Error(`Unhandled: ${name} = ${ctx.attributeValue().getText()}`);
             }
