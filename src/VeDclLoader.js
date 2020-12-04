@@ -18,6 +18,7 @@ const {
     // Tiles
     Button,
     EditBox,
+    PopupList,
     RadioButton,
     Slider,
     Spacer,
@@ -40,6 +41,7 @@ const tileCtors = {
     // Tiles
     'button'            : (id) => new Button(id),
     'edit_box'          : (id) => new EditBox(id),
+    'popup_list'        : (id) => new PopupList(id),
     'radio_button'      : (id) => new RadioButton(id),
     'slider'            : (id) => new Slider(id),
     'spacer'            : (id) => new Spacer(id),

@@ -30,6 +30,7 @@ clusterTile : 'dialog'
 
 simpleTile : 'button'
            | 'edit_box'
+           | 'popup_list'
            | 'radio_button'
            | 'slider'
            | 'spacer'

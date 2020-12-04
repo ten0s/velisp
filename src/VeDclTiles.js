@@ -165,6 +165,20 @@ class Cluster extends Tile {
         return list;
     }
 
+    getListStores() {
+        let list = [];
+        for (let tile of this._tiles) {
+            if (tile instanceof Cluster) {
+                list = list.concat(tile.getListStores());
+            } else {
+                if (tile.hasOwnProperty('list') && tile.key) {
+                    list.push([tile.key, tile.list, tile.tabs]);
+                }
+            }
+        }
+        return list;
+    }
+
     findTile(key) {
         if (this.key === key) {
             return this;
@@ -195,6 +209,7 @@ class Dialog extends Cluster {
         this._column = new Column();
         this._gtkBuilder = null;
         this._gtkWindow = null;
+        this._listStores = null; // [ [key, list, tabs ] ]
     }
 
     // Cluster
@@ -205,6 +220,11 @@ class Dialog extends Cluster {
     // Cluster
     getActions() {
         return this._column.getActions();
+    }
+
+    // Cluster
+    getListStores() {
+        return this._column.getListStores();
     }
 
     // Cluster
@@ -287,6 +307,8 @@ class Dialog extends Cluster {
 
     // GTK
     gtkInitWidget(context) {
+        // Preprocess
+        this._listStores = this.getListStores();
         const gtkXml = this.gtkXml();
         console.log(gtkXml);
         this._gtkBuilder = new Gtk.Builder();
@@ -318,6 +340,9 @@ class Dialog extends Cluster {
         const id = this.id ? `id="${this.id}"` : '';
         const title = this.label ? this.label : this.value;
         const child = this._child(this._column.gtkXml({layout: Layout.COLUMN}));
+        const listStores = this._listStores.map(([key, list, tabs]) => {
+            return (new  ListStore(key, list, tabs)).gtkXml();
+        }).join('\n');
         return `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -327,7 +352,38 @@ class Dialog extends Cluster {
     <property name="title">${title}</property>
     ${child}
   </object>
+  ${listStores}
 </interface>
+`;
+    }
+}
+
+class ListStore {
+    constructor(key, list, tabs) {
+        this.key = key;
+        this.list = list;
+        this.tabs = tabs;
+    }
+
+    _column() {
+        return `<column type="gchararray"/>`;
+    }
+
+    _row(value) {
+        return `<row><col id="0">${value}</col></row>`;
+    }
+
+    gtkXml() {
+        const rows = this.list.split('\\n').map(this._row).join('\n');
+        return `
+<object class="GtkListStore" id="liststore-${this.key}">
+  <columns>
+    ${this._column()}
+  </columns>
+  <data>
+    ${rows}
+  </data>
+</object>
 `;
     }
 }
@@ -737,6 +793,109 @@ class EditBox extends Tile {
       <property name="max_length">${this.edit_limit}</property>
       <property name="width_chars">${this.edit_width}</property>
       <property name="text">${this.value}</property>
+    </object>
+    <packing>
+      <property name="fill">True</property>
+      <property name="expand">${this._bool(!this.edit_width > 0)}</property>
+      <property name="pack_type">end</property>
+      <property name="position">1</property>
+    </packing>
+  </child>
+</object>
+`;
+    }
+}
+
+class PopupList extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = '';
+        this.edit_width = 0;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.is_enabled = true;
+        //this.is_tab_stop = true;
+        this.key = null;
+        this.label = '';
+        this.list = '';
+        //this.mnemonic = '';
+        this.tabs = '';
+        this.value = '';
+        this.width = -1;
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('changed', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        const value = gtkWidget.getActive();
+        return value != -1 ? value.toString() : '';
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        value = Number.parseInt(value);
+        if (!Number.isInteger(value)) {
+            value = -1;
+        }
+        gtkWidget.setActive(value);
+    }
+
+    gtkXml({layout}) {
+        const id = this.key ? `id="${this.key}"` : '';
+        return `
+<object class="GtkBox">
+  <property name="orientation">horizontal</property>
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="spacing">0</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <!-- Not sure for now how it should align
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  -->
+  <child>
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+      <property name="justify">left</property>
+      <property name="margin_right">5</property>
+    </object>
+    <packing>
+      <property name="fill">True</property>
+      <property name="expand">False</property>
+      <property name="pack_type">start</property>
+      <property name="position">0</property>
+    </packing>
+  </child>
+  <child>
+    <object class="GtkComboBox" ${id}>
+      <property name="visible">True</property>
+      <property name="sensitive">${this._bool(this.is_enabled)}</property>
+      <property name="can_focus">True</property>
+      <property name="model">liststore-${this.key}</property>
+      <property name="active">${this.value}</property>
+
+      <child>
+        <object class="GtkCellRendererText"/>
+        <attributes>
+          <attribute name="text">0</attribute>
+        </attributes>
+      </child>
+
     </object>
     <packing>
       <property name="fill">True</property>
@@ -1256,6 +1415,7 @@ exports.Spacer = Spacer;
 exports.Text = Text;
 exports.Button = Button;
 exports.EditBox = EditBox;
+exports.PopupList = PopupList;
 
 exports.RadioRow = RadioRow;
 exports.RadioColumn = RadioColumn;
