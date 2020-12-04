@@ -683,7 +683,7 @@ class EditBox extends Tile {
         this.action = handler;
         gtkWidget.on('changed', () => {
             context.setVar('$KEY', new Str(this.key));
-            context.setVar('$VALUE', new Str(gtkWidget.getText ? gtkWidget.getText() : ''));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -700,6 +700,7 @@ class EditBox extends Tile {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkBox">
+  <property name="orientation">horizontal</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
@@ -1061,7 +1062,6 @@ class RadioButton extends Tile {
 
     gtkSetTile(gtkWidget, value) {
         gtkWidget.active = (value === '1');
-        this.value = value;
     }
 
     gtkXml({layout, group}) {
@@ -1132,6 +1132,9 @@ class Slider extends Tile {
 
     gtkSetTile(gtkWidget, value) {
         value = Number.parseInt(value);
+        if (!Number.isInteger(value)) {
+            value = 0;
+        }
         gtkWidget.setValue(value);
     }
 
@@ -1164,13 +1167,13 @@ class Slider extends Tile {
    <property name="expand">False</property>
    <property name="fill">False</property>
 </packing>
- <object class="GtkAdjustment" id="scale-adj-${this._index}">
-    <property name="lower">${this.min_value}</property>
-    <property name="upper">${this.max_value}</property>
-    <property name="value">${this.value}</property>
-    <!-- this.big_increment? -->
-    <property name="step_increment">1</property>
-  </object>
+<object class="GtkAdjustment" id="scale-adj-${this._index}">
+  <property name="lower">${this.min_value}</property>
+  <property name="upper">${this.max_value}</property>
+  <property name="value">${this.value}</property>
+  <!-- this.big_increment? -->
+  <property name="step_increment">1</property>
+</object>
 `;
     }
 }
