@@ -6,7 +6,7 @@ var grammarFileName = "VeDcl.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003%\u008a\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003&\u008a\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f\u0004",
     "\r\t\r\u0004\u000e\t\u000e\u0003\u0002\u0003\u0002\u0007\u0002\u001f",
@@ -28,7 +28,7 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u000b\u0003\u000b\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\r\u0003",
     "\r\u0003\u000e\u0003\u000e\u0003\u000e\u0002\u0002\u000f\u0002\u0004",
     "\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u0002\u0005\u0003",
-    "\u0002\b\u0011\u0003\u0002\u0012\u0019\u0003\u0002\u001b \u0002\u008e",
+    "\u0002\b\u0011\u0003\u0002\u0012\u001a\u0003\u0002\u001c!\u0002\u008e",
     "\u0002 \u0003\u0002\u0002\u0002\u0004#\u0003\u0002\u0002\u0002\u0006",
     "D\u0003\u0002\u0002\u0002\bp\u0003\u0002\u0002\u0002\nr\u0003\u0002",
     "\u0002\u0002\ft\u0003\u0002\u0002\u0002\u000ev\u0003\u0002\u0002\u0002",
@@ -41,13 +41,13 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002\u0002!\u0003\u0003\u0002\u0002\u0002\" \u0003\u0002\u0002\u0002",
     "#$\u0007\u0003\u0002\u0002$&\u0005\u0014\u000b\u0002%\'\u0007\u0004",
     "\u0002\u0002&%\u0003\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002\'",
-    "\u0005\u0003\u0002\u0002\u0002()\u0007!\u0002\u0002)*\u0007\u0005\u0002",
+    "\u0005\u0003\u0002\u0002\u0002()\u0007\"\u0002\u0002)*\u0007\u0005\u0002",
     "\u0002*+\u0005\n\u0006\u0002+/\u0007\u0006\u0002\u0002,.\u0005\u0012",
     "\n\u0002-,\u0003\u0002\u0002\u0002.1\u0003\u0002\u0002\u0002/-\u0003",
     "\u0002\u0002\u0002/0\u0003\u0002\u0002\u000202\u0003\u0002\u0002\u0002",
     "1/\u0003\u0002\u0002\u000224\u0007\u0007\u0002\u000235\u0007\u0004\u0002",
     "\u000243\u0003\u0002\u0002\u000245\u0003\u0002\u0002\u00025E\u0003\u0002",
-    "\u0002\u000267\u0007!\u0002\u000278\u0007\u0005\u0002\u000289\u0005",
+    "\u0002\u000267\u0007\"\u0002\u000278\u0007\u0005\u0002\u000289\u0005",
     "\f\u0007\u00029=\u0007\u0006\u0002\u0002:<\u0005\u0016\f\u0002;:\u0003",
     "\u0002\u0002\u0002<?\u0003\u0002\u0002\u0002=;\u0003\u0002\u0002\u0002",
     "=>\u0003\u0002\u0002\u0002>@\u0003\u0002\u0002\u0002?=\u0003\u0002\u0002",
@@ -75,14 +75,14 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "pS\u0003\u0002\u0002\u0002p`\u0003\u0002\u0002\u0002pm\u0003\u0002\u0002",
     "\u0002q\t\u0003\u0002\u0002\u0002rs\t\u0002\u0002\u0002s\u000b\u0003",
     "\u0002\u0002\u0002tu\t\u0003\u0002\u0002u\r\u0003\u0002\u0002\u0002",
-    "vw\u0007!\u0002\u0002w\u000f\u0003\u0002\u0002\u0002xy\u0007!\u0002",
+    "vw\u0007\"\u0002\u0002w\u000f\u0003\u0002\u0002\u0002xy\u0007\"\u0002",
     "\u0002y\u0011\u0003\u0002\u0002\u0002z}\u0005\u0016\f\u0002{}\u0005",
     "\b\u0005\u0002|z\u0003\u0002\u0002\u0002|{\u0003\u0002\u0002\u0002}",
-    "\u0013\u0003\u0002\u0002\u0002~\u007f\u0007\u001e\u0002\u0002\u007f",
+    "\u0013\u0003\u0002\u0002\u0002~\u007f\u0007\u001f\u0002\u0002\u007f",
     "\u0015\u0003\u0002\u0002\u0002\u0080\u0081\u0005\u0018\r\u0002\u0081",
-    "\u0082\u0007\u001a\u0002\u0002\u0082\u0083\u0005\u001a\u000e\u0002\u0083",
+    "\u0082\u0007\u001b\u0002\u0002\u0082\u0083\u0005\u001a\u000e\u0002\u0083",
     "\u0084\u0007\u0004\u0002\u0002\u0084\u0017\u0003\u0002\u0002\u0002\u0085",
-    "\u0086\u0007!\u0002\u0002\u0086\u0019\u0003\u0002\u0002\u0002\u0087",
+    "\u0086\u0007\"\u0002\u0002\u0086\u0019\u0003\u0002\u0002\u0002\u0087",
     "\u0088\t\u0004\u0002\u0002\u0088\u001b\u0003\u0002\u0002\u0002\u0012",
     "\u001e &/4=BDLQY^fkp|"].join("");
 
@@ -97,12 +97,12 @@ var literalNames = [ null, "'@include'", "';'", "':'", "'{'", "'}'", "'dialog'",
                      "'row'", "'column'", "'boxed_row'", "'boxed_column'", 
                      "'concatenation'", "'radio_row'", "'radio_column'", 
                      "'boxed_radio_row'", "'boxed_radio_column'", "'button'", 
-                     "'edit_box'", "'popup_list'", "'radio_button'", "'slider'", 
-                     "'spacer'", "'text'", "'toggle'", "'='" ];
+                     "'edit_box'", "'list_box'", "'popup_list'", "'radio_button'", 
+                     "'slider'", "'spacer'", "'text'", "'toggle'", "'='" ];
 
 var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, null, null, "BOOL", 
+                      null, null, null, null, null, null, null, null, "BOOL", 
                       "INT", "REAL", "STR", "ALIGN", "LAYOUT", "ID", "COMMENT", 
                       "LINE_COMMENT", "NEWLINE", "WHITESPACE" ];
 
@@ -153,17 +153,18 @@ VeDclParser.T__20 = 21;
 VeDclParser.T__21 = 22;
 VeDclParser.T__22 = 23;
 VeDclParser.T__23 = 24;
-VeDclParser.BOOL = 25;
-VeDclParser.INT = 26;
-VeDclParser.REAL = 27;
-VeDclParser.STR = 28;
-VeDclParser.ALIGN = 29;
-VeDclParser.LAYOUT = 30;
-VeDclParser.ID = 31;
-VeDclParser.COMMENT = 32;
-VeDclParser.LINE_COMMENT = 33;
-VeDclParser.NEWLINE = 34;
-VeDclParser.WHITESPACE = 35;
+VeDclParser.T__24 = 25;
+VeDclParser.BOOL = 26;
+VeDclParser.INT = 27;
+VeDclParser.REAL = 28;
+VeDclParser.STR = 29;
+VeDclParser.ALIGN = 30;
+VeDclParser.LAYOUT = 31;
+VeDclParser.ID = 32;
+VeDclParser.COMMENT = 33;
+VeDclParser.LINE_COMMENT = 34;
+VeDclParser.NEWLINE = 35;
+VeDclParser.WHITESPACE = 36;
 
 VeDclParser.RULE_file = 0;
 VeDclParser.RULE_includeFile = 1;
@@ -955,7 +956,7 @@ VeDclParser.prototype.simpleTile = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 114;
         _la = this._input.LA(1);
-        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeDclParser.T__15) | (1 << VeDclParser.T__16) | (1 << VeDclParser.T__17) | (1 << VeDclParser.T__18) | (1 << VeDclParser.T__19) | (1 << VeDclParser.T__20) | (1 << VeDclParser.T__21) | (1 << VeDclParser.T__22))) !== 0))) {
+        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << VeDclParser.T__15) | (1 << VeDclParser.T__16) | (1 << VeDclParser.T__17) | (1 << VeDclParser.T__18) | (1 << VeDclParser.T__19) | (1 << VeDclParser.T__20) | (1 << VeDclParser.T__21) | (1 << VeDclParser.T__22) | (1 << VeDclParser.T__23))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -1285,7 +1286,7 @@ VeDclParser.prototype.attribute = function() {
         this.state = 126;
         this.attributeName();
         this.state = 127;
-        this.match(VeDclParser.T__23);
+        this.match(VeDclParser.T__24);
         this.state = 128;
         this.attributeValue();
         this.state = 129;

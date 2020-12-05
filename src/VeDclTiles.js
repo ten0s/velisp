@@ -116,6 +116,10 @@ class Tile {
         return 15 * value;
     }
 
+    // Optional
+    gtkInitWidget(gtkWidget) {
+    }
+
     gtkActionTile(gtkWidget, handler, context) {
         throw new Error(
             `Not implemented gtkActionTile for ${this.constructor.name}`
@@ -128,7 +132,7 @@ class Tile {
         );
     }
 
-    gtkSetTile(gtkWidget, _value) {
+    gtkSetTile(gtkWidget, value) {
         throw new Error(
             `Not implemented gtkSetTile for ${this.constructor.name}`
         );
@@ -149,6 +153,20 @@ class Cluster extends Tile {
 
     addTile(tile) {
         this._tiles.push(tile);
+    }
+
+    getKeys() {
+        let list = [];
+        for (let tile of this._tiles) {
+            if (tile instanceof Cluster) {
+                list = list.concat(tile.getKeys());
+            } else {
+                if (tile.key) {
+                    list.push(tile.key);
+                }
+            }
+        }
+        return list;
     }
 
     getActions() {
@@ -218,6 +236,11 @@ class Dialog extends Cluster {
     }
 
     // Cluster
+    getKeys() {
+        return this._column.getKeys();
+    }
+
+    // Cluster
     getActions() {
         return this._column.getActions();
     }
@@ -229,14 +252,17 @@ class Dialog extends Cluster {
 
     // Cluster
     findTile(key) {
-        return this._column.findTile(key);
+        const tile = this._column.findTile(key);
+        if (tile) {
+            return tile;
+        }
+        throw new Error(`Tile not found: ${key}`);
     }
 
     // DCL
     actionTile(key, handler, context) {
         const tile = this.findTile(key);
         const gtkWidget = this.gtkFindWidget(key);
-        console.log(gtkWidget);
         tile.gtkActionTile(gtkWidget, handler, context);
     }
 
@@ -307,13 +333,22 @@ class Dialog extends Cluster {
 
     // GTK
     gtkInitWidget(context) {
-        // Preprocess
+        // Pre init
         this._listStores = this.getListStores();
+        // Init
         const gtkXml = this.gtkXml();
         console.log(gtkXml);
         this._gtkBuilder = new Gtk.Builder();
         this._gtkBuilder.addFromString(gtkXml, gtkXml.length);
         this._gtkWindow = this.gtkFindWidget(this.id);
+        // Post init:
+        // 1. Init widgets
+        for (let key of this.getKeys()) {
+            const tile = this.findTile(key);
+            const gtkWidget = this.gtkFindWidget(key);
+            tile.gtkInitWidget(gtkWidget);
+        }
+        // 2. Init actions
         for (let [key, handler] of this.getActions()) {
             this.actionTile(key, handler, context);
         }
@@ -323,7 +358,11 @@ class Dialog extends Cluster {
         if (this.key === key) {
             return this._gtkWindow;
         }
-        return this._gtkBuilder.getObject(key);
+        const gtkWidget = this._gtkBuilder.getObject(key);
+        if (gtkWidget) {
+            return gtkWidget;
+        }
+        throw new Error(`Widget not found: ${key}`);
     }
 
     gtkGetTile(gtkWidget) {
@@ -909,6 +948,128 @@ class PopupList extends Tile {
     }
 }
 
+class ListBox extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = '';
+        //this.allow_accept = false;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = -1;
+        this.is_enabled = true;
+        //this.is_tab_stop = true;
+        this.key = null;
+        this.label = '';
+        this.list = '';
+        //this.mnemonic = '';
+        this.multiple_select = false;
+        this.tabs = '';
+        this.value = '';
+        this.width = -1;
+    }
+
+    gtkInitWidget(gtkWidget) {
+        this.gtkSetTile(gtkWidget, this.value);
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        const selection = gtkWidget.getSelection();
+        selection.on('changed', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+
+    gtkGetTile(gtkWidget) {
+        const selection = gtkWidget.getSelection();
+        const [rows, ] = selection.getSelectedRows();
+        return rows.map(row => row.toString()).join(' ');
+    }
+     
+    gtkSetTile(gtkWidget, value) {
+        const selection = gtkWidget.getSelection();
+        selection.unselectAll();
+        value.split(' ')
+             .map(v => Number.parseInt(v))
+             .filter(Number.isInteger)
+             .forEach(index => {
+                 const path = new Gtk.TreePath.newFromIndices([index]);
+                 selection.selectPath(path);
+             });
+    }
+
+    gtkXml({layout}) {
+        const id = this.key ? `id="${this.key}"` : '';
+        const mode = this.multiple_select ? 'multiple' : 'single';
+        const label = `
+<child>
+  <object class="GtkLabel">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="label">${this.label}</property>
+    <property name="justify">center</property>
+    <property name="margin_bottom">5</property>
+  </object>
+</child>
+`;
+        return `
+<object class="GtkBox">
+  <property name="orientation">vertical</property>
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="spacing">0</property>
+  <property name="margin_left">5</property>
+  <property name="margin_right">5</property>
+  <property name="margin_top">5</property>
+  <property name="margin_bottom">5</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <!-- Not sure for now how it should align
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  -->
+
+  <!-- Optional Label -->
+  ${this.label ? label : ''}
+
+  <child>
+    <object class="GtkTreeView" ${id}>
+      <property name="visible">True</property>
+      <property name="sensitive">${this._bool(this.is_enabled)}</property>
+      <property name="can_focus">True</property>
+      <property name="model">liststore-${this.key}</property>
+      <property name="headers_visible">False</property>
+      <property name="headers_clickable">False</property>
+      <property name="enable_search">False</property>
+      <property name="show_expanders">False</property>
+      <child internal-child="selection">
+        <object class="GtkTreeSelection">
+          <property name="mode">${mode}</property>
+        </object>
+      </child>
+
+      <child>
+        <object class="GtkTreeViewColumn">
+          <property name="title">One</property>
+          <child>
+            <object class="GtkCellRendererText"/>
+            <attributes>
+              <attribute name="text">0</attribute>
+            </attributes>
+          </child>
+        </object>
+      </child>
+
+    </object>
+  </child>
+</object>
+`;
+    }
+}
+
 class RadioCluster extends Cluster {
     constructor(id) {
         super(id);
@@ -1415,6 +1576,7 @@ exports.Spacer = Spacer;
 exports.Text = Text;
 exports.Button = Button;
 exports.EditBox = EditBox;
+exports.ListBox = ListBox;
 exports.PopupList = PopupList;
 
 exports.RadioRow = RadioRow;
