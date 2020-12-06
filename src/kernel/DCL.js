@@ -224,7 +224,8 @@ exports.initContext = function (context) {
         // TODO: ensure list handle
         const str = ensureType('add_list: `str`', args[0], [Str]);
         _dclDialog.addList(_listHandle, str.value());
-        return new Bool(false);
+        // TODO: return nil on error
+        return str;
     }));
     context.setSym('END_LIST', new Fun('end_list', [], [], (self, args) => {
         if (args.length > 1) {

@@ -1,8 +1,6 @@
 ; Clear/append
 (start_list "popup1" 3)
-  (add_list "ONE")
-  (add_list "TWO")
-  (add_list "THREE")
+(mapcar 'add_list '("ONE" "TWO" "THREE"))
 (end_list)
 (set_tile "popup1" "0")
 (set_tile "popup1-value" (get_tile "popup1"))
