@@ -994,6 +994,7 @@ class ListBox extends Tile {
      
     gtkSetTile(gtkWidget, value) {
         const selection = gtkWidget.getSelection();
+        // TODO: support unselect for single
         selection.unselectAll();
         value.split(' ')
              .map(v => Number.parseInt(v))
