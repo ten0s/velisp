@@ -16,7 +16,7 @@ list_box_dlg : dialog {
     action = "(set_tile \"listbox1-value\" $value)";
     value = ""; // TODO: doesn't work for single
   }
-  spacer;
+  spacer_1;
 
   : row {
     alignment = centered;
@@ -35,7 +35,7 @@ list_box_dlg : dialog {
     multiple_select = true;
     value = "0 3";
   }
-  spacer;
+  spacer_1;
 
   : row {
     alignment = centered;
@@ -53,7 +53,7 @@ list_box_dlg : dialog {
     list = "Jan\nFeb\nMar\nApr\nMay\nJun\nJul\nAug\nSep\nOct\nNov\nDec";
     multiple_select = true;
   }
-  spacer;
+  spacer_1;
 
   ok_only;
 }

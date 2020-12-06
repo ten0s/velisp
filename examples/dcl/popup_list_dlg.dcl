@@ -16,7 +16,8 @@ popup_list_dlg : dialog {
     value = "1";
     action = "(set_tile \"popup1-value\" $value)";
   }
-  spacer;
+  spacer_1;
+
   : row {
     alignment = centered;
     : text {
@@ -32,7 +33,8 @@ popup_list_dlg : dialog {
     label = "Select: ";
     list = "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday";
   }
-  spacer;
+  spacer_1;
+
   : row {
     alignment = centered;
     : text {
@@ -49,6 +51,7 @@ popup_list_dlg : dialog {
     edit_width = "5";
     list = "Jan\nFeb\nMar\nApr\nMay\nJun\nJul\nAug\nSep\nOct\nNov\nDec";
   }
-  spacer;
+  spacer_1;
+
   ok_only;
 }
