@@ -1,6 +1,7 @@
 const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
 const {VeDclContext} = require('../VeDclContext.js');
 const VeDclLoader = require('../VeDclLoader.js');
+const {ListOperation} = require('../VeDclTiles.js');
 
 const util = require('util');
 
@@ -9,6 +10,7 @@ let _dclId = 0;
 const _dclFiles = {};
 
 let _dclDialog = null;
+let _listHandle = null;
 
 exports.initContext = function (context) {
     context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
@@ -184,6 +186,54 @@ exports.initContext = function (context) {
         const key = ensureType('mode_tile: `key`', args[0], [Str]);
         const mode = ensureType('mode_tile: `mode`', args[1], [Int]);
         _dclDialog.modeTile(key.value(), mode.value());
+        return new Bool(false);
+    }));
+    context.setSym('START_LIST', new Fun('start_list', ['key', '[operation]', '[index]'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('start_list: too few arguments');
+        }
+        if (args.length > 3) {
+            throw new Error('start_list: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('start_list: `key`', args[0], [Str]);
+        let operation;
+        if (args.length > 1) {
+            operation = ensureType('start_list: `operation`', args[1], [Int]);
+        } else {
+            operation = new Int(ListOperation.CLEAR);
+        }
+        let index;
+        if (args.length > 2) {
+            index = ensureType('start_list: `index`', args[2], [Int]);
+        } else {
+            // Used for ListOperation.CHANGE only
+            index = new Int(0);
+        }
+        _listHandle = _dclDialog.startList(key.value(), operation.value(), index.value());
+        return key;
+    }));
+    context.setSym('ADD_LIST', new Fun('add_list', ['str'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('add_list: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('add_list: too many arguments');
+        }
+        // TODO: ensure current dialog
+        // TODO: ensure list handle
+        const str = ensureType('add_list: `str`', args[0], [Str]);
+        _dclDialog.addList(_listHandle, str.value());
+        return new Bool(false);
+    }));
+    context.setSym('END_LIST', new Fun('end_list', [], [], (self, args) => {
+        if (args.length > 1) {
+            throw new Error('end_list: too many arguments');
+        }
+        // TODO: ensure current dialog
+        // TODO: ensure list handle
+        _dclDialog.endList(_listHandle);
+        _listHandle = null;
         return new Bool(false);
     }));
 }

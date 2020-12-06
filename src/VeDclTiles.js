@@ -3,6 +3,7 @@ const Evaluator = require('./VeLispEvaluator.js');
 
 const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
+const GObject = gi.require('GObject');
 
 gi.startLoop();
 Gtk.init();
@@ -12,7 +13,7 @@ const TileMode = {
     DISABLE_TILE: 1,
     FOCUS_TILE: 2,
     SELECT_EDITBOX: 3,
-    FLIP_IMAGE: 4
+    FLIP_IMAGE: 4,
 };
 
 const Layout = {
@@ -27,6 +28,12 @@ const Alignment = {
     BOTTOM: 'bottom',
     CENTERED: 'centered',
     FILLED: 'filled', // GTK specific
+}
+
+const ListOperation = {
+    CHANGE: 1,
+    APPEND: 2,
+    CLEAR: 3,
 }
 
 class Tile {
@@ -227,7 +234,7 @@ class Dialog extends Cluster {
         this._column = new Column();
         this._gtkBuilder = null;
         this._gtkWindow = null;
-        this._listStores = null; // [ [key, list, tabs ] ]
+        this._listStores = null; // [ [key, list, tabs] ]
     }
 
     // Cluster
@@ -329,6 +336,78 @@ class Dialog extends Cluster {
         this._status = status;
         Gtk.mainQuit();
         // TODO: what it should return? some (X, Y) point of the dialog
+    }
+
+    // DCL
+    startList(key, operation, index) {
+        const tile = this.findTile(key);
+        const gtkWidget = this.gtkFindWidget(key);
+        const listStore = gtkWidget.getModel();
+        switch (operation) {
+        case ListOperation.CHANGE:
+            return {
+                operation,
+                index,
+                listStore,
+            };
+        case ListOperation.APPEND:
+            return {
+                operation,
+                listStore,
+            };
+        case ListOperation.CLEAR:
+            this.gtkListClear(listStore);
+            return {
+                operation: ListOperation.APPEND,
+                listStore,
+            }
+        default:
+            throw new Error(`Unknown start_list operation: ${operation}`)
+        }
+    }
+
+    // DCL
+    addList({operation, index, listStore}, str) {
+        switch (operation) {
+        case ListOperation.CHANGE:
+            this.gtkListChange(listStore, index, str);
+            break;
+        case ListOperation.APPEND:
+            this.gtkListAppend(listStore, str);
+            break;
+        default:
+            throw new Error(`Unknown add_list operation: ${operation}`)
+        }
+    }
+
+    gtkListClear(listStore) {
+        listStore.clear();
+    }
+
+    gtkListChange(listStore, index, str) {
+        debugger;
+        const path = new Gtk.TreePath.newFromIndices([index]);
+        const [valid, iter] = listStore.getIter(path);
+        if (!valid) {
+            throw new Error(`Invalid add_list index: ${index}`);
+        }
+        this.gtkListSet(listStore, iter, str);
+    }
+
+    gtkListAppend(listStore, str) {
+        const iter = listStore.append();
+        this.gtkListSet(listStore, iter, str);
+    }
+
+    gtkListSet(listStore, iter, str) {
+        const value = new GObject.Value();
+        value.init(GObject.TYPE_STRING);
+        value.setString(str);
+        listStore.setValue(iter, 0, value);
+    }
+
+    // DCL
+    endList({}) {
     }
 
     // GTK
@@ -1591,3 +1670,6 @@ exports.BoxedRadioColumn = BoxedRadioColumn;
 
 exports.Slider = Slider;
 exports.Toggle = Toggle;
+
+// TODO: move to Consts
+exports.ListOperation = ListOperation;
