@@ -865,6 +865,10 @@ class PopupList extends Tile {
         this.width = -1;
     }
 
+    gtkInitWidget(gtkWidget) {
+        this.gtkSetTile(gtkWidget, this.value);
+    }
+
     gtkActionTile(gtkWidget, handler, context) {
         this.action = handler;
         gtkWidget.on('changed', () => {
@@ -926,7 +930,6 @@ class PopupList extends Tile {
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
       <property name="can_focus">True</property>
       <property name="model">liststore-${this.key}</property>
-      <property name="active">${this.value}</property>
 
       <child>
         <object class="GtkCellRendererText"/>
