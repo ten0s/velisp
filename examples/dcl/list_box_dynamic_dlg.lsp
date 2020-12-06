@@ -1,6 +1,6 @@
 ; Clear/append
 (start_list "listbox1" 3)
-(mapcar 'add_list '("ONE" "TWO" "THREE"))
+  (mapcar 'add_list '("ONE" "TWO" "THREE"))
 (end_list)
 (set_tile "listbox1" "0")
 (set_tile "listbox1-value" (get_tile "listbox1"))
