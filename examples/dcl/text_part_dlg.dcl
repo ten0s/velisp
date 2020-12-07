@@ -6,7 +6,11 @@ text_part_dlg : dialog {
         label = "One";
       }
       : text_part {
-        label = "good turn";
+        label = "good";
+        is_bold = true;
+      }
+      : text_part {
+        label = "turn";
       }
     }
     : text_part {

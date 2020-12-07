@@ -58,10 +58,11 @@ class Tile {
     }
 
     _bool(value) {
-        if (value) {
-            return 'True';
-        }
-        return 'False';
+        return value ? 'True' : 'False';
+    }
+
+    _bold(value) {
+        return value ? 'bold' : 'normal';
     }
 
     _dcl_to_gtk_align(alignment) {
@@ -804,7 +805,7 @@ class Text extends Tile {
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = -1;
-        //this.is_bold = false;
+        this.is_bold = false;
         this.key = null;
         this.label = '';
         this.value = '';
@@ -838,6 +839,9 @@ class Text extends Tile {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
+  <attributes>
+    <attribute name="weight" value="${this._bold(this.is_bold)}"/>
+  </attributes>
 </object>
 `;
     }
@@ -848,7 +852,7 @@ class TextPart extends Tile {
         super(id);
         this.alignment = Alignment.CENTERED;
         this.height = -1;
-        //this.is_bold = false;
+        this.is_bold = false;
         this.key = null;
         this.label = '';
         this.value = '';
@@ -879,6 +883,9 @@ class TextPart extends Tile {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
+  <attributes>
+    <attribute name="weight" value="${this._bold(this.is_bold)}"/>
+  </attributes>
 </object>
 <packing>
   <property name="expand">False</property>

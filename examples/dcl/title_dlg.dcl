@@ -5,6 +5,7 @@ title_dlg : dialog {
     alignment = centered;
     : text {
       label = "Old Title: ";
+      is_bold = true;
     }
     : text {
       key = "old_title";
