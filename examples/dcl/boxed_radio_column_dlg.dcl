@@ -4,6 +4,7 @@ boxed_radio_column_dlg : dialog {
     alignment = centered;
     : text {
       label = "Current: ";
+      is_bold = true;
     }
     : text {
       key = "current";

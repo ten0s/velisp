@@ -1,8 +1,10 @@
 radio_column_dlg : dialog {
   label = "Radio Column";
   : row {
+    alignment = centered;
     : text {
       label = "Current: ";
+      is_bold = true;
     }
     : text {
       key = "current";
