@@ -930,7 +930,6 @@ class Button extends Tile {
         gtkWidget.setLabel(value);
     }
 
-    // TODO: rename gtkXml
     gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
         return `
