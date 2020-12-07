@@ -11,6 +11,7 @@ const {
     BoxedRow,
     BoxedColumn,
     Concatenation,
+    Paragraph,
     RadioRow,
     RadioColumn,
     BoxedRadioRow,
@@ -24,6 +25,7 @@ const {
     Slider,
     Spacer,
     Text,
+    TextPart,
     Toggle,
 } = require('./VeDclTiles.js');
 
@@ -35,6 +37,7 @@ const tileCtors = {
     'boxed_row'         : (id) => new BoxedRow(id),
     'boxed_column'      : (id) => new BoxedColumn(id),
     'concatenation'     : (id) => new Concatenation(id),
+    'paragraph'         : (id) => new Paragraph(id),
     'radio_row'         : (id) => new RadioRow(id),
     'radio_column'      : (id) => new RadioColumn(id),
     'boxed_radio_row'   : (id) => new BoxedRadioRow(id),
@@ -48,6 +51,7 @@ const tileCtors = {
     'slider'            : (id) => new Slider(id),
     'spacer'            : (id) => new Spacer(id),
     'text'              : (id) => new Text(id),
+    'text_part'         : (id) => new TextPart(id),
     'toggle'            : (id) => new Toggle(id),
 };
 

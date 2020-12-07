@@ -697,7 +697,72 @@ class BoxedColumn extends Cluster {
     }
 }
 
-class Concatenation extends Column {
+class Concatenation extends Cluster {
+    constructor(id) {
+        super(id);
+        this.alignment = Alignment.CENTERED;
+        this.height = -1;
+        this.width = -1;
+    }
+
+    gtkXml({layout}) {
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.ROW}))
+        ).join('\n');
+        return `
+<object class="GtkBox">
+  <property name="orientation">horizontal</property>
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="spacing">0</property>
+  <!-- A margin around the concatenation as a whole -->
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <!-- text_part(s) might have diff width(s) -->
+  <property name="homogeneous">False</property>
+  ${tiles}
+</object>
+`;
+    }
+}
+
+class Paragraph extends Cluster {
+    constructor(id) {
+        super(id);
+        this.alignment = Alignment.CENTERED;
+        this.height = -1;
+        this.width = -1;
+    }
+
+    gtkXml({layout}) {
+        const tiles = this._tiles.map(
+            tile => this._child(tile.gtkXml({layout: Layout.COLUMN}))
+        ).join('\n');
+        return `
+<object class="GtkBox">
+  <property name="orientation">vertical</property>
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="spacing">0</property>
+  <!-- A margin around the paragraph as a whole -->
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  ${tiles}
+</object>
+`;
+    }
 }
 
 class Spacer extends Tile {
@@ -755,15 +820,60 @@ class Text extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="label">${label}</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 </object>
+`;
+    }
+}
+
+class TextPart extends Tile {
+    constructor(id) {
+        super(id);
+        this.alignment = Alignment.CENTERED;
+        this.height = -1;
+        //this.is_bold = false;
+        this.key = null;
+        this.label = '';
+        this.value = '';
+        this.width = -1;
+    }
+
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.getText();
+    }
+
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.setText(value);
+    }
+
+    gtkXml({layout}) {
+        const id = this.key ? `id="${this.key}"` : '';
+        const label = this.label ? this.label : this.value;
+        return `
+<object class="GtkLabel" ${id}>
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="label">${label}</property>
+  <property name="margin_left">2</property>
+  <property name="margin_right">2</property>
+  <property name="margin_top">0</property>
+  <property name="margin_bottom">0</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+</object>
+<packing>
+  <property name="expand">False</property>
+  <property name="fill">False</property>
+</packing>
 `;
     }
 }
@@ -1655,8 +1765,10 @@ exports.BoxedRow = BoxedRow;
 exports.BoxedColumn = BoxedColumn;
 
 exports.Concatenation = Concatenation;
+exports.Paragraph = Paragraph;
 exports.Spacer = Spacer;
 exports.Text = Text;
+exports.TextPart = TextPart;
 exports.Button = Button;
 exports.EditBox = EditBox;
 exports.ListBox = ListBox;
