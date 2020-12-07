@@ -530,15 +530,17 @@ class Row extends Cluster {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-
+  <!-- Without a border around it -->
+  <property name="margin_left">0</property>
+  <property name="margin_right">0</property>
+  <property name="margin_top">0</property>
+  <property name="margin_bottom">0</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <!-- Whether the children should all be the same size??? -->
   <property name="homogeneous">True</property>
-
   ${tiles}
 </object>
 `;
@@ -569,10 +571,15 @@ class Column extends Cluster {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
+  <!-- Without a border around it -->
+  <property name="margin_left">0</property>
+  <property name="margin_right">0</property>
+  <property name="margin_top">0</property>
+  <property name="margin_bottom">0</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   ${tiles}
 </object>
 `;
@@ -603,10 +610,11 @@ class BoxedRow extends Cluster {
 <object class="GtkFrame">
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
+  <!-- A row with a border around it -->
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="label_xalign">0.03</property>
   <child>
     <object class="GtkBox" ${id}>
@@ -614,12 +622,10 @@ class BoxedRow extends Cluster {
       <property name="can_focus">False</property>
       <property name="orientation">horizontal</property>
       <property name="spacing">0</property>
-
-      <property name="width_request">${this._width(this.width)}</property>
-      <property name="height_request">${this._height(this.height)}</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
       ${tiles}
     </object>
   </child>
@@ -663,10 +669,11 @@ class BoxedColumn extends Cluster {
 <object class="GtkFrame">
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
+  <!-- A column with a border around it -->
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="label_xalign">0.029999999329447746</property>
   <child>
     <object class="GtkBox" ${id}>
@@ -674,10 +681,10 @@ class BoxedColumn extends Cluster {
       <property name="can_focus">False</property>
       <property name="orientation">vertical</property>
       <property name="spacing">0</property>
-      <property name="width_request">${this._width(this.width)}</property>
-      <property name="height_request">${this._height(this.height)}</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
       ${tiles}
     </object>
   </child>
@@ -781,10 +788,10 @@ class Spacer extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="label"></property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 </object>
 `;
     }
@@ -925,14 +932,14 @@ class Button extends Tile {
   <property name="can_default">True</property>
   <property name="has_default">${this._bool(this.is_default)}</property>
   <property name="receives_default">True</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 </object>
 <packing>
   <property name="fill">False</property>
@@ -988,23 +995,23 @@ class EditBox extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <!-- Not sure for now how it should align
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   -->
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <child>
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="label">${this.label}</property>
       <property name="justify">left</property>
-      <property name="margin_right">5</property>
+      <property name="margin_right">4</property>
     </object>
     <packing>
       <property name="fill">True</property>
@@ -1088,23 +1095,23 @@ class PopupList extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <!-- Not sure for now how it should align
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   -->
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   <child>
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="label">${this.label}</property>
       <property name="justify">left</property>
-      <property name="margin_right">5</property>
+      <property name="margin_right">4</property>
     </object>
     <packing>
       <property name="fill">True</property>
@@ -1204,7 +1211,7 @@ class ListBox extends Tile {
     <property name="can_focus">False</property>
     <property name="label">${this.label}</property>
     <property name="justify">center</property>
-    <property name="margin_bottom">5</property>
+    <property name="margin_bottom">4</property>
   </object>
 </child>
 `;
@@ -1214,16 +1221,16 @@ class ListBox extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="spacing">0</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <!-- Not sure for now how it should align
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   -->
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 
   <!-- Optional Label -->
   ${this.label ? label : ''}
@@ -1341,12 +1348,10 @@ class RadioRow extends RadioCluster {
   <property name="can_focus">False</property>
   <property name="orientation">horizontal</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   ${tiles}
 </object>
 <packing>
@@ -1391,12 +1396,10 @@ class RadioColumn extends RadioCluster {
   <property name="can_focus">False</property>
   <property name="orientation">vertical</property>
   <property name="spacing">0</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
   ${tiles}
 </object>
 <packing>
@@ -1439,10 +1442,10 @@ class BoxedRadioRow extends RadioCluster {
 <object class="GtkFrame">
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="label_xalign">0.029999999329447746</property>
   <child>
     <!-- Since it's a radio group, id must be here -->
@@ -1451,10 +1454,10 @@ class BoxedRadioRow extends RadioCluster {
       <property name="can_focus">False</property>
       <property name="orientation">horizontal</property>
       <property name="spacing">0</property>
-      <property name="width_request">${this._width(this.width)}</property>
-      <property name="height_request">${this._height(this.height)}</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
       ${tiles}
     </object>
   </child>
@@ -1506,10 +1509,10 @@ class BoxedRadioColumn extends RadioCluster {
 <object class="GtkFrame">
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="label_xalign">0.03</property>
   <child>
     <!-- Since it's a radio group, id must be here -->
@@ -1518,10 +1521,10 @@ class BoxedRadioColumn extends RadioCluster {
       <property name="can_focus">False</property>
       <property name="orientation">vertical</property>
       <property name="spacing">0</property>
-      <property name="width_request">${this._width(this.width)}</property>
-      <property name="height_request">${this._height(this.height)}</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
       ${tiles}
     </object>
   </child>
@@ -1589,16 +1592,14 @@ class RadioButton extends Tile {
   <property name="draw_indicator">True</property>
   <property name="group">${group}</property>
   <property name="active">${this._bool(this.value === '1')}</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 </object>
 <packing>
   <property name="fill">False</property>
@@ -1663,18 +1664,14 @@ class Slider extends Tile {
   <property name="digits">0</property>
   <property name="draw_value">False</property>
   <property name="value_pos">top</property>
-
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-  <!-- <property name="hexpand">True</property> -->
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 </object>
 <packing>
    <property name="expand">False</property>
@@ -1738,16 +1735,14 @@ class Toggle extends Tile {
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
   <property name="active">${this._bool(this.value === '1')}</property>
-  <property name="width_request">${this._width(this.width)}</property>
-  <property name="height_request">${this._height(this.height)}</property>
-  <property name="margin_left">5</property>
-  <property name="margin_right">5</property>
-  <property name="margin_top">5</property>
-  <property name="margin_bottom">5</property>
-
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
-
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
 </object>
 <packing>
   <property name="fill">False</property>

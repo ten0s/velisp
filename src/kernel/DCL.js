@@ -111,7 +111,7 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('done_dialog: too many arguments');
         }
-        let status = 0;
+        let status = new Int(0);
         if (args.length == 1) {
             status = ensureType('done_dialog:', args[0], [Int]);
         }
