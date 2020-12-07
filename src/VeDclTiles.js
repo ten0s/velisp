@@ -827,6 +827,9 @@ class Text extends Tile {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="label">${label}</property>
+  <!-- Align text left if width is given -->
+  <property name="hexpand">True</property>
+  <property name="xalign">0.00</property>
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
   <property name="margin_top">4</property>
