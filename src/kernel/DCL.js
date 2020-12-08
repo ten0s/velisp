@@ -11,6 +11,7 @@ const _dclFiles = {};
 
 let _dclDialog = null;
 let _listHandle = null;
+let _imageHandle = null;
 
 exports.initContext = function (context) {
     context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
@@ -211,6 +212,7 @@ exports.initContext = function (context) {
             index = new Int(0);
         }
         _listHandle = _dclDialog.startList(key.value(), operation.value(), index.value());
+        // TODO: The key argument, if successful; otherwise nil.
         return key;
     }));
     context.setSym('ADD_LIST', new Fun('add_list', ['str'], [], (self, args) => {
@@ -235,6 +237,91 @@ exports.initContext = function (context) {
         // TODO: ensure list handle
         _dclDialog.endList(_listHandle);
         _listHandle = null;
+        return new Bool(false);
+    }));
+    context.setSym('DIMX', new Fun('dimx', ['key'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('dimx: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('dimx: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('dimx: `key`', args[0], [Str]);
+        const dimX = _dclDialog.dimX(key.value());
+        return new Int(dimX);
+    }));
+    context.setSym('DIMY', new Fun('dimy', ['key'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('dimy: too few arguments');
+        }
+        if (args.length > 1) {
+            throw new Error('dimy: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('dimy: `key`', args[0], [Str]);
+        const dimY = _dclDialog.dimY(key.value());
+        return new Int(dimY);
+    }));
+    context.setSym('START_IMAGE', new Fun('start_list', ['key'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('start_image: too few arguments');
+        }
+        if (args.length > 3) {
+            throw new Error('start_image: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('start_image: `key`', args[0], [Str]);
+        _imageHandle = _dclDialog.startImage(key.value());
+        // TODO: The key argument, if successful; otherwise nil.
+        return key;
+    }));
+    context.setSym('FILL_IMAGE', new Fun('fill_image', ['x1', 'y1', 'width', 'height', 'color'], [], (self, args) => {
+        if (args.length < 5) {
+            throw new Error('fill_image: too few arguments');
+        }
+        if (args.length > 5) {
+            throw new Error('fill_image: too many arguments');
+        }
+        // TODO: ensure current dialog
+        // TODO: ensure image handle
+        const x = ensureType('fill_image: `x1`'    , args[0], [Int]);
+        const y = ensureType('fill_image: `y1`'    , args[1], [Int]);
+        const w = ensureType('fill_image: `width`' , args[2], [Int]);
+        const h = ensureType('fill_image: `height`', args[3], [Int]);
+        const c = ensureType('fill_image: `color`' , args[4], [Int]);
+        _imageHanlde = _dclDialog.fillImage(
+            _imageHandle, x.value(), y.value(), w.value(), h.value(), c.value()
+        );
+        return c;
+    }));
+    context.setSym('VECTOR_IMAGE', new Fun('vector_image', ['x1', 'y1', 'x2', 'y2', 'color'], [], (self, args) => {
+        if (args.length < 5) {
+            throw new Error('vector_image: too few arguments');
+        }
+        if (args.length > 5) {
+            throw new Error('vector_image: too many arguments');
+        }
+        // TODO: ensure current dialog
+        // TODO: ensure image handle
+        const x1 = ensureType('vector_image: `x1`'   , args[0], [Int]);
+        const y1 = ensureType('vector_image: `y1`'   , args[1], [Int]);
+        const x2 = ensureType('vector_image: `x2`'   , args[2], [Int]);
+        const y2 = ensureType('vector_image: `y2`'   , args[3], [Int]);
+        const c  = ensureType('vector_image: `color`', args[4], [Int]);
+        _imageHandle = _dclDialog.vectorImage(
+            _imageHandle, x1.value(), y1.value(), x2.value(), y2.value(), c.value()
+        );
+        return c;
+    }));
+    context.setSym('END_IMAGE', new Fun('end_image', [], [], (self, args) => {
+        if (args.length > 1) {
+            throw new Error('end_image: too many arguments');
+        }
+        // TODO: ensure current dialog
+        // TODO: ensure image handle
+        _dclDialog.endImage(_imageHandle);
+        _imageHandle = null;
         return new Bool(false);
     }));
 }

@@ -146,6 +146,17 @@ class Tile {
         );
     }
 
+    gtkDimX(gtkWidget) {
+        throw new Error(
+            `Not implemented gtkDimX for ${this.constructor.name}`
+        );
+    }
+
+    gtkDimY(gtkWidget) {
+        throw new Error(
+            `Not implemented gtkDimY for ${this.constructor.name}`
+        );
+    }
     gtkXml() {
         throw new Error(
             'Not implemented gtkXml for ${this.constructor.name}'
@@ -409,6 +420,47 @@ class Dialog extends Cluster {
 
     // DCL
     endList({}) {
+    }
+
+    // DCL
+    dimX(key) {
+        const tile = this.findTile(key);
+        const gtkWidget = this.gtkFindWidget(key);
+        return tile.gtkDimX(gtkWidget);
+    }
+
+    // DCL
+    dimY(key) {
+        const tile = this.findTile(key);
+        const gtkWidget = this.gtkFindWidget(key);
+        return tile.gtkDimY(gtkWidget);
+    }
+
+    // DCL
+    startImage(key) {
+        const tile = this.findTile(key);
+        const gtkWidget = this.gtkFindWidget(key);
+        return {
+            tile,
+            operations: [],
+        };
+    }
+
+    // DCL
+    fillImage(handle, x, y, w, h, color) {
+        handle.operations.push(["fill_image", x, y, w, h, color]);
+        return handle;
+    }
+
+    // DCL
+    vectorImage(handle, x1, y1, x2, y2, color) {
+        handle.operations.push(["vector_image", x1, y1, x2, y2, color]);
+        return handle;
+    }
+
+    // DCL
+    endImage({tile, operations}) {
+        tile.setOperations(operations);
     }
 
     // GTK
@@ -1043,6 +1095,134 @@ class EditBox extends Tile {
       <property name="expand">${this._bool(!this.edit_width > 0)}</property>
       <property name="pack_type">end</property>
       <property name="position">1</property>
+    </packing>
+  </child>
+</object>
+`;
+    }
+}
+
+class Image extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = '';
+        //this.aspect_radio = ;
+        //this.color;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = 10;
+        this.is_enabled = true;
+        //this.is_tab_stop = true;
+        this.key = null;
+        //this.mnemonic = '';
+        this.value = '';
+        this.width = 10;
+        this._operations = [];
+    }
+
+    setOperations(operations) {
+        this._operations = operations;
+    }
+
+    gtkInitWidget(gtkWidget) {
+        gtkWidget.on('draw', (ctx) => this.gtkDraw(gtkWidget, ctx));
+    }
+
+    gtkDraw(gtkWidget, gtkCtx) {
+        debugger;
+        this._operations.forEach(op => this.gtkOperation(gtkWidget, gtkCtx, op));
+    }
+
+    gtkOperation(gtkWidget, gtkCtx, op) {
+        switch (op[0]) {
+        case "fill_image":
+            this.gtkFillImage(gtkWidget, gtkCtx, op[1], op[2], op[3], op[4], op[5]);
+            break;
+        case "vector_image":
+            this.gtkVectorImage(gtkWidget, gtkCtx, op[1], op[2], op[3], op[4], op[5]);
+            break;
+        default:
+            throw new Error(`Unknown image operation: ${op[0]}`);
+        }
+    }
+
+    gtkFillImage(gtkWidget, gtkCtx, x, y, w, h, color) {
+        console.log(x, y, w, h, color);
+        // TODO: set color
+        gtkCtx.setSourceRgba(0, 0, 0, 1);
+        gtkCtx.rectangle(x, y, w, h);
+        gtkCtx.fill();
+    }
+
+    gtkVectorImage(gtkWidget, gtkCtx, x1, y1, x2, y2, color) {
+        console.log(x1, y1, x2, y2, color);
+        // TODO: set color
+        gtkCtx.setSourceRgb(0, 0, 0);
+        gtkCtx.setLineWidth(5);
+        gtkCtx.moveTo(x1, y1);
+        gtkCtx.lineTo(x2, y2);
+        gtkCtx.stroke();
+    }
+
+    /*
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('changed', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+    */
+
+    /*
+    gtkGetTile(gtkWidget) {
+        return gtkWidget.getText();
+    }
+    */
+
+    /*
+    gtkSetTile(gtkWidget, value) {
+        gtkWidget.setText(value);
+    }
+    */
+
+    gtkDimX(gtkWidget) {
+        //return gtkWidget.getAllocatedWidth();
+        return this.width;
+    }
+
+    gtkDimY(gtkWidget) {
+        //return gtkWidget.getAllocatedHeight();
+        return this.height;
+    }
+
+    gtkXml({layout}) {
+        const id = this.key ? `id="${this.key}"` : '';
+        return `
+<object class="GtkBox">
+  <property name="orientation">horizontal</property>
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="spacing">0</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <property name="width_request">${this._width(this.width)}</property>
+  <property name="height_request">${this._height(this.height)}</property>
+  <child>
+    <object class="GtkDrawingArea" ${id}>
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="sensitive">${this._bool(this.is_enabled)}</property>
+    </object>
+    <packing>
+       <property name="expand">False</property>
+       <property name="fill">True</property>
     </packing>
   </child>
 </object>

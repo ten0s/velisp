@@ -1,0 +1,6 @@
+(princ (dimx "image1"))
+(princ (dimy "image1"))
+(start_image "image1")
+;(fill_image 0 0 50 50 1)
+(vector_image 0 0 1000 1000 1)
+(end_image)

@@ -31,6 +31,7 @@ clusterTile : 'dialog'
 
 simpleTile : 'button'
            | 'edit_box'
+           | 'image'
            | 'list_box'
            | 'popup_list'
            | 'radio_button'
