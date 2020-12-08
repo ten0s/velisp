@@ -3,57 +3,7 @@ const antlr4 = require('antlr4');
 const {VeDclLexer} = require('../grammar/VeDclLexer.js');
 const {VeDclParser} = require('../grammar/VeDclParser.js');
 const {VeDclListener} = require('../grammar/VeDclListener.js');
-const {
-    // Clusters
-    Dialog,
-    Row,
-    Column,
-    BoxedRow,
-    BoxedColumn,
-    Concatenation,
-    Paragraph,
-    RadioRow,
-    RadioColumn,
-    BoxedRadioRow,
-    BoxedRadioColumn,
-    // Tiles
-    Button,
-    EditBox,
-    ListBox,
-    PopupList,
-    RadioButton,
-    Slider,
-    Spacer,
-    Text,
-    TextPart,
-    Toggle,
-} = require('./VeDclTiles.js');
-
-const tileCtors = {
-    // Clusters
-    'dialog'            : (id) => new Dialog(id),
-    'row'               : (id) => new Row(id),
-    'column'            : (id) => new Column(id),
-    'boxed_row'         : (id) => new BoxedRow(id),
-    'boxed_column'      : (id) => new BoxedColumn(id),
-    'concatenation'     : (id) => new Concatenation(id),
-    'paragraph'         : (id) => new Paragraph(id),
-    'radio_row'         : (id) => new RadioRow(id),
-    'radio_column'      : (id) => new RadioColumn(id),
-    'boxed_radio_row'   : (id) => new BoxedRadioRow(id),
-    'boxed_radio_column': (id) => new BoxedRadioColumn(id),
-    // Tiles
-    'button'            : (id) => new Button(id),
-    'edit_box'          : (id) => new EditBox(id),
-    'list_box'          : (id) => new ListBox(id),
-    'popup_list'        : (id) => new PopupList(id),
-    'radio_button'      : (id) => new RadioButton(id),
-    'slider'            : (id) => new Slider(id),
-    'spacer'            : (id) => new Spacer(id),
-    'text'              : (id) => new Text(id),
-    'text_part'         : (id) => new TextPart(id),
-    'toggle'            : (id) => new Toggle(id),
-};
+const {Dialog, buildTile} = require('./VeDclTiles.js');
 
 class VeDclLoader extends VeDclListener {
     constructor(context) {
@@ -88,11 +38,7 @@ class VeDclLoader extends VeDclListener {
         //console.log('enterDefineClusterTile');
         const tileId = ctx.ID().getText();
         const tileName = ctx.clusterTile().getText();
-        const tileCtor = tileCtors[tileName];
-        if (!tileCtor) {
-            throw new Error(`Unknown tile constructor: ${tileName}`);
-        }
-        const tile = tileCtor(tileId);
+        const tile = buildTile(tileName, tileId);
         this.context.defines[tileId] = tile;
         this.context.clusters.push(tile);
         this.context.tiles.push(tile);
@@ -108,11 +54,7 @@ class VeDclLoader extends VeDclListener {
         //console.log('enterDefineSimpleTile');
         const tileId = ctx.ID().getText();
         const tileName = ctx.simpleTile().getText();
-        const tileCtor = tileCtors[tileName];
-        if (!tileCtor) {
-            throw new Error(`Unknown tile constructor: ${tileName}`);
-        }
-        const tile = tileCtor(tileId);
+        const tile = buildTile(tileName, tileId);
         this.context.defines[tileId] = tile;
         this.context.tiles.push(tile);
     };
@@ -125,11 +67,7 @@ class VeDclLoader extends VeDclListener {
     enterInnerClusterTile(ctx) {
         //console.log('enterInnerClusterTile');
         const tileName = ctx.clusterTile().getText();
-        const tileCtor = tileCtors[tileName];
-        if (!tileCtor) {
-            throw new Error(`Unknown tile constructor: ${tileName}`);
-        }
-        const tile = tileCtor();
+        const tile = buildTile(tileName);
         this.context.clusters.push(tile);
         this.context.tiles.push(tile);
     }
@@ -143,11 +81,7 @@ class VeDclLoader extends VeDclListener {
     enterInnerSimpleTile(ctx) {
         //console.log('enterInnerSimpleTile');
         const tileName = ctx.simpleTile().getText();
-        const tileCtor = tileCtors[tileName];
-        if (!tileCtor) {
-            throw new Error(`Unknown tile constructor: ${tileName}`);
-        }
-        const tile = tileCtor();
+        const tile = buildTile(tileName);
         this.context.tiles.push(tile);
     }
 

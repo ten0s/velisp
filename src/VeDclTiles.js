@@ -1762,30 +1762,39 @@ class Toggle extends Tile {
 }
 
 exports.Dialog = Dialog;
-
-exports.Row = Row;
-exports.Column = Column;
-exports.BoxedRow = BoxedRow;
-exports.BoxedColumn = BoxedColumn;
-
-exports.Concatenation = Concatenation;
-exports.Paragraph = Paragraph;
-exports.Spacer = Spacer;
-exports.Text = Text;
-exports.TextPart = TextPart;
-exports.Button = Button;
-exports.EditBox = EditBox;
-exports.ListBox = ListBox;
-exports.PopupList = PopupList;
-
-exports.RadioRow = RadioRow;
-exports.RadioColumn = RadioColumn;
-exports.RadioButton = RadioButton;
-exports.BoxedRadioRow = BoxedRadioRow;
-exports.BoxedRadioColumn = BoxedRadioColumn;
-
-exports.Slider = Slider;
-exports.Toggle = Toggle;
-
-// TODO: move to Consts
 exports.ListOperation = ListOperation;
+
+const tileCtors = {
+    // Clusters
+    'dialog'            : (id) => new Dialog(id),
+    'row'               : (id) => new Row(id),
+    'column'            : (id) => new Column(id),
+    'boxed_row'         : (id) => new BoxedRow(id),
+    'boxed_column'      : (id) => new BoxedColumn(id),
+    'concatenation'     : (id) => new Concatenation(id),
+    'paragraph'         : (id) => new Paragraph(id),
+    'radio_row'         : (id) => new RadioRow(id),
+    'radio_column'      : (id) => new RadioColumn(id),
+    'boxed_radio_row'   : (id) => new BoxedRadioRow(id),
+    'boxed_radio_column': (id) => new BoxedRadioColumn(id),
+    // Tiles
+    'button'            : (id) => new Button(id),
+    'edit_box'          : (id) => new EditBox(id),
+    'image'             : (id) => new Image(id),
+    'list_box'          : (id) => new ListBox(id),
+    'popup_list'        : (id) => new PopupList(id),
+    'radio_button'      : (id) => new RadioButton(id),
+    'slider'            : (id) => new Slider(id),
+    'spacer'            : (id) => new Spacer(id),
+    'text'              : (id) => new Text(id),
+    'text_part'         : (id) => new TextPart(id),
+    'toggle'            : (id) => new Toggle(id),
+};
+
+exports.buildTile = (tileName, tileId) => {
+    const tileCtor = tileCtors[tileName];
+    if (!tileCtor) {
+        throw new Error(`Unknown tile constructor: ${tileName}`);
+    }
+    return tileCtor(tileId);
+};
