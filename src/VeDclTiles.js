@@ -1221,7 +1221,7 @@ class Image extends Tile {
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
     </object>
     <packing>
-       <property name="expand">False</property>
+       <property name="expand">True</property>
        <property name="fill">True</property>
     </packing>
   </child>
