@@ -1150,7 +1150,7 @@ class Image extends Tile {
         //console.log(x, y, w, h, color);
         const rgb = RGB.fromACI(color);
         gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
-        gtkCtx.rectangle(this._width(x), this._height(y), this._width(w), this._height(h));
+        gtkCtx.rectangle(x, y, w, h);
         gtkCtx.fill();
     }
 
@@ -1159,8 +1159,8 @@ class Image extends Tile {
         const rgb = RGB.fromACI(color);
         gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
         gtkCtx.setLineWidth(1);
-        gtkCtx.moveTo(this._width(x1), this._height(y1));
-        gtkCtx.lineTo(this._width(x2), this._height(y2));
+        gtkCtx.moveTo(x1, y1);
+        gtkCtx.lineTo(x2, y2);
         gtkCtx.stroke();
     }
 
@@ -1189,12 +1189,12 @@ class Image extends Tile {
 
     gtkDimX(gtkWidget) {
         //return gtkWidget.getAllocatedWidth();
-        return this.width;
+        return Math.round(this._width(this.width));
     }
 
     gtkDimY(gtkWidget) {
         //return gtkWidget.getAllocatedHeight();
-        return this.height;
+        return Math.round(this._height(this.height));
     }
 
     gtkXml({layout}) {

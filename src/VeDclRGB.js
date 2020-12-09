@@ -1,8 +1,12 @@
 class RGB {
     constructor(r, g, b) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
+        this.r = this._percent(r);
+        this.g = this._percent(g);
+        this.b = this._percent(b);
+    }
+
+    _percent(color) {
+        return color / 255;
     }
 
     static fromACI(aci) {
