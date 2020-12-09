@@ -1,4 +1,5 @@
 const {Str} = require('./VeLispTypes.js');
+const {RGB} = require('./VeDclRGB.js');
 const Evaluator = require('./VeLispEvaluator.js');
 
 const gi = require('node-gtk');
@@ -1146,17 +1147,17 @@ class Image extends Tile {
     }
 
     gtkFillImage(gtkWidget, gtkCtx, x, y, w, h, color) {
-        console.log(x, y, w, h, color);
-        // TODO: set color
-        gtkCtx.setSourceRgba(0, 0, 0, 1);
+        //console.log(x, y, w, h, color);
+        const rgb = RGB.fromACI(color);
+        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
         gtkCtx.rectangle(this._width(x), this._height(y), this._width(w), this._height(h));
         gtkCtx.fill();
     }
 
     gtkVectorImage(gtkWidget, gtkCtx, x1, y1, x2, y2, color) {
-        console.log(x1, y1, x2, y2, color);
-        // TODO: set color
-        gtkCtx.setSourceRgb(0, 0, 0);
+        //console.log(x1, y1, x2, y2, color);
+        const rgb = RGB.fromACI(color);
+        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
         gtkCtx.setLineWidth(1);
         gtkCtx.moveTo(this._width(x1), this._height(y1));
         gtkCtx.lineTo(this._width(x2), this._height(y2));

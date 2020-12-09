@@ -2,6 +2,6 @@
 (setq h (dimy "image1"))
 (start_image "image1")
 (fill_image 0 0 (/ w 2) (/ h 2) 1)
-(fill_image (/ w 2) (/ h 2) w h 1)
-(vector_image w 0 0 h 1)
+(fill_image (/ w 2) (/ h 2) w h 3)
+(vector_image w 0 0 h 5)
 (end_image)
