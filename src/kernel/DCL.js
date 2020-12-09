@@ -290,7 +290,7 @@ exports.initContext = function (context) {
         const w = ensureType('fill_image: `width`' , args[2], [Int]);
         const h = ensureType('fill_image: `height`', args[3], [Int]);
         const c = ensureType('fill_image: `color`' , args[4], [Int]);
-        _imageHanlde = _dclDialog.fillImage(
+        _dclDialog.fillImage(
             _imageHandle, x.value(), y.value(), w.value(), h.value(), c.value()
         );
         return c;
@@ -309,7 +309,7 @@ exports.initContext = function (context) {
         const x2 = ensureType('vector_image: `x2`'   , args[2], [Int]);
         const y2 = ensureType('vector_image: `y2`'   , args[3], [Int]);
         const c  = ensureType('vector_image: `color`', args[4], [Int]);
-        _imageHandle = _dclDialog.vectorImage(
+        _dclDialog.vectorImage(
             _imageHandle, x1.value(), y1.value(), x2.value(), y2.value(), c.value()
         );
         return c;

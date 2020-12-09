@@ -449,13 +449,11 @@ class Dialog extends Cluster {
     // DCL
     fillImage(handle, x, y, w, h, color) {
         handle.operations.push(["fill_image", x, y, w, h, color]);
-        return handle;
     }
 
     // DCL
     vectorImage(handle, x1, y1, x2, y2, color) {
         handle.operations.push(["vector_image", x1, y1, x2, y2, color]);
-        return handle;
     }
 
     // DCL
