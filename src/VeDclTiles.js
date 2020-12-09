@@ -1149,7 +1149,7 @@ class Image extends Tile {
         console.log(x, y, w, h, color);
         // TODO: set color
         gtkCtx.setSourceRgba(0, 0, 0, 1);
-        gtkCtx.rectangle(x, y, w, h);
+        gtkCtx.rectangle(this._width(x), this._height(y), this._width(w), this._height(h));
         gtkCtx.fill();
     }
 
@@ -1157,9 +1157,9 @@ class Image extends Tile {
         console.log(x1, y1, x2, y2, color);
         // TODO: set color
         gtkCtx.setSourceRgb(0, 0, 0);
-        gtkCtx.setLineWidth(5);
-        gtkCtx.moveTo(x1, y1);
-        gtkCtx.lineTo(x2, y2);
+        gtkCtx.setLineWidth(1);
+        gtkCtx.moveTo(this._width(x1), this._height(y1));
+        gtkCtx.lineTo(this._width(x2), this._height(y2));
         gtkCtx.stroke();
     }
 
