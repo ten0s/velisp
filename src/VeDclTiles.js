@@ -1,9 +1,10 @@
-const {Str} = require('./VeLispTypes.js');
+const {Int, Str} = require('./VeLispTypes.js');
 const {RGB} = require('./VeDclRGB.js');
 const Evaluator = require('./VeLispEvaluator.js');
 
 const gi = require('node-gtk');
 const Gtk = gi.require('Gtk', '3.0');
+const Gdk = gi.require('Gdk');
 const GObject = gi.require('GObject');
 
 gi.startLoop();
@@ -1213,6 +1214,8 @@ class ImageButton extends Tile {
         //this.mnemonic = '';
         this.value = '';
         this.width = 10;
+        this._x = 0;
+        this._y = 0;
     }
 
     gtkInitWidget(gtkWidget) {
@@ -1222,10 +1225,17 @@ class ImageButton extends Tile {
 
     gtkActionTile(gtkWidget, handler, context) {
         this.action = handler;
+        gtkWidget.on('button-press-event', (event) => {
+            if (event.type === Gdk.EventType['BUTTON_PRESS']) {
+                this._x = Math.round(event.x | 0);
+                this._y = Math.round(event.y | 0);
+            }
+        });
         gtkWidget.on('clicked', () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(''));
-            // TODO: add $X, $Y
+            context.setVar('$X', new Int(this._x));
+            context.setVar('$Y', new Int(this._y));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
