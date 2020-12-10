@@ -389,8 +389,9 @@ class Dialog extends Cluster {
     doneDialog(status) {
         // See startDialog for dialogStatus
         this._status = status;
+        const pos = this._gtkWindow.getPosition();
         Gtk.mainQuit();
-        // TODO: what it should return? some (X, Y) point of the dialog
+        return pos;
     }
 
     // DCL
@@ -440,7 +441,6 @@ class Dialog extends Cluster {
     }
 
     gtkListChange(listStore, index, str) {
-        debugger;
         const path = new Gtk.TreePath.newFromIndices([index]);
         const [valid, iter] = listStore.getIter(path);
         if (!valid) {

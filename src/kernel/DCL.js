@@ -117,9 +117,8 @@ exports.initContext = function (context) {
             status = ensureType('done_dialog:', args[0], [Int]);
         }
         // TODO: check there's current dialog
-        _dclDialog.doneDialog(status.value());
-        // TODO: what it should return? some (X, Y) point of the dialog
-        return new Bool(true);
+        const [x, y] = _dclDialog.doneDialog(status.value());
+        return new List([new Int(x), new Int(y)]);
     }));
     context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {
         if (args.length < 1) {
