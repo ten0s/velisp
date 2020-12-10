@@ -1106,7 +1106,7 @@ class Image extends Tile {
         super(id);
         this.action = '';
         this.alignment = '';
-        //this.aspect_radio = ;
+        //this.aspect_radio = null;
         //this.color;
         //this.fixed_height = false;
         //this.fixed_width = false;
@@ -1133,6 +1133,7 @@ class Image extends Tile {
         this._operations.forEach(op => this.gtkOperation(gtkWidget, gtkCtx, op));
     }
 
+    // TODO: move to Base
     gtkOperation(gtkWidget, gtkCtx, op) {
         switch (op[0]) {
         case "fill_image":
@@ -1188,12 +1189,10 @@ class Image extends Tile {
     */
 
     gtkDimX(gtkWidget) {
-        //return gtkWidget.getAllocatedWidth();
         return Math.round(this._width(this.width));
     }
 
     gtkDimY(gtkWidget) {
-        //return gtkWidget.getAllocatedHeight();
         return Math.round(this._height(this.height));
     }
 
@@ -1225,6 +1224,122 @@ class Image extends Tile {
     </packing>
   </child>
 </object>
+`;
+    }
+}
+
+class ImageButton extends Tile {
+    constructor(id) {
+        super(id);
+        this.action = '';
+        this.alignment = '';
+        //this.allow_accept = false;
+        //this.aspect_radio = null;
+        //this.color;
+        //this.fixed_height = false;
+        //this.fixed_width = false;
+        this.height = 10;
+        this.is_enabled = true;
+        //this.is_tab_stop = true;
+        this.key = null;
+        //this.mnemonic = '';
+        this.value = '';
+        this.width = 10;
+        this._operations = [];
+    }
+
+    setOperations(operations) {
+        this._operations = operations;
+    }
+
+    gtkInitWidget(gtkWidget) {
+        debugger;
+        const gtkChild = gtkWidget.getChildren()[0];
+        gtkChild.on('draw', (ctx) => this.gtkDraw(gtkChild, ctx));
+    }
+
+    gtkDraw(gtkWidget, gtkCtx) {
+        debugger;
+        this._operations.forEach(op => this.gtkOperation(gtkWidget, gtkCtx, op));
+    }
+
+    // TODO: move to Base
+    gtkOperation(gtkWidget, gtkCtx, op) {
+        switch (op[0]) {
+        case "fill_image":
+            this.gtkFillImage(gtkWidget, gtkCtx, op[1], op[2], op[3], op[4], op[5]);
+            break;
+        case "vector_image":
+            this.gtkVectorImage(gtkWidget, gtkCtx, op[1], op[2], op[3], op[4], op[5]);
+            break;
+        default:
+            throw new Error(`Unknown image operation: ${op[0]}`);
+        }
+    }
+
+    gtkFillImage(gtkWidget, gtkCtx, x, y, w, h, color) {
+        //console.log(x, y, w, h, color);
+        const rgb = RGB.fromACI(color);
+        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
+        gtkCtx.rectangle(x, y, w, h);
+        gtkCtx.fill();
+    }
+
+    gtkVectorImage(gtkWidget, gtkCtx, x1, y1, x2, y2, color) {
+        //console.log(x1, y1, x2, y2, color);
+        const rgb = RGB.fromACI(color);
+        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
+        gtkCtx.setLineWidth(1);
+        gtkCtx.moveTo(x1, y1);
+        gtkCtx.lineTo(x2, y2);
+        gtkCtx.stroke();
+    }
+
+    gtkActionTile(gtkWidget, handler, context) {
+        this.action = handler;
+        gtkWidget.on('clicked', () => {
+            context.setVar('$KEY', new Str(this.key));
+            context.setVar('$VALUE', new Str(''));
+            // TODO: add $X, $Y
+            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+        });
+    }
+
+    gtkDimX(gtkWidget) {
+        return Math.round(this._width(this.width));
+    }
+
+    gtkDimY(gtkWidget) {
+        return Math.round(this._height(this.height));
+    }
+
+    gtkXml({layout}) {
+        const id = this.key ? `id="${this.key}"` : '';
+        return `
+<object class="GtkButton" ${id}>
+  <property name="visible">True</property>
+  <property name="sensitive">${this._bool(this.is_enabled)}</property>
+  <property name="can_focus">True</property>
+  <property name="can_default">True</property>
+  <property name="has_default">${this._bool(this.is_default)}</property>
+  <property name="receives_default">True</property>
+  <property name="margin_left">4</property>
+  <property name="margin_right">4</property>
+  <property name="margin_top">4</property>
+  <property name="margin_bottom">4</property>
+  <property name="halign">${this._halign(this.alignment, layout)}</property>
+  <property name="valign">${this._valign(this.alignment, layout)}</property>
+  <child>
+    <object class="GtkDrawingArea">
+      <property name="width_request">${this._width(this.width)}</property>
+      <property name="height_request">${this._height(this.height)}</property>
+    </object>
+  </child>
+</object>
+<packing>
+  <property name="fill">False</property>
+  <property name="expand">False</property>
+</packing>
 `;
     }
 }
@@ -1960,6 +2075,7 @@ const tileCtors = {
     'button'            : (id) => new Button(id),
     'edit_box'          : (id) => new EditBox(id),
     'image'             : (id) => new Image(id),
+    'image_button'      : (id) => new ImageButton(id),
     'list_box'          : (id) => new ListBox(id),
     'popup_list'        : (id) => new PopupList(id),
     'radio_button'      : (id) => new RadioButton(id),
