@@ -388,7 +388,7 @@ class Dialog extends Cluster {
         this._gtkWindow.setModal(true);
         this._gtkWindow.setResizable(false);
         // TODO: calculate using both length and font
-        console.log(this._gtkWindow.getTitle().length);
+        //console.log(this._gtkWindow.getTitle().length);
         const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
         this._gtkWindow.setSizeRequest(fixMeWidth, -1);
         if (this._initPosition[0] >= 0 && this._initPosition[1] >= 0) {
@@ -528,7 +528,7 @@ class Dialog extends Cluster {
         this._listStores = this.getListStores();
         // Init
         const gtkXml = this.gtkXml();
-        console.log(gtkXml);
+        //console.log(gtkXml);
         this._gtkBuilder = new Gtk.Builder();
         this._gtkBuilder.addFromString(gtkXml, gtkXml.length);
         this._gtkWindow = this.gtkFindWidget(this.id);

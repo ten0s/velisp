@@ -62,7 +62,7 @@ exports.initContext = function (context) {
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context);
 
         const dclDialogs = VeDclLoader.load(dclFile.value(), context);
-        console.log(util.inspect(dclDialogs, {showHidden: false, depth: null}));
+        //console.log(util.inspect(dclDialogs, {showHidden: false, depth: null}));
         const dclMap = {};
         for (const dclDialog of dclDialogs) {
             dclMap[dclDialog.id] = dclDialog;
