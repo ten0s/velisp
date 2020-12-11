@@ -150,6 +150,19 @@ exports.initContext = function (context) {
             return new Bool(false);
         }
     }));
+    context.setSym('CLIENT_DATA_TILE', new Fun('client_data_tile', ['key', 'data'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('client_data_tile: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('client_data_tile: too many arguments');
+        }
+        // TODO: ensure current dialog
+        const key = ensureType('client_data_tile: `key`', args[0], [Str]);
+        const data = ensureType('client_data_tile: `data`', args[1], [Str]);
+        _dclDialog.clientDataTile(key.value(), data.value());
+        return new Bool(false);
+    }));
     context.setSym('GET_TILE', new Fun('get_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('get_tile: too few arguments');

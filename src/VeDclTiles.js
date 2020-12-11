@@ -43,6 +43,7 @@ class Tile {
         this.id = id;
         this.height = null;
         this.width = null;
+        this._clientData = '';
         this._drawOperations = [];
     }
 
@@ -326,6 +327,12 @@ class Dialog extends Cluster {
         const tile = this.findTile(key);
         const gtkWidget = this.gtkFindWidget(key);
         tile.gtkActionTile(gtkWidget, handler, context);
+    }
+
+    // DCL
+    clientDataTile(key, data) {
+        const tile = this.findTile(key);
+        tile._clientData = data;
     }
 
     // DCL
@@ -1011,6 +1018,7 @@ class Button extends Tile {
         gtkWidget.on('clicked', () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(''));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -1077,6 +1085,7 @@ class EditBox extends Tile {
         gtkWidget.on('changed', () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -1236,6 +1245,7 @@ class ImageButton extends Tile {
             context.setVar('$VALUE', new Str(''));
             context.setVar('$X', new Int(this._x));
             context.setVar('$Y', new Int(this._y));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -1299,7 +1309,9 @@ class PopupList extends Tile {
         this.action = handler;
         gtkWidget.on('changed', () => {
             context.setVar('$KEY', new Str(this.key));
+            // Should be nil if nothing is selected
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -1407,7 +1419,9 @@ class ListBox extends Tile {
         const selection = gtkWidget.getSelection();
         selection.on('changed', () => {
             context.setVar('$KEY', new Str(this.key));
+            // Should be nil if nothing is selected
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -1517,6 +1531,7 @@ class RadioCluster extends Cluster {
                         context.setVar('$KEY', new Str(this.key));
                         // Radio Button Key
                         context.setVar('$VALUE', new Str(this._tiles[i].key));
+                        context.setVar('$DATA', new Str(this._clientData));
                         Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
                     }
                 });
@@ -1797,6 +1812,7 @@ class RadioButton extends Tile {
             if (gtkWidget.active) {
                 context.setVar('$KEY', new Str(this.key));
                 context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+                context.setVar('$DATA', new Str(this._clientData));
                 Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
             }
         });
@@ -1865,6 +1881,7 @@ class Slider extends Tile {
         gtkWidget.on('value-changed', () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
@@ -1941,6 +1958,7 @@ class Toggle extends Tile {
         gtkWidget.on('clicked', () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
+            context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
         });
     }
