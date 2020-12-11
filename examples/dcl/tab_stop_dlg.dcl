@@ -1,5 +1,6 @@
 tab_stop_dlg : dialog {
   label = "Tab Stop Example";
+  initial_focus = "accept";
   : column {
     : button {
       key = "button";

@@ -1,5 +1,6 @@
 client_data_tile_dlg : dialog {
   label = "Client Data Tile Example";
+  initial_focus = "button";
   : row {
     : button {
       key = "button";

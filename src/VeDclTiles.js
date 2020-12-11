@@ -282,7 +282,7 @@ class Cluster extends Tile {
 class Dialog extends Cluster {
     constructor(id) {
         super(id);
-        //this.initial_focus = null;
+        this.initial_focus = null;
         this.key = null;
         this.label = '';
         this.value = '';
@@ -531,6 +531,11 @@ class Dialog extends Cluster {
         // 2. Init actions
         for (let [key, handler] of this.getActions()) {
             this.actionTile(key, handler, context);
+        }
+        // 3. Optional initial focus
+        if (this.initial_focus) {
+            const gtkWidget = this.gtkFindWidget(this.initial_focus);
+            this._gtkWindow.setFocus(gtkWidget);
         }
     }
 
