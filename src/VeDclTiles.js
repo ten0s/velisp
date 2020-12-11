@@ -635,7 +635,6 @@ class Row extends Cluster {
   <property name="orientation">horizontal</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <!-- Without a border around it -->
   <property name="margin_left">0</property>
   <property name="margin_right">0</property>
@@ -676,7 +675,6 @@ class Column extends Cluster {
   <property name="orientation">vertical</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <!-- Without a border around it -->
   <property name="margin_left">0</property>
   <property name="margin_right">0</property>
@@ -727,7 +725,6 @@ class BoxedRow extends Cluster {
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="orientation">horizontal</property>
-      <property name="spacing">0</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
       <property name="width_request">${this._width(this.width)}</property>
@@ -786,7 +783,6 @@ class BoxedColumn extends Cluster {
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="orientation">vertical</property>
-      <property name="spacing">0</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
       <property name="width_request">${this._width(this.width)}</property>
@@ -827,7 +823,6 @@ class Concatenation extends Cluster {
   <property name="orientation">horizontal</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <!-- A margin around the concatenation as a whole -->
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
@@ -862,7 +857,6 @@ class Paragraph extends Cluster {
   <property name="orientation">vertical</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <!-- A margin around the paragraph as a whole -->
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
@@ -1110,7 +1104,6 @@ class EditBox extends Tile {
   <property name="orientation">horizontal</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
   <property name="margin_top">4</property>
@@ -1186,7 +1179,6 @@ class Image extends Tile {
   <property name="orientation">horizontal</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
   <property name="margin_top">4</property>
@@ -1343,7 +1335,6 @@ class PopupList extends Tile {
   <property name="orientation">horizontal</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
   <property name="margin_top">4</property>
@@ -1471,7 +1462,6 @@ class ListBox extends Tile {
   <property name="orientation">vertical</property>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="spacing">0</property>
   <property name="margin_left">4</property>
   <property name="margin_right">4</property>
   <property name="margin_top">4</property>
@@ -1599,7 +1589,6 @@ class RadioRow extends RadioCluster {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="orientation">horizontal</property>
-  <property name="spacing">0</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
@@ -1647,7 +1636,6 @@ class RadioColumn extends RadioCluster {
   <property name="visible">True</property>
   <property name="can_focus">False</property>
   <property name="orientation">vertical</property>
-  <property name="spacing">0</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
@@ -1705,7 +1693,6 @@ class BoxedRadioRow extends RadioCluster {
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="orientation">horizontal</property>
-      <property name="spacing">0</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
       <property name="width_request">${this._width(this.width)}</property>
@@ -1772,7 +1759,6 @@ class BoxedRadioColumn extends RadioCluster {
       <property name="visible">True</property>
       <property name="can_focus">False</property>
       <property name="orientation">vertical</property>
-      <property name="spacing">0</property>
       <property name="halign">${this._halign(this.alignment, layout)}</property>
       <property name="valign">${this._valign(this.alignment, layout)}</property>
       <property name="width_request">${this._width(this.width)}</property>
