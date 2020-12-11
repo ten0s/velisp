@@ -17,15 +17,15 @@ radio_row_dlg : dialog {
         label = "radio #1";
         key = "radio1";
     }
-    : radio_button{
+    : radio_button {
       label = "radio #2";
       key = "radio2";
     }
-    : radio_button{
+    : radio_button {
       label = "radio #3";
       key = "radio3";
     }
-    : radio_button{
+    : radio_button {
       label = "radio #4";
       key = "radio4";
     }
