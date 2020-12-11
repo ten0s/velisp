@@ -1006,7 +1006,7 @@ class Button extends Tile {
         //this.is_cancel = false;
         this.is_default = false;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         this.label = '';
         //this.mnemonic = '';
@@ -1038,7 +1038,7 @@ class Button extends Tile {
   <property name="label">${this.label}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
-  <property name="can_focus">True</property>
+  <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
   <property name="can_default">True</property>
   <property name="has_default">${this._bool(this.is_default)}</property>
   <property name="receives_default">True</property>
@@ -1071,7 +1071,7 @@ class EditBox extends Tile {
         //this.fixed_width = false;
         this.height = -1;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         this.label = '';
         //this.mnemonic = '';
@@ -1135,7 +1135,7 @@ class EditBox extends Tile {
     <object class="GtkEntry" ${id}>
       <property name="visible">True</property>
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
-      <property name="can_focus">True</property>
+      <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
       <property name="max_length">${this.edit_limit}</property>
       <property name="width_chars">${this.edit_width}</property>
       <property name="text">${this.value}</property>
@@ -1163,7 +1163,7 @@ class Image extends Tile {
         //this.fixed_width = false;
         this.height = 10;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         //this.mnemonic = '';
         this.value = '';
@@ -1193,7 +1193,7 @@ class Image extends Tile {
   <child>
     <object class="GtkDrawingArea" ${id}>
       <property name="visible">True</property>
-      <property name="can_focus">False</property>
+      <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
     </object>
     <packing>
@@ -1218,7 +1218,7 @@ class ImageButton extends Tile {
         //this.fixed_width = false;
         this.height = 10;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         //this.mnemonic = '';
         this.value = '';
@@ -1256,7 +1256,7 @@ class ImageButton extends Tile {
 <object class="GtkButton" ${id}>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
-  <property name="can_focus">True</property>
+  <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
   <property name="can_default">True</property>
   <property name="has_default">${this._bool(this.is_default)}</property>
   <property name="receives_default">True</property>
@@ -1291,6 +1291,8 @@ class PopupList extends Tile {
         //this.fixed_width = false;
         this.height = -1;
         this.is_enabled = true;
+        // TODO: Doesn't work as expected,
+        // probably due to internal Gtk.Entry
         //this.is_tab_stop = true;
         this.key = null;
         this.label = '';
@@ -1366,7 +1368,7 @@ class PopupList extends Tile {
     <object class="GtkComboBox" ${id}>
       <property name="visible">True</property>
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
-      <property name="can_focus">True</property>
+      <property name="can_focus">False</property>
       <property name="model">liststore-${this.key}</property>
 
       <child>
@@ -1399,7 +1401,7 @@ class ListBox extends Tile {
         //this.fixed_width = false;
         this.height = -1;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         this.label = '';
         this.list = '';
@@ -1483,7 +1485,7 @@ class ListBox extends Tile {
     <object class="GtkTreeView" ${id}>
       <property name="visible">True</property>
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
-      <property name="can_focus">True</property>
+      <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
       <property name="model">liststore-${this.key}</property>
       <property name="headers_visible">False</property>
       <property name="headers_clickable">False</property>
@@ -1798,7 +1800,7 @@ class RadioButton extends Tile {
         //this.fixed_width = false;
         this.height = -1;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         this.label = '';
         //this.mnemonic = '';
@@ -1833,7 +1835,7 @@ class RadioButton extends Tile {
   <property name="label">${this.label}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
-  <property name="can_focus">True</property>
+  <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
   <property name="group">${group}</property>
@@ -1945,7 +1947,7 @@ class Toggle extends Tile {
         //this.fixed_width = false;
         this.height = -1;
         this.is_enabled = true;
-        //this.is_tab_stop = true;
+        this.is_tab_stop = true;
         this.key = null;
         this.label = '';
         //this.mnemonic = '';
@@ -1979,7 +1981,7 @@ class Toggle extends Tile {
   <property name="label">${this.label}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
-  <property name="can_focus">True</property>
+  <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
   <property name="receives_default">False</property>
   <property name="draw_indicator">True</property>
   <property name="active">${this._bool(this.value === '1')}</property>
