@@ -1309,7 +1309,7 @@ class PopupList extends Tile {
         this.action = handler;
         gtkWidget.on('changed', () => {
             context.setVar('$KEY', new Str(this.key));
-            // Should be nil if nothing is selected
+            // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
@@ -1419,7 +1419,7 @@ class ListBox extends Tile {
         const selection = gtkWidget.getSelection();
         selection.on('changed', () => {
             context.setVar('$KEY', new Str(this.key));
-            // Should be nil if nothing is selected
+            // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
             Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
