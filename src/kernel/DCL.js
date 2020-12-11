@@ -71,22 +71,31 @@ exports.initContext = function (context) {
         _dclFiles[dclId.value()] = dclMap;
         return dclId;
     }));
-    context.setSym('NEW_DIALOG', new Fun('new_dialog', ['dlg_id', 'dcl_id'], [], (self, args) => {
+    context.setSym('NEW_DIALOG', new Fun('new_dialog', ['dlg_id', 'dcl_id', '[action]', '[point]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('new_dialog: too few arguments');
         }
-        if (args.length > 2) {
+        if (args.length > 4) {
             throw new Error('new_dialog: too many arguments');
         }
+        const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
         const dclId = ensureType('new_dialog: `dcl_id`', args[1], [Int]);
+        let action = new Str('');
+        let point = new List([new Int(-1), new Int(-1)]);
+        if (args.length > 2) {
+            action = ensureType('new_dialog: `action`', args[2], [Str]);
+        }
+        if (args.length > 3) {
+            // TODO: evaluate args[3]
+            //point = ensureType('new_dialog: `point`', args[3], [Str]);
+        }
         const dclFile = _dclFiles[dclId.value()];
         if (dclFile) {
-            const dlgId = ensureType('new_dialog: `dlg_id`', args[0], [Str]);
             const dclDialog = dclFile[dlgId.value()];
             if (dclDialog) {
                 try {
                     _dclDialog = dclDialog.clone();
-                    _dclDialog.gtkInitWidget(context);
+                    _dclDialog.gtkInitWidget(action.value(), context);
                     return new Bool(true);
                 } catch (e) {
                     // Should never happen since dialog ID is mandatory
@@ -131,7 +140,7 @@ exports.initContext = function (context) {
         delete _dclFiles[dclId.value()];
         return new Bool(false);
     }));
-    context.setSym('ACTION_TILE', new Fun('action_tile', ['key', 'handler'], [], (self, args) => {
+    context.setSym('ACTION_TILE', new Fun('action_tile', ['key', 'action'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('action_tile: too few arguments');
         }
@@ -140,10 +149,10 @@ exports.initContext = function (context) {
         }
         // TODO: ensure current dialog
         const key = ensureType('action_tile: `key`', args[0], [Str]);
-        const handler = ensureType('action_tile: `handler`', args[1], [Str]);
-        console.log(handler.toUnescapedString());
+        const action = ensureType('action_tile: `action`', args[1], [Str]);
+        //console.log(action.toUnescapedString());
         try {
-            _dclDialog.actionTile(key.value(), handler.value(), context);
+            _dclDialog.actionTile(key.value(), action.value(), context);
             return new Bool(true);
         } catch (e) {
             console.error(e);

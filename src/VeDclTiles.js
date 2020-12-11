@@ -40,9 +40,11 @@ const ListOperation = {
 
 class Tile {
     constructor(id) {
+        // Attributes
         this.id = id;
         this.height = null;
         this.width = null;
+        // Locals
         this._clientData = '';
         this._drawOperations = [];
     }
@@ -134,7 +136,7 @@ class Tile {
     gtkInitWidget(gtkWidget) {
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
+    gtkActionTile(gtkWidget, action, context) {
         throw new Error(
             `Not implemented gtkActionTile for ${this.constructor.name}`
         );
@@ -211,6 +213,7 @@ class Tile {
 class Cluster extends Tile {
     constructor(id) {
         super(id);
+        // Locals
         this._tiles = [];
     }
 
@@ -282,15 +285,18 @@ class Cluster extends Tile {
 class Dialog extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.initial_focus = null;
         this.key = null;
         this.label = '';
         this.value = '';
+        // Locals
         delete this._tiles;
         this._column = new Column();
         this._gtkBuilder = null;
         this._gtkWindow = null;
         this._listStores = null; // [ [key, list, tabs] ]
+        this._status = null;
     }
 
     // Cluster
@@ -323,10 +329,10 @@ class Dialog extends Cluster {
     }
 
     // DCL
-    actionTile(key, handler, context) {
+    actionTile(key, action, context) {
         const tile = this.findTile(key);
         const gtkWidget = this.gtkFindWidget(key);
-        tile.gtkActionTile(gtkWidget, handler, context);
+        tile.gtkActionTile(gtkWidget, action, context);
     }
 
     // DCL
@@ -512,7 +518,7 @@ class Dialog extends Cluster {
     }
 
     // GTK
-    gtkInitWidget(context) {
+    gtkInitWidget(defaultAction, context) {
         // Pre init
         this._listStores = this.getListStores();
         // Init
@@ -526,11 +532,18 @@ class Dialog extends Cluster {
         for (let key of this.getKeys()) {
             const tile = this.findTile(key);
             const gtkWidget = this.gtkFindWidget(key);
+            // Init widget
             tile.gtkInitWidget(gtkWidget);
+            // Optional dialog action
+            if (defaultAction) {
+                if (tile.hasOwnProperty('action') && !tile.action) {
+                    this.actionTile(key, defaultAction, context);
+                }
+            }
         }
-        // 2. Init actions
-        for (let [key, handler] of this.getActions()) {
-            this.actionTile(key, handler, context);
+        // 2. Init attribute actions
+        for (let [key, action] of this.getActions()) {
+            this.actionTile(key, action, context);
         }
         // 3. Optional initial focus
         if (this.initial_focus) {
@@ -584,6 +597,7 @@ class Dialog extends Cluster {
 
 class ListStore {
     constructor(key, list, tabs) {
+        // Attributes
         this.key = key;
         this.list = list;
         this.tabs = tabs;
@@ -615,6 +629,7 @@ class ListStore {
 class Row extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -655,6 +670,7 @@ class Row extends Cluster {
 class Column extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -693,6 +709,7 @@ class Column extends Cluster {
 class BoxedRow extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -751,6 +768,7 @@ class BoxedRow extends Cluster {
 class BoxedColumn extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -809,6 +827,7 @@ class BoxedColumn extends Cluster {
 class Concatenation extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.CENTERED;
         this.height = -1;
         this.width = -1;
@@ -843,6 +862,7 @@ class Concatenation extends Cluster {
 class Paragraph extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.CENTERED;
         this.height = -1;
         this.width = -1;
@@ -875,6 +895,7 @@ class Paragraph extends Cluster {
 class Spacer extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
@@ -900,6 +921,7 @@ class Spacer extends Tile {
 class Text extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
@@ -949,6 +971,7 @@ class Text extends Tile {
 class TextPart extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.alignment = Alignment.CENTERED;
         this.height = -1;
         this.is_bold = false;
@@ -997,6 +1020,7 @@ class TextPart extends Tile {
 class Button extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         //this.fixed_height = false;
@@ -1010,16 +1034,25 @@ class Button extends Tile {
         this.label = '';
         //this.mnemonic = '';
         this.width = -1;
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
-        gtkWidget.on('clicked', () => {
+    gtkInitWidget(gtkWidget) {
+        this._action = this.action;
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('clicked', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(''));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        gtkWidget.on('clicked', this._callback);
     }
 
     gtkGetTile(gtkWidget) {
@@ -1061,6 +1094,7 @@ class Button extends Tile {
 class EditBox extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         //this.allow_accept = false;
@@ -1077,16 +1111,25 @@ class EditBox extends Tile {
         this.value = '';
         this.width = -1;
         //this.password_char = '*';
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
-        gtkWidget.on('changed', () => {
+    gtkInitWidget(gtkWidget) {
+        this._action = this.action;
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('changed', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        gtkWidget.on('changed', this._callback);
     }
 
     gtkGetTile(gtkWidget) {
@@ -1153,7 +1196,8 @@ class EditBox extends Tile {
 class Image extends Tile {
     constructor(id) {
         super(id);
-        this.action = '';
+        // Attributes
+        //this.action = '';
         this.alignment = '';
         //this.aspect_radio = null;
         //this.color;
@@ -1206,6 +1250,7 @@ class Image extends Tile {
 class ImageButton extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         //this.allow_accept = false;
@@ -1220,31 +1265,37 @@ class ImageButton extends Tile {
         //this.mnemonic = '';
         this.value = '';
         this.width = 10;
+        // Locals
+        this._action = null;
+        this._callback = null;
         this._x = 0;
         this._y = 0;
     }
 
     gtkInitWidget(gtkWidget) {
-        const gtkChild = gtkWidget.getChildren()[0];
-        gtkChild.on('draw', (ctx) => this.gtkDraw(gtkChild, ctx));
-    }
-
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
+        this._action = this.action;
         gtkWidget.on('button-press-event', (event) => {
             if (event.type === Gdk.EventType['BUTTON_PRESS']) {
                 this._x = Math.round(event.x | 0);
                 this._y = Math.round(event.y | 0);
             }
         });
-        gtkWidget.on('clicked', () => {
+        const gtkChild = gtkWidget.getChildren()[0];
+        gtkChild.on('draw', (ctx) => this.gtkDraw(gtkChild, ctx));
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('clicked', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(''));
             context.setVar('$X', new Int(this._x));
             context.setVar('$Y', new Int(this._y));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        gtkWidget.on('clicked', this._callback);
     }
 
     gtkXml({layout}) {
@@ -1281,6 +1332,7 @@ class ImageButton extends Tile {
 class PopupList extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         this.edit_width = 0;
@@ -1298,21 +1350,27 @@ class PopupList extends Tile {
         this.tabs = '';
         this.value = '';
         this.width = -1;
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
     gtkInitWidget(gtkWidget) {
+        this._action = this.action;
         this.gtkSetTile(gtkWidget, this.value);
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
-        gtkWidget.on('changed', () => {
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('changed', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        gtkWidget.on('changed', this._callback);
     }
 
     gtkGetTile(gtkWidget) {
@@ -1390,6 +1448,7 @@ class PopupList extends Tile {
 class ListBox extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         //this.allow_accept = false;
@@ -1406,22 +1465,28 @@ class ListBox extends Tile {
         this.tabs = '';
         this.value = '';
         this.width = -1;
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
     gtkInitWidget(gtkWidget) {
+        this._action = this.action;
         this.gtkSetTile(gtkWidget, this.value);
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
+    gtkActionTile(gtkWidget, action, context) {
         const selection = gtkWidget.getSelection();
-        selection.on('changed', () => {
+        this._action = action;
+        this._callback && selection.off('changed', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        selection.on('changed', this._callback);
     }
 
     gtkGetTile(gtkWidget) {
@@ -1514,24 +1579,36 @@ class ListBox extends Tile {
 class RadioCluster extends Cluster {
     constructor(id) {
         super(id);
+        // Attributes
+        this.action = '';
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
+    gtkInitWidget(gtkWidget) {
+        this._action = this.action;
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
         for (let i = 0; i < gtkWidget.getChildren().length; i++) {
             const child = gtkWidget.getChildren()[i];
+            const tile = this._tiles[i];
             // Ensure it's radio button and it has not action
-            if (child instanceof Gtk.RadioButton && this._tiles[i].action === '') {
-                child.on('clicked', () => {
+            if (child instanceof Gtk.RadioButton && !tile.action) {
+                tile._callback && child.off('clicked', tile._callback);
+                tile._callback = () => {
                     if (child.active) {
                         // Radio Cluster Key
                         context.setVar('$KEY', new Str(this.key));
                         // Radio Button Key
                         context.setVar('$VALUE', new Str(this._tiles[i].key));
                         context.setVar('$DATA', new Str(this._clientData));
-                        Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+                        Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
                     }
-                });
+                };
+                child.on('clicked', tile._callback);
             }
         }
     }
@@ -1559,7 +1636,7 @@ class RadioCluster extends Cluster {
 class RadioRow extends RadioCluster {
     constructor(id) {
         super(id);
-        this.action = '';
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -1606,7 +1683,7 @@ class RadioRow extends RadioCluster {
 class RadioColumn extends RadioCluster {
     constructor(id) {
         super(id);
-        this.action = '';
+        // Attributes
         this.alignment = '';
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -1653,7 +1730,7 @@ class RadioColumn extends RadioCluster {
 class BoxedRadioRow extends RadioCluster {
     constructor(id) {
         super(id);
-        this.action = '';
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -1719,7 +1796,7 @@ class BoxedRadioRow extends RadioCluster {
 class BoxedRadioColumn extends RadioCluster {
     constructor(id) {
         super(id);
-        this.action = '';
+        // Attributes
         this.alignment = Alignment.FILLED;
         //this.children_alignment = '';
         //this.children_fixed_height = false;
@@ -1785,6 +1862,7 @@ class BoxedRadioColumn extends RadioCluster {
 class RadioButton extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         //this.fixed_height = false;
@@ -1797,18 +1875,27 @@ class RadioButton extends Tile {
         //this.mnemonic = '';
         this.value = '0';
         this.width = -1;
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
-        gtkWidget.on('clicked', () => {
+    gtkInitWidget(gtkWidget) {
+        this._action = this.action;
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('clicked', this._callback);
+        this._callback = () => {
             if (gtkWidget.active) {
                 context.setVar('$KEY', new Str(this.key));
                 context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
                 context.setVar('$DATA', new Str(this._clientData));
-                Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
+                Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
             }
-        });
+        };
+        gtkWidget.on('clicked', this._callback);
     }
 
     gtkGetTile(gtkWidget) {
@@ -1851,6 +1938,7 @@ class RadioButton extends Tile {
 class Slider extends Tile {
     constructor(id) {
         super(id);
+        // Attrubutes
         this.action = '';
         this.alignment = '';
         //this.big_increment = integer; // one-tenth of the total range
@@ -1866,17 +1954,26 @@ class Slider extends Tile {
         //this.small_increment = integer; // one one-hundredth the total range
         this.value = 0;
         this.width = -1;
+        // Locals
+        this._action = null;
+        this._callback = null;
         this._index = Slider.index++;
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
-        gtkWidget.on('value-changed', () => {
+    gtkInitWidget(gtkWidget) {
+        this._action = this.action;
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('value-changed', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        gtkWidget.on('value-changed', this._callback);
     }
 
     gtkGetTile(gtkWidget) {
@@ -1932,6 +2029,7 @@ Slider.index = 0;
 class Toggle extends Tile {
     constructor(id) {
         super(id);
+        // Attributes
         this.action = '';
         this.alignment = '';
         //this.fixed_height = false;
@@ -1944,16 +2042,25 @@ class Toggle extends Tile {
         //this.mnemonic = '';
         this.value = '0';
         this.width = -1;
+        // Locals
+        this._action = null;
+        this._callback = null;
     }
 
-    gtkActionTile(gtkWidget, handler, context) {
-        this.action = handler;
-        gtkWidget.on('clicked', () => {
+    gtkInitWidget(gtkWidget) {
+        this._action = this.action;
+    }
+
+    gtkActionTile(gtkWidget, action, context) {
+        this._action = action;
+        this._callback && gtkWidget.off('clicked', this._callback);
+        this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
-            Evaluator.evaluate(new Str(this.action).toUnescapedString(), context);
-        });
+            Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
+        };
+        gtkWidget.on('clicked', this._callback);
     }
 
     gtkGetTile(gtkWidget) {

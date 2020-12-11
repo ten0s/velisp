@@ -22,8 +22,12 @@ node ${opts[@]} ${dir}/../../src/main.js <<EOF
     (progn
       (princ (strcat "Error: dcl file '" dcl_file "' not loaded"))
       (exit 1)))
+
+  (defun default (key value)
+    (princ (strcat "default: key: " key " value: " value)))
+
   (setq dlg_id "${name}")
-  (if (not (new_dialog dlg_id dcl_id))
+  (if (not (new_dialog dlg_id dcl_id "(default \$key \$value)" '(-1 -1)))
     (progn
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
       (exit 1)))
