@@ -1045,6 +1045,7 @@ class Button extends Tile {
 
     gtkActionTile(gtkWidget, action, context) {
         this._action = action;
+        // TODO: move to ActionTile.on(event, callback)
         this._callback && gtkWidget.off('clicked', this._callback);
         this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
