@@ -86,16 +86,16 @@ exports.initContext = function (context) {
             action = ensureType('new_dialog: `action`', args[2], [Str]);
         }
         if (args.length > 3) {
-            // TODO: evaluate args[3]
-            //point = ensureType('new_dialog: `point`', args[3], [Str]);
+            point = ensureType('new_dialog: `point`', args[3], [List]);
         }
         const dclFile = _dclFiles[dclId.value()];
         if (dclFile) {
             const dclDialog = dclFile[dlgId.value()];
             if (dclDialog) {
                 try {
+                    const position = [point.value()[0].value(), point.value()[1].value()];
                     _dclDialog = dclDialog.clone();
-                    _dclDialog.gtkInitWidget(action.value(), context);
+                    _dclDialog.gtkInitWidget(action.value(), position, context);
                     return new Bool(true);
                 } catch (e) {
                     // Should never happen since dialog ID is mandatory

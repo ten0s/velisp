@@ -295,7 +295,8 @@ class Dialog extends Cluster {
         this._column = new Column();
         this._gtkBuilder = null;
         this._gtkWindow = null;
-        this._listStores = null; // [ [key, list, tabs] ]
+        this._initPosition = null; // [ x, y ]
+        this._listStores = null;   // [ [key, list, tabs] ]
         this._status = null;
     }
 
@@ -390,6 +391,9 @@ class Dialog extends Cluster {
         console.log(this._gtkWindow.getTitle().length);
         const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
         this._gtkWindow.setSizeRequest(fixMeWidth, -1);
+        if (this._initPosition[0] >= 0 && this._initPosition[1] >= 0) {
+            this._gtkWindow.move(this._initPosition[0], this._initPosition[1]);
+        }
         this._gtkWindow.on('show', Gtk.main);
         this._gtkWindow.on('destroy', Gtk.mainQuit);
         this._gtkWindow.showAll();
@@ -518,8 +522,9 @@ class Dialog extends Cluster {
     }
 
     // GTK
-    gtkInitWidget(defaultAction, context) {
+    gtkInitWidget(defaultAction, initPosition, context) {
         // Pre init
+        this._initPosition = initPosition;
         this._listStores = this.getListStores();
         // Init
         const gtkXml = this.gtkXml();
