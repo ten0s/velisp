@@ -3,6 +3,11 @@ class VeStack {
         this.stack = [];
     }
 
+    // :: () -> boolean()
+    isEmpty() {
+        return this.stack.length === 0;
+    }
+
     // :: (value) -> integer()
     push(value) {
         this.stack.push(value);

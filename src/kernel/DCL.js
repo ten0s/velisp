@@ -1,4 +1,5 @@
 const {Bool, Int, Sym, Str, List, Fun, ensureType} = require('../VeLispTypes.js');
+const {VeStack} = require('../VeStack.js');
 const {VeDclContext} = require('../VeDclContext.js');
 const VeDclLoader = require('../VeDclLoader.js');
 const {ListOperation} = require('../VeDclTiles.js');
@@ -9,9 +10,39 @@ const util = require('util');
 let _dclId = 0;
 const _dclFiles = {};
 
-let _dclDialog = null;
-let _listHandle = null;
-let _imageHandle = null;
+const _dialogs = new VeStack();
+const _lists   = new VeStack();
+const _images  = new VeStack();
+
+const withDialog = (ifFunc1, elseFunc0 = null) => {
+    if (!_dialogs.isEmpty()) {
+        return ifFunc1(_dialogs.top());
+    }
+    if (elseFunc0) {
+        return elseFunc0();
+    }
+    throw new Error('No current dialog');
+}
+
+const withList = (ifFunc1, elseFunc0 = null) => {
+    if (!_lists.isEmpty()) {
+        return ifFunc1(_lists.top());
+    }
+    if (elseFunc0) {
+        return elseFunc0();
+    }
+    throw new Error('No current list');
+}
+
+const withImage = (ifFunc1, elseFunc0 = null) => {
+    if (!_images.isEmpty()) {
+        return ifFunc1(_images.top());
+    }
+    if (elseFunc0) {
+        return elseFunc0();
+    }
+    throw new Error('No current image');
+}
 
 exports.initContext = function (context) {
     context.setSym('ALERT', new Fun('alert', ['string'], [], (self, args) => {
@@ -32,10 +63,13 @@ exports.initContext = function (context) {
             message_type: Gtk.MessageType.INFO,
             buttons: Gtk.ButtonsType.OK
         });
-        if (_dclDialog) {
-            // FIXME: get rid of internal knowledge
-            dlg.transientFor = _dclDialog._gtkWindow;
-        }
+        withDialog(
+            dialog => {
+                // FIXME: get rid of internal knowledge
+                dlg.transientFor = dialog._gtkWindow;
+            },
+            () => {}
+        );
         dlg.run();
         dlg.destroy();
         return new Bool(false);
@@ -93,19 +127,21 @@ exports.initContext = function (context) {
             const dclDialog = dclFile[dlgId.value()];
             if (dclDialog) {
                 try {
-                    const position = [point.value()[0].value(), point.value()[1].value()];
-                    _dclDialog = dclDialog.clone();
-                    _dclDialog.gtkInitWidget(action.value(), position, context);
-                    return new Bool(true);
+                    _dialogs.push(dclDialog.clone());
+                    return withDialog(dialog => {
+                        const position = [point.value()[0].value(), point.value()[1].value()];
+                        dialog.gtkInitWidget(action.value(), position, context);
+                        return new Bool(true);
+                    });
                 } catch (e) {
                     // Should never happen since dialog ID is mandatory
                     console.error(e);
                 }
             } else {
-                // TODO: No dlg_id found in DCL file
+                throw new Error(`${dlgId} not found in ${dclFile}`);
             }
         } else {
-            // TODO: No dcl_id found
+            throw new Error(`${dclId} not found`);
         }
         return new Bool(false);
     }));
@@ -113,9 +149,10 @@ exports.initContext = function (context) {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments');
         }
-        // TODO: ensure _dclDialog
-        const status = _dclDialog.startDialog();
-        return new Int(status);
+        return withDialog(dialog => {
+            const status = dialog.startDialog();
+            return new Int(status);
+        });
     }));
     context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
         if (args.length > 1) {
@@ -125,9 +162,10 @@ exports.initContext = function (context) {
         if (args.length == 1) {
             status = ensureType('done_dialog:', args[0], [Int]);
         }
-        // TODO: check there's current dialog
-        const [x, y] = _dclDialog.doneDialog(status.value());
-        return new List([new Int(x), new Int(y)]);
+        return withDialog(_dialog => {
+            const [x, y] = _dialogs.pop().doneDialog(status.value());
+            return new List([new Int(x), new Int(y)]);
+        });
     }));
     context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {
         if (args.length < 1) {
@@ -147,17 +185,18 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('action_tile: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('action_tile: `key`', args[0], [Str]);
         const action = ensureType('action_tile: `action`', args[1], [Str]);
         //console.log(action.toUnescapedString());
-        try {
-            _dclDialog.actionTile(key.value(), action.value(), context);
-            return new Bool(true);
-        } catch (e) {
-            console.error(e);
-            return new Bool(false);
-        }
+        return withDialog(dialog => {
+            try {
+                dialog.actionTile(key.value(), action.value(), context);
+                return new Bool(true);
+            } catch (e) {
+                console.error(e);
+                return new Bool(false);
+            }
+        });
     }));
     context.setSym('CLIENT_DATA_TILE', new Fun('client_data_tile', ['key', 'data'], [], (self, args) => {
         if (args.length < 2) {
@@ -166,11 +205,12 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('client_data_tile: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('client_data_tile: `key`', args[0], [Str]);
         const data = ensureType('client_data_tile: `data`', args[1], [Str]);
-        _dclDialog.clientDataTile(key.value(), data.value());
-        return new Bool(false);
+        return withDialog(dialog => {
+            dialog.clientDataTile(key.value(), data.value());
+            return new Bool(false);
+        });
     }));
     context.setSym('GET_TILE', new Fun('get_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
@@ -179,10 +219,11 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('get_tile: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('get_tile:', args[0], [Str]);
-        const str = _dclDialog.getTile(key.value());
-        return new Str(str);
+        return withDialog(dialog => {
+            const str = dialog.getTile(key.value());
+            return new Str(str);
+        });
     }));
     context.setSym('SET_TILE', new Fun('get_tile', ['key', 'value'], [], (self, args) => {
         if (args.length < 2) {
@@ -191,11 +232,12 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('set_tile: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('set_tile:', args[0], [Str]);
         const value = ensureType('set_tile:', args[1], [Str]);
-        _dclDialog.setTile(key.value(), value.value());
-        return value;
+        return withDialog(dialog => {
+            dialog.setTile(key.value(), value.value());
+            return value;
+        });
     }));
     context.setSym('MODE_TILE', new Fun('mode_tile', ['key', 'mode'], [], (self, args) => {
         if (args.length < 2) {
@@ -204,11 +246,12 @@ exports.initContext = function (context) {
         if (args.length > 2) {
             throw new Error('mode_tile: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('mode_tile: `key`', args[0], [Str]);
         const mode = ensureType('mode_tile: `mode`', args[1], [Int]);
-        _dclDialog.modeTile(key.value(), mode.value());
-        return new Bool(false);
+        return withDialog(dialog => {
+            dialog.modeTile(key.value(), mode.value());
+            return new Bool(false);
+        });
     }));
     context.setSym('START_LIST', new Fun('start_list', ['key', '[operation]', '[index]'], [], (self, args) => {
         if (args.length < 1) {
@@ -217,7 +260,6 @@ exports.initContext = function (context) {
         if (args.length > 3) {
             throw new Error('start_list: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('start_list: `key`', args[0], [Str]);
         let operation;
         if (args.length > 1) {
@@ -232,9 +274,10 @@ exports.initContext = function (context) {
             // Used for ListOperation.CHANGE only
             index = new Int(0);
         }
-        _listHandle = _dclDialog.startList(key.value(), operation.value(), index.value());
-        // TODO: The key argument, if successful; otherwise nil.
-        return key;
+        return withDialog(dialog => {
+            _lists.push(dialog.startList(key.value(), operation.value(), index.value()));
+            return key;
+        });
     }));
     context.setSym('ADD_LIST', new Fun('add_list', ['str'], [], (self, args) => {
         if (args.length < 1) {
@@ -243,22 +286,24 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('add_list: too many arguments');
         }
-        // TODO: ensure current dialog
-        // TODO: ensure list handle
         const str = ensureType('add_list: `str`', args[0], [Str]);
-        _dclDialog.addList(_listHandle, str.value());
-        // TODO: return nil on error
-        return str;
+        return withDialog(dialog => {
+            withList(list => {
+                dialog.addList(list, str.value());
+                return str;
+            });
+        });
     }));
     context.setSym('END_LIST', new Fun('end_list', [], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('end_list: too many arguments');
         }
-        // TODO: ensure current dialog
-        // TODO: ensure list handle
-        _dclDialog.endList(_listHandle);
-        _listHandle = null;
-        return new Bool(false);
+        return withDialog(dialog => {
+            return withList(_list => {
+                dialog.endList(_lists.pop());
+                return new Bool(false);
+            });
+        });
     }));
     context.setSym('DIMX', new Fun('dimx', ['key'], [], (self, args) => {
         if (args.length < 1) {
@@ -267,10 +312,11 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('dimx: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('dimx: `key`', args[0], [Str]);
-        const dimX = _dclDialog.dimX(key.value());
-        return new Int(dimX);
+        return withDialog(dialog => {
+            const dimX = dialog.dimX(key.value());
+            return new Int(dimX);
+        });
     }));
     context.setSym('DIMY', new Fun('dimy', ['key'], [], (self, args) => {
         if (args.length < 1) {
@@ -279,10 +325,11 @@ exports.initContext = function (context) {
         if (args.length > 1) {
             throw new Error('dimy: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('dimy: `key`', args[0], [Str]);
-        const dimY = _dclDialog.dimY(key.value());
-        return new Int(dimY);
+        return withDialog(dialog => {
+            const dimY = dialog.dimY(key.value());
+            return new Int(dimY);
+        });
     }));
     context.setSym('START_IMAGE', new Fun('start_list', ['key'], [], (self, args) => {
         if (args.length < 1) {
@@ -291,11 +338,11 @@ exports.initContext = function (context) {
         if (args.length > 3) {
             throw new Error('start_image: too many arguments');
         }
-        // TODO: ensure current dialog
         const key = ensureType('start_image: `key`', args[0], [Str]);
-        _imageHandle = _dclDialog.startImage(key.value());
-        // TODO: The key argument, if successful; otherwise nil.
-        return key;
+        return withDialog(dialog => {
+            _images.push(dialog.startImage(key.value()));
+            return key;
+        });
     }));
     context.setSym('FILL_IMAGE', new Fun('fill_image', ['x1', 'y1', 'width', 'height', 'color'], [], (self, args) => {
         if (args.length < 5) {
@@ -304,17 +351,19 @@ exports.initContext = function (context) {
         if (args.length > 5) {
             throw new Error('fill_image: too many arguments');
         }
-        // TODO: ensure current dialog
-        // TODO: ensure image handle
         const x = ensureType('fill_image: `x1`'    , args[0], [Int]);
         const y = ensureType('fill_image: `y1`'    , args[1], [Int]);
         const w = ensureType('fill_image: `width`' , args[2], [Int]);
         const h = ensureType('fill_image: `height`', args[3], [Int]);
         const c = ensureType('fill_image: `color`' , args[4], [Int]);
-        _dclDialog.fillImage(
-            _imageHandle, x.value(), y.value(), w.value(), h.value(), c.value()
-        );
-        return c;
+        return withDialog(dialog => {
+            return withImage(image => {
+                dialog.fillImage(
+                    image, x.value(), y.value(), w.value(), h.value(), c.value()
+                );
+                return c;
+            });
+        });
     }));
     context.setSym('VECTOR_IMAGE', new Fun('vector_image', ['x1', 'y1', 'x2', 'y2', 'color'], [], (self, args) => {
         if (args.length < 5) {
@@ -323,26 +372,29 @@ exports.initContext = function (context) {
         if (args.length > 5) {
             throw new Error('vector_image: too many arguments');
         }
-        // TODO: ensure current dialog
-        // TODO: ensure image handle
         const x1 = ensureType('vector_image: `x1`'   , args[0], [Int]);
         const y1 = ensureType('vector_image: `y1`'   , args[1], [Int]);
         const x2 = ensureType('vector_image: `x2`'   , args[2], [Int]);
         const y2 = ensureType('vector_image: `y2`'   , args[3], [Int]);
         const c  = ensureType('vector_image: `color`', args[4], [Int]);
-        _dclDialog.vectorImage(
-            _imageHandle, x1.value(), y1.value(), x2.value(), y2.value(), c.value()
-        );
-        return c;
+        return withDialog(dialog => {
+            return withImage(image => {
+                dialog.vectorImage(
+                    image, x1.value(), y1.value(), x2.value(), y2.value(), c.value()
+                );
+                return c;
+            });
+        });
     }));
     context.setSym('END_IMAGE', new Fun('end_image', [], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('end_image: too many arguments');
         }
-        // TODO: ensure current dialog
-        // TODO: ensure image handle
-        _dclDialog.endImage(_imageHandle);
-        _imageHandle = null;
-        return new Bool(false);
+        return withDialog(dialog => {
+            return withImage(_image => {
+                dialog.endImage(_images.pop());
+                return new Bool(false);
+            });
+        });
     }));
 }
