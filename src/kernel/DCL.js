@@ -233,6 +233,20 @@ exports.initContext = function (context) {
             return new Bool(false);
         });
     }));
+    context.setSym('GET_ATTR', new Fun('get_attr', ['key', 'attr'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('get_attr: too few arguments');
+        }
+        if (args.length > 2) {
+            throw new Error('get_attr: too many arguments');
+        }
+        const key = ensureType('get_attr:', args[0], [Str]);
+        const attr = ensureType('get_attr:', args[1], [Str]);
+        return withDialog(dialog => {
+            const str = dialog.getAttr(key.value(), attr.value());
+            return new Str(str);
+        });
+    }));
     context.setSym('GET_TILE', new Fun('get_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('get_tile: too few arguments');

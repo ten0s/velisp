@@ -325,6 +325,9 @@ class Dialog extends Cluster {
 
     // Cluster
     findTile(key) {
+        if (this.key === key) {
+            return this;
+        }
         const tile = this._column.findTile(key);
         if (tile) {
             return tile;
@@ -343,6 +346,15 @@ class Dialog extends Cluster {
     clientDataTile(key, data) {
         const tile = this.findTile(key);
         tile._clientData = data;
+    }
+
+    // DCL
+    getAttr(key, attr) {
+        const tile = this.findTile(key);
+        if (tile.hasOwnProperty(attr)) {
+            return tile[attr].toString();
+        }
+        return "";
     }
 
     // DCL
