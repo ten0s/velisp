@@ -14,32 +14,32 @@ const _dialogs = new VeStack();
 const _lists   = new VeStack();
 const _images  = new VeStack();
 
-const withDialog = (ifFunc1, elseFunc0 = null) => {
+const withDialog = (ifFunc, elseFunc = null) => {
     if (!_dialogs.isEmpty()) {
-        return ifFunc1(_dialogs.top());
+        return ifFunc(_dialogs.top());
     }
-    if (elseFunc0) {
-        return elseFunc0();
+    if (elseFunc) {
+        return elseFunc();
     }
     throw new Error('No current dialog');
 }
 
-const withList = (ifFunc1, elseFunc0 = null) => {
+const withList = (ifFunc, elseFunc = null) => {
     if (!_lists.isEmpty()) {
-        return ifFunc1(_lists.top());
+        return ifFunc(_lists.top());
     }
-    if (elseFunc0) {
-        return elseFunc0();
+    if (elseFunc) {
+        return elseFunc();
     }
     throw new Error('No current list');
 }
 
-const withImage = (ifFunc1, elseFunc0 = null) => {
+const withImage = (ifFunc, elseFunc = null) => {
     if (!_images.isEmpty()) {
-        return ifFunc1(_images.top());
+        return ifFunc(_images.top());
     }
-    if (elseFunc0) {
-        return elseFunc0();
+    if (elseFunc) {
+        return elseFunc();
     }
     throw new Error('No current image');
 }
