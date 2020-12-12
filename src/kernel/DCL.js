@@ -14,6 +14,8 @@ const _dialogs = new VeStack();
 const _lists   = new VeStack();
 const _images  = new VeStack();
 
+const DONE_DIALOG_DELAY = 10;
+
 const withDialog = (ifFunc, elseFunc = null) => {
     if (_dialogs.size() === 1) {
         const self = _dialogs.top();
@@ -174,6 +176,17 @@ exports.initContext = function (context) {
             const [x, y] = _dialogs.pop().doneDialog(status.value());
             return new List([new Int(x), new Int(y)]);
         });
+    }));
+    context.setSym('TERM_DIALOG', new Fun('term_dialog', [], [], (self, args) => {
+        if (args.length > 0) {
+            throw new Error('term_dialog: too many arguments');
+        }
+        let i = 0;
+        while (!_dialogs.isEmpty()) {
+            const dialog = _dialogs.pop();
+            setTimeout(() => dialog.doneDialog(0), DONE_DIALOG_DELAY * i++);
+        }
+        return new Bool(false);
     }));
     context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {
         if (args.length < 1) {
