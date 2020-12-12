@@ -75,7 +75,7 @@ class VeDclLoader extends VeDclListener {
     exitInnerClusterTile(ctx) {
         //console.log('exitInnerClusterTile');
         const cluster = this.context.clusters.pop();
-        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
+        this.context.clusters.top().addTile(this.context.tiles.pop());
     }
 
     enterInnerSimpleTile(ctx) {
@@ -87,7 +87,7 @@ class VeDclLoader extends VeDclListener {
 
     exitInnerSimpleTile(ctx) {
         //console.log('exitInnerSimpleTile');
-        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
+        this.context.clusters.top().addTile(this.context.tiles.pop());
     }
 
     enterInnerDeriveTile(ctx) {
@@ -103,7 +103,7 @@ class VeDclLoader extends VeDclListener {
 
     exitInnerDeriveTile(ctx) {
         //console.log('exitInnerDeriveTile');
-        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
+        this.context.clusters.top().addTile(this.context.tiles.pop());
     }
 
     enterInnerAliasTile(ctx) {
@@ -118,11 +118,11 @@ class VeDclLoader extends VeDclListener {
 
     exitInnerAliasTile(ctx) {
         //console.log('exitInnerAliasTile');
-        this.context.clusters[this.context.clusters.length-1].addTile(this.context.tiles.pop());
+        this.context.clusters.top().addTile(this.context.tiles.pop());
     }
 
     enterAttribute(ctx) {
-        const current = this.context.tiles[this.context.tiles.length-1];
+        const current = this.context.tiles.top();
         if (current) {
             const name = ctx.attributeName().ID().getText();
             let value = null;

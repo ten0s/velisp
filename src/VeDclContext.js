@@ -1,8 +1,10 @@
+const {VeStack} = require('./VeStack.js');
+
 class VeDclContext {
     constructor() {
         this.defines = {};
-        this.clusters = [];
-        this.tiles = [];
+        this.clusters = new VeStack();
+        this.tiles = new VeStack();
     }
 }
 
