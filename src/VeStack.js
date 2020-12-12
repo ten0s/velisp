@@ -8,6 +8,11 @@ class VeStack {
         return this.stack.length === 0;
     }
 
+    // :: () -> non_neg_integer()
+    size() {
+        return this.stack.length;
+    }
+
     // :: (value) -> integer()
     push(value) {
         this.stack.push(value);

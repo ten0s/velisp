@@ -15,8 +15,16 @@ const _lists   = new VeStack();
 const _images  = new VeStack();
 
 const withDialog = (ifFunc, elseFunc = null) => {
-    if (!_dialogs.isEmpty()) {
-        return ifFunc(_dialogs.top());
+    if (_dialogs.size() === 1) {
+        const self = _dialogs.top();
+        const parent = null;
+        return ifFunc(self, parent);
+    }
+    if (_dialogs.size() >= 2) {
+        const self = _dialogs.pop();
+        const parent = _dialogs.top();
+        _dialogs.push(self);
+        return ifFunc(self, parent);
     }
     if (elseFunc) {
         return elseFunc();
@@ -149,8 +157,8 @@ exports.initContext = function (context) {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments');
         }
-        return withDialog(dialog => {
-            const status = dialog.startDialog();
+        return withDialog((dialog, parent) => {
+            const status = dialog.startDialog(parent);
             return new Int(status);
         });
     }));

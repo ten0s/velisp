@@ -38,6 +38,9 @@ const ListOperation = {
     CLEAR: 3,
 }
 
+const PARENT_DX = 10;
+const PARENT_DY = 10;
+
 class Tile {
     constructor(id) {
         // Attributes
@@ -384,7 +387,7 @@ class Dialog extends Cluster {
     }
 
     // DCL
-    startDialog() {
+    startDialog(parent) {
         this._gtkWindow.setModal(true);
         this._gtkWindow.setResizable(false);
         // TODO: calculate using both length and font
@@ -392,22 +395,34 @@ class Dialog extends Cluster {
         const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
         this._gtkWindow.setSizeRequest(fixMeWidth, -1);
         if (this._initPosition[0] >= 0 && this._initPosition[1] >= 0) {
-            this._gtkWindow.move(this._initPosition[0], this._initPosition[1]);
+            this._gtkWindow.move(
+                this._initPosition[0],
+                this._initPosition[1]
+            );
+        } else if (parent) {
+            const parentPos = parent._gtkWindow.getPosition();
+            this._gtkWindow.move(
+                parentPos[0] + PARENT_DX,
+                parentPos[1] + PARENT_DY
+            );
         }
         this._gtkWindow.on('show', Gtk.main);
         this._gtkWindow.on('destroy', Gtk.mainQuit);
+        // Blocking call, this._gtkWindow is null after it! See doneDialog.
         this._gtkWindow.showAll();
-        // See doneDialog for dialogStatus
+        // See doneDialog for status.
         const status = this._status ? this._status : 0;
         return status;
     }
 
     // DCL
     doneDialog(status) {
-        // See startDialog for dialogStatus
+        // See startDialog for status
         this._status = status;
         const pos = this._gtkWindow.getPosition();
-        Gtk.mainQuit();
+        this._gtkWindow.destroy();
+        this._gtkWindow = null;
+        this._gtkBuilder = null;
         return pos;
     }
 
