@@ -208,46 +208,49 @@ class Tile {
     }
 
     gtkDraw(gtkWidget, gtkCtx) {
-        this._drawOperations.forEach(op => {
-            this.gtkDrawOperation(gtkWidget, gtkCtx, op);
-        });
-    }
-
-    gtkDrawOperation(gtkWidget, gtkCtx, op) {
-        switch (op[0]) {
-        case "fill_image":
-            this.gtkFillImage(gtkWidget, gtkCtx, op[1], op[2], op[3], op[4], op[5]);
-            break;
-        case "vector_image":
-            this.gtkVectorImage(gtkWidget, gtkCtx, op[1], op[2], op[3], op[4], op[5]);
-            break;
-        default:
-            throw new Error(`Unknown image operation: ${op[0]}`);
-        }
-    }
-
-    gtkFillImage(gtkWidget, gtkCtx, x, y, w, h, color) {
-        //console.log(x, y, w, h, color);
-        const rgb = RGB.fromACI(color);
-        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
-        gtkCtx.rectangle(x, y, w, h);
-        gtkCtx.fill();
-    }
-
-    gtkVectorImage(gtkWidget, gtkCtx, x1, y1, x2, y2, color) {
-        //console.log(x1, y1, x2, y2, color);
-        const rgb = RGB.fromACI(color);
-        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
-        gtkCtx.setLineWidth(1);
-        gtkCtx.moveTo(x1, y1);
-        gtkCtx.lineTo(x2, y2);
-        gtkCtx.stroke();
+        this._drawOperations.forEach(op => op.gtkDraw(gtkWidget, gtkCtx));
     }
 
     gtkXml() {
         throw new Error(
             'Not implemented gtkXml for ${this.constructor.name}'
         );
+    }
+}
+
+class FillImage {
+    constructor(x, y, w, h, c) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.c = c;
+    }
+
+    gtkDraw(gtkWidget, gtkCtx) {
+        const rgb = RGB.fromACI(this.c);
+        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
+        gtkCtx.rectangle(this.x, this.y, this.w, this.h);
+        gtkCtx.fill();
+    }
+}
+
+class VectorImage {
+    constructor(x1, y1, x2, y2, c) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.c = c;
+    }
+
+    gtkDraw(gtkWidget, gtkCtx) {
+        const rgb = RGB.fromACI(this.c);
+        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b);
+        gtkCtx.setLineWidth(1);
+        gtkCtx.moveTo(this.x1, this.y1);
+        gtkCtx.lineTo(this.x2, this.y2);
+        gtkCtx.stroke();
     }
 }
 
@@ -577,14 +580,12 @@ class Dialog extends Cluster {
 
     // DCL
     fillImage(handle, x, y, w, h, color) {
-        // TODO: hide internal structure
-        handle.operations.push(["fill_image", x, y, w, h, color]);
+        handle.operations.push(new FillImage(x, y, w, h, color));
     }
 
     // DCL
     vectorImage(handle, x1, y1, x2, y2, color) {
-        // TODO: hide internal structure
-        handle.operations.push(["vector_image", x1, y1, x2, y2, color]);
+        handle.operations.push(new VectorImage(x1, y1, x2, y2, color));
     }
 
     // DCL
@@ -1310,8 +1311,7 @@ class Image extends Tile {
     gtkInitWidget(gtkWidget) {
         if (this.color) {
             this.gtkAppendDrawOperations([
-                // TODO: hide internal structure
-                ["fill_image", 0, 0, this._width(this.width), this._height(this.height), this.color]
+                new FillImage(0, 0, this._width(this.width), this._height(this.height), this.color)
             ]);
         }
         gtkWidget.on('draw', (ctx) => this.gtkDraw(gtkWidget, ctx));
@@ -1383,8 +1383,7 @@ class ImageButton extends Tile {
         });
         if (this.color) {
             this.gtkAppendDrawOperations([
-                // TODO: hide internal structure
-                ["fill_image", 0, 0, this._width(this.width), this._height(this.height), this.color]
+                new FillImage(0, 0, this._width(this.width), this._height(this.height), this.color)
             ]);
         }
         const gtkChild = gtkWidget.getChildren()[0];
