@@ -203,8 +203,8 @@ class Tile {
         return Math.round(this._height(this.height));
     }
 
-    gtkSetDrawOperations(operations) {
-        this._drawOperations = operations;
+    gtkAppendDrawOperations(operations) {
+        operations.forEach(op => this._drawOperations.push(op));
     }
 
     gtkDraw(gtkWidget, gtkCtx) {
@@ -577,17 +577,19 @@ class Dialog extends Cluster {
 
     // DCL
     fillImage(handle, x, y, w, h, color) {
+        // TODO: hide internal structure
         handle.operations.push(["fill_image", x, y, w, h, color]);
     }
 
     // DCL
     vectorImage(handle, x1, y1, x2, y2, color) {
+        // TODO: hide internal structure
         handle.operations.push(["vector_image", x1, y1, x2, y2, color]);
     }
 
     // DCL
     endImage({tile, operations}) {
-        tile.gtkSetDrawOperations(operations);
+        tile.gtkAppendDrawOperations(operations);
     }
 
     // GTK
@@ -1293,7 +1295,7 @@ class Image extends Tile {
         //this.action = '';
         this.alignment = '';
         //this.aspect_radio = null;
-        //this.color;
+        this.color = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = 10;
@@ -1306,6 +1308,12 @@ class Image extends Tile {
     }
 
     gtkInitWidget(gtkWidget) {
+        if (this.color) {
+            this.gtkAppendDrawOperations([
+                // TODO: hide internal structure
+                ["fill_image", 0, 0, this._width(this.width), this._height(this.height), this.color]
+            ]);
+        }
         gtkWidget.on('draw', (ctx) => this.gtkDraw(gtkWidget, ctx));
     }
 
@@ -1348,7 +1356,7 @@ class ImageButton extends Tile {
         this.alignment = '';
         //this.allow_accept = false;
         //this.aspect_radio = null;
-        //this.color;
+        this.color = '';
         //this.fixed_height = false;
         //this.fixed_width = false;
         this.height = 10;
@@ -1373,6 +1381,12 @@ class ImageButton extends Tile {
                 this._y = Math.round(event.y | 0);
             }
         });
+        if (this.color) {
+            this.gtkAppendDrawOperations([
+                // TODO: hide internal structure
+                ["fill_image", 0, 0, this._width(this.width), this._height(this.height), this.color]
+            ]);
+        }
         const gtkChild = gtkWidget.getChildren()[0];
         gtkChild.on('draw', (ctx) => this.gtkDraw(gtkChild, ctx));
         // For mnemonic see accelerator in gtkXml()

@@ -10,10 +10,15 @@ class RGB {
     }
 
     static fromACI(aci) {
-        if (aci >= 0 && aci <= 256) {
+        if (typeof aci === 'string') {
+            if (symbolics.hasOwnProperty(aci)) {
+                return symbolics[aci];
+            }
+        }
+        if (Number.isInteger(aci) && aci >= 0 && aci <= 256) {
             return colors[aci];
         }
-        throw new Error(`Incorrect ACI color`);
+        throw new Error(`Incorrect ACI color: ${aci}`);
     }
 }
 
@@ -277,5 +282,25 @@ const colors = [
     new RGB(190, 190, 190),
     new RGB(255, 255, 255)
 ];
+
+const symbolics = {
+    // TODO: Current dialog box line color
+    dialog_line: colors[0],
+    // TODO: Current dialog box foreground color (for text)
+    dialog_foreground: colors[0],
+    // TODO: Current dialog box background color
+    dialog_background: colors[0],
+    // TODO: Current background of the AutoCAD graphics screen (usually equivalent to 0)
+    graphics_background: colors[0],
+
+    black:   colors[0],
+    red:     colors[1],
+    yellow:  colors[2],
+    green:   colors[3],
+    cyan:    colors[4],
+    blue:    colors[5],
+    magenta: colors[6],
+    white:   colors[7], graphics_foreground: colors[7],
+}
 
 exports.RGB = RGB;
