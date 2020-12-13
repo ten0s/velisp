@@ -1412,7 +1412,7 @@ class ImageButton extends Tile {
         if (mnemonicChar) {
             // GDK_MOD1_MASK is Alt
             accelerator =
-                `<accelerator key="${mnemonicChar}" signal="grab-focus" modifiers="GDK_MOD1_MASK"/>`;
+                `<accelerator key="${mnemonicChar}" signal="clicked" modifiers="GDK_MOD1_MASK"/>`;
         }
         return `
 <object class="GtkButton" ${id}>
