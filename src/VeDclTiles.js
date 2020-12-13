@@ -135,6 +135,44 @@ class Tile {
         return 15 * value;
     }
 
+    // * if there's '_' in label, return label
+    // * if there's a non-empty mnemonic try to merge it into label, return '' otherwise
+    // * return '' otherwise
+    _mnemonicLabel(mnemonic, label = '') {
+        if (label.includes('_')) {
+            return label;
+        } else if (mnemonic.trim()) {
+            let output = '';
+            let merged = false;
+            mnemonic = mnemonic.trim()[0].toLowerCase();
+            for (let i = 0; i < label.length; i++) {
+                const char = label.charAt(i);
+                if (!merged && char.toLowerCase() === mnemonic) {
+                    output += '_';
+                    merged = true;
+                }
+                output += char;
+            }
+            if (merged) {
+                return output;
+            }
+        }
+        return '';
+    }
+
+    // * if there's '_' in label, return char following '_', if one
+    // * if there's a non-empty mnemonic, return it's first char
+    // * return '' otherwise
+    _mnemonicChar(mnemonic, label = '') {
+        const index = label.indexOf('_');
+        if (index !== -1 && index + 1 < label.length) {
+            return label.charAt(index + 1);
+        } else if (mnemonic.trim()) {
+            return mnemonic.trim()[0].toLowerCase();
+        }
+        return '';
+    }
+
     // Optional
     gtkInitWidget(gtkWidget) {
     }
@@ -1068,7 +1106,7 @@ class Button extends Tile {
         this.is_tab_stop = true;
         this.key = null;
         this.label = '';
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.width = -1;
         // Locals
         this._action = null;
@@ -1077,6 +1115,12 @@ class Button extends Tile {
 
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
+        const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
+        if (mnemonicLabel) {
+            const gtkLabel = gtkWidget.getChildren()[0];
+            gtkLabel.setTextWithMnemonic(mnemonicLabel);
+            gtkLabel.setMnemonicWidget(gtkWidget);
+        }
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -1104,7 +1148,6 @@ class Button extends Tile {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkButton" ${id}>
-  <property name="label">${this.label}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
@@ -1119,6 +1162,13 @@ class Button extends Tile {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
+  <child>
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
 </object>
 <packing>
   <property name="fill">False</property>
@@ -1144,7 +1194,7 @@ class EditBox extends Tile {
         this.is_tab_stop = true;
         this.key = null;
         this.label = '';
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.value = '';
         this.width = -1;
         //this.password_char = '*';
@@ -1155,6 +1205,12 @@ class EditBox extends Tile {
 
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
+        const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
+        if (mnemonicLabel) {
+            const gtkLabel = gtkWidget.getParent().getChildren()[0];
+            gtkLabel.setTextWithMnemonic(mnemonicLabel);
+            gtkLabel.setMnemonicWidget(gtkWidget);
+        }
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -1299,7 +1355,7 @@ class ImageButton extends Tile {
         this.is_enabled = true;
         this.is_tab_stop = true;
         this.key = null;
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.value = '';
         this.width = 10;
         // Locals
@@ -1319,6 +1375,7 @@ class ImageButton extends Tile {
         });
         const gtkChild = gtkWidget.getChildren()[0];
         gtkChild.on('draw', (ctx) => this.gtkDraw(gtkChild, ctx));
+        // For mnemonic see accelerator in gtkXml()
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -1337,6 +1394,13 @@ class ImageButton extends Tile {
 
     gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
+        const mnemonicChar = this._mnemonicChar(this.mnemonic);
+        let accelerator = '';
+        if (mnemonicChar) {
+            // GDK_MOD1_MASK is Alt
+            accelerator =
+                `<accelerator key="${mnemonicChar}" signal="grab-focus" modifiers="GDK_MOD1_MASK"/>`;
+        }
         return `
 <object class="GtkButton" ${id}>
   <property name="visible">True</property>
@@ -1351,6 +1415,7 @@ class ImageButton extends Tile {
   <property name="margin_bottom">4</property>
   <property name="halign">${this._halign(this.alignment, layout)}</property>
   <property name="valign">${this._valign(this.alignment, layout)}</property>
+  ${accelerator}
   <child>
     <object class="GtkDrawingArea">
       <property name="width_request">${this._width(this.width)}</property>
@@ -1383,7 +1448,7 @@ class PopupList extends Tile {
         this.key = null;
         this.label = '';
         this.list = '';
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.tabs = '';
         this.value = '';
         this.width = -1;
@@ -1395,6 +1460,12 @@ class PopupList extends Tile {
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
         this.gtkSetTile(gtkWidget, this.value);
+        const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
+        if (mnemonicLabel) {
+            const gtkLabel = gtkWidget.getParent().getChildren()[0];
+            gtkLabel.setTextWithMnemonic(mnemonicLabel);
+            gtkLabel.setMnemonicWidget(gtkWidget);
+        }
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -1497,7 +1568,7 @@ class ListBox extends Tile {
         this.key = null;
         this.label = '';
         this.list = '';
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.multiple_select = false;
         this.tabs = '';
         this.value = '';
@@ -1510,6 +1581,12 @@ class ListBox extends Tile {
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
         this.gtkSetTile(gtkWidget, this.value);
+        const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
+        if (mnemonicLabel) {
+            const gtkLabel = gtkWidget.getParent().getChildren()[0];
+            gtkLabel.setTextWithMnemonic(mnemonicLabel);
+            gtkLabel.setMnemonicWidget(gtkWidget);
+        }
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -1909,7 +1986,7 @@ class RadioButton extends Tile {
         this.is_tab_stop = true;
         this.key = null;
         this.label = '';
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.value = '0';
         this.width = -1;
         // Locals
@@ -1919,6 +1996,12 @@ class RadioButton extends Tile {
 
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
+        const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
+        if (mnemonicLabel) {
+            const gtkLabel = gtkWidget.getChildren()[0];
+            gtkLabel.setTextWithMnemonic(mnemonicLabel);
+            gtkLabel.setMnemonicWidget(gtkWidget);
+        }
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -1947,7 +2030,6 @@ class RadioButton extends Tile {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkRadioButton" ${id}>
-  <property name="label">${this.label}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
@@ -1963,6 +2045,13 @@ class RadioButton extends Tile {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
+  <child>
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
 </object>
 <packing>
   <property name="fill">False</property>
@@ -1983,11 +2072,11 @@ class Slider extends Tile {
         //this.fixed_width = false;
         this.height = -1;
         this.key = '';
-        //this.label = '';
+        this.label = '';
         this.layout = 'horizontal'; // 'vertical'
         this.max_value = 10000;  // signed 16-bit integer no greater than 32767
         this.min_value = 0;      // signed 16-bit integer no less than -32768
-        //this.mnemonic = '';
+        this.mnemonic = '';
         //this.small_increment = integer; // one one-hundredth the total range
         this.value = 0;
         this.width = -1;
@@ -1999,6 +2088,7 @@ class Slider extends Tile {
 
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
+        // For mnemonic see accelerator in gtkXml()
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -2028,6 +2118,13 @@ class Slider extends Tile {
 
     gtkXml({layout}) {
         const id = this.key ? `id="${this.key}"` : '';
+        const mnemonicChar = this._mnemonicChar(this.mnemonic, this.label);
+        let accelerator = '';
+        if (mnemonicChar) {
+            // GDK_MOD1_MASK is Alt
+            accelerator =
+                `<accelerator key="${mnemonicChar}" signal="grab-focus" modifiers="GDK_MOD1_MASK"/>`;
+        }
         return `
 <object class="GtkScale" ${id}>
   <property name="visible">True</property>
@@ -2046,6 +2143,7 @@ class Slider extends Tile {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
+  ${accelerator}
 </object>
 <packing>
    <property name="expand">False</property>
@@ -2076,7 +2174,7 @@ class Toggle extends Tile {
         this.is_tab_stop = true;
         this.key = null;
         this.label = '';
-        //this.mnemonic = '';
+        this.mnemonic = '';
         this.value = '0';
         this.width = -1;
         // Locals
@@ -2086,6 +2184,12 @@ class Toggle extends Tile {
 
     gtkInitWidget(gtkWidget) {
         this._action = this.action;
+        const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
+        if (mnemonicLabel) {
+            const gtkLabel = gtkWidget.getChildren()[0];
+            gtkLabel.setTextWithMnemonic(mnemonicLabel);
+            gtkLabel.setMnemonicWidget(gtkWidget);
+        }
     }
 
     gtkActionTile(gtkWidget, action, context) {
@@ -2113,7 +2217,6 @@ class Toggle extends Tile {
         const id = this.key ? `id="${this.key}"` : '';
         return `
 <object class="GtkCheckButton" ${id}>
-  <property name="label">${this.label}</property>
   <property name="visible">True</property>
   <property name="sensitive">${this._bool(this.is_enabled)}</property>
   <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
@@ -2128,6 +2231,13 @@ class Toggle extends Tile {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
+  <child>
+    <object class="GtkLabel">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="label">${this.label}</property>
+    </object>
+  </child>
 </object>
 <packing>
   <property name="fill">False</property>

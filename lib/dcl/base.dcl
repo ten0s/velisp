@@ -4,24 +4,24 @@
 
 ok_button : button {
   key = "accept";
-  label = "OK";
+  label = "_OK";
   action = "(done_dialog 1)";
 }
 
 cancel_button : button {
   key = "cancel";
-  label = "Cancel";
+  label = "_Cancel";
   action = "(done_dialog 0)";
 }
 
 help_button : button {
   key = "help";
-  label = "Help";
+  label = "_Help";
 }
 
 info_button : button {
   key = "info";
-  label = "Info...";
+  label = "_Info...";
 }
 
 errtile : text {
