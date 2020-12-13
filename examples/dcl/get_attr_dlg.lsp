@@ -1,5 +1,5 @@
 (setq keys '("get_attr_dialog" "key_name" "attr_name" "attr_value" "get_attr"))
-(setq attrs '("key" "label" "value" "unknown"))
+(setq attrs '("key" "label" "value" "width" "height" "unknown"))
 
 (start_list "key_name")
   (mapcar 'add_list keys)

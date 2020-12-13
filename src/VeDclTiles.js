@@ -45,8 +45,8 @@ class Tile {
     constructor(id) {
         // Attributes
         this.id = id;
-        this.height = null;
-        this.width = null;
+        this.height = -1;
+        this.width = -1;
         // Locals
         this._clientData = '';
         this._drawOperations = [];
@@ -290,9 +290,11 @@ class Dialog extends Cluster {
         super(id);
         // Attributes
         this.initial_focus = null;
+        this.height = -1;
         this.key = null;
         this.label = '';
         this.value = '';
+        this.width = -1;
         // Locals
         delete this._tiles;
         this._column = new Column();
@@ -405,7 +407,9 @@ class Dialog extends Cluster {
         // TODO: calculate using both length and font
         //console.log(this._gtkWindow.getTitle().length);
         const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
-        this._gtkWindow.setSizeRequest(fixMeWidth, -1);
+        const width = Math.max(this._width(this.width), fixMeWidth);
+        const height = this._height(this.height);
+        this._gtkWindow.setSizeRequest(width, height);
         if (this._initPosition[0] >= 0 && this._initPosition[1] >= 0) {
             this._gtkWindow.move(
                 this._initPosition[0],
