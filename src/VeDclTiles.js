@@ -1138,7 +1138,7 @@ class Button extends Tile {
         this._callback && gtkWidget.off('clicked', this._callback);
         this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
-            context.setVar('$VALUE', new Str(''));
+            context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
@@ -1147,11 +1147,13 @@ class Button extends Tile {
     }
 
     gtkGetTile(gtkWidget) {
-        return gtkWidget.getLabel();
+        const gtkLabel = gtkWidget.getChildren()[0];
+        return gtkLabel.getLabel();
     }
 
     gtkSetTile(gtkWidget, value) {
-        gtkWidget.setLabel(value);
+        const gtkLabel = gtkWidget.getChildren()[0];
+        gtkLabel.setLabel(value);
     }
 
     gtkXml({layout}) {
