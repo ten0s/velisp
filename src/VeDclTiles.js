@@ -38,6 +38,13 @@ const ListOperation = {
     CLEAR: 3,
 }
 
+const ActionReason = {
+    TILE_SELECTED: 1,
+    EDIT_BOX_LOST_FOCUS: 2,
+    SLIDER_INTERIM_CHANGE: 3,
+    TILE_DOUBLE_CLICKED: 4,
+};
+
 const PARENT_DX = 10;
 const PARENT_DY = 10;
 
@@ -1128,12 +1135,12 @@ class Button extends Tile {
 
     gtkActionTile(gtkWidget, action, context) {
         this._action = action;
-        // TODO: move to ActionTile.on(event, callback)
         this._callback && gtkWidget.off('clicked', this._callback);
         this._callback = () => {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(''));
             context.setVar('$DATA', new Str(this._clientData));
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         gtkWidget.on('clicked', this._callback);
@@ -1223,6 +1230,8 @@ class EditBox extends Tile {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
+            // TODO: Implement reason 2 - Edit Box lost focus?
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         gtkWidget.on('changed', this._callback);
@@ -1400,6 +1409,8 @@ class ImageButton extends Tile {
             context.setVar('$X', new Int(this._x));
             context.setVar('$Y', new Int(this._y));
             context.setVar('$DATA', new Str(this._clientData));
+            // TODO: Implement reason 4 - Image Button double-clicked?
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         gtkWidget.on('clicked', this._callback);
@@ -1489,6 +1500,7 @@ class PopupList extends Tile {
             // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         gtkWidget.on('changed', this._callback);
@@ -1611,6 +1623,8 @@ class ListBox extends Tile {
             // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
+            // TODO: Implement reason 4 - List Box double-clicked?
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         selection.on('changed', this._callback);
@@ -1732,6 +1746,7 @@ class RadioCluster extends Cluster {
                         // Radio Button Key
                         context.setVar('$VALUE', new Str(this._tiles[i].key));
                         context.setVar('$DATA', new Str(this._clientData));
+                        context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
                         Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
                     }
                 };
@@ -2025,6 +2040,7 @@ class RadioButton extends Tile {
                 context.setVar('$KEY', new Str(this.key));
                 context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
                 context.setVar('$DATA', new Str(this._clientData));
+                context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
                 Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
             }
         };
@@ -2111,6 +2127,10 @@ class Slider extends Tile {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
+            // TODO: Implement reason 3 - Slider dragging?
+            // Should take into account small big and increments
+            // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-F208561B-5C2E-47FE-BD24-520DF75DE92A
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         gtkWidget.on('value-changed', this._callback);
@@ -2212,6 +2232,7 @@ class Toggle extends Tile {
             context.setVar('$KEY', new Str(this.key));
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)));
             context.setVar('$DATA', new Str(this._clientData));
+            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED));
             Evaluator.evaluate(new Str(this._action).toUnescapedString(), context);
         };
         gtkWidget.on('clicked', this._callback);
