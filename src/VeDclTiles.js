@@ -15,7 +15,7 @@ const TileMode = {
     DISABLE_TILE: 1,
     FOCUS_TILE: 2,
     SELECT_EDITBOX: 3,
-    FLIP_IMAGE: 4,
+    FLIP_IMAGE_HIGHLIGHT: 4,
 };
 
 const Layout = {
@@ -440,7 +440,7 @@ class Dialog extends Cluster {
         case TileMode.FOCUS_TILE:
             this._gtkWindow.setFocus(gtkWidget);
             break;
-        case TileMode.FLIP_IMAGE:
+        case TileMode.FLIP_IMAGE_HIGHLIGHT:
             console.error(`Error: not implemented tile mode '${mode}'`);
             break;
         default:
