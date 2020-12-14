@@ -1558,6 +1558,7 @@ class PopupList extends Tile {
       <property name="visible">True</property>
       <property name="sensitive">${this._bool(this.is_enabled)}</property>
       <property name="can_focus">False</property>
+      <property name="width_request">${this._width(this.edit_width)}</property>
       <property name="model">liststore-${this.key}</property>
 
       <child>

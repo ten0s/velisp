@@ -48,7 +48,7 @@ popup_list_dlg : dialog {
   : popup_list {
     key = "popup3";
     label = "Select: ";
-    edit_width = "5";
+    edit_width = 5;
     list = "Jan\nFeb\nMar\nApr\nMay\nJun\nJul\nAug\nSep\nOct\nNov\nDec";
   }
   spacer_1;
