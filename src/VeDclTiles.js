@@ -1560,14 +1560,12 @@ class PopupList extends Tile {
       <property name="can_focus">False</property>
       <property name="width_request">${this._width(this.edit_width)}</property>
       <property name="model">liststore-${this.key}</property>
-
       <child>
         <object class="GtkCellRendererText"/>
         <attributes>
           <attribute name="text">0</attribute>
         </attributes>
       </child>
-
     </object>
     <packing>
       <property name="fill">True</property>
@@ -1700,7 +1698,6 @@ class ListBox extends Tile {
           <property name="mode">${mode}</property>
         </object>
       </child>
-
       <child>
         <object class="GtkTreeViewColumn">
           <property name="title">One</property>
@@ -1712,7 +1709,6 @@ class ListBox extends Tile {
           </child>
         </object>
       </child>
-
     </object>
   </child>
 </object>
