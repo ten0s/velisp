@@ -4,7 +4,7 @@ mnemonic_dlg : dialog {
   : row {
     : edit_box {
       key = "edit1";
-      label = "_Edit Box";
+      label = "&Edit Box";
       mnemonic = "e"; // ignored
     }
     : edit_box {
@@ -16,7 +16,7 @@ mnemonic_dlg : dialog {
   : row {
     : list_box {
       key = "listbox1";
-      label = "_List Box";
+      label = "&List Box";
     }
     : list_box {
       key = "listbox2";
@@ -27,7 +27,7 @@ mnemonic_dlg : dialog {
   : row {
     : popup_list {
       key = "popup1";
-      label = "_Popup List";
+      label = "&Popup List";
     }
     : popup_list {
       key = "popup2";
@@ -38,7 +38,7 @@ mnemonic_dlg : dialog {
   : radio_row {
     key = "radio_group";
     : radio_button {
-      label = "_Radio Button";
+      label = "&Radio Button";
       key = "radio1";
     }
     : radio_button {
@@ -50,7 +50,7 @@ mnemonic_dlg : dialog {
   : row {
     : toggle {
       key = "toggle1";
-      label = "_Toggle";
+      label = "&Toggle";
     }
     : toggle {
       key = "toggle2";
@@ -61,7 +61,7 @@ mnemonic_dlg : dialog {
   : row {
     : slider {
       key = "slider1";
-      label = "_Slider";
+      label = "&Slider";
       width = 10;
     }
     : slider {

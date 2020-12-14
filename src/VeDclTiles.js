@@ -142,12 +142,12 @@ class Tile {
         return 15 * value;
     }
 
-    // * if there's '_' in label, return label
+    // * if there's '&' in label, return label with '&' replaced by '_'
     // * if there's a non-empty mnemonic try to merge it into label, return '' otherwise
     // * return '' otherwise
     _mnemonicLabel(mnemonic, label = '') {
-        if (label.includes('_')) {
-            return label;
+        if (label.includes('&')) {
+            return label.split('&').join('_');
         } else if (mnemonic.trim()) {
             let output = '';
             let merged = false;
@@ -167,17 +167,21 @@ class Tile {
         return '';
     }
 
-    // * if there's '_' in label, return char following '_', if one
+    // * if there's '&' in label, return char following '&', if one
     // * if there's a non-empty mnemonic, return it's first char
     // * return '' otherwise
     _mnemonicChar(mnemonic, label = '') {
-        const index = label.indexOf('_');
+        const index = label.indexOf('&');
         if (index !== -1 && index + 1 < label.length) {
             return label.charAt(index + 1);
         } else if (mnemonic.trim()) {
             return mnemonic.trim()[0].toLowerCase();
         }
         return '';
+    }
+
+    _escape(text) {
+        return text.split('&').join('&amp;');
     }
 
     // Optional
@@ -837,7 +841,7 @@ class BoxedRow extends Cluster {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
@@ -896,7 +900,7 @@ class BoxedColumn extends Cluster {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
@@ -1032,7 +1036,7 @@ class Text extends Tile {
 <object class="GtkLabel" ${id}>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="label">${label}</property>
+  <property name="label">${this._escape(label)}</property>
   <!-- Align text left if width is given -->
   <property name="hexpand">True</property>
   <property name="xalign">0.00</property>
@@ -1080,7 +1084,7 @@ class TextPart extends Tile {
 <object class="GtkLabel" ${id}>
   <property name="visible">True</property>
   <property name="can_focus">False</property>
-  <property name="label">${label}</property>
+  <property name="label">${this._escape(label)}</property>
   <property name="margin_left">2</property>
   <property name="margin_right">2</property>
   <property name="margin_top">0</property>
@@ -1178,7 +1182,7 @@ class Button extends Tile {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
@@ -1268,7 +1272,7 @@ class EditBox extends Tile {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
       <property name="justify">left</property>
       <property name="margin_right">4</property>
     </object>
@@ -1542,7 +1546,7 @@ class PopupList extends Tile {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
       <property name="justify">left</property>
       <property name="margin_right">4</property>
     </object>
@@ -1658,7 +1662,7 @@ class ListBox extends Tile {
   <object class="GtkLabel">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="label">${this.label}</property>
+    <property name="label">${this._escape(this.label)}</property>
     <property name="justify">center</property>
     <property name="margin_bottom">4</property>
   </object>
@@ -1922,7 +1926,7 @@ class BoxedRadioRow extends RadioCluster {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
@@ -1988,7 +1992,7 @@ class BoxedRadioColumn extends RadioCluster {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
@@ -2077,7 +2081,7 @@ class RadioButton extends Tile {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
@@ -2268,7 +2272,7 @@ class Toggle extends Tile {
     <object class="GtkLabel">
       <property name="visible">True</property>
       <property name="can_focus">False</property>
-      <property name="label">${this.label}</property>
+      <property name="label">${this._escape(this.label)}</property>
     </object>
   </child>
 </object>
