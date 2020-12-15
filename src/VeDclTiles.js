@@ -1614,7 +1614,7 @@ class ListBox extends Tile {
         this.gtkSetTile(gtkWidget, this.value);
         const mnemonicLabel = this._mnemonicLabel(this.mnemonic, this.label);
         if (mnemonicLabel) {
-            const gtkLabel = gtkWidget.getParent().getChildren()[0];
+            const gtkLabel = gtkWidget.getParent().getParent().getChildren()[0];
             gtkLabel.setTextWithMnemonic(mnemonicLabel);
             gtkLabel.setMnemonicWidget(gtkWidget);
         }
@@ -1689,32 +1689,49 @@ class ListBox extends Tile {
   ${this.label ? label : ''}
 
   <child>
-    <object class="GtkTreeView" ${id}>
+    <object class="GtkScrolledWindow">
       <property name="visible">True</property>
-      <property name="sensitive">${this._bool(this.is_enabled)}</property>
-      <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
-      <property name="model">liststore-${this.key}</property>
-      <property name="headers_visible">False</property>
-      <property name="headers_clickable">False</property>
-      <property name="enable_search">False</property>
-      <property name="show_expanders">False</property>
-      <child internal-child="selection">
-        <object class="GtkTreeSelection">
-          <property name="mode">${mode}</property>
-        </object>
-      </child>
+      <property name="can_focus">False</property>
+      <property name="shadow_type">in</property>
+      <property name="max_content_width">${this._width(this.width)}</property>
+      <property name="max_content_height">${this._height(this.height)}</property>
+      <property name="propagate_natural_width">True</property>
+      <property name="propagate_natural_height">True</property>
       <child>
-        <object class="GtkTreeViewColumn">
-          <property name="title">One</property>
+        <object class="GtkTreeView" ${id}>
+          <property name="visible">True</property>
+          <property name="sensitive">${this._bool(this.is_enabled)}</property>
+          <property name="can_focus">${this._bool(this.is_tab_stop)}</property>
+          <property name="model">liststore-${this.key}</property>
+          <property name="headers_visible">False</property>
+          <property name="headers_clickable">False</property>
+          <property name="enable_search">False</property>
+          <property name="show_expanders">False</property>
+          <property name="hscroll_policy">natural</property>
+          <property name="vscroll_policy">natural</property>
+          <child internal-child="selection">
+             <object class="GtkTreeSelection">
+               <property name="mode">${mode}</property>
+             </object>
+          </child>
           <child>
-            <object class="GtkCellRendererText"/>
-            <attributes>
-              <attribute name="text">0</attribute>
-            </attributes>
+            <object class="GtkTreeViewColumn">
+              <property name="title">One</property>
+              <child>
+                <object class="GtkCellRendererText"/>
+                  <attributes>
+                    <attribute name="text">0</attribute>
+                  </attributes>
+              </child>
+            </object>
           </child>
         </object>
       </child>
-    </object>
+   </object>
+   <packing>
+     <property name="expand">False</property>
+     <property name="fill">True</property>
+   </packing>
   </child>
 </object>
 `;

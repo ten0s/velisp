@@ -1,0 +1,6 @@
+(start_list "listbox")
+  (setq i 0)
+  (while (< i 30)
+    (add_list "The quick brown fox jumps over the lazy dog")
+    (setq i (1+ i)))
+(end_list)
