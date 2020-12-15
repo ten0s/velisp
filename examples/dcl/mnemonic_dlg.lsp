@@ -1,3 +1,19 @@
+(start_list "listbox1")
+(mapcar 'add_list '("One" "Two" "Three"))
+(end_list)
+
+(start_list "listbox2")
+(mapcar 'add_list '("Один" "Два" "Три"))
+(end_list)
+
+(start_list "popup1")
+(mapcar 'add_list '("One" "Two" "Three"))
+(end_list)
+
+(start_list "popup2")
+(mapcar 'add_list '("Один" "Два" "Три"))
+(end_list)
+
 ; Draw M on imagebutton1
 (setq w1 (dimx "imagebutton1"))
 (setq h1 (dimy "imagebutton1"))
