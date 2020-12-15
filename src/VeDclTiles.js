@@ -342,6 +342,7 @@ class Dialog extends Cluster {
         super(id);
         // Attributes
         this.initial_focus = null;
+        this.is_resizable = false; // GTK specific
         this.height = -1;
         this.key = null;
         this.label = '';
@@ -455,7 +456,7 @@ class Dialog extends Cluster {
     // DCL
     startDialog(parent) {
         this._gtkWindow.setModal(true);
-        this._gtkWindow.setResizable(false);
+        this._gtkWindow.setResizable(this.is_resizable);
         // TODO: calculate using both length and font
         //console.log(this._gtkWindow.getTitle().length);
         const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
