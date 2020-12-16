@@ -1,6 +1,7 @@
 text_part_dlg : dialog {
   label = "Text Part";
   : paragraph {
+    alignment = centered;
     : concatenation {
       : text_part  {
         label = "One";

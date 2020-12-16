@@ -952,7 +952,7 @@ class Paragraph extends Cluster {
     constructor(id) {
         super(id);
         // Attributes
-        this.alignment = Alignment.CENTERED;
+        this.alignment = Alignment.LEFT;
         this.height = -1;
         this.width = -1;
     }
@@ -1061,7 +1061,7 @@ class TextPart extends Tile {
     constructor(id) {
         super(id);
         // Attributes
-        this.alignment = Alignment.CENTERED;
+        this.alignment = Alignment.LEFT;
         this.height = -1;
         this.is_bold = false;
         this.key = null;
