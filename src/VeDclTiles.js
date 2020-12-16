@@ -459,7 +459,7 @@ class Dialog extends Cluster {
         this._gtkWindow.setResizable(this.is_resizable);
         // TODO: calculate using both length and font
         //console.log(this._gtkWindow.getTitle().length);
-        const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 170;
+        const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 160;
         const width = Math.max(this._width(this.width), fixMeWidth);
         const height = this._height(this.height);
         this._gtkWindow.setSizeRequest(width, height);
