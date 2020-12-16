@@ -340,29 +340,29 @@ exports.initContext = function (context) {
             });
         });
     }));
-    context.setSym('DIMX', new Fun('dimx', ['key'], [], (self, args) => {
+    context.setSym('DIMX_TILE', new Fun('dimx_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
-            throw new Error('dimx: too few arguments');
+            throw new Error('dimx_tile: too few arguments');
         }
         if (args.length > 1) {
-            throw new Error('dimx: too many arguments');
+            throw new Error('dimx_tile: too many arguments');
         }
-        const key = ensureType('dimx: `key`', args[0], [Str]);
+        const key = ensureType('dimx_tile: `key`', args[0], [Str]);
         return withDialog(dialog => {
-            const dimX = dialog.dimX(key.value());
+            const dimX = dialog.dimXTile(key.value());
             return new Int(dimX);
         });
     }));
-    context.setSym('DIMY', new Fun('dimy', ['key'], [], (self, args) => {
+    context.setSym('DIMY_TILE', new Fun('dimy_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
-            throw new Error('dimy: too few arguments');
+            throw new Error('dimy_tile: too few arguments');
         }
         if (args.length > 1) {
-            throw new Error('dimy: too many arguments');
+            throw new Error('dimy_tile: too many arguments');
         }
-        const key = ensureType('dimy: `key`', args[0], [Str]);
+        const key = ensureType('dimy_tile: `key`', args[0], [Str]);
         return withDialog(dialog => {
-            const dimY = dialog.dimY(key.value());
+            const dimY = dialog.dimYTile(key.value());
             return new Int(dimY);
         });
     }));

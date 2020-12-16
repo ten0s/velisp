@@ -15,8 +15,8 @@
 (end_list)
 
 ; Draw M on imagebutton1
-(setq w1 (dimx "imagebutton1"))
-(setq h1 (dimy "imagebutton1"))
+(setq w1 (dimx_tile "imagebutton1"))
+(setq h1 (dimy_tile "imagebutton1"))
 (setq dw1 (fix (/ w1 4)))
 (setq dh1 (fix (/ h1 4)))
 
@@ -28,8 +28,8 @@
 (end_image)
 
 ; Draw N on imagebutton2
-(setq w2 (dimx "imagebutton2"))
-(setq h2 (dimy "imagebutton2"))
+(setq w2 (dimx_tile "imagebutton2"))
+(setq h2 (dimy_tile "imagebutton2"))
 (setq dw2 (fix (/ w2 4)))
 (setq dh2 (fix (/ h2 4)))
 

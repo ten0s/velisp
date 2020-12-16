@@ -567,14 +567,14 @@ class Dialog extends Cluster {
     }
 
     // DCL
-    dimX(key) {
+    dimXTile(key) {
         const tile = this.findTile(key);
         const gtkWidget = this.gtkFindWidget(key);
         return tile.gtkDimX(gtkWidget);
     }
 
     // DCL
-    dimY(key) {
+    dimYTile(key) {
         const tile = this.findTile(key);
         const gtkWidget = this.gtkFindWidget(key);
         return tile.gtkDimY(gtkWidget);

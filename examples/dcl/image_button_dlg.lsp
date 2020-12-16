@@ -7,8 +7,8 @@
 
 (action_tile "button" "(update_status $x $y)")
 
-(setq width (dimx "button"))
-(setq height (dimy "button"))
+(setq width (dimx_tile "button"))
+(setq height (dimy_tile "button"))
 
 (start_image "button")
 (fill_image 0 0 width height 1)

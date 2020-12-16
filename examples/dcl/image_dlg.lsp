@@ -4,8 +4,8 @@
       (aux a (1- b) (cons b acc))))
   (aux a b '()))
 
-(setq width (dimx "image1"))
-(setq height (dimy "image1"))
+(setq width (dimx_tile "image1"))
+(setq height (dimy_tile "image1"))
 
 (setq cols 16)
 (setq rows 16)
