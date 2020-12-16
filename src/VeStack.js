@@ -3,17 +3,17 @@ class VeStack {
         this.stack = [];
     }
 
-    // :: () -> boolean()
+    // :: () -> bool
     isEmpty() {
         return this.stack.length === 0;
     }
 
-    // :: () -> non_neg_integer()
+    // :: () -> non_neg_int
     size() {
         return this.stack.length;
     }
 
-    // :: (value) -> integer()
+    // :: (value) -> int
     push(value) {
         this.stack.push(value);
     }

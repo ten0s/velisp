@@ -354,7 +354,7 @@ class Str {
         return this.str;
     }
 
-    // :: () -> int
+    // :: () -> non_neg_int
     length() {
         return this.str.length;
     }
@@ -512,7 +512,7 @@ class List {
         return new List(rest);
     }
 
-    // :: () -> int
+    // :: () -> non_neg_int
     length() {
         return this.arr.length;
     }
