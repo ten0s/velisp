@@ -2,45 +2,79 @@ mnemonic_dlg : dialog {
   label = "Mnemonic Example";
   initial_focus = "accept";
   : row {
-    : edit_box {
-      key = "edit1";
-      label = "&Edit Box";
-      edit_width = 10;
-      mnemonic = "e"; // ignored
+    : column {
+      : edit_box {
+        key = "edit1";
+        label = "&Edit Box";
+        mnemonic = "e"; // ignored
+      }
+      : list_box {
+        key = "listbox1";
+        label = "&List Box";
+      }
+      : popup_list {
+        key = "popup1";
+        label = "&Popup List";
+      }
+      : slider {
+        key = "slider1";
+        label = "&Slider";
+      }
+      : image_button {
+        key = "imagebutton1";
+        color = "red";
+        mnemonic = "m";
+        width = 5;
+        height = 3;
+        alignment = centered;
+      }
     }
-    : edit_box {
-      key = "edit2";
-      label = "Edit Box";
-      edit_width = 10;
-      mnemonic = "e";
+
+    : column {
+      : edit_box {
+        key = "edit2";
+        label = "Edit Box";
+        mnemonic = "e";
+      }
+      : list_box {
+        key = "listbox2";
+        label = "List Box";
+        mnemonic = "l";
+      }
+      : popup_list {
+        key = "popup2";
+        label = "Popup List";
+        mnemonic = "p";
+      }
+      : slider {
+        key = "slider2";
+        label = "Slider";
+        mnemonic = "u";
+      }
+      : image_button {
+        key = "imagebutton2";
+        color = "green";
+        mnemonic = "n";
+        width = 5;
+        height = 3;
+        alignment = centered;
+      }
     }
   }
 
   : row {
-    : list_box {
-      key = "listbox1";
-      label = "&List Box";
-      width = 20;
+    : column {
+      : toggle {
+        key = "toggle1";
+        label = "&Toggle";
+      }
     }
-    : list_box {
-      key = "listbox2";
-      label = "List Box";
-      width = 20;
-      mnemonic = "l";
-    }
-  }
-
-  : row {
-    : popup_list {
-      key = "popup1";
-      label = "&Popup List";
-      width = 20;
-    }
-    : popup_list {
-      key = "popup2";
-      label = "Popup List";
-      width = 20;
-      mnemonic = "p";
+    : column {
+      : toggle {
+        key = "toggle2";
+        label = "Toggle";
+        mnemonic = "g";
+      }
     }
   }
 
@@ -56,53 +90,6 @@ mnemonic_dlg : dialog {
       key = "radio2";
       width = 20;
       mnemonic = "a";
-    }
-  }
-
-  : row {
-    : toggle {
-      key = "toggle1";
-      label = "&Toggle";
-      width = 20;
-    }
-    : toggle {
-      key = "toggle2";
-      label = "Toggle";
-      width = 20;
-      mnemonic = "g";
-    }
-  }
-
-  : row {
-    : slider {
-      key = "slider1";
-      label = "&Slider";
-    }
-    : slider {
-      key = "slider2";
-      label = "Slider";
-      mnemonic = "u";
-    }
-  }
-
-  : row {
-    : column {
-      : image_button {
-        key = "imagebutton1";
-        color = "red";
-        mnemonic = "m";
-        width = 5;
-        height = 3;
-      }
-    }
-    : column {
-      : image_button {
-        key = "imagebutton2";
-        color = "green";
-        mnemonic = "n";
-        width = 5;
-        height = 3;
-      }
     }
   }
 
