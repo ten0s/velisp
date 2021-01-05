@@ -45,8 +45,8 @@ const ActionReason = {
     TILE_DOUBLE_CLICKED: 4,
 };
 
-const PARENT_DX = 10;
-const PARENT_DY = 10;
+const PARENT_DX = 60;
+const PARENT_DY = -20;
 
 class Tile {
     constructor(id) {
