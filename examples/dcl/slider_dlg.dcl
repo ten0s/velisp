@@ -10,8 +10,7 @@ slider_dlg : dialog {
       : slider {
         key = "slider1";
         action = "(set_tile \"slider1-value\" $value)";
-        //height = 5;
-        width = 30;
+        //width = 30; // Width is set automatically
       }
     }
   }
@@ -28,8 +27,9 @@ slider_dlg : dialog {
         max_value = 100;
         value = 50;
         layout = vertical;
+        // Height should be specified explicitely, since
+        // there's no other elements to calculate it
         height = 10;
-        width = 30;
       }
     }
   }

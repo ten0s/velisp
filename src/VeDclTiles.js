@@ -665,7 +665,7 @@ class Dialog extends Cluster {
     gtkXml() {
         const id = this.id ? `id="${this.id}"` : '';
         const title = this.label ? this.label : this.value;
-        const child = this._child(this._column.gtkXml({layout: Layout.COLUMN}));
+        const child = this._child(this._column.gtkXml({layout: Layout.COLUMN, is_top: true}));
         const listStores = this._listStores.map(([key, list, tabs]) => {
             return (new  ListStore(key, list, tabs)).gtkXml();
         }).join('\n');
@@ -748,10 +748,14 @@ class Row extends Cluster {
   <property name="valign">${this._valign(this.alignment, layout)}</property>
   <property name="width_request">${this._width(this.width)}</property>
   <property name="height_request">${this._height(this.height)}</property>
-  <!-- Whether the children should all be the same size??? -->
-  <property name="homogeneous">True</property>
+  <!-- Whether the children should all be the same size? No -->
+  <property name="homogeneous">False</property>
   ${tiles}
 </object>
+<packing>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
+</packing>
 `;
     }
 }
@@ -771,10 +775,19 @@ class Column extends Cluster {
         this.width = -1;
     }
 
-    gtkXml({layout}) {
+    gtkXml({layout, is_top}) {
         const tiles = this._tiles.map(
             tile => this._child(tile.gtkXml({layout: Layout.COLUMN}))
         ).join('\n');
+        let packing = '';
+        if (!is_top) {
+            packing = `
+<packing>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
+</packing>
+`;
+        }
         return `
 <object class="GtkBox">
   <property name="orientation">vertical</property>
@@ -791,6 +804,7 @@ class Column extends Cluster {
   <property name="height_request">${this._height(this.height)}</property>
   ${tiles}
 </object>
+${packing}
 `;
     }
 }
@@ -847,8 +861,8 @@ class BoxedRow extends Cluster {
   </child>
 </object>
 <packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
 </packing>
 `;
     }
@@ -906,8 +920,8 @@ class BoxedColumn extends Cluster {
   </child>
 </object>
 <packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
 </packing>
 `;
     }
@@ -1727,11 +1741,11 @@ class ListBox extends Tile {
           </child>
         </object>
       </child>
-   </object>
-   <packing>
-     <property name="expand">False</property>
-     <property name="fill">True</property>
-   </packing>
+    </object>
+    <packing>
+      <property name="fill">True</property>
+      <property name="expand">True</property>
+    </packing>
   </child>
 </object>
 `;
@@ -1836,8 +1850,8 @@ class RadioRow extends RadioCluster {
   ${tiles}
 </object>
 <packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
 </packing>
 `;
     }
@@ -1883,8 +1897,8 @@ class RadioColumn extends RadioCluster {
   ${tiles}
 </object>
 <packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
 </packing>
 `;
     }
@@ -1949,8 +1963,8 @@ class BoxedRadioRow extends RadioCluster {
   </child>
 </object>
 <packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
 </packing>
 `;
     }
@@ -2015,8 +2029,8 @@ class BoxedRadioColumn extends RadioCluster {
   </child>
 </object>
 <packing>
-  <property name="fill">False</property>
-  <property name="expand">False</property>
+  <property name="fill">True</property>
+  <property name="expand">True</property>
 </packing>
 `;
     }
@@ -2116,7 +2130,7 @@ class Slider extends Tile {
         super(id);
         // Attrubutes
         this.action = '';
-        this.alignment = '';
+        this.alignment = Alignment.FILLED;
         //this.big_increment = integer; // one-tenth of the total range
         //this.fixed_height = false;
         //this.fixed_width = false;
@@ -2200,8 +2214,8 @@ class Slider extends Tile {
   ${accelerator}
 </object>
 <packing>
-   <property name="expand">False</property>
-   <property name="fill">False</property>
+   <property name="expand">True</property>
+   <property name="fill">True</property>
 </packing>
 <object class="GtkAdjustment" id="scale-adj-${this._index}">
   <property name="lower">${this.min_value}</property>
