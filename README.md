@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ten0s/velisp.svg?branch=master)](https://travis-ci.org/ten0s/velisp)
 
-**VeLisp** is a simple AutoLISP compatible interpreter to run AutoCAD independent code.
+**VeLisp** is an AutoLISP / DCL compatible interpreter to run AutoCAD independent code.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.1.0 on linux
+VeLisp 0.2.0 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -70,11 +70,11 @@ $ make pkgMacOS
 
 ```
 $ ls velisp*
-velisp-0.1.0-linux-x64 velisp-0.1.0-macos-x64 velisp-0.1.0-win-x64.exe velisp-0.1.0-win-x86.exe
+velisp-0.2.0-linux-x64 velisp-0.2.0-macos-x64 velisp-0.2.0-win-x64.exe velisp-0.2.0-win-x86.exe
 ```
 
 ```
-$ ./velisp-0.1.0-linux-x64 examples/fib.lsp
+$ ./velisp-0.2.0-linux-x64 examples/fib.lsp
 55
 ```
 
@@ -82,7 +82,7 @@ $ ./velisp-0.1.0-linux-x64 examples/fib.lsp
 
 ```
 $ npm start -- --run tree
-VeLisp 0.1.0 on linux
+VeLisp 0.2.0 on linux
 Type ".help" for more information
 >
 > (+ 1 2)
