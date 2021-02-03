@@ -70,11 +70,11 @@ function readStream(stream, action, context) {
                 action(input, context);
             }
         } catch (e) {
-            console.error(e.message);
+            console.error(e);
         }
     });
     stream.on('error', (e) => {
-        console.error(e.message);
+        console.error(e);
     });
 }
 
@@ -109,7 +109,7 @@ function startRepl(config, action, context) {
                             console.log(result);
                         }
                     } catch (e) {
-                        console.error(e.message);
+                        console.error(e);
                         // fall through
                     }
                 }
@@ -130,7 +130,7 @@ function replEval(repl, input, action, context, callback) {
             if (isRecoverable(input, e)) {
                 return callback(new repl.Recoverable(e));
             } else {
-                console.error(e.message);
+                console.error(e);
                 // fall through
             }
         }

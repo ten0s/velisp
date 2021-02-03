@@ -1,6 +1,6 @@
 const QUnit = require('qunit');
 const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Int, Str, Sym, List} = require('../src/VeLispTypes.js');
+const {Bool, Int, Str, Sym, List} = require('../src/VeLispTypes.js');
 
 const tests = [
     {test: '(defun foo () "foo")', result: new Sym('foo')},
@@ -32,12 +32,20 @@ const tests = [
     // The a param is in the local context
     {test: '(defun a (a) (+ a 1)) (a 1)', result: new Int(2)},
     // The a fun and a param are in the local contexts
-    {test: `(defun a (x)
+    {test: `(defun a (x / a)
               (defun a (a)
                 (+ a 1))
               (a x))
             (a 1)`,
      result: new Int(2)},
+    // Local fun is in the global context (not yet defined)
+    {test: '(defun a () (defun b () \'b)) (type b)', result: new Bool(false)},
+    // Local fun is in the global context (defined)
+    {test: '(defun a () (defun b () \'b)) (a) (type b)', result: new Sym('subr')},
+    // Local fun is in the local context (not yet defined)
+    {test: '(defun a ( / b) (defun b () \'b)) (type b)', result: new Bool(false)},
+    // Local fun is in the local context (defined)
+    {test: '(defun a ( / b) (defun b () \'b)) (a) (type b)', result: new Bool(false)},
 
     {test: '(defun plus (n1 n2) (+ n1 n2)) (plus 1 4)', result: new Int(5)},
 
@@ -61,7 +69,7 @@ const tests = [
             (fib 10)`,
      result: new Int(55)},
 
-    {test: `(defun fib (n)
+    {test: `(defun fib (n / fib-iter)
               (defun fib-iter (a b counter)
                 (if (= counter 0)
                   a

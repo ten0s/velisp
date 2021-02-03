@@ -100,13 +100,13 @@
   (if (null lst) 0
     (+ 1 (length (cdr lst)))))
 
-(defun reverse (lst)
+(defun reverse (lst / aux)
   (defun aux (lst acc)
     (cond ((null lst) acc)
           (t (aux (cdr lst) (cons (car lst) acc)))))
   (aux lst (list)))
 
-(defun last (lst)
+(defun last (lst / aux)
   (defun aux (lst last)
     (cond ((null lst) last)
           (t (aux (cdr lst) (car lst)))))
