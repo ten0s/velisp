@@ -1,4 +1,5 @@
-const {Bool, Str, Fun, ensureType} = require('../VeLispTypes.js')
+const fs = require('fs')
+const {Bool, Str, Fun, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
@@ -100,5 +101,47 @@ exports.initContext = function (context) {
         const value = ensureType('setenv: `value`', args[1], [Str])
         process.env[name.value()] = value.value()
         return value
+    }))
+    context.setSym('OPEN', new Fun('open', ['filename', 'mode'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('open: too few arguments')
+        }
+        if (args.length > 2) {
+            throw new Error('open: too many arguments')
+        }
+        const name = ensureType('open: `filename`', args[0], [Str]).value()
+        const mode = ensureType('open: `mode`', args[1], [Str]).toLowerCase().value()
+        switch (mode) {
+        case 'r':
+        case 'w':
+        case 'a':
+            break;
+        default:
+            throw new Error(`open: unknown mode '${mode}'`)
+        }
+        try {
+            const fd = fs.openSync(name, mode)
+            return new File(name, mode, fd)
+        } catch (e) {
+            console.error(e)
+            return new Bool(false)
+        }
+    }))
+    context.setSym('CLOSE', new Fun('close', ['file-desc'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('close: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('close: too many arguments')
+        }
+        const file = ensureType('close: `file-desc`', args[0], [File])
+        try {
+            fs.closeSync(file.fd)
+            file.close()
+            return new Bool(false)
+        } catch (e) {
+            console.error(e)
+            throw e
+        }
     }))
 }

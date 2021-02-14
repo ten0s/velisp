@@ -665,6 +665,48 @@ class Fun {
     }
 }
 
+class File {
+    // :: (string, string, integer)
+    constructor(name, mode, fd) {
+        this.name = name
+        this.mode = mode
+        this.fd = fd
+        this.state = 'open'
+    }
+
+    close() {
+        this.state = 'closed'
+    }
+
+    // :: () -> Sym
+    type() {
+        return new Sym('file')
+    }
+
+    // :: () -> false
+    isNil() {
+        return false
+    }
+
+    // :: (Any) -> Bool
+    eq(that) {
+        return new Bool(this === that)
+    }
+
+    // :: (Any) -> Bool
+    equal(that) {
+        if (that instanceof File) {
+            return new Bool(this === that)
+        }
+        return new Bool(false)
+    }
+
+    // :: () -> string
+    toString() {
+        return `#<file "${this.name}">`
+    }
+}
+
 function ensureType(prefix, argValue, argTypes) {
     for (const argType of argTypes) {
         if (argValue instanceof argType) {
@@ -683,4 +725,5 @@ exports.Sym = Sym
 exports.List = List
 exports.Pair = Pair
 exports.Fun = Fun
+exports.File = File
 exports.ensureType = ensureType
