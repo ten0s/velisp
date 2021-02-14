@@ -115,7 +115,7 @@ exports.initContext = function (context) {
         case 'r':
         case 'w':
         case 'a':
-            break;
+            break
         default:
             throw new Error(`open: unknown mode '${mode}'`)
         }
