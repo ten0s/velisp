@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Str} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool, Int, Str} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(repeat 1)', result: new Bool(false)},
@@ -19,10 +19,10 @@ const tests = [
             (repeat 4 
               (setq a (+ a 10))
               (setq b (+ b 100)))`, result: new Int(500)},
-];
+]
 
-QUnit.test("repeat", assert => {
+QUnit.test('repeat', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

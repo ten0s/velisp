@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Int, Str, Sym, List} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Int, Str, List} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(apply (lambda () "foo") (list))', result: new Str('foo')},
@@ -13,18 +13,18 @@ const tests = [
                     (T (cons (apply fn (list (car lst)))
                              (map-apply fn (cdr lst))))))
             (map-apply (lambda (x) (* 2 x)) (list 1 2 3))`,
-     result: new List([new Int(2), new Int(4), new Int(6)])},
+    result: new List([new Int(2), new Int(4), new Int(6)])},
 
     {test: `(defun map (fn lst)
               (cond ((equal lst nil) nil)
                     (T (cons (fn (car lst))
                              (map fn (cdr lst))))))
             (map (lambda (x) (+ x 1)) (list 1 2 3))`,
-     result: new List([new Int(2), new Int(3), new Int(4)])},
-];
+    result: new List([new Int(2), new Int(3), new Int(4)])},
+]
 
-QUnit.test("lambda", assert => {
+QUnit.test('lambda', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Real, Str, List, Pair} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Int, List} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(mapcar \'+ nil)', result: new List([])},
@@ -25,7 +25,7 @@ const tests = [
     {test: '(mapcar \'+ \'(1 2 3) \'(4 5 6 7))', result: new List([
         new Int(5), new Int(7), new Int(9)
     ])},
-];
+]
 
 const errors = [
     {test: '(mapcar)', result: new Error('mapcar: too few arguments')},
@@ -33,14 +33,14 @@ const errors = [
     {test: '(mapcar "+")', result: new Error('mapcar: too few arguments')},
     {test: '(mapcar "+" \'())', result: new Error('mapcar: no such function "+"')},
     {test: '(mapcar \'+ "str")', result: new Error('mapcar: `list` expected List')},
-];
+]
 
-QUnit.test("mapcar", assert => {
+QUnit.test('mapcar', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

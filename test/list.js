@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Real, Str, List, Pair} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Int, Real, Str, List, Pair} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(list)', result: new List([])},
@@ -34,7 +34,7 @@ const tests = [
         new Int(2), new Int(3)
     ])},
     {test: '(cdr (cons 1 2))', result: new Int(2)},
-];
+]
 
 const errors = [
     {test: '(cons)', result: new Error('cons: too few arguments')},
@@ -48,14 +48,14 @@ const errors = [
     {test: '(cdr)', result: new Error('cdr: too few arguments')},
     {test: '(cdr (list 1 2) (list 3))', result: new Error('cdr: too many arguments')},
     {test: '(cdr (list))', result: new Error('cdr: expected non-empty List, Pair')},
-];
+]
 
-QUnit.test("list", assert => {
+QUnit.test('list', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

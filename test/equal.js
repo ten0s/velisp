@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Pair} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(equal nil nil)', result: new Bool(true)},
@@ -34,19 +34,19 @@ const tests = [
             (equal f1 f3)`, result: new Bool(true)},
 
     {test: '(equal + +)', result: new Bool(true)},
-];
+]
 
 const errors = [
     {test: '(equal)', result: new Error('equal: too few arguments')},
     {test: '(equal 1 2 3)', result: new Error('equal: too many arguments')},
-];
+]
 
-QUnit.test("equal", assert => {
+QUnit.test('equal', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

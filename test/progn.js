@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool, Int} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(progn)', result: new Bool(false)},
@@ -15,12 +15,12 @@ const tests = [
     {test: `(setq a 0)
             (progn
               (setq a (- a 1))
-              (setq a (- a 1)))`,
-     result: new Int(-2)},
-];
+              (setq a (- a 1)))`, result: new Int(-2)},
+]
 
-QUnit.test("progn", assert => {
+QUnit.test('progn', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})
+

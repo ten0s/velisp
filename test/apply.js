@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Int, Str} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Int, Str} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(apply (defun foo () "foo") (list))', result: new Str('foo')},
@@ -10,7 +10,7 @@ const tests = [
     {test: '(apply (lambda (x) (* x x)) (list 3))', result: new Int(9)},
     {test: '(apply \'(lambda (x) (* x x)) (list 3))', result: new Int(9)},
     {test: '(apply \'+ (list 1 2 3))', result: new Int(6)},
-];
+]
 
 const errors = [
     {test: '(apply)', result: new Error('apply: too few arguments')},
@@ -18,14 +18,14 @@ const errors = [
     {test: '(apply \'+ (list 1 2) (list 3 4))', result: new Error('apply: too many arguments')},
     {test: '(apply \'+ 1)', result: new Error('apply: `list` expected List')},
     {test: '(apply \'add (list 1 2 3))', result: new Error('apply: no such function ADD')},
-];
+]
 
-QUnit.test("apply", assert => {
+QUnit.test('apply', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

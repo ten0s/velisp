@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Str, Sym, List} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool, Int, Str, Sym, List} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(defun foo () "foo")', result: new Sym('foo')},
@@ -37,7 +37,7 @@ const tests = [
                 (+ a 1))
               (a x))
             (a 1)`,
-     result: new Int(2)},
+    result: new Int(2)},
     // Local fun is in the global context (not yet defined)
     {test: '(defun a () (defun b () \'b)) (type b)', result: new Bool(false)},
     // Local fun is in the global context (defined)
@@ -53,13 +53,13 @@ const tests = [
             (defun plus (n1 n2) (+ n1 n2))
             (plus 1 4)
             n1`,
-     result: new Str('one')},
+    result: new Str('one')},
 
     {test: `(defun fac (n)
               (cond ((= n 0) 1)
                     (t (* n (fac (- n 1))))))
             (fac 5)`,
-     result: new Int(120)},
+    result: new Int(120)},
 
     {test: `(defun fib (n)
               (cond ((= n 0) 0)
@@ -67,7 +67,7 @@ const tests = [
                     (t (+ (fib (- n 2))
                           (fib (- n 1))))))
             (fib 10)`,
-     result: new Int(55)},
+    result: new Int(55)},
 
     {test: `(defun fib (n / fib-iter)
               (defun fib-iter (a b counter)
@@ -76,7 +76,7 @@ const tests = [
                   (fib-iter b (+ a b) (- counter 1))))
               (fib-iter 0 1 n))
             (fib 10)`,
-     result: new Int(55)},
+    result: new Int(55)},
 
     {test: `(defun double (x)
               (* 2 x))
@@ -85,7 +85,7 @@ const tests = [
                     (T (cons (apply fn (list (car lst)))
                              (map-apply fn (cdr lst))))))
             (map-apply 'double (list 1 2 3))`,
-     result: new List([new Int(2), new Int(4), new Int(6)])},
+    result: new List([new Int(2), new Int(4), new Int(6)])},
 
     {test: `(defun 1+ (num) (+ num 1))
             (defun map (fn lst)
@@ -93,19 +93,19 @@ const tests = [
                     (T (cons (fn (car lst))
                              (map fn (cdr lst))))))
             (map '1+ (list 1 2 3))`,
-     result: new List([new Int(2), new Int(3), new Int(4)])},
-];
+    result: new List([new Int(2), new Int(3), new Int(4)])},
+]
 
 const errors = [
     {test: '(unknown)', result: new Error('unknown: function not defined')},
-];
+]
 
-QUnit.test("defun", assert => {
+QUnit.test('defun', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

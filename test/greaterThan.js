@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(> 1)', result: new Bool(true)},
@@ -14,7 +14,7 @@ const tests = [
     {test: '(> 77 4 2)', result: new Bool(true)},
     {test: '(> 77 4 4)', result: new Bool(false)},
     {test: '(> "c" "b"))', result: new Bool(true)},
-];
+]
 
 const errors = [
     {test: '(>)', result: new Error('>: too few arguments')},
@@ -23,14 +23,14 @@ const errors = [
     {test: '(> T)', result: new Error('>: expected Int, Real, Str')},
     {test: '(> (list))', result: new Error('>: expected Int, Real, Str')},
     {test: '(> (cons 1 \'a))', result: new Error('>: expected Int, Real, Str')},
-];
+]
 
-QUnit.test("greaterThan", assert => {
+QUnit.test('greaterThan', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

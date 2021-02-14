@@ -1,149 +1,149 @@
-const {Command} = require('commander');
-const {VeLispGlobalContext} = require('./VeLispGlobalContext.js');
-const {evaluate, tree} = require('./VeLispEvaluator.js');
-const config = require('../package.json');
+const {Command} = require('commander')
+const {VeLispGlobalContext} = require('./VeLispGlobalContext.js')
+const {evaluate, tree} = require('./VeLispEvaluator.js')
+const config = require('../package.json')
 
-main();
+main()
 
 function main() {
-    const program = new Command();
+    const program = new Command()
     program.version(config.version)
         .option('-r, --run <command>', 'eval | tree', 'eval')
         .arguments('[file]')
         .action((file) => {
-            const action = runAction(program.run);
-            const context = new VeLispGlobalContext();
-            maybeInjectLib(action, context);
+            const action = runAction(program.run)
+            const context = new VeLispGlobalContext()
+            maybeInjectLib(action, context)
             if (file) {
                 //console.log(`Read from ${file}`);
-                const fs = require('fs');
-                readStream(fs.createReadStream(file), action, context);
+                const fs = require('fs')
+                readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
-                startRepl(config, action, context);
+                startRepl(config, action, context)
             } else {
                 //console.log('Read from stdin');
-                readStream(process.stdin, action, context);
+                readStream(process.stdin, action, context)
             }
         })
-        .parse(process.argv);
+        .parse(process.argv)
 }
 
 function runAction(what, isREPL) {
     switch (what.toLowerCase()) {
     case 'eval':
-        return evaluate;
+        return evaluate
     case 'tree':
         // REPL prints itself
         if (isREPL) {
-            return tree;
+            return tree
         }
         // Let's print for others
         return (input, context) => {
             console.log(tree(input, context))
-        };
+        }
     default:
-        console.error(`Unknown action: ${what}`);
-        process.exit(1);
+        console.error(`Unknown action: ${what}`)
+        process.exit(1)
     }
 }
 
 function maybeInjectLib(action, context) {
     if (action === evaluate) {
-        const path = require('path');
-        let rootdir = path.join(__dirname, '..');
+        const path = require('path')
+        let rootdir = path.join(__dirname, '..')
         // Win32 workaround
-        rootdir = rootdir.split('\\').join('/');
-        process.env['VELISP_ROOT'] = rootdir;
-        evaluate(`(load "${rootdir}/lib/main.lsp")`, context);
+        rootdir = rootdir.split('\\').join('/')
+        process.env['VELISP_ROOT'] = rootdir
+        evaluate(`(load "${rootdir}/lib/main.lsp")`, context)
     }
 }
 
 function readStream(stream, action, context) {
-    let input = "";
+    let input = ''
     stream.on('data', (chunk) => {
-        input += chunk.toString();
-    });
+        input += chunk.toString()
+    })
     stream.on('end', () => {
         try {
             if (input.trim()) {
-                action(input, context);
+                action(input, context)
             }
         } catch (e) {
-            console.error(e);
+            console.error(e)
         }
-    });
+    })
     stream.on('error', (e) => {
-        console.error(e);
-    });
+        console.error(e)
+    })
 }
 
 function startRepl(config, action, context) {
-    console.log(`${config.name} ${config.version} on ${process.platform}`);
-    console.log('Type ".help" for more information');
-    const repl = require('repl');
+    console.log(`${config.name} ${config.version} on ${process.platform}`)
+    console.log('Type ".help" for more information')
+    const repl = require('repl')
     const replServer = repl.start({
         prompt: '> ',
         eval: (input, replCtx, filename, callback) => {
-            return replEval(repl, input, action, context, callback);
+            return replEval(repl, input, action, context, callback)
         },
         writer: (output) => {
-            return replWriter(repl, output);
+            return replWriter(repl, output)
         }
-    });
+    })
     if (action === evaluate) {
         replServer.defineCommand('context', {
             help: 'Show global context',
             action() {
-                console.log(context);
-                this.displayPrompt();
+                console.log(context)
+                this.displayPrompt()
             }
-        });
+        })
         replServer.defineCommand('type', {
             help: 'Show expression\'s internal type',
             action(input) {
                 if (input.trim()) {
                     try {
-                        const result = action(input, context);
+                        const result = action(input, context)
                         if (result !== null) {
-                            console.log(result);
+                            console.log(result)
                         }
                     } catch (e) {
-                        console.error(e);
+                        console.error(e)
                         // fall through
                     }
                 }
-                this.displayPrompt();
+                this.displayPrompt()
             }
-        });
+        })
     }
 }
 
 function replEval(repl, input, action, context, callback) {
     if (input.trim()) {
         try {
-            const result = action(input, context);
+            const result = action(input, context)
             if (result !== null && result !== undefined) {
-                return callback(null, result);
+                return callback(null, result)
             }
         } catch (e) {
             if (isRecoverable(input, e)) {
-                return callback(new repl.Recoverable(e));
+                return callback(new repl.Recoverable(e))
             } else {
-                console.error(e);
+                console.error(e)
                 // fall through
             }
         }
     }
-    callback(null);
+    callback(null)
 }
 
-function replWriter(repl, output) {
+function replWriter(_repl, output) {
     // TODO: Types come in, color them appropriately
-    return output;
+    return output
 }
 
-function isRecoverable(input, error) {
+function isRecoverable(_input, _error) {
     // TODO
-    return false;
+    return false
 }

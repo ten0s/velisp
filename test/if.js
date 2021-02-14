@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Str, Pair} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool, Int, Str, Pair} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(if T 1 0)', result: new Int(1)},
@@ -37,16 +37,16 @@ const tests = [
             (if T (progn (setq a (- a 1)) (setq a (- a 1)) (setq a (- a 1)))
                   (progn (setq b (- b 1)) (setq b (- b 1)) (setq b (- b 1))))
             (cons a b)`,
-     result: new Pair(new Int(-3), new Int(0))},
+    result: new Pair(new Int(-3), new Int(0))},
     {test: `(setq a 0 b 0)
             (if nil (progn (setq a (- a 1)) (setq a (- a 1)) (setq a (- a 1)))
                   (progn (setq b (- b 1)) (setq b (- b 1)) (setq b (- b 1))))
             (cons a b)`,
-     result: new Pair(new Int(0), new Int(-3))},
-];
+    result: new Pair(new Int(0), new Int(-3))},
+]
 
-QUnit.test("if", assert => {
+QUnit.test('if', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

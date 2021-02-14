@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(and)', result: new Bool(true)},
@@ -21,10 +21,10 @@ const tests = [
     {test: '(and nil nil T)', result: new Bool(false)},
 
     {test: '(and T T T)', result: new Bool(true)},
-];
+]
 
-QUnit.test("and", assert => {
+QUnit.test('and', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

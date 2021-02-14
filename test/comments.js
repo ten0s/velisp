@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Int} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Int} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: `;;; Comment #1
@@ -19,10 +19,10 @@ const tests = [
             Comment #10
             |;
             (princ (fib 10))`, result: new Int(55)},
-];
+]
 
-QUnit.test("comments", assert => {
+QUnit.test('comments', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Int} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Int} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(~ 0)', result: new Int(-1)},
@@ -9,7 +9,7 @@ const tests = [
     {test: '(~ -4)', result: new Int(3)},
     {test: '(~ 100)', result: new Int(-101)},
     {test: '(~ -101)', result: new Int(100)},
-];
+]
 
 const errors = [
     {test: '(~)', result: new Error('~: too few arguments')},
@@ -17,14 +17,14 @@ const errors = [
     {test: '(~ 0.0)', result: new Error('~: expected Int')},
     {test: '(~ "0")', result: new Error('~: expected Int')},
     {test: '(~ \'one)', result: new Error('~: expected Int')},
-];
+]
 
-QUnit.test("bitwiseNot", assert => {
+QUnit.test('bitwiseNot', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

@@ -1,11 +1,11 @@
-const {VeLispContext} = require('./VeLispContext.js');
-const Kernel = require('./kernel/Kernel.js');
+const {VeLispContext} = require('./VeLispContext.js')
+const Kernel = require('./kernel/Kernel.js')
 
 class VeLispGlobalContext extends VeLispContext {
     constructor() {
-        super();
-        Kernel.initContext(this);
+        super()
+        Kernel.initContext(this)
     }
 }
 
-exports.VeLispGlobalContext = VeLispGlobalContext;
+exports.VeLispGlobalContext = VeLispGlobalContext

@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Int, Real, Str, Sym, List, Pair, Fun} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool, Int, Real, Str, Sym, List, Pair} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(quote nil)', result: new Bool(false)},
@@ -44,12 +44,11 @@ const tests = [
         new Sym('list'), new Int(1), new Int(2), new Int(3)
     ])},
 
-    {test: '(quote (1 (2) ((3))))',
-     result: new List([
-         new Int(1),
-         new List([new Int(2)]),
-         new List([new List([new Int(3)])])
-     ])},
+    {test: '(quote (1 (2) ((3))))', result: new List([
+        new Int(1),
+        new List([new Int(2)]),
+        new List([new List([new Int(3)])])
+    ])},
 
     {test: '(quote (a . b))', result: new Pair(new Sym('a'), new Sym('b'))},
     {test: '\'(a . b))', result: new Pair(new Sym('a'), new Sym('b'))},
@@ -66,7 +65,7 @@ const tests = [
 
     {test: '(quote (quote foo))', result: new List([new Sym('quote'), new Sym('foo')])},
     {test: '\'(quote foo)', result: new List([new Sym('quote'), new Sym('foo')])},
-];
+]
 
 const errors = [
     {test: '\'(and)', result: new Error('quote: `and` not supported')},
@@ -81,12 +80,12 @@ const errors = [
     {test: '\'(while nil nil)', result: new Error('quote: `while` not supported')},
 ]
 
-QUnit.test("quote", assert => {
+QUnit.test('quote', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

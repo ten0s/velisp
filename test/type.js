@@ -1,6 +1,6 @@
-const QUnit = require('qunit');
-const {evaluate} = require('../src/VeLispEvaluator.js');
-const {Bool, Sym} = require('../src/VeLispTypes.js');
+const QUnit = require('qunit')
+const {evaluate} = require('../src/VeLispEvaluator.js')
+const {Bool, Sym} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(type nil)', result: new Bool(false)},
@@ -15,19 +15,19 @@ const tests = [
     {test: '(type \'(1 . 2))', result: new Sym('list')},
     {test: '(type +)', result: new Sym('subr')},
     {test: '(type (lambda (x) x))', result: new Sym('subr')},
-];
+]
 
 const errors = [
     {test: '(type)', result: new Error('type: too few arguments')},
     {test: '(type 1 2)', result: new Error('type: too many arguments')},
-];
+]
 
-QUnit.test("type", assert => {
+QUnit.test('type', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
-    });
+    })
 
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
-    });
-});
+    })
+})

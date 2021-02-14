@@ -16,5 +16,5 @@ exports.initContext = function (context) {
         require('./VL-Symbol.js'),
     ].forEach(
         module => module.initContext(context)
-    );
+    )
 }

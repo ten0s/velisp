@@ -1,30 +1,30 @@
-const {Bool, Sym, List, Fun} = require('../VeLispTypes.js');
+const {Sym, List, Fun} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
     context.setSym('APPLY', new Fun('apply', ['function', 'list'], [], (self, args) => {
         //console.log('apply args', args);
         if (args.length < 2) {
-            throw new Error('apply: too few arguments');
+            throw new Error('apply: too few arguments')
         }
         if (args.length > 2) {
-            throw new Error('apply: too many arguments');
+            throw new Error('apply: too many arguments')
         }
-        let fun = args[0];
+        let fun = args[0]
         if (fun instanceof Sym) {
             // Try resolving symbol to function
-            fun = self.contexts[self.contexts.length-1].getSym(fun.value());
+            fun = self.contexts[self.contexts.length-1].getSym(fun.value())
         }
         if (fun instanceof Fun) {
-            let list = args[1];
+            let list = args[1]
             if (list instanceof List) {
-                list = list.value();
+                list = list.value()
             } else if (list.isNil()) {
-                list = [];
+                list = []
             } else {
-                throw new Error('apply: `list` expected List');
+                throw new Error('apply: `list` expected List')
             }
-            return fun.apply(self, list);
+            return fun.apply(self, list)
         }
-        throw new Error(`apply: no such function ${args[0]}`);
-    }));
+        throw new Error(`apply: no such function ${args[0]}`)
+    }))
 }

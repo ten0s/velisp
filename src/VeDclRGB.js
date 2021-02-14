@@ -1,24 +1,24 @@
 class RGB {
     constructor(r, g, b) {
-        this.r = this._percent(r);
-        this.g = this._percent(g);
-        this.b = this._percent(b);
+        this.r = this._percent(r)
+        this.g = this._percent(g)
+        this.b = this._percent(b)
     }
 
     _percent(color) {
-        return color / 255;
+        return color / 255
     }
 
     static fromACI(aci) {
         if (typeof aci === 'string') {
             if (symbolics.hasOwnProperty(aci)) {
-                return symbolics[aci];
+                return symbolics[aci]
             }
         }
         if (Number.isInteger(aci) && aci >= 0 && aci <= 256) {
-            return colors[aci];
+            return colors[aci]
         }
-        throw new Error(`Incorrect ACI color: ${aci}`);
+        throw new Error(`Incorrect ACI color: ${aci}`)
     }
 }
 
@@ -281,7 +281,7 @@ const colors = [
     new RGB(130, 130, 130),
     new RGB(190, 190, 190),
     new RGB(255, 255, 255)
-];
+]
 
 const symbolics = {
     // TODO: Current dialog box line color
@@ -303,4 +303,4 @@ const symbolics = {
     white:   colors[7], graphics_foreground: colors[7],
 }
 
-exports.RGB = RGB;
+exports.RGB = RGB

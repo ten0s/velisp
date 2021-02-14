@@ -22,6 +22,9 @@ test:
 	npx qunit
 	node src/main.js lib/test.lsp
 
+lint:
+	npx eslint {src,test}/{*,*/*}.js
+
 rollMinor:
 	npm --no-git-tag-version version minor
 	$(MAKE) roll
