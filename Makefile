@@ -25,6 +25,8 @@ test:
 lint:
 	npx eslint {src,test}/{*,*/*}.js
 
+check: lint test
+
 rollMinor:
 	npm --no-git-tag-version version minor
 	$(MAKE) roll

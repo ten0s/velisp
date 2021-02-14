@@ -8,4 +8,4 @@ install:
     make install
 script:
     Xvfb :7 -screen 0 1024x768x16 &
-    DISPLAY=:7 make test && make lint
+    DISPLAY=:7 make check

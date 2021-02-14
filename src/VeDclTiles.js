@@ -457,7 +457,7 @@ class Dialog extends Cluster {
         this._gtkWindow.setModal(true)
         this._gtkWindow.setResizable(this.is_resizable)
         // TODO: calculate using both length and font
-        //console.log(this._gtkWindow.getTitle().length);
+        //console.log(this._gtkWindow.getTitle().length)
         const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 160
         const width = Math.max(this._width(this.width), fixMeWidth)
         const height = this._height(this.height)
@@ -610,7 +610,7 @@ class Dialog extends Cluster {
         this._listStores = this.getListStores()
         // Init
         const gtkXml = this.gtkXml()
-        //console.log(gtkXml);
+        //console.log(gtkXml)
         this._gtkBuilder = new Gtk.Builder()
         this._gtkBuilder.addFromString(gtkXml, gtkXml.length)
         this._gtkWindow = this.gtkFindWidget(this.id)
@@ -763,13 +763,13 @@ class Column extends Cluster {
         super(id)
         // Attributes
         this.alignment = Alignment.FILLED
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
-        //this.label = '';
+        //this.label = ''
         this.width = -1
     }
 
@@ -812,11 +812,11 @@ class BoxedRow extends Cluster {
         super(id)
         // Attributes
         this.alignment = Alignment.FILLED
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = null
         this.label = ''
@@ -871,11 +871,11 @@ class BoxedColumn extends Cluster {
         super(id)
         // Attributes
         this.alignment = Alignment.FILLED
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = null
         this.label = ''
@@ -998,8 +998,8 @@ class Spacer extends Tile {
         super(id)
         // Attributes
         this.alignment = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.width = -1
     }
@@ -1024,8 +1024,8 @@ class Text extends Tile {
         super(id)
         // Attributes
         this.alignment = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.is_bold = false
         this.key = null
@@ -1124,10 +1124,10 @@ class Button extends Tile {
         // Attributes
         this.action = ''
         this.alignment = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
-        //this.is_cancel = false;
+        //this.is_cancel = false
         this.is_default = false
         this.is_enabled = true
         this.is_tab_stop = true
@@ -1213,11 +1213,11 @@ class EditBox extends Tile {
         // Attributes
         this.action = ''
         this.alignment = ''
-        //this.allow_accept = false;
+        //this.allow_accept = false
         this.edit_limit = 132
         this.edit_width = 0
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.is_enabled = true
         this.is_tab_stop = true
@@ -1226,7 +1226,7 @@ class EditBox extends Tile {
         this.mnemonic = ''
         this.value = ''
         this.width = -1
-        //this.password_char = '*';
+        //this.password_char = '*'
         // Locals
         this._action = null
         this._callback = null
@@ -1321,17 +1321,17 @@ class Image extends Tile {
     constructor(id) {
         super(id)
         // Attributes
-        //this.action = '';
+        //this.action = ''
         this.alignment = ''
-        //this.aspect_radio = null;
+        //this.aspect_radio = null
         this.color = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = 10
         this.is_enabled = true
         this.is_tab_stop = true
         this.key = null
-        //this.mnemonic = '';
+        //this.mnemonic = ''
         this.value = ''
         this.width = 10
     }
@@ -1382,11 +1382,11 @@ class ImageButton extends Tile {
         // Attributes
         this.action = ''
         this.alignment = ''
-        //this.allow_accept = false;
-        //this.aspect_radio = null;
+        //this.allow_accept = false
+        //this.aspect_radio = null
         this.color = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = 10
         this.is_enabled = true
         this.is_tab_stop = true
@@ -1481,13 +1481,13 @@ class PopupList extends Tile {
         this.action = ''
         this.alignment = ''
         this.edit_width = 0
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.is_enabled = true
         // TODO: Doesn't work as expected,
         // probably due to internal Gtk.Entry
-        //this.is_tab_stop = true;
+        //this.is_tab_stop = true
         this.key = null
         this.label = ''
         this.list = ''
@@ -1602,9 +1602,9 @@ class ListBox extends Tile {
         // Attributes
         this.action = ''
         this.alignment = ''
-        //this.allow_accept = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.allow_accept = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.is_enabled = true
         this.is_tab_stop = true
@@ -1813,14 +1813,14 @@ class RadioRow extends RadioCluster {
         super(id)
         // Attributes
         this.alignment = Alignment.FILLED
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = null
-        //this.label = '';
+        //this.label = ''
         this.width = -1
     }
 
@@ -1860,14 +1860,14 @@ class RadioColumn extends RadioCluster {
         super(id)
         // Attributes
         this.alignment = ''
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = null
-        //this.label = '';
+        //this.label = ''
         this.width = -1
     }
 
@@ -1907,11 +1907,11 @@ class BoxedRadioRow extends RadioCluster {
         super(id)
         // Attributes
         this.alignment = Alignment.FILLED
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = null
         this.label = ''
@@ -1973,11 +1973,11 @@ class BoxedRadioColumn extends RadioCluster {
         super(id)
         // Attributes
         this.alignment = Alignment.FILLED
-        //this.children_alignment = '';
-        //this.children_fixed_height = false;
-        //this.children_fixed_width = false;
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.children_alignment = ''
+        //this.children_fixed_height = false
+        //this.children_fixed_width = false
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = null
         this.label = ''
@@ -2040,8 +2040,8 @@ class RadioButton extends Tile {
         // Attributes
         this.action = ''
         this.alignment = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.is_enabled = true
         this.is_tab_stop = true
@@ -2129,9 +2129,9 @@ class Slider extends Tile {
         // Attrubutes
         this.action = ''
         this.alignment = Alignment.FILLED
-        //this.big_increment = integer; // one-tenth of the total range
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.big_increment = integer // one-tenth of the total range
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.key = ''
         this.label = ''
@@ -2139,7 +2139,7 @@ class Slider extends Tile {
         this.max_value = 10000  // signed 16-bit integer no greater than 32767
         this.min_value = 0      // signed 16-bit integer no less than -32768
         this.mnemonic = ''
-        //this.small_increment = integer; // one one-hundredth the total range
+        //this.small_increment = integer // one one-hundredth the total range
         this.value = 0
         this.width = -1
         // Locals
@@ -2233,8 +2233,8 @@ class Toggle extends Tile {
         // Attributes
         this.action = ''
         this.alignment = ''
-        //this.fixed_height = false;
-        //this.fixed_width = false;
+        //this.fixed_height = false
+        //this.fixed_width = false
         this.height = -1
         this.is_enabled = true
         this.is_tab_stop = true

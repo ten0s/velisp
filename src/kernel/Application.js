@@ -7,7 +7,7 @@ const {fmtError} = require('../VeLispError.js')
 
 exports.initContext = function (context) {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
-        //console.log('load args:', args);
+        //console.log('load args:', args)
         if (args.length === 0) {
             throw new Error('load: too few arguments')
         }
