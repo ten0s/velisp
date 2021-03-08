@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {Bool, Str, Fun, File, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Str, Fun, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
@@ -117,5 +117,42 @@ exports.initContext = function (context) {
             console.error(e)
             throw e
         }
+    }))
+    context.setSym('READ-CHAR', new Fun('read-char', ['file-desc'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('read-char: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('read-char: too many arguments')
+        }
+        // TODO: Support stdin
+        const file = ensureType('read-char: `file-desc`', args[0], [File])
+        const buf = Buffer.alloc(1)
+        const len = fs.readSync(file.fd, buf, 0, 1)
+        if (!len) {
+            return 10
+        }
+        return new Int(buf[0])
+    }))
+    context.setSym('WRITE-CHAR', new Fun('write-char', ['num', ['file-desc']], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('write-char: too few arguments')
+        }
+        if (args.length > 2) {
+            throw new Error('write-char: too many arguments')
+        }
+        const num = ensureType('write-char: `num`', args[0], [Int])
+        if (num.value() <= 0 && num.value() > 255) {
+            throw new Error('write-char: `num` expected ASCII code')
+        }
+        let file = null
+        if (args.length == 1) {
+            file = new File('stdout', 'w', process.stdout.fd)
+        } else {
+            file = ensureType('write-char: `file-desc`', args[1], [File])
+        }
+        const buf = Buffer.from([num.value()])
+        fs.writeSync(file.fd, buf, 0, 1)
+        return num
     }))
 }
