@@ -1,6 +1,29 @@
 const {Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
+    context.setSym('ASCII', new Fun('ascii', ['string'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('ascii: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('ascii: too many arguments')
+        }
+        const str = ensureType('ascii:', args[0], [Str]).value()
+        if (!str.length) {
+            throw new Error('ascii: expected non-empty Str')
+        }
+        return new Int(str.charCodeAt())
+    }))
+    context.setSym('CHR', new Fun('chr', ['int'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('chr: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('chr: too many arguments')
+        }
+        const int = ensureType('chr:', args[0], [Int]).value()
+        return new Str(String.fromCharCode(int))
+    }))
     context.setSym('ITOA', new Fun('itoa', ['int'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('itoa: too few arguments')
