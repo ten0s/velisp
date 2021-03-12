@@ -23,15 +23,21 @@ const tests = [
 ]
 
 const errors = [
-    {test: '(read-char)', result: new Error('read-char: too few arguments')},
+    {test: '(read-char)', result:
+     new Error('read-char: too few arguments')},
     {test: '(setq f (open "file.txt" "w")) (read-char f f)', result:
      new Error('read-char: too many arguments')},
-    {test: '(read-char 0)', result: new Error('read-char: `file-desc` expected File')},
+    {test: '(read-char 0)', result:
+     new Error('read-char: `file-desc` expected File')},
     
-    {test: '(write-char)', result: new Error('write-char: too few arguments')},
-    {test: '(setq f (open "file.txt" "w")) (write-char 65 f f)', result: new Error('write-char: too many arguments')},
-    {test: '(write-char "A" 1)', result: new Error('write-char: `num` expected Int')},
-    {test: '(write-char 65  1)', result: new Error('write-char: `file-desc` expected File')},
+    {test: '(write-char)', result:
+     new Error('write-char: too few arguments')},
+    {test: '(setq f (open "file.txt" "w")) (write-char 65 f f)', result:
+     new Error('write-char: too many arguments')},
+    {test: '(write-char "A" 1)', result:
+     new Error('write-char: `num` expected Int')},
+    {test: '(write-char 65  1)', result:
+     new Error('write-char: `file-desc` expected File')},
 ]
 
 QUnit.test('read-write-char', assert => {

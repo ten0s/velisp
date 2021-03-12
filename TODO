@@ -1,1 +1,2 @@
 read-char doesn't support stdin
+read-line doesn't support stdin

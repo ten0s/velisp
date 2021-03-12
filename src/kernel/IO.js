@@ -1,4 +1,3 @@
-const fs = require('fs')
 const {Bool, Int, Str, Fun, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
@@ -94,8 +93,7 @@ exports.initContext = function (context) {
             throw new Error(`open: unknown mode '${mode}'`)
         }
         try {
-            const fd = fs.openSync(name, mode)
-            return new File(name, mode, fd)
+            return new File(name, mode)
         } catch (e) {
             console.error(e)
             return new Bool(false)
@@ -110,7 +108,6 @@ exports.initContext = function (context) {
         }
         const file = ensureType('close: `file-desc`', args[0], [File])
         try {
-            fs.closeSync(file.fd)
             file.close()
             return new Bool(false)
         } catch (e) {
@@ -127,12 +124,18 @@ exports.initContext = function (context) {
         }
         // TODO: Support stdin
         const file = ensureType('read-char: `file-desc`', args[0], [File])
-        const buf = Buffer.alloc(1)
-        const len = fs.readSync(file.fd, buf, 0, 1)
-        if (!len) {
-            return 10
+        return file.readChar()
+    }))
+    context.setSym('READ-LINE', new Fun('read-line', ['file-desc'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('read-line: too few arguments')
         }
-        return new Int(buf[0])
+        if (args.length > 1) {
+            throw new Error('read-line: too many arguments')
+        }
+        // TODO: Support stdin
+        const file = ensureType('read-line: `file-desc`', args[0], [File])
+        return file.readLine()
     }))
     context.setSym('WRITE-CHAR', new Fun('write-char', ['num', ['file-desc']], [], (self, args) => {
         if (args.length < 1) {
@@ -147,12 +150,28 @@ exports.initContext = function (context) {
         }
         let file = null
         if (args.length == 1) {
-            file = new File('stdout', 'w', process.stdout.fd)
+            file = new File('stdout', 'w')
         } else {
             file = ensureType('write-char: `file-desc`', args[1], [File])
         }
-        const buf = Buffer.from([num.value()])
-        fs.writeSync(file.fd, buf, 0, 1)
+        file.writeChar(num)
         return num
+    }))
+    context.setSym('WRITE-LINE', new Fun('write-line', ['string', ['file-desc']], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('write-line: too few arguments')
+        }
+        if (args.length > 2) {
+            throw new Error('write-line: too many arguments')
+        }
+        const str = ensureType('write-line: `string`', args[0], [Str])
+        let file = null
+        if (args.length == 1) {
+            file = new File('stdout', 'w')
+        } else {
+            file = ensureType('write-line: `file-desc`', args[1], [File])
+        }
+        file.writeLine(str)
+        return str
     }))
 }

@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 class Bool {
     // :: (bool)
     constructor(bool) {
@@ -666,16 +668,90 @@ class Fun {
 }
 
 class File {
-    // :: (string, string, integer)
-    constructor(name, mode, fd) {
+    // :: (string, string)
+    constructor(name, mode) {
         this.name = name
         this.mode = mode
-        this.fd = fd
+        this.fd = null
+        this.state = 'closed'
+        this.open()
+    }
+
+    // :: () -> ()
+    open() {
+        switch (this.name) {
+        case "stdin":
+            this.fd = process.stdin.fd
+            break
+        case "stdout":
+            this.fd = process.stdout.fd
+            break
+        default:
+            this.fd = fs.openSync(this.name, this.mode)
+            break
+        }
         this.state = 'open'
     }
 
+    // :: () -> ()
     close() {
+        switch (this.name) {
+        case "stdin":
+        case "stdout":
+            break
+        default:
+            fs.closeSync(this.fd)
+            break
+        }
+        this.fd = null
         this.state = 'closed'
+    }
+
+    // :: () -> Int
+    readChar() {
+        const buf = Buffer.alloc(1)
+        const len = fs.readSync(this.fd, buf, 0, 1)
+        if (!len) {
+            return new Int(10)
+        }
+        return new Int(buf[0])
+    }
+
+    // :: (Int) -> ()
+    writeChar(num) {
+        const buf = Buffer.from([num.value()])
+        fs.writeSync(this.fd, buf, 0, 1)
+    }
+
+    // :: () -> Str
+    readLine() {
+        const {EOL} = require('os')
+        // Linux  : '\n'
+        // Windows: '\n'
+        const eol = EOL[EOL.length-1].charCodeAt()
+        let str = ''
+        const buf = Buffer.alloc(1)
+        for (;;) {
+            const len = fs.readSync(this.fd, buf, 0, 1)
+            if (!len) {
+                if (!str) {
+                    return new Bool(false)
+                }
+                break
+            }
+            str += buf.toString()
+            if (buf[0] === eol) {
+                break
+            }
+        }
+        return new Str(str.replace('\r', '').replace('\n', ''))
+    }
+
+    // :: (Str) -> ()
+    writeLine(str) {
+        const {EOL} = require('os')
+        const buf = Buffer.from(str.value() + EOL)
+        fs.writeSync(this.fd, buf, 0, buf.length)
     }
 
     // :: () -> Sym
