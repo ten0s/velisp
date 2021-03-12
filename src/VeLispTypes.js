@@ -680,10 +680,10 @@ class File {
     // :: () -> ()
     open() {
         switch (this.name) {
-        case "stdin":
+        case 'stdin':
             this.fd = process.stdin.fd
             break
-        case "stdout":
+        case 'stdout':
             this.fd = process.stdout.fd
             break
         default:
@@ -696,8 +696,8 @@ class File {
     // :: () -> ()
     close() {
         switch (this.name) {
-        case "stdin":
-        case "stdout":
+        case 'stdin':
+        case 'stdout':
             break
         default:
             fs.closeSync(this.fd)

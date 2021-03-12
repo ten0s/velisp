@@ -39,8 +39,8 @@ const errors = [
      new Error('write-line: too many arguments')},
     {test: '(write-line 65 1)', result:
      new Error('write-line: `string` expected Str')},
-    {test: '(write-line "str" 1)',
-     result: new Error('write-line: `file-desc` expected File')},
+    {test: '(write-line "str" 1)', result:
+     new Error('write-line: `file-desc` expected File')},
 ]
 
 QUnit.test('read-write-line', assert => {
