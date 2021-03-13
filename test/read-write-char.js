@@ -32,10 +32,16 @@ res
 const errors = [
     {test: '(read-char)', result:
      new Error('read-char: too few arguments')},
-    {test: '(setq f (open "file.txt" "w")) (read-char f f)', result:
+    {test: '(setq f (open "file.txt" "r")) (read-char f f)', result:
      new Error('read-char: too many arguments')},
     {test: '(read-char 0)', result:
      new Error('read-char: `file-desc` expected File')},
+    {test: '(setq f (open "file.txt" "r")) (close f) (read-char f)', result:
+     new Error('read-char: bad file #<file "file.txt" r:c>')},
+    {test: '(setq f (open "file.txt" "w")) (read-char f)', result:
+     new Error('read-char: bad file #<file "file.txt" w:o>')},
+    {test: '(setq f (open "file.txt" "a")) (read-char f)', result:
+     new Error('read-char: bad file #<file "file.txt" a:o>')},
     
     {test: '(write-char)', result:
      new Error('write-char: too few arguments')},
@@ -45,6 +51,10 @@ const errors = [
      new Error('write-char: `num` expected Int')},
     {test: '(write-char 65  1)', result:
      new Error('write-char: `file-desc` expected File')},
+    {test: '(setq f (open "file.txt" "w")) (close f) (write-char 65 f)', result:
+     new Error('write-char: bad file #<file "file.txt" w:c>')},
+    {test: '(setq f (open "file.txt" "r")) (write-char 65 f)', result:
+     new Error('write-char: bad file #<file "file.txt" r:o>')},
 ]
 
 QUnit.test('read-write-char', assert => {
@@ -56,10 +66,10 @@ QUnit.test('read-write-char', assert => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
     })
 
-    // Tear down
-    fs.unlinkSync('file.txt')
-
     errors.forEach(t => {
         assert.throws(() => evaluate(t.test), t.result, t.test)
     })
+
+    // Tear down
+    fs.unlinkSync('file.txt')
 })

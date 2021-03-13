@@ -667,51 +667,75 @@ class Fun {
     }
 }
 
+const FileStream = {
+    STDIN: 'stdin',
+    STDOUT: 'stdout',
+    STDERR: 'stderr'
+}
+
+const FileMode = {
+    READ: 'r',
+    WRITE: 'w',
+    APPEND: 'a'
+}
+
+const FileState = {
+    OPEN: 'o',
+    CLOSED: 'c'
+}
+
 class File {
-    // :: (string, string)
-    constructor(name, mode) {
+    // :: (string, string, integer)
+    /*private*/ constructor(name, mode, fd) {
         this.name = name
         this.mode = mode
-        this.fd = null
-        this.state = 'closed'
+        this.fd = fd
+        this.state = FileState.OPEN
     }
 
     // :: () -> ()
-    open() {
-        switch (this.name) {
-        case 'stdin':
-            this.fd = process.stdin.fd
-            break
-        case 'stdout':
-            this.fd = process.stdout.fd
-            break
+    static open(name, mode) {
+        switch (name) {
+        case FileStream.STDIN:
+            return new File(name, mode, process.stdin.fd)
+        case FileStream.STDOUT:
+            return new File(name, mode, process.stdout.fd)
         default:
-            this.fd = fs.openSync(this.name, this.mode)
-            break
+            try {
+                return new File(name, mode, fs.openSync(name, mode))
+            } catch (e) {
+                const os = require('os')
+                if (mode === FileMode.READ && e.errno === -os.constants.errno.ENOENT) {
+                    return new Bool(false)
+                }
+                throw e
+            }
         }
-        this.state = 'open'
     }
 
     // :: () -> ()
     close() {
-        if (this.state === 'closed') {
+        if (this.state === FileState.CLOSED) {
             return new Bool(false)
         }
         switch (this.name) {
-        case 'stdin':
-        case 'stdout':
+        case FileStream.STDIN:
+        case FileStream.STDOUT:
             break
         default:
             fs.closeSync(this.fd)
             break
         }
-        this.fd = null
-        this.state = 'closed'
+        this.fd = -1
+        this.state = FileState.CLOSED
         return new Bool(false)
     }
 
     // :: () -> Int
     readChar() {
+        if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
+            throw new Error(`read-char: bad file ${this}`)
+        }
         const buf = Buffer.alloc(1)
         const len = fs.readSync(this.fd, buf, 0, 1)
         if (!len) {
@@ -722,12 +746,18 @@ class File {
 
     // :: (Int) -> ()
     writeChar(num) {
+        if (this.state === FileState.CLOSED || this.mode === FileMode.READ) {
+            throw new Error(`write-char: bad file ${this}`)
+        }
         const buf = Buffer.from([num.value()])
         fs.writeSync(this.fd, buf, 0, 1)
     }
 
     // :: () -> Str
     readLine() {
+        if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
+            throw new Error(`read-line: bad file ${this}`)
+        }
         const {EOL} = require('os')
         // Linux  : '\n'
         // Windows: '\n'
@@ -752,6 +782,9 @@ class File {
 
     // :: (Str) -> ()
     writeLine(str) {
+        if (this.state === FileState.CLOSED || this.mode === FileMode.READ) {
+            throw new Error(`write-line: bad file ${this}`)
+        }
         const {EOL} = require('os')
         const buf = Buffer.from(str.value() + EOL)
         fs.writeSync(this.fd, buf, 0, buf.length)
@@ -782,7 +815,7 @@ class File {
 
     // :: () -> string
     toString() {
-        return `#<file "${this.name}">`
+        return `#<file "${this.name}" ${this.mode}:${this.state}>`
     }
 }
 
@@ -804,5 +837,7 @@ exports.Sym = Sym
 exports.List = List
 exports.Pair = Pair
 exports.Fun = Fun
+exports.FileStream = FileStream
+exports.FileMode = FileMode
 exports.File = File
 exports.ensureType = ensureType

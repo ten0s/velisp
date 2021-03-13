@@ -1,4 +1,4 @@
-const {Bool, Int, Str, Fun, File, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
@@ -85,21 +85,14 @@ exports.initContext = function (context) {
         const name = ensureType('open: `filename`', args[0], [Str]).value()
         const mode = ensureType('open: `mode`', args[1], [Str]).toLowerCase().value()
         switch (mode) {
-        case 'r':
-        case 'w':
-        case 'a':
+        case FileMode.READ:
+        case FileMode.WRITE:
+        case FileMode.APPEND:
             break
         default:
             throw new Error(`open: unknown mode '${mode}'`)
         }
-        try {
-            const file = new File(name, mode)
-            file.open()
-            return file
-        } catch (e) {
-            console.error(e)
-            return new Bool(false)
-        }
+        return File.open(name, mode)
     }))
     context.setSym('CLOSE', new Fun('close', ['file-desc'], [], (self, args) => {
         if (args.length < 1) {
@@ -109,12 +102,7 @@ exports.initContext = function (context) {
             throw new Error('close: too many arguments')
         }
         const file = ensureType('close: `file-desc`', args[0], [File])
-        try {
-            return file.close()
-        } catch (e) {
-            console.error(e)
-            throw e
-        }
+        return file.close()
     }))
     context.setSym('READ-CHAR', new Fun('read-char', ['file-desc'], [], (self, args) => {
         if (args.length < 1) {
@@ -151,8 +139,7 @@ exports.initContext = function (context) {
         }
         let file = null
         if (args.length == 1) {
-            file = new File('stdout', 'w')
-            file.open()
+            file = File.open(FileStream.STDOUT, FileMode.WRITE)
         } else {
             file = ensureType('write-char: `file-desc`', args[1], [File])
         }
@@ -169,8 +156,7 @@ exports.initContext = function (context) {
         const str = ensureType('write-line: `string`', args[0], [Str])
         let file = null
         if (args.length == 1) {
-            file = new File('stdout', 'w')
-            file.open()
+            file = File.open(FileStream.STDOUT, FileMode.WRITE)
         } else {
             file = ensureType('write-line: `file-desc`', args[1], [File])
         }
