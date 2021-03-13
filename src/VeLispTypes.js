@@ -715,7 +715,7 @@ class File {
         const buf = Buffer.alloc(1)
         const len = fs.readSync(this.fd, buf, 0, 1)
         if (!len) {
-            return new Int(10)
+            return new Bool(false)
         }
         return new Int(buf[0])
     }

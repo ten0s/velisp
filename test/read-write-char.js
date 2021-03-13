@@ -1,8 +1,15 @@
 const QUnit = require('qunit')
 const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Str} = require('../src/VeLispTypes.js')
+const {Bool, Str} = require('../src/VeLispTypes.js')
 
 const tests = [
+    {test:`
+(setq f (open "file.txt" "r"))
+(setq res (read-char f))
+(close f)
+res
+`, result: new Bool(false)},
+
     {test: `
 (setq f (open "file.txt" "w"))
 (write-char (ascii "H") f)
