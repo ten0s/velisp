@@ -674,7 +674,6 @@ class File {
         this.mode = mode
         this.fd = null
         this.state = 'closed'
-        this.open()
     }
 
     // :: () -> ()
@@ -696,7 +695,7 @@ class File {
     // :: () -> ()
     close() {
         if (this.state === 'closed') {
-            return
+            return new Bool(false)
         }
         switch (this.name) {
         case 'stdin':
@@ -708,6 +707,7 @@ class File {
         }
         this.fd = null
         this.state = 'closed'
+        return new Bool(false)
     }
 
     // :: () -> Int

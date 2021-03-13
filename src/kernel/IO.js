@@ -93,7 +93,9 @@ exports.initContext = function (context) {
             throw new Error(`open: unknown mode '${mode}'`)
         }
         try {
-            return new File(name, mode)
+            const file = new File(name, mode)
+            file.open()
+            return file
         } catch (e) {
             console.error(e)
             return new Bool(false)
@@ -108,8 +110,7 @@ exports.initContext = function (context) {
         }
         const file = ensureType('close: `file-desc`', args[0], [File])
         try {
-            file.close()
-            return new Bool(false)
+            return file.close()
         } catch (e) {
             console.error(e)
             throw e
@@ -151,6 +152,7 @@ exports.initContext = function (context) {
         let file = null
         if (args.length == 1) {
             file = new File('stdout', 'w')
+            file.open()
         } else {
             file = ensureType('write-char: `file-desc`', args[1], [File])
         }
@@ -168,6 +170,7 @@ exports.initContext = function (context) {
         let file = null
         if (args.length == 1) {
             file = new File('stdout', 'w')
+            file.open()
         } else {
             file = ensureType('write-line: `file-desc`', args[1], [File])
         }
