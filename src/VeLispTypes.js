@@ -695,6 +695,9 @@ class File {
 
     // :: () -> ()
     close() {
+        if (this.state === 'closed') {
+            return
+        }
         switch (this.name) {
         case 'stdin':
         case 'stdout':

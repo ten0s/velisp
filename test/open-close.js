@@ -6,6 +6,9 @@ const tests = [
     {test: '(close (open "file.txt" "r"))', result: new Bool(false)},
     {test: '(close (open "file.txt" "w"))', result: new Bool(false)},
     {test: '(close (open "file.txt" "a"))', result: new Bool(false)},
+
+    {test: '(open "unknown.txt" "r")', result: new Bool(false)},
+    {test: '(setq f (open "file.txt" "w")) (close f) (close f)', result: new Bool(false)},
 ]
 
 const errors = [
@@ -13,14 +16,8 @@ const errors = [
     {test: '(open "file.txt")', result: new Error('open: too few arguments')},
     {test: '(open "file.txt" "r" \'extra)', result: new Error('open: too many arguments')},
 
-    // TODO
-    //{test: '(open "unknown.txt" "r")', result: new Error()},
-    
     {test: '(close)', result: new Error('close: too few arguments')},
     {test: '(close (open "file.txt" "w") \'extra)', result: new Error('close: too many arguments')},
-
-    // TODO
-    //{test: '(setq f (open "file.txt" "w")) (close f) (close f)', result: new Error()},
 ]
 
 QUnit.test('open-close', assert => {
