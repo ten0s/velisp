@@ -46,17 +46,17 @@ readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
 
 pkgLinux:
-	npx pkg -c package.json -t node10-linux-x64 -o velisp-${VERSION}-linux-x64 src/main.js
+	npx pkg -c package.json -t node12-linux-x64 -o velisp-${VERSION}-linux-x64 src/main.js
 
 pkgWin86:
 	# https://github.com/vercel/pkg-fetch/issues/68
-	npx pkg -c package.json -t node10-win-x86 -o velisp-${VERSION}-win-x86 --no-bytecode --public --public-packages '*' src/main.js
+	npx pkg -c package.json -t node12-win-x86 -o velisp-${VERSION}-win-x86 --no-bytecode --public --public-packages '*' src/main.js
 
 pkgWin64:
-	npx pkg -c package.json -t node10-win-x64 -o velisp-${VERSION}-win-x64 src/main.js
+	npx pkg -c package.json -t node12-win-x64 -o velisp-${VERSION}-win-x64 src/main.js
 
 pkgMacOS:
-	npx pkg -c package.json -t node10-macos -o velisp-${VERSION}-macos-x64 src/main.js
+	npx pkg -c package.json -t node12-macos -o velisp-${VERSION}-macos-x64 src/main.js
 
 cleanPkg:
 	rm -f velisp*
