@@ -10,13 +10,13 @@
     "license": "",
     "dependencies": {
         "antlr4": "4.8.0",
-        "commander": "^6.2.0",
+        "commander": "^6.2.1",
         "node-gtk": "^0.5.1"
     },
     "devDependencies": {
-        "eslint": "^7.20.0",
-        "pkg": "^4.4.9",
-        "qunit": "^2.13.0"
+        "eslint": "^7.23.0",
+        "pkg": "^4.5.1",
+        "qunit": "^2.14.1"
     },
     "pkg": {
         "assets": [

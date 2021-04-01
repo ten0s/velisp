@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-In order to build **VeLisp** you need to have [Node.js 10.x](https://nodejs.org/dist/latest-v10.x/) and
+In order to build **VeLisp** you need to have [Node.js 12.x](https://nodejs.org/dist/latest-v12.x/) and
 [GNU Make](http://www.gnu.org/software/make/) installed.
 
 ## Build
