@@ -62,6 +62,7 @@ exports.initContext = function (context) {
                 ext = extension.value()
             }
         }
+        // TODO: check out 'tmp' package
         const {path: tmpFile} = temp.openSync({
             dir   : dir  ? dir  : DEFAULT_DIR,
             prefix: name ? name : DEFAULT_NAME,
