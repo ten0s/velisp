@@ -23,7 +23,7 @@ exports.initContext = function (context) {
         }
         const arg = args[0]
         if (arg instanceof Str) {
-            return new Str(arg.toUnescapedString())
+            return arg
         }
         return new Str(arg.toString())
     }))
