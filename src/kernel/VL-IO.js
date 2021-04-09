@@ -107,10 +107,9 @@ exports.initContext = function (context) {
 }
 
 const tmpDir = () => {
-    let tmp = null
-    tmp = process.env["TMP"]
+    let tmp = process.env['TMP']
     if (fs.existsSync(tmp)) { return tmp }
-    tmp = process.env["TEMP"]
+    tmp = process.env['TEMP']
     if (fs.existsSync(tmp)) { return tmp }
     return process.cwd()
 }

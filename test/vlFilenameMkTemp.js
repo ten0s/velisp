@@ -1,8 +1,6 @@
-const fs = require('fs')
-const os = require('os')
 const QUnit = require('qunit')
 const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool} = require('../src/VeLispTypes.js')
+//const {Str} = require('../src/VeLispTypes.js')
 
 const tests = [
     //{test: '(vl-filename-mktemp)', result: new Str('')},
@@ -10,8 +8,8 @@ const tests = [
 ]
 
 const errors = [
-    {test: '(vl-filename-mktemp nil nil nil nil)',
-     result: new Error('vl-filename-mktemp: too many arguments')},
+    {test: '(vl-filename-mktemp nil nil nil nil)', result:
+     new Error('vl-filename-mktemp: too many arguments')},
 ]
     
 QUnit.test('vl-filename-mktemp', assert => {
