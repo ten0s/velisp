@@ -28,13 +28,18 @@ exports.initContext = function (context) {
         }
         const arg = args[0]
         let msg
-        // TODO: file-desc
         if (arg instanceof Str) {
-            msg = arg.toEscapedString()
+            msg = arg.toString()
         } else {
             msg = arg.toString()
         }
-        console.log(msg)
+        let file
+        if (args.length === 1) {
+            file = File.open(FileStream.STDOUT, FileMode.WRITE)
+        } else {
+            file = ensureType('prin1: `file-desc`', args[1], [File])
+        }
+        file.write(new Str(msg))
         return arg
     }))
     context.setSym('PRINC', new Fun('princ', ['[expr [file-desc]]'], [], (self, args) => {
@@ -47,13 +52,18 @@ exports.initContext = function (context) {
         }
         const arg = args[0]
         let msg
-        // TODO: file-desc
         if (arg instanceof Str) {
             msg = arg.toUnescapedString()
         } else {
             msg = arg.toString()
         }
-        console.log(msg)
+        let file
+        if (args.length === 1) {
+            file = File.open(FileStream.STDOUT, FileMode.WRITE)
+        } else {
+            file = ensureType('princ: `file-desc`', args[1], [File])
+        }
+        file.write(new Str(msg))
         return arg
     }))
     context.setSym('PRINT', new Fun('print', ['[expr [file-desc]]'], [], (self, args) => {
@@ -66,13 +76,19 @@ exports.initContext = function (context) {
         }
         const arg = args[0]
         let msg
-        // TODO: file-desc
         if (arg instanceof Str) {
-            msg = arg.toEscapedString()
+            msg = arg.toString()
         } else {
             msg = arg.toString()
         }
-        console.log('\n' + msg + ' ')
+        let file
+        if (args.length === 1) {
+            file = File.open(FileStream.STDOUT, FileMode.WRITE)
+        } else {
+            file = ensureType('print: `file-desc`', args[1], [File])
+        }
+        const {EOL} = require('os')
+        file.write(new Str(EOL).concat(new Str(msg)).concat(new Str(' ')))
         return arg
     }))
     context.setSym('OPEN', new Fun('open', ['filename', 'mode'], [], (self, args) => {

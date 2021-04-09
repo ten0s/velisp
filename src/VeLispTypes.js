@@ -781,13 +781,21 @@ class File {
     }
 
     // :: (Str) -> ()
+    write(str) {
+        if (this.state === FileState.CLOSED || this.mode === FileMode.READ) {
+            throw new Error(`write: bad file ${this}`)
+        }
+        const buf = Buffer.from(str.value())
+        fs.writeSync(this.fd, buf, 0, buf.length)
+    }
+
+    // :: (Str) -> ()
     writeLine(str) {
         if (this.state === FileState.CLOSED || this.mode === FileMode.READ) {
             throw new Error(`write-line: bad file ${this}`)
         }
         const {EOL} = require('os')
-        const buf = Buffer.from(str.value() + EOL)
-        fs.writeSync(this.fd, buf, 0, buf.length)
+        this.write(str.concat(new Str(EOL)))
     }
 
     // :: () -> Sym
