@@ -1,2 +1,5 @@
-read-char doesn't support stdin
-read-line doesn't support stdin
+* read-char doesn't support stdin
+* read-line doesn't support stdin
+* How to run VeLisp in the browser?
+* How to run VeLisp behind CGI?
+* Add .velisp somewhere and put (setenv "TMP" (tmpdir))
