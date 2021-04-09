@@ -1,11 +1,20 @@
+const os = require('os')
 const {Bool, Int, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = function (context) {
+    // VeLisp Extension
     context.setSym('CWD', new Fun('cwd', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('cwd: too many arguments')
         }
         return new Str(process.cwd())
+    }))
+    // VeLisp Extension
+    context.setSym('TMPDIR', new Fun('tmpdir', [], [], (self, args) => {
+        if (args.length > 0) {
+            throw new Error('tmpdir: too many arguments')
+        }
+        return new Str(os.tmpdir())
     }))
     context.setSym('EXIT', new Fun('exit', ['[code]'], [], (self, args) => {
         if (args.length > 1) {
