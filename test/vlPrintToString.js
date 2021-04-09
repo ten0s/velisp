@@ -10,7 +10,7 @@ const tests = [
     {test: '(vl-prin1-to-string \'my-var)', result: new Str('MY-VAR')},
     {test: `(setq str "The \\"allowable\\" tolerance is +/- 1/4\\"")
             (vl-prin1-to-string str)`, result:
-     new Str('\\"The \\\\\\"allowable\\\\\\" tolerance is +/- 1/4\\\\\\"\\\"')},
+     new Str('\\"The \\\\\\"allowable\\\\\\" tolerance is +/- 1/4\\\\\\"\\"')},
     
     {test: '(vl-princ-to-string "abc")', result: new Str('abc')},
     {test: '(vl-princ-to-string "/myutilities")', result: new Str('/myutilities')},

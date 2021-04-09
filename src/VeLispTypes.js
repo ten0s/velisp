@@ -418,7 +418,7 @@ class Str {
         // TODO: FIXME
         // Poor man's replaceAll
         return this.str
-            .split('\\"').join('\"')
+            .split('\\"').join('"')
             .split('\\\\').join('\\')
             .split('\\r').join('\r')
             .split('\\n').join('\n')
@@ -430,11 +430,11 @@ class Str {
         // TODO: FIXME
         // Poor man's replaceAll
         const str = this.str
-              .split('\\').join('\\\\')
-              .split('"').join('\\"')
-              //.split('\\r').join('\\\\r')
-              //.split('\\n').join('\\\\n')
-              //.split('\\t').join('\\\\t')
+            .split('\\').join('\\\\')
+            .split('"').join('\\"')
+            //.split('\\r').join('\\\\r')
+            //.split('\\n').join('\\\\n')
+            //.split('\\t').join('\\\\t')
         return `\\"${str}\\"`
     }
 
