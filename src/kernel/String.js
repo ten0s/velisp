@@ -94,7 +94,7 @@ exports.initContext = function (context) {
         }
         return new Int(result)
     }))
-    context.setSym('SUBSTR', new Fun('substr', ['str int [int]'], [], (self, args) => {
+    context.setSym('SUBSTR', new Fun('substr', ['string start [length]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('substr: too few arguments')
         }
@@ -106,10 +106,10 @@ exports.initContext = function (context) {
         if (start.value() > 0) {
             if (args.length === 3) {
                 const length = ensureType('substr: `length`', args[2], [Int])
-                if (length.value() > 0) {
+                if (length.value() >= 0) {
                     return string.substring(start.value() - 1, length.value())
                 }
-                throw new Error('substr: `length` expected positive Int')
+                throw new Error('substr: `length` expected non-negative Int')
             }
             return string.substring(start.value() - 1, string.length())
         }
