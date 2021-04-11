@@ -1,2 +1,2 @@
-(load (strcat (getenv "VELISP_ROOT") "/lib/stdlib/list-test.lsp"))
-(load (strcat (getenv "VELISP_ROOT") "/lib/stdlib/vl-list-test.lsp"))
+(foreach name '("list" "vl-list" "vl-string")
+         (load (strcat (getenv "VELISP_ROOT") "/lib/stdlib/" name "-test.lsp")))
