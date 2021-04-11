@@ -9,7 +9,7 @@ exports.initContext = function (context) {
             throw new Error('vl-filename-mktemp: too many arguments')
         }
 
-        const DEFAULT_NAME = '$VL~~'
+        const DEFAULT_NAME = 'velisp-'
         const DEFAULT_DIR  = tmpDir()
         const DEFAULT_EXT  = ''
 
