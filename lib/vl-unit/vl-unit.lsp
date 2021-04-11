@@ -112,8 +112,8 @@
   (princ
    (strcat
     "Expected: " (vl-princ-to-string expected)
-    " but saw: " (vl-princ-to-string actual))
-    "\n"))
+    " but saw: " (vl-princ-to-string actual)
+    "\n")))
 
 (defun %vlu-show-test-result-message (test-fn)
   (princ
