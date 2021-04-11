@@ -13,7 +13,7 @@
 (setq ACTION_REASON_INTERIM_CHANGE 3)
 (setq ACTION_REASON_DOUBLE_CLICK 4)
 
-(defun alert (msg / dlg_id dcl_id dcl_file file)
+(defun alert (message / dlg_id dcl_id dcl_file file)
   (setq dlg_id "alert_dlg")
   (setq dcl_file (vl-filename-mktemp (strcat dlg_id "-") "" ".dcl"))
   (setq file (open dcl_file "w"))
@@ -23,13 +23,11 @@
   (princ  "  : paragraph {                     \n"  file)
   (princ  "    alignment = centered;           \n"  file)
 
-  ;;
-  ;; TODO: split msg by EOL and build multiple text_part
-  ;;
-  (princ  "    : text_part  {                  \n"  file)
-  (princ  (strcat "      label = \"" msg "\";  \n") file)
-  (princ  "      alignment = centered;         \n"  file)
-  (princ  "    }                               \n"  file)
+  (foreach line (ve-string-split "\n" message)
+           (princ  "    : text_part  {                  \n"  file)
+           (princ  (strcat "      label = \"" line "\"; \n") file)
+           (princ  "      alignment = centered;         \n"  file)
+           (princ  "    }                               \n"  file))
 
   (princ  "  }                                 \n"  file)
   (princ  "  ok_only;                          \n"  file)
@@ -42,8 +40,6 @@
       (princ (strcat "Error: dcl file '" dcl_file "' not loaded"))
       (exit 1)))
 
-  (vl-file-delete dcl_file)
-
   (if (not (new_dialog dlg_id dcl_id))
     (progn
       (princ (strcat "Error: dialog '" dlg_id "' not found"))
@@ -51,4 +47,5 @@
 
   (start_dialog)
   (unload_dialog dcl_id)
+  (vl-file-delete dcl_file)
   nil)
