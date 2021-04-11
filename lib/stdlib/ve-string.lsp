@@ -10,3 +10,6 @@
   (if (zerop delim-len)
       (mapcar 'chr (vl-string->list str))
     (do-split str)))
+
+;; TODO: (defun ve-list-join (delim list))
+;; (ve-list-join "," '("a", "b", "c")) => "abc"
