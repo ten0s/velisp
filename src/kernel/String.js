@@ -102,16 +102,16 @@ exports.initContext = function (context) {
             throw new Error('substr: too many arguments')
         }
         const string = ensureType('substr: `string`', args[0], [Str])
-        const start = ensureType('substr: `start`', args[1], [Int])
-        if (start.value() > 0) {
+        const start = ensureType('substr: `start`', args[1], [Int]).value()
+        if (start > 0) {
             if (args.length === 3) {
-                const length = ensureType('substr: `length`', args[2], [Int])
-                if (length.value() >= 0) {
-                    return string.substring(start.value() - 1, length.value())
+                const length = ensureType('substr: `length`', args[2], [Int]).value()
+                if (length >= 0) {
+                    return string.substring(start - 1, length)
                 }
                 throw new Error('substr: `length` expected non-negative Int')
             }
-            return string.substring(start.value() - 1, string.length())
+            return string.substring(start - 1, string.length())
         }
         throw new Error('substr: `start` expected positive Int')
     }))
