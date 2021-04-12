@@ -88,3 +88,9 @@ Type ".help" for more information
 > (+ 1 2)
 (file (expr ( (listExpr (expr +)) (listExpr (expr 1)) (listExpr (expr 2)) )))
 ```
+
+## Print VeLisp Extension
+
+```
+$ grep -A1 'VeLisp Extension' {lib,src}/**/*
+```
