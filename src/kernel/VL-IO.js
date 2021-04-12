@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const temp = require('temp').track()
-const {Bool, Str, Fun, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     context.setSym('VL-FILENAME-MKTEMP', new Fun('vl-filename-mktemp', ['pattern', 'directory', 'extention'], [], (self, args) => {
@@ -81,6 +81,29 @@ exports.initContext = (context) => {
         try {
             fs.unlinkSync(filename)
             return new Bool(true)
+        } catch (e) {
+            // TODO: put to *error*?
+            // console.error(e)
+            return new Bool(false)
+        }
+    }))
+    context.setSym('VL-FILE-SIZE', new Fun('vl-file-size', ['filename'], [], (self, args) => {
+        if (args.length === 0) {
+            throw new Error('vl-file-size: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('vl-file-size: too many arguments')
+        }
+        const filename = ensureType('vl-file-size:', args[0], [Str]).value()
+        try {
+            // TODO: If you do not specify a full path name,
+            // vl-file-size searches the AutoCAD default drawing
+            // directory for the file.
+            const stats = fs.statSync(filename)
+            if (stats.isDirectory()) {
+                return new Int(0)
+            }
+            return new Int(stats.size)
         } catch (e) {
             // TODO: put to *error*?
             // console.error(e)
