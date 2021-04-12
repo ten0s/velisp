@@ -5,7 +5,7 @@ const {Str, Sym, Fun} = require('../VeLispTypes.js')
 const Evaluator = require('../VeLispEvaluator.js')
 const {fmtError} = require('../VeLispError.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
         //console.log('load args:', args)
         if (args.length === 0) {
@@ -46,7 +46,7 @@ exports.initContext = function (context) {
     }))
 }
 
-function maybeAddExt(filename) {
+const maybeAddExt = (filename) => {
     if (path.extname(filename)) {
         return filename
     }

@@ -1,6 +1,6 @@
 const {Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('SET', new Fun('set', ['sym', 'expr'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('set: too few arguments')

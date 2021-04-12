@@ -1,4 +1,4 @@
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     [
         require('./Application.js'),
         require('./Arithmetic.js'),

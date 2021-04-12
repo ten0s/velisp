@@ -1,6 +1,6 @@
 const {Bool, Int, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('prompt: too few arguments')

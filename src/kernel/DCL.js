@@ -54,7 +54,7 @@ const withImage = (ifFunc, elseFunc = null) => {
     throw new Error('No current image')
 }
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dclfile'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('load_dialog: too few arguments')

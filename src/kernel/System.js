@@ -1,7 +1,7 @@
 const os = require('os')
 const {Bool, Int, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     // VeLisp Extension
     context.setSym('CWD', new Fun('cwd', [], [], (self, args) => {
         if (args.length > 0) {

@@ -1,6 +1,6 @@
 const {Int, Real, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('*', new Fun('*', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)

@@ -3,7 +3,7 @@ const path = require('path')
 const temp = require('temp').track()
 const {Bool, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('VL-FILENAME-MKTEMP', new Fun('vl-filename-mktemp', ['pattern', 'directory', 'extention'], [], (self, args) => {
         if (args.length > 3) {
             throw new Error('vl-filename-mktemp: too many arguments')

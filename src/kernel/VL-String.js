@@ -1,6 +1,6 @@
 const {Bool, Int, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('VL-PRIN1-TO-STRING', new Fun('vl-print1-to-string', ['data'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-prin1-to-string: too few arguments')

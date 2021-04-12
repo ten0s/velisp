@@ -1,6 +1,6 @@
 const {Bool, List, Pair, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('APPEND', new Fun('append', ['[list ...]'], [], (self, args) => {
         if (args.length === 0) {
             return new Bool(false)

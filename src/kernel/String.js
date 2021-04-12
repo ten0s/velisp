@@ -1,6 +1,6 @@
 const {Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('ASCII', new Fun('ascii', ['string'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('ascii: too few arguments')

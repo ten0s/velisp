@@ -1,6 +1,6 @@
 const {Bool, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
-exports.initContext = function (context) {
+exports.initContext = (context) => {
     context.setSym('VL-SYMBOL-NAME', new Fun('vl-symbol-name', ['sym'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-symbol-name: too few arguments')
