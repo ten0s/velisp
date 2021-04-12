@@ -767,8 +767,8 @@ class File {
             throw new Error(`read-line: bad file ${this}`)
         }
         const {EOL} = require('os')
-        // Linux  : '\n'
-        // Windows: '\n'
+        // Linux  :   '\n'
+        // Windows: '\r\n'
         const eol = EOL[EOL.length-1].charCodeAt()
         let str = ''
         const buf = Buffer.alloc(1)

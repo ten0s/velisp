@@ -18,20 +18,20 @@
   (setq dcl_file (vl-filename-mktemp (strcat dlg_id "-") "" ".dcl"))
   (setq file (open dcl_file "w"))
 
-  (princ  (strcat dlg_id " : dialog {          \n") file)
-  (princ  "  label = \"Alert Message\";        \n"  file)
-  (princ  "  : paragraph {                     \n"  file)
-  (princ  "    alignment = centered;           \n"  file)
+  (princ  (strcat dlg_id " : dialog {          " EOL) file)
+  (princ  (strcat "  label = \"Alert Message\";" EOL) file)
+  (princ  (strcat "  : paragraph {             " EOL) file)
+  (princ  (strcat "    alignment = centered;   " EOL) file)
 
-  (foreach line (ve-string-split "\n" message)
-           (princ  "    : text_part  {                  \n"  file)
-           (princ  (strcat "      label = \"" line "\"; \n") file)
-           (princ  "      alignment = centered;         \n"  file)
-           (princ  "    }                               \n"  file))
+  (foreach line (ve-string-split EOL message)
+           (princ  (strcat "    : text_part  {         " EOL) file)
+           (princ  (strcat "      label = \"" line "\";" EOL) file)
+           (princ  (strcat "      alignment = centered;" EOL) file)
+           (princ  (strcat "    }                      " EOL) file))
 
-  (princ  "  }                                 \n"  file)
-  (princ  "  ok_only;                          \n"  file)
-  (princ  "}                                   \n"  file)
+  (princ  (strcat "  }                           " EOL) file)
+  (princ  (strcat "  ok_only;                    " EOL) file)
+  (princ  (strcat "}                             " EOL) file)
 
   (close file)
 

@@ -113,14 +113,15 @@
    (strcat
     "Expected: " (vl-princ-to-string expected)
     " but saw: " (vl-princ-to-string actual)
-    "\n")))
+    EOL)))
 
 (defun %vlu-show-test-result-message (test-fn)
   (princ
    (strcat
     (vl-symbol-name test-fn) ": "
     (itoa *vlu-assert-pass-count*) " assertions passed, "
-    (itoa *vlu-assert-fail-count*) " failed.\n")))
+    (itoa *vlu-assert-fail-count*) " failed."
+    EOL)))
 
 (defun %vlu-show-tests-result-message ()
   (princ
@@ -129,7 +130,8 @@
     (itoa *vlu-test-pass-count*) " tests passed, "
     (itoa *vlu-test-fail-count*) " failed, "
     (itoa (- *vlu-test-count* *vlu-test-pass-count* *vlu-test-fail-count*))
-    " execution errors.\n")))
+    " execution errors."
+    EOL)))
 
 (defun %vlu-get-test-result ()
   (= (- *vlu-assert-count* *vlu-assert-pass-count*) 0))
