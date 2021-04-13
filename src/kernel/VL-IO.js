@@ -17,8 +17,10 @@ exports.initContext = (context) => {
         let name = null
         let ext  = null
 
+        // NB: T behaves like nil to not pollute implementation
+
         if (args.length == 1) {
-            let pattern = ensureType('vl-filename-mktemp:', args[0], [Str, Bool])
+            let pattern = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
             if (pattern instanceof Str) {
                 ({dir, name, ext} = path.parse(pattern.value()))
                 if (!fs.existsSync(dir)) {
@@ -27,8 +29,8 @@ exports.initContext = (context) => {
             }
         }
         if (args.length == 2) {
-            let pattern   = ensureType('vl-filename-mktemp:', args[0], [Str, Bool])
-            let directory = ensureType('vl-filename-mktemp:', args[1], [Str, Bool])
+            let pattern   = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
+            let directory = ensureType('vl-filename-mktemp: `directory`', args[1], [Str, Bool])
             if (pattern instanceof Str) {
                 ({dir, name, ext} = path.parse(pattern.value()))
                 if (!fs.existsSync(dir)) {
@@ -43,9 +45,9 @@ exports.initContext = (context) => {
             }
         }
         if (args.length == 3) {
-            let pattern   = ensureType('vl-filename-mktemp:', args[0], [Str, Bool])
-            let directory = ensureType('vl-filename-mktemp:', args[1], [Str, Bool])
-            let extension = ensureType('vl-filename-mktemp:', args[2], [Str, Bool])
+            let pattern   = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
+            let directory = ensureType('vl-filename-mktemp: `directory`', args[1], [Str, Bool])
+            let extension = ensureType('vl-filename-mktemp: `extension`', args[2], [Str, Bool])
             if (pattern instanceof Str) {
                 ({dir, name, ext} = path.parse(pattern.value()))
                 if (!fs.existsSync(dir)) {
@@ -161,9 +163,9 @@ exports.initContext = (context) => {
 }
 
 const tmpDir = () => {
-    let tmp = process.env['TMP']
+    const tmp = process.env['TMP']
     if (fs.existsSync(tmp)) { return tmp }
-    tmp = process.env['TEMP']
-    if (fs.existsSync(tmp)) { return tmp }
+    const temp = process.env['TEMP']
+    if (fs.existsSync(temp)) { return temp }
     return process.cwd()
 }
