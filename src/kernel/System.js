@@ -10,6 +10,13 @@ exports.initContext = (context) => {
         return new Str(process.cwd())
     }))
     // VeLisp Extension
+    context.setSym('HOMEDIR', new Fun('homedir', [], [], (self, args) => {
+        if (args.length > 0) {
+            throw new Error('homedir: too many arguments')
+        }
+        return new Str(os.homedir())
+    }))
+    // VeLisp Extension
     context.setSym('TMPDIR', new Fun('tmpdir', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('tmpdir: too many arguments')
