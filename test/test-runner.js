@@ -12,7 +12,7 @@ class TestRunner {
             tests.forEach(t => {
                 const actual = evaluate(t.test)
                 if (typeof(t.result) === 'function') {
-                    assert.ok(t.result(actual, env))
+                    assert.ok(t.result(actual, env), t.test)
                 } else {
                     assert.deepEqual(actual, t.result, t.test)
                 }
