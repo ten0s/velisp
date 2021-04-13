@@ -1,22 +1,15 @@
 const os = require('os')
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
+const {TestRunner} = require('./test-runner.js')
 const {Str} = require('../src/VeLispTypes.js')
 
-const tests = [
-    {test: '(tmpdir)', result: new Str(os.tmpdir())},
-]
+TestRunner.run({
+    name: 'tmpdir',
 
-const errors = [
-    {test: '(tmpdir \'foo)', result: new Error('tmpdir: too many arguments')},
-]
+    tests: [
+        {test: '(tmpdir)', result: new Str(os.tmpdir())},
+    ],
 
-QUnit.test('tmpdir', assert => {
-    tests.forEach(t => {
-        assert.deepEqual(evaluate(t.test), t.result, t.test)
-    })
-
-    errors.forEach(t => {
-        assert.throws(() => evaluate(t.test), t.result, t.test)
-    })
+    errors: [
+        {test: '(tmpdir \'foo)', result: new Error('tmpdir: too many arguments')},
+    ]
 })
