@@ -15,11 +15,11 @@ TestRunner.run({
     tests: [
         {test: '(vl-mkdir "d1") (vl-file-systime "d1")', result: new Bool(false)},
         {test: '(vl-file-systime "d2")', result: new Bool(false)},
-        {test: '(close (open "f1" "w")) (vl-file-systime "f1")', result: (systime) => {
-            //console.log(systime)
-            return systime instanceof List
-                && systime.length() === 8
-                && systime.value().every(x => x instanceof Int)
+        {test: '(close (open "f1" "w")) (vl-file-systime "f1")', result: (act) => {
+            //console.log(act)
+            return act instanceof List
+                && act.length() === 8
+                && act.value().every(x => x instanceof Int)
         }},
         {test: '(vl-file-systime "f2")', result: new Bool(false)},
     ],
