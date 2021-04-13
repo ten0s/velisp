@@ -12,6 +12,7 @@ exports.initContext = (context) => {
         require('./String.js'),
         require('./Symbol.js'),
         require('./System.js'),
+        require('./VE-Filename.js'),
         require('./VL-Filename.js'),
         require('./VL-IO.js'),
         require('./VL-String.js'),
