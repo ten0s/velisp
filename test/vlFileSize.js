@@ -1,26 +1,25 @@
-const fs = require('fs')
 const {TestRunner} = require('./test-runner.js')
+const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Bool, Int} = require('../src/VeLispTypes.js')
 
 TestRunner.run({
     name: 'vl-file-size',
 
     setup: () => {
-        fs.mkdirSync('d1')
+        evaluate('(setq f (open "f1" "w")) (princ "Hello" f) (close f)')
+        evaluate('(vl-mkdir "d1")')
     },
 
     teardown: () => {
-        fs.unlinkSync('f1')
-        fs.rmdirSync('d1')
+        evaluate('(vl-file-delete "f1")')
+        evaluate('(ve-rmdir "d1")')
     },
 
     tests: [
         {test: '(vl-file-size "d1")', result: new Int(0)},
         {test: '(vl-file-size "d2")', result: new Bool(false)},
-        {test: `(setq f (open "f1" "w"))
-            (princ "Hello" f)
-            (close f)
-            (vl-file-size "f1")`, result: new Int(5)},
+        {test: '(vl-file-size "f1")', result: new Int(5)},
+        {test: '(vl-file-size "f2")', result: new Bool(false)},
     ],
 
     errors: [
