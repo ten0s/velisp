@@ -19,6 +19,11 @@ class Bool {
         return !this.bool
     }
 
+    // :: () -> bool
+    value() {
+        return this.bool
+    }
+
     // :: (Any) -> Bool
     and(that) {
         if (that instanceof Bool) {

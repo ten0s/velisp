@@ -2,6 +2,44 @@ const fs = require('fs')
 const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
+    context.setSym('VL-FILE-COPY', new Fun('vl-file-copy', ['src-filename', 'dst-filename', '[append]'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('vl-file-copy: too few arguments')
+        }
+        if (args.length > 3) {
+            throw new Error('vl-file-copy: too many arguments')
+        }
+        const srcFilename = ensureType('vl-file-copy: `src-filename`', args[0], [Str]).value()
+        const dstFilename = ensureType('vl-file-copy: `dst-filename`', args[1], [Str]).value()
+        // TODO: If you do not specify a full path name,
+        // vl-file-copy looks the AutoCAD default drawing directory.
+        let append = false
+        if (args.length === 3) {
+            append = ensureType('vl-file-copy: `append`', args[2], [Bool]).value()
+        }
+        if (srcFilename === dstFilename) {
+            return new Bool(false)
+        }
+        try {
+            const srcStats = fs.statSync(srcFilename)
+            if (srcStats.isDirectory()) {
+                return new Bool(false)
+            }
+            if (!append) {
+                fs.copyFileSync(srcFilename, dstFilename, fs.constants.COPYFILE_EXCL)
+            } else {
+                const srcBuf = fs.readFileSync(srcFilename)
+                const dstFd = fs.openSync(dstFilename, 'a')
+                fs.writeSync(dstFd, srcBuf, 0, srcBuf.length)
+                fs.closeSync(dstFd)
+            }
+            return new Int(srcStats.size)
+        } catch (e) {
+            // TODO: put to *error*?
+            // console.error(e)
+            return new Bool(false)
+        }
+    }))
     context.setSym('VL-FILE-DELETE', new Fun('vl-file-delete', ['filename'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-file-delete: too few arguments')
