@@ -57,6 +57,33 @@ exports.initContext = (context) => {
             return new Bool(false)
         }
     }))
+    context.setSym('VL-FILE-RENAME', new Fun('vl-file-rename', ['src-filename', 'dst-filename'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('vl-file-rename: too few arguments')
+        }
+        if (args.length > 2) {
+            throw new Error('vl-file-rename: too many arguments')
+        }
+        const srcFilename = ensureType('vl-file-rename: `src-filename`', args[0], [Str]).value()
+        const dstFilename = ensureType('vl-file-rename: `dst-filename`', args[1], [Str]).value()
+        // TODO: If you do not specify a full path name,
+        // vl-file-rename looks the AutoCAD default drawing directory.
+        try {
+            // Check destination file exists
+            fs.statSync(dstFilename)
+            return new Bool(false)
+        } catch (e) {
+            // fall through
+        }
+        try {
+            fs.renameSync(srcFilename, dstFilename)
+            return new Bool(true)
+        } catch (e) {
+            // TODO: put to *error*?
+            // console.error(e)
+            return new Bool(false)
+        }
+    }))
     context.setSym('VL-FILE-SIZE', new Fun('vl-file-size', ['filename'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-file-size: too few arguments')
