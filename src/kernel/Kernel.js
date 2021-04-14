@@ -14,7 +14,7 @@ exports.initContext = (context) => {
         require('./System.js'),
         require('./VE-Filename.js'),
         require('./VL-Filename.js'),
-        require('./VL-IO.js'),
+        require('./VL-FileSystem.js'),
         require('./VL-String.js'),
         require('./VL-Symbol.js'),
     ].forEach(
