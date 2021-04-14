@@ -57,6 +57,24 @@ exports.initContext = (context) => {
             return new Bool(false)
         }
     }))
+    context.setSym('VL-FILE-DIRECTORY-P', new Fun('vl-file-directory-p', ['filename'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('vl-file-directory-p: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('vl-file-directory-p: too many arguments')
+        }
+        const filename = ensureType('vl-file-directory-p:', args[0], [Str]).value()
+        // TODO: If you do not specify a full path name,
+        // vl-file-directory-p looks the AutoCAD default drawing directory.
+        try {
+            return new Bool(fs.statSync(filename).isDirectory())
+        } catch (e) {
+            // TODO: put to *error*?
+            // console.error(e)
+            return new Bool(false)
+        }
+    }))
     context.setSym('VL-FILE-RENAME', new Fun('vl-file-rename', ['src-filename', 'dst-filename'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-file-rename: too few arguments')
