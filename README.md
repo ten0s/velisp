@@ -34,11 +34,11 @@ Type ".help" for more information
 55
 > (defun add (a b) (+ a b))
 ADD
-> .type 'add
+> .inspect 'add
 Sym { sym: 'ADD' }
-> .type add
+> .inspect add
 Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
-> .type (add 1 2)
+> .inspect (add 1 2)
 Int { int: 3 }
 > (mapcar '(lambda (x y) (itoa (+ x y))) '(1 2 3) '(9 8 7))
 ("10" "10" "10")

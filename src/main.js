@@ -99,8 +99,8 @@ function startRepl(config, action, context) {
                 this.displayPrompt()
             }
         })
-        replServer.defineCommand('type', {
-            help: 'Show expression\'s internal type',
+        replServer.defineCommand('inspect', {
+            help: 'Inspect internal representation of <expression>',
             action(input) {
                 if (input.trim()) {
                     try {
