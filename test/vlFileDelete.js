@@ -1,18 +1,20 @@
-const fs = require('fs')
 const {TestRunner} = require('./test-runner.js')
+const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Bool} = require('../src/VeLispTypes.js')
 
 TestRunner.run({
     name: 'vl-file-delete',
 
-    setup: () => {},
+    setup: () => {
+        evaluate('(close (open "f1" "w"))')
+    },
 
     teardown: () => {
-        fs.unlinkSync('f1')
+        evaluate('(vl-file-delete "f1")')
     },
 
     tests: [
-        {test: '(setq f (open "f1" "w")) (close f) (vl-file-delete "f1")', result: new Bool(true)},
+        {test: '(vl-file-delete "f1")', result: new Bool(true)},
         {test: '(vl-file-delete "f2")', result: new Bool(false)},
     ],
 
