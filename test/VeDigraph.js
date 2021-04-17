@@ -23,9 +23,9 @@ QUnit.test('VeDigraph', assert => {
     G.addEdge(6, 7)
     G.addEdge(7, 8)
 
-    console.log(G)
-    console.log(G.toString())
-    console.log(G.toDot())
+    //console.log(G)
+    //console.log(G.toString())
+    //console.log(G.toDot())
 
     assert.equal(10, G.vertices())
     assert.equal(16, G.edges())

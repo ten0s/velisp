@@ -4,7 +4,7 @@ class VeDigraph {
     constructor(V) {
         this._vertices = V
         this._edges = 0
-        this._adjacent = []
+        this._adjacent = new Array(V)
         for (let v = 0; v < V; v++) {
             this._adjacent[v] = []
         }
