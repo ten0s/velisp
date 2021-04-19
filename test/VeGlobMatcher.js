@@ -1,0 +1,96 @@
+const QUnit = require('qunit')
+const {VeGlobMatcher} = require('../src/VeGlobMatcher.js')
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('a')
+    assert.ok(glob.matches('a'))
+    assert.ok(glob.matches('A'))
+    assert.notOk(glob.matches('aa'))
+    assert.notOk(glob.matches('AA'))
+    assert.notOk(glob.matches('ab'))
+    assert.notOk(glob.matches('AB'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('abc')
+    assert.ok(glob.matches('abc'))
+    assert.ok(glob.matches('aBc'))
+    assert.ok(glob.matches('aBC'))
+    assert.ok(glob.matches('ABC'))
+    assert.notOk(glob.matches('abcd'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('?')
+    assert.ok(glob.matches('.'))
+    assert.ok(glob.matches('A'))
+    assert.ok(glob.matches('a'))
+    assert.ok(glob.matches('A'))
+    assert.notOk(glob.matches('aa'))
+    assert.notOk(glob.matches('AA'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('??')
+    assert.ok(glob.matches('..'))
+    assert.ok(glob.matches('aa'))
+    assert.ok(glob.matches('AA'))
+    assert.ok(glob.matches('ab'))
+    assert.ok(glob.matches('BA'))
+    assert.notOk(glob.matches('a'))
+    assert.notOk(glob.matches('A'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('a?')
+    assert.notOk(glob.matches('a'))
+    assert.notOk(glob.matches('A'))
+    assert.ok(glob.matches('aa'))
+    assert.ok(glob.matches('AA'))
+    assert.ok(glob.matches('ab'))
+    assert.ok(glob.matches('AB'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('a?c')
+    assert.notOk(glob.matches('a'))
+    assert.notOk(glob.matches('A'))
+    assert.notOk(glob.matches('aa'))
+    assert.notOk(glob.matches('AA'))
+    assert.notOk(glob.matches('ab'))
+    assert.notOk(glob.matches('AB'))
+    assert.ok(glob.matches('abc'))
+    assert.ok(glob.matches('ABC'))
+    assert.ok(glob.matches('aXc'))
+    assert.ok(glob.matches('AxC'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('*')
+    assert.ok(glob.matches(''))
+    assert.ok(glob.matches('.'))
+    assert.ok(glob.matches('..'))
+    assert.ok(glob.matches('a'))
+    assert.ok(glob.matches('abc'))
+    assert.ok(glob.matches('abcdefghijklmnopqrstuvwxyz'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('a?c*d')
+    assert.ok(glob.matches('abcd'))
+    assert.ok(glob.matches('ABCD'))
+    assert.ok(glob.matches('aXcYd'))
+    assert.ok(glob.matches('AxCYZ123D'))
+    assert.ok(glob.matches('A.C.....D'))
+    assert.ok(glob.matches('A?C********D'))
+})
+
+QUnit.test('VeGlobMatcher', assert => {
+    const glob = new VeGlobMatcher('*.txt')
+    assert.ok(glob.matches('.txt'))
+    assert.ok(glob.matches('file.txt'))
+    assert.ok(glob.matches('.TXT'))
+    assert.ok(glob.matches('FILE.TXT'))
+    assert.notOk(glob.matches('file.pdf'))
+    assert.notOk(glob.matches('file.xls'))
+})

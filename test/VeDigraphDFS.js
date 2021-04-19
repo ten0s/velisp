@@ -2,7 +2,7 @@ const QUnit = require('qunit')
 const {VeDigraph} = require('../src/VeDigraph.js')
 const {VeDigraphDFS} = require('../src/VeDigraphDFS.js')
 
-QUnit.test('VeDigraph', assert => {
+QUnit.test('VeDigraphDFS', assert => {
     const G = new VeDigraph(13)
     G.addEdge(4, 2)
     G.addEdge(2, 3)
