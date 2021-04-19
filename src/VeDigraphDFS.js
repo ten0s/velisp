@@ -5,7 +5,8 @@ class VeDigraphDFS {
             this._marked[v] = false
         }
         let sources
-        if (Array.isArray(source)) {
+        if (Symbol.iterator in Object(source)) {
+            // Support any iterable
             sources = source
         } else {
             sources = [source]

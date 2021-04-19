@@ -38,9 +38,13 @@ QUnit.test('VeDigraph', assert => {
     assert.notOk(sp0.hasPathTo(7))
     assert.notOk(sp0.hasPathTo(9))
 
-    const s69 = [6, 9]
-    const sp69 = new VeDigraphDFS(G, s69)
+    const sp69 = new VeDigraphDFS(G, [6, 9])
     assert.ok(sp69.hasPathTo(0))
     assert.ok(sp69.hasPathTo(8))
     assert.notOk(sp69.hasPathTo(7))
+
+    const sp699 = new VeDigraphDFS(G, new Set([6, 9, 9]))
+    assert.ok(sp699.hasPathTo(0))
+    assert.ok(sp699.hasPathTo(8))
+    assert.notOk(sp699.hasPathTo(7))
 })
