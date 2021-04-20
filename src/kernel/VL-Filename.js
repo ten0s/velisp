@@ -19,7 +19,7 @@ exports.initContext = (context) => {
 
         // NB: T behaves like nil to not pollute implementation
 
-        if (args.length == 1) {
+        if (args.length === 1) {
             let pattern = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
             if (pattern instanceof Str) {
                 ({dir, name, ext} = path.parse(pattern.value()))
@@ -28,7 +28,7 @@ exports.initContext = (context) => {
                 }
             }
         }
-        if (args.length == 2) {
+        if (args.length === 2) {
             let pattern   = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
             let directory = ensureType('vl-filename-mktemp: `directory`', args[1], [Str, Bool])
             if (pattern instanceof Str) {
@@ -44,7 +44,7 @@ exports.initContext = (context) => {
                 }
             }
         }
-        if (args.length == 3) {
+        if (args.length === 3) {
             let pattern   = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
             let directory = ensureType('vl-filename-mktemp: `directory`', args[1], [Str, Bool])
             let extension = ensureType('vl-filename-mktemp: `extension`', args[2], [Str, Bool])
