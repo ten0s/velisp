@@ -2,7 +2,7 @@ const {VeDigraph} = require('./VeDigraph.js')
 const {VeDigraphDFS} = require('./VeDigraphDFS.js')
 
 // See Algorithms, 4th Edition, 5.4 Regular Expressions for detail
-class VeGlobMatcher {
+class VeGlob {
     constructor(glob) {
         this.glob = Array.from(glob.toLowerCase())
         this.G = this.epsilonTransitionDigraph()
@@ -20,7 +20,8 @@ class VeGlobMatcher {
         return G
     }
 
-    matches(text) {
+    // :: (String) -> Boolean
+    test(text) {
         let states = new Set()
         let dfs = new VeDigraphDFS(this.G, 0)
         for (let v = 0; v < this.G.vertices(); v++) {
@@ -65,4 +66,4 @@ class VeGlobMatcher {
     }
 }
 
-exports.VeGlobMatcher = VeGlobMatcher
+exports.VeGlob = VeGlob
