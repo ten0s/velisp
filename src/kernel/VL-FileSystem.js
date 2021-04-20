@@ -1,7 +1,77 @@
 const fs = require('fs')
+const {VeGlob} = require('../VeGlob.js')
 const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
+    context.setSym('VL-DIRECTORY-FILES', new Fun('vl-directory-files', ['[directory]', '[pattern]', '[what]'], [], (self, args) => {
+        if (args.length > 3) {
+            throw new Error('vl-directory-files: too many arguments')
+        }
+        let directory = process.cwd()
+        let pattern = '*.*'
+        let what = 0
+        if (args.length === 1) {
+            const dir = ensureType('vl-directory-files: `directory`', args[0], [Str, Bool])
+            if (dir instanceof Str) {
+                directory = dir.value()
+            }
+        }
+        if (args.length === 2) {
+            const dir = ensureType('vl-directory-files: `directory`', args[0], [Str, Bool])
+            if (dir instanceof Str) {
+                directory = dir.value()
+            }
+            const pat = ensureType('vl-directory-files: `pattern`', args[1], [Str, Bool])
+            if (pat instanceof Str) {
+                pattern = pat.value()
+            }
+        }
+        if (args.length === 3) {
+            const dir = ensureType('vl-directory-files: `directory`', args[0], [Str, Bool])
+            if (dir instanceof Str) {
+                directory = dir.value()
+            }
+            const pat = ensureType('vl-directory-files: `pattern`', args[1], [Str, Bool])
+            if (pat instanceof Str) {
+                pattern = pat.value()
+            }
+            const typ = ensureType('vl-directory-files: `what`', args[2], [Int, Bool])
+            if (typ instanceof Int) {
+                what = typ.value()
+            }
+        }
+        try {
+            const glob = new VeGlob(pattern)
+            const dirents = [
+                new fs.Dirent('.', fs.constants.UV_DIRENT_DIR),
+                new fs.Dirent('..', fs.constants.UV_DIRENT_DIR)
+            ].concat(fs.readdirSync(directory, {withFileTypes: true}))
+            const names = []
+            for (const dirent of dirents) {
+                const isDir = dirent.isDirectory()
+                const isFile = dirent.isFile()
+                const name = dirent.name
+                const validName = glob.test(name)
+                // Dirs only
+                if (what < 0 && isDir && validName) {
+                    names.push(name)
+                }
+                // Dirs and files
+                if (what === 0 && (isDir || isFile) && validName) {
+                    names.push(name)
+                }
+                // Files only
+                if (what > 0 && isFile && validName) {
+                    names.push(name)
+                }
+            }
+            return new List(names.map(name => new Str(name)))
+        } catch (e) {
+            // TODO: put to *error*?
+            // console.error(e)
+            return new Bool(false)
+        }
+    }))
     context.setSym('VL-FILE-COPY', new Fun('vl-file-copy', ['src-filename', 'dst-filename', '[append]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-file-copy: too few arguments')
