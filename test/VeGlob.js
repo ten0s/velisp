@@ -2,6 +2,13 @@ const QUnit = require('qunit')
 const {VeGlob} = require('../src/VeGlob.js')
 
 QUnit.test('VeGlob', assert => {
+    const glob = new VeGlob('')
+    assert.ok(glob.test(''))
+    assert.notOk(glob.test('a'))
+    assert.notOk(glob.test('A'))
+})
+
+QUnit.test('VeGlob', assert => {
     const glob = new VeGlob('a')
     assert.ok(glob.test('a'))
     assert.ok(glob.test('A'))
