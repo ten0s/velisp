@@ -40,8 +40,8 @@ roll:
 	$(MAKE) readme
 	git add package.json package-lock.json README.md
 	git commit -m "Roll ${VERSION}"
-	echo git tag -a "${VERSION}" -m "Roll ${VERSION}"
-	echo git push origin master --tags
+	git tag "${VERSION}"
+	git push origin master --tags
 
 readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
