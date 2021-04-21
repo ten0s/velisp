@@ -77,20 +77,3 @@ velisp-{{version}}-linux-x64 velisp-{{version}}-macos-x64 velisp-{{version}}-win
 $ ./velisp-{{version}}-linux-x64 examples/fib.lsp
 55
 ```
-
-## Print parse tree
-
-```
-$ npm start -- --run tree
-VeLisp {{version}} on linux
-Type ".help" for more information
->
-> (+ 1 2)
-(file (expr ( (listExpr (expr +)) (listExpr (expr 1)) (listExpr (expr 2)) )))
-```
-
-## Print VeLisp Extension
-
-```
-$ grep -A1 'VeLisp Extension' {lib,src}/**/*
-```
