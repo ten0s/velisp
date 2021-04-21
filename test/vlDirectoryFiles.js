@@ -50,38 +50,38 @@ TestRunner.run({
         {test: '(vl-directory-files "d1" "*")', result: new List([
             new Str('.'), new Str('..'),
             new Str('.f1'), new Str('.f2.conf'),
-            new Str("d2"),
-            new Str("f3"),
+            new Str('d2'),
+            new Str('f3'),
             new Str('f4.txt'),
         ])},
 
         {test: '(vl-directory-files "d1" "??")', result: new List([
             new Str('..'),
-            new Str("d2"),
-            new Str("f3"),
+            new Str('d2'),
+            new Str('f3'),
         ])},
 
         {test: '(vl-directory-files "d1" "*" -1)', result: new List([
             new Str('.'), new Str('..'),
-            new Str("d2"),
+            new Str('d2'),
         ])},
 
         {test: '(vl-directory-files "d1" "*" -1)', result: new List([
             new Str('.'), new Str('..'),
-            new Str("d2"),
+            new Str('d2'),
         ])},
 
         {test: '(vl-directory-files "d1" "*" 0)', result: new List([
             new Str('.'), new Str('..'),
             new Str('.f1'), new Str('.f2.conf'),
-            new Str("d2"),
-            new Str("f3"),
+            new Str('d2'),
+            new Str('f3'),
             new Str('f4.txt'),
         ])},
 
         {test: '(vl-directory-files "d1" "*" 1)', result: new List([
             new Str('.f1'), new Str('.f2.conf'),
-            new Str("f3"),
+            new Str('f3'),
             new Str('f4.txt'),
         ])},
 
