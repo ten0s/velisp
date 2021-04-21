@@ -10,6 +10,24 @@ exports.initContext = (context) => {
         return new Str(process.cwd())
     }))
     // VeLisp Extension
+    context.setSym('CHDIR', new Fun('chdir', ['dirname'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('chdir: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('chdir: too many arguments')
+        }
+        const dirname = ensureType('chdir:', args[0], [Str]).value()
+        try {
+            process.chdir(dirname)
+            return new Str(process.cwd())
+        } catch (e) {
+            // TODO: put to *error*?
+            // console.error(e)
+            return new Bool(false)
+        }
+    }))
+    // VeLisp Extension
     context.setSym('HOMEDIR', new Fun('homedir', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('homedir: too many arguments')
