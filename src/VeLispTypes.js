@@ -706,7 +706,7 @@ class File {
         this.state = FileState.OPEN
     }
 
-    // :: () -> ()
+    // :: (string, string) -> File
     static open(name, mode) {
         switch (name) {
         case FileStream.STDIN:

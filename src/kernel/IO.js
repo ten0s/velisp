@@ -9,7 +9,7 @@ exports.initContext = (context) => {
             throw new Error('prompt: too many arguments')
         }
         const arg = ensureType('prompt:', args[0], [Str])
-        let msg
+        let msg = undefined
         if (arg instanceof Str) {
             msg = arg.toUnescapedString()
         } else {
@@ -27,19 +27,24 @@ exports.initContext = (context) => {
             return new Str('')
         }
         const arg = args[0]
-        let msg
+        let msg = undefined
         if (arg instanceof Str) {
             msg = arg.toString()
         } else {
             msg = arg.toString()
         }
-        let file
+        let file = undefined
+        let close = false
         if (args.length === 1) {
             file = File.open(FileStream.STDOUT, FileMode.WRITE)
+            close = true
         } else {
             file = ensureType('prin1: `file-desc`', args[1], [File])
         }
         file.write(new Str(msg))
+        if (close) {
+            file.close()
+        }
         return arg
     }))
     context.setSym('PRINC', new Fun('princ', ['[expr [file-desc]]'], [], (self, args) => {
@@ -51,19 +56,24 @@ exports.initContext = (context) => {
             return new Str('')
         }
         const arg = args[0]
-        let msg
+        let msg = undefined
         if (arg instanceof Str) {
             msg = arg.toUnescapedString()
         } else {
             msg = arg.toString()
         }
-        let file
+        let file = undefined
+        let close = false
         if (args.length === 1) {
             file = File.open(FileStream.STDOUT, FileMode.WRITE)
+            close = true
         } else {
             file = ensureType('princ: `file-desc`', args[1], [File])
         }
         file.write(new Str(msg))
+        if (close) {
+            file.close()
+        }
         return arg
     }))
     context.setSym('PRINT', new Fun('print', ['[expr [file-desc]]'], [], (self, args) => {
@@ -75,20 +85,25 @@ exports.initContext = (context) => {
             return new Str('')
         }
         const arg = args[0]
-        let msg
+        let msg = undefined
         if (arg instanceof Str) {
             msg = arg.toString()
         } else {
             msg = arg.toString()
         }
-        let file
+        let file = undefined
+        let close = false
         if (args.length === 1) {
             file = File.open(FileStream.STDOUT, FileMode.WRITE)
+            close = true
         } else {
             file = ensureType('print: `file-desc`', args[1], [File])
         }
         const {EOL} = require('os')
         file.write(new Str(EOL).concat(new Str(msg)).concat(new Str(' ')))
+        if (close) {
+            file.close()
+        }
         return arg
     }))
     context.setSym('OPEN', new Fun('open', ['filename', 'mode'], [], (self, args) => {
@@ -153,13 +168,18 @@ exports.initContext = (context) => {
         if (num.value() <= 0 && num.value() > 255) {
             throw new Error('write-char: `num` expected ASCII code')
         }
-        let file = null
+        let file = undefined
+        let close = false
         if (args.length == 1) {
             file = File.open(FileStream.STDOUT, FileMode.WRITE)
+            close = true
         } else {
             file = ensureType('write-char: `file-desc`', args[1], [File])
         }
         file.writeChar(num)
+        if (close) {
+            file.close()
+        }
         return num
     }))
     context.setSym('WRITE-LINE', new Fun('write-line', ['string', ['file-desc']], [], (self, args) => {
@@ -170,13 +190,18 @@ exports.initContext = (context) => {
             throw new Error('write-line: too many arguments')
         }
         const str = ensureType('write-line: `string`', args[0], [Str])
-        let file = null
+        let file = undefined
+        let close = false
         if (args.length == 1) {
             file = File.open(FileStream.STDOUT, FileMode.WRITE)
+            close = true
         } else {
             file = ensureType('write-line: `file-desc`', args[1], [File])
         }
         file.writeLine(str)
+        if (close) {
+            file.close()
+        }
         return str
     }))
 }
