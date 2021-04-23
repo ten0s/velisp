@@ -10,7 +10,7 @@ exports.initContext = (context) => {
             msg = ensureType('getint: `msg`', args[0], [Str]).value()
         }
         let value = undefined
-        while (typeof value === 'undefined') {
+        while (value === undefined) {
             const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
             outFile.write(new Str(msg))
             outFile.close()
@@ -48,7 +48,7 @@ exports.initContext = (context) => {
             msg = ensureType('getreal: `msg`', args[0], [Str]).value()
         }
         let value = undefined
-        while (typeof value === 'undefined') {
+        while (value === undefined) {
             const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
             outFile.write(new Str(msg))
             outFile.close()

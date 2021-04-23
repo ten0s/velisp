@@ -60,7 +60,7 @@ exports.initContext = (context) => {
         }
         const name = ensureType('getenv:', args[0], [Str])
         const value = process.env[name.value()]
-        if (typeof value === 'undefined') {
+        if (value === undefined) {
             return new Bool(false)
         }
         return new Str(value)
