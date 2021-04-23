@@ -43,7 +43,7 @@ exports.initContext = (context) => {
         const arg = ensureType('atoi:', args[0], [Str])
         try {
             const val = Number.parseInt(arg.str)
-            if (Number.isFinite(val)) {
+            if (Number.isInteger(val)) {
                 return new Int(val)
             }
         } catch (e) {}
@@ -58,7 +58,7 @@ exports.initContext = (context) => {
         }
         const arg = ensureType('atof:', args[0], [Str])
         try {
-            const val = parseFloat(arg.str)
+            const val = Number.parseFloat(arg.str)
             if (Number.isFinite(val)) {
                 return new Real(val)
             }

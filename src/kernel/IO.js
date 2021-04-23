@@ -1,6 +1,76 @@
-const {Bool, Int, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
+    context.setSym('GETINT', new Fun('getint', ['[msg]'], [], (self, args) => {
+        if (args.length > 1) {
+            throw new Error('getint: too many arguments')
+        }
+        let msg = ''
+        if (args.length === 1) {
+            msg = ensureType('getint: `msg`', args[0], [Str]).value()
+        }
+        let value = undefined
+        while (typeof value === 'undefined') {
+            const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+            outFile.write(new Str(msg))
+            outFile.close()
+
+            const inFile = File.open(FileStream.STDIN, FileMode.READ)
+            const str = inFile.readLine({eol: ' \r\n', echo: true}).value()
+            inFile.close()
+
+            if (!str) {
+                return new Bool(false)
+            }
+
+            value = Number.parseInt(str)
+            if (!Number.isInteger(value)) {
+                value = undefined
+                const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+                outFile.writeLine(new Str('Requires an integer value'))
+                outFile.close()
+            }
+            if (value < -32768 || value > 32767) {
+                value = undefined
+                const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+                outFile.writeLine(new Str('Requires an integer between -32768 and 32767'))
+                outFile.close()
+            }
+        }
+        return new Int(value)
+    }))
+    context.setSym('GETREAL', new Fun('getreal', ['[msg]'], [], (self, args) => {
+        if (args.length > 1) {
+            throw new Error('getreal: too many arguments')
+        }
+        let msg = ''
+        if (args.length === 1) {
+            msg = ensureType('getreal: `msg`', args[0], [Str]).value()
+        }
+        let value = undefined
+        while (typeof value === 'undefined') {
+            const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+            outFile.write(new Str(msg))
+            outFile.close()
+
+            const inFile = File.open(FileStream.STDIN, FileMode.READ)
+            const str = inFile.readLine({eol: ' \r\n', echo: true}).value()
+            inFile.close()
+
+            if (!str) {
+                return new Bool(false)
+            }
+
+            value = Number.parseFloat(str)
+            if (!Number.isFinite(value)) {
+                value = undefined
+                const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+                outFile.writeLine(new Str('Requires numeric value'))
+                outFile.close()
+            }
+        }
+        return new Real(value)
+    }))
     context.setSym('GETSTRING', new Fun('getstring', ['[cr]', '[msg]'], [], (self, args) => {
         if (args.length > 2) {
             throw new Error('getstring: too many arguments')
@@ -18,14 +88,11 @@ exports.initContext = (context) => {
         outFile.write(new Str(msg))
         outFile.close()
 
-        const inFile  = File.open(FileStream.STDIN, FileMode.READ)
-        const line = inFile.readLine({
-            eol: cr ? '\r\n' : ' \r\n',
-            echo: true,
-        })
+        const inFile = File.open(FileStream.STDIN, FileMode.READ)
+        const str = inFile.readLine({eol: cr ? '\r\n' : ' \r\n', echo: true})
         inFile.close()
 
-        return line
+        return str
     }))
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
         if (args.length === 0) {
