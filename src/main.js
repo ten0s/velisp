@@ -87,6 +87,9 @@ function startRepl(config, action, context) {
         eval: (input, replCtx, filename, callback) => {
             return replEval(repl, input, action, context, callback)
         },
+        completer: (line) => {
+            return replCompleter(repl, line)
+        },
         writer: (output) => {
             return replWriter(repl, output)
         }
@@ -136,6 +139,11 @@ function replEval(repl, input, action, context, callback) {
         }
     }
     callback(null)
+}
+
+function replCompleter(_repl, line) {
+    // TODO
+    return [[], line]
 }
 
 function replWriter(_repl, output) {
