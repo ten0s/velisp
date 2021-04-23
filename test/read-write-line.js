@@ -26,8 +26,9 @@ res
 ]
 
 const errors = [
-    {test: '(read-line)', result:
-     new Error('read-line: too few arguments')},
+    // Disabled since it reads from stdin
+    //{test: '(read-line)', result:
+    // new Error('read-line: too few arguments')},
     {test: '(setq f (open "file.txt" "r")) (read-line f f)', result:
      new Error('read-line: too many arguments')},
     {test: '(read-line 0)', result:

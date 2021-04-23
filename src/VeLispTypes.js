@@ -1,4 +1,6 @@
 const fs = require('fs')
+const os = require('os')
+const {find} = require('./VeUtil.js')
 
 class Bool {
     // :: (bool)
@@ -710,14 +712,19 @@ class File {
     static open(name, mode) {
         switch (name) {
         case FileStream.STDIN:
-            return new File(name, mode, process.stdin.fd)
+            switch (os.platform()) {
+            case 'linux':
+                return new File(name, mode, fs.openSync('/dev/stdin', mode))
+            default:
+                return new File(name, mode, process.stdin.fd)
+            }
+
         case FileStream.STDOUT:
             return new File(name, mode, process.stdout.fd)
         default:
             try {
                 return new File(name, mode, fs.openSync(name, mode))
             } catch (e) {
-                const os = require('os')
                 if (mode === FileMode.READ && e.errno === -os.constants.errno.ENOENT) {
                     return new Bool(false)
                 }
@@ -733,6 +740,14 @@ class File {
         }
         switch (this.name) {
         case FileStream.STDIN:
+            switch (os.platform()) {
+            case 'linux':
+                fs.closeSync(this.fd)
+                break
+            default:
+                break
+            }
+            break
         case FileStream.STDOUT:
             break
         default:
@@ -744,8 +759,8 @@ class File {
         return new Bool(false)
     }
 
-    // :: () -> Int
-    readChar() {
+    // :: ({echo: bool}) -> Int
+    readChar({echo = false} = {}) {
         if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
             throw new Error(`read-char: bad file ${this}`)
         }
@@ -753,6 +768,9 @@ class File {
         const len = fs.readSync(this.fd, buf, 0, 1)
         if (!len) {
             return new Bool(false)
+        }
+        if (echo) {
+            fs.writeSync(process.stdout.fd, buf, 0, 1)
         }
         return new Int(buf[0])
     }
@@ -766,31 +784,42 @@ class File {
         fs.writeSync(this.fd, buf, 0, 1)
     }
 
-    // :: () -> Str
-    readLine() {
+    // :: ({eol: string, echo: bool}) -> Str
+    readLine({eol = '\r\n', echo = false} = {}) {
         if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
             throw new Error(`read-line: bad file ${this}`)
         }
-        const {EOL} = require('os')
-        // Linux  :   '\n'
-        // Windows: '\r\n'
-        const eol = EOL[EOL.length-1].charCodeAt()
+        const stops = Array.from(eol).map(c => c.charCodeAt())
         let str = ''
         const buf = Buffer.alloc(1)
         for (;;) {
             const len = fs.readSync(this.fd, buf, 0, 1)
+            //console.log(buf)
             if (!len) {
                 if (!str) {
                     return new Bool(false)
                 }
                 break
             }
+            if (echo) {
+                fs.writeSync(process.stdout.fd, buf, 0, 1)
+            }
+
             str += buf.toString()
-            if (buf[0] === eol) {
+
+            if (find(buf[0], stops)) {
                 break
             }
         }
-        return new Str(str.replace('\r', '').replace('\n', ''))
+        if (echo) {
+            buf[0] = '\n'.charCodeAt()
+            fs.writeSync(process.stdout.fd, buf, 0, 1)
+        }
+        // Trim end-of-line(s) from right
+        while (str.length > 0 && find(str[str.length-1].charCodeAt(), stops)) {
+            str = str.substr(0, str.length-1)
+        }
+        return new Str(str)
     }
 
     // :: (Str) -> ()

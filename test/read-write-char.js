@@ -30,8 +30,9 @@ res
 ]
 
 const errors = [
-    {test: '(read-char)', result:
-     new Error('read-char: too few arguments')},
+    // Disabled since it reads from stdin
+    //{test: '(read-char)', result:
+    // new Error('read-char: too few arguments')},
     {test: '(setq f (open "file.txt" "r")) (read-char f f)', result:
      new Error('read-char: too many arguments')},
     {test: '(read-char 0)', result:

@@ -136,26 +136,44 @@ exports.initContext = (context) => {
         return file.close()
     }))
     context.setSym('READ-CHAR', new Fun('read-char', ['file-desc'], [], (self, args) => {
-        if (args.length < 1) {
-            throw new Error('read-char: too few arguments')
-        }
         if (args.length > 1) {
             throw new Error('read-char: too many arguments')
         }
-        // TODO: Support stdin
-        const file = ensureType('read-char: `file-desc`', args[0], [File])
-        return file.readChar()
+        let file = undefined
+        let echo = false
+        let close = false
+        if (args.length === 0) {
+            file = File.open(FileStream.STDIN, FileMode.READ)
+            echo = true
+            close = true
+        } else {
+            file = ensureType('read-char: `file-desc`', args[0], [File])
+        }
+        const char = file.readChar({echo})
+        if (close) {
+            file.close()
+        }
+        return char
     }))
     context.setSym('READ-LINE', new Fun('read-line', ['file-desc'], [], (self, args) => {
-        if (args.length < 1) {
-            throw new Error('read-line: too few arguments')
-        }
         if (args.length > 1) {
             throw new Error('read-line: too many arguments')
         }
-        // TODO: Support stdin
-        const file = ensureType('read-line: `file-desc`', args[0], [File])
-        return file.readLine()
+        let file = undefined
+        let echo = false
+        let close = false
+        if (args.length === 0) {
+            file = File.open(FileStream.STDIN, FileMode.READ)
+            echo = true
+            close = true
+        } else {
+            file = ensureType('read-line: `file-desc`', args[0], [File])
+        }
+        const line = file.readLine({echo})
+        if (close) {
+            file.close()
+        }
+        return line
     }))
     context.setSym('WRITE-CHAR', new Fun('write-char', ['num', ['file-desc']], [], (self, args) => {
         if (args.length < 1) {
