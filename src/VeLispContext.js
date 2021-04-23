@@ -56,4 +56,4 @@ class VeLispContext {
     }
 }
 
-exports.VeLispContext = VeLispContext
+module.exports = VeLispContext

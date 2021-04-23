@@ -59,4 +59,4 @@ class VeDigraph {
     }
 }
 
-exports.VeDigraph = VeDigraph
+module.exports = VeDigraph

@@ -36,4 +36,4 @@ class VeStack {
 
 }
 
-exports.VeStack = VeStack
+module.exports = VeStack

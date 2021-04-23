@@ -1,3 +1,4 @@
+// :: (any, [any]) -> bool
 const find = (y, xs) => {
     for (let x of xs) {
         if (y === x) {
@@ -7,4 +8,6 @@ const find = (y, xs) => {
     return false
 }
 
-exports.find = find
+module.exports = {
+    find,
+}

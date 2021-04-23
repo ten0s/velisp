@@ -32,4 +32,4 @@ class VeDigraphDFS {
     }
 }
 
-exports.VeDigraphDFS = VeDigraphDFS
+module.exports = VeDigraphDFS

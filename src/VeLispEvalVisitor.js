@@ -1,6 +1,6 @@
 const {VeLispParser} = require('../grammar/VeLispParser.js')
 const {VeLispVisitor} = require('../grammar/VeLispVisitor.js')
-const {VeLispContext} = require('./VeLispContext.js')
+const VeLispContext = require('./VeLispContext.js')
 const {Bool, Int, Real, Str, Sym, List, Pair, Fun} = require('./VeLispTypes.js')
 
 class VeLispEvalVisitor extends VeLispVisitor {
@@ -341,4 +341,4 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 }
 
-exports.VeLispEvalVisitor = VeLispEvalVisitor
+module.exports = VeLispEvalVisitor

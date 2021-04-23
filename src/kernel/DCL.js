@@ -1,6 +1,6 @@
 const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
-const {VeStack} = require('../VeStack.js')
-const {VeDclContext} = require('../VeDclContext.js')
+const VeStack = require('../VeStack.js')
+const VeDclContext = require('../VeDclContext.js')
 const VeDclLoader = require('../VeDclLoader.js')
 const {ListOperation} = require('../VeDclTiles.js')
 

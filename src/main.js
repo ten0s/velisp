@@ -1,5 +1,5 @@
 const {Command} = require('commander')
-const {VeLispGlobalContext} = require('./VeLispGlobalContext.js')
+const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
 const config = require('../package.json')
 

@@ -33,4 +33,6 @@ function perror(errCode) {
     }
 }
 
-exports.fmtError = fmtError
+module.exports = {
+    fmtError,
+}

@@ -1,5 +1,5 @@
 const {Int, Str} = require('./VeLispTypes.js')
-const {RGB} = require('./VeDclRGB.js')
+const RGB = require('./VeDclRGB.js')
 const Evaluator = require('./VeLispEvaluator.js')
 
 const gi = require('node-gtk')
@@ -2314,9 +2314,6 @@ class Toggle extends Tile {
     }
 }
 
-exports.Dialog = Dialog
-exports.ListOperation = ListOperation
-
 const tileCtors = {
     // Clusters
     'dialog'            : (id) => new Dialog(id),
@@ -2345,10 +2342,16 @@ const tileCtors = {
     'toggle'            : (id) => new Toggle(id),
 }
 
-exports.buildTile = (tileName, tileId) => {
+const buildTile = (tileName, tileId) => {
     const tileCtor = tileCtors[tileName]
     if (!tileCtor) {
         throw new Error(`Unknown tile constructor: ${tileName}`)
     }
     return tileCtor(tileId)
+}
+
+module.exports = {
+    Dialog,
+    ListOperation,
+    buildTile,
 }

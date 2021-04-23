@@ -1,5 +1,5 @@
 const QUnit = require('qunit')
-const {VeDigraph} = require('../src/VeDigraph.js')
+const VeDigraph = require('../src/VeDigraph.js')
 
 QUnit.test('VeDigraph', assert => {
     const G = new VeDigraph(10)

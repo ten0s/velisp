@@ -1,5 +1,5 @@
-const {VeDigraph} = require('./VeDigraph.js')
-const {VeDigraphDFS} = require('./VeDigraphDFS.js')
+const VeDigraph = require('./VeDigraph.js')
+const VeDigraphDFS = require('./VeDigraphDFS.js')
 
 // See Algorithms, 4th Edition, 5.4 Regular Expressions for detail
 class VeGlob {
@@ -66,4 +66,4 @@ class VeGlob {
     }
 }
 
-exports.VeGlob = VeGlob
+module.exports = VeGlob

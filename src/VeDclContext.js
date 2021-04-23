@@ -1,4 +1,4 @@
-const {VeStack} = require('./VeStack.js')
+const VeStack = require('./VeStack.js')
 
 class VeDclContext {
     constructor() {
@@ -8,4 +8,4 @@ class VeDclContext {
     }
 }
 
-exports.VeDclContext = VeDclContext
+module.exports = VeDclContext

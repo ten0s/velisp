@@ -879,15 +879,17 @@ function ensureType(prefix, argValue, argTypes) {
     throw new Error(`${prefix} expected ${typeNames}`)
 }
 
-exports.Bool = Bool
-exports.Int = Int
-exports.Real = Real
-exports.Str = Str
-exports.Sym = Sym
-exports.List = List
-exports.Pair = Pair
-exports.Fun = Fun
-exports.FileStream = FileStream
-exports.FileMode = FileMode
-exports.File = File
-exports.ensureType = ensureType
+module.exports = {
+    Bool,
+    Int,
+    Real,
+    Str,
+    Sym,
+    List,
+    Pair,
+    Fun,
+    FileStream,
+    FileMode,
+    File,
+    ensureType,
+}

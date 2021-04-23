@@ -183,5 +183,7 @@ function parseDcl(dcl) {
     }
 }
 
-exports.load = load
-exports.tree = tree
+module.exports = {
+    load,
+    tree,
+}

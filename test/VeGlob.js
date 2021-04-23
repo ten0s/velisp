@@ -1,5 +1,5 @@
 const QUnit = require('qunit')
-const {VeGlob} = require('../src/VeGlob.js')
+const VeGlob = require('../src/VeGlob.js')
 
 QUnit.test('VeGlob', assert => {
     const glob = new VeGlob('')

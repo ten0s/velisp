@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {VeGlob} = require('../VeGlob.js')
+const VeGlob = require('../VeGlob.js')
 const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {

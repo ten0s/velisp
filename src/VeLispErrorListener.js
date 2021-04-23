@@ -6,4 +6,4 @@ class VeLispErrorListener extends antlr4.error.ErrorListener {
     }
 }
 
-exports.VeLispErrorListener = VeLispErrorListener
+module.exports = VeLispErrorListener
