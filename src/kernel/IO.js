@@ -1,6 +1,32 @@
 const {Bool, Int, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
+    context.setSym('GETSTRING', new Fun('getstring', ['[cr]', '[msg]'], [], (self, args) => {
+        if (args.length > 2) {
+            throw new Error('getstring: too many arguments')
+        }
+        let cr = true
+        let msg = ''
+        if (args.length === 1) {
+            msg = ensureType('getstring: `msg`', args[0], [Str]).value()
+        }
+        if (args.length === 2) {
+            cr = ensureType('getstring: `cr`', args[0], [Bool]).value()
+            msg = ensureType('getstring: `msg`', args[1], [Str]).value()
+        }
+        const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+        outFile.write(new Str(msg))
+        outFile.close()
+
+        const inFile  = File.open(FileStream.STDIN, FileMode.READ)
+        const line = inFile.readLine({
+            eol: cr ? '\r\n' : ' \r\n',
+            echo: true,
+        })
+        inFile.close()
+
+        return line
+    }))
     context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('prompt: too few arguments')
