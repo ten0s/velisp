@@ -801,19 +801,17 @@ class File {
                 }
                 break
             }
-            if (echo) {
-                fs.writeSync(process.stdout.fd, buf, 0, 1)
-            }
-
             str += buf.toString()
 
             if (find(buf[0], stops)) {
                 break
             }
+            if (echo) {
+                fs.writeSync(process.stdout.fd, buf, 0, 1)
+            }
         }
         if (echo) {
-            buf[0] = '\n'.charCodeAt()
-            fs.writeSync(process.stdout.fd, buf, 0, 1)
+            fs.writeSync(process.stdout.fd, '\n')
         }
         // Trim end-of-line(s) from right
         while (str.length > 0 && find(str[str.length-1].charCodeAt(), stops)) {
