@@ -87,4 +87,28 @@ exports.initContext = (context) => {
         process.env[name.value()] = value.value()
         return value
     }))
+    context.setSym('STARTAPP', new Fun('startapp', ['cmd', '[file]'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('startapp: too few arguments')
+        }
+        if (args.length > 2) {
+            throw new Error('startapp: too many arguments')
+        }
+        const cmd = ensureType('startapp: `cmd`', args[0], [Str]).value()
+        let file = undefined
+        if (args.length === 2) {
+            file = ensureType('startapp: `file`', args[1], [Str]).value()
+        }
+        const {spawn} = require('child_process')
+        const child = spawn(cmd, file ? [file] : [], {
+            detached: true,
+            stdio: 'ignore',
+            windowsHide: true,
+        }).on('error', () => {})
+        child.unref()
+        if (child.pid) {
+            return new Int(child.pid)
+        }
+        return new Bool(false)
+    }))
 }
