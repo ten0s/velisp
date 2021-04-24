@@ -44,7 +44,7 @@ const isRecoverableInput = (s) => {
             }
             break
         default:
-            break;
+            break
         }
     }
     if (stack.isEmpty()) {
