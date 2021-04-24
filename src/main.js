@@ -84,6 +84,7 @@ function startRepl(config, action, context) {
     const repl = require('repl')
     const replServer = repl.start({
         prompt: '> ',
+        useGlobal: true,
         eval: (input, replCtx, filename, callback) => {
             return replEval(repl, input, action, context, callback)
         },
