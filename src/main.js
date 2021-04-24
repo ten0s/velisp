@@ -82,10 +82,30 @@ function readStream(stream, action, context) {
 function startRepl(config, action, context) {
     console.log(`${config.name} ${config.version} on ${process.platform}`)
     console.log('Type ".help" for more information')
+
+    let historyFile = process.env['VELISP_REPL_HISTORY']
+    if (historyFile !== '') { // Is enabled?
+        if (historyFile === undefined) {
+            historyFile = path.join(os.homedir(), '.velisp_repl_history')
+        }
+    }
+    const HISTORY_SIZE = 1000
+    let historySize = process.env['VELISP_REPL_HISTORY_SIZE']
+    if (!historySize) {
+        historySize = HISTORY_SIZE
+    } else {
+        historySize = Number.parseInt(historySize)
+        if (!Number.isInteger(historySize) || historySize <= 0) {
+            console.error(`Error: VELISP_REPL_HISTORY_SIZE is invalid. Use ${HISTORY_SIZE}`)
+            historySize = HISTORY_SIZE
+        }
+    }
+
     const repl = require('repl')
     const replServer = repl.start({
         prompt: '> ',
         useGlobal: true,
+        historySize: historySize,
         eval: (input, replCtx, filename, callback) => {
             return replEval(repl, input, action, context, callback)
         },
@@ -121,12 +141,8 @@ function startRepl(config, action, context) {
                 this.displayPrompt()
             }
         })
-        let replHistory = process.env['VELISP_REPL_HISTORY']
-        if (replHistory !== '') { // Is disable?
-            if (replHistory === undefined) { // Is defined?
-                replHistory = path.join(os.homedir(), '.velisp_repl_history')
-            }
-            replServer.setupHistory(replHistory, (err, _repl) => {
+        if (historyFile !== '') { // Is enabled?
+            replServer.setupHistory(historyFile, (err, _repl) => {
                 if (err) {
                     console.log(err)
                 }
