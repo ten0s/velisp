@@ -1,3 +1,5 @@
+const os = require('os')
+const path = require('path')
 const {Command} = require('commander')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
@@ -50,7 +52,6 @@ function runAction(what, isREPL) {
 
 function maybeInjectLib(action, context) {
     if (action === evaluate) {
-        const path = require('path')
         let rootdir = path.join(__dirname, '..')
         // Win32 workaround
         rootdir = rootdir.split('\\').join('/')
@@ -120,6 +121,17 @@ function startRepl(config, action, context) {
                 this.displayPrompt()
             }
         })
+        let replHistory = process.env['VELISP_REPL_HISTORY']
+        if (replHistory !== '') { // Is disable?
+            if (replHistory === undefined) { // Is defined?
+                replHistory = path.join(os.homedir(), '.velisp_repl_history')
+            }
+            replServer.setupHistory(replHistory, (err, _repl) => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        }
     }
 }
 
