@@ -151,7 +151,7 @@ function replWriter(_repl, output) {
     return output
 }
 
-function isRecoverable(_input, _error) {
-    // TODO
-    return false
+function isRecoverable(input, _error) {
+    const {isRecoverableInput} = require('./VeUtil.js')
+    return isRecoverableInput(input)
 }
