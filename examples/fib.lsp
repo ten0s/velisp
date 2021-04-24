@@ -1,8 +1,8 @@
-(defun fib (n)
-  (defun fib-iter (a b counter)
+(defun fib (n / iter)
+  (defun iter (a b counter)
     (if (= counter 0)
       a
-      (fib-iter b (+ a b) (- counter 1))))
-  (fib-iter 0 1 n))
+      (iter b (+ a b) (- counter 1))))
+  (iter 0 1 n))
 
 (princ (fib 10))
