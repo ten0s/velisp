@@ -110,7 +110,7 @@ function startRepl(config, action, context) {
             return replEval(repl, input, action, context, callback)
         },
         completer: (line) => {
-            return replCompleter(repl, line)
+            return replCompleter(repl, line, context)
         },
         writer: (output) => {
             return replWriter(repl, output)
@@ -170,9 +170,15 @@ function replEval(repl, input, action, context, callback) {
     callback(null)
 }
 
-function replCompleter(_repl, line) {
-    // TODO
-    return [[], line]
+function replCompleter(_repl, line, context) {
+    const symbols = Object.keys(context.symbols).map(s => s.toLowerCase())
+    const tokens = line.split(' ')
+    if (tokens.length) {
+        const last = tokens[tokens.length-1].replace('(', '')
+        const hits = symbols.filter(c => c.startsWith(last))
+        return [hits.length ? hits : symbols, last]
+    }
+    return [symbols, line]
 }
 
 function replWriter(_repl, output) {
