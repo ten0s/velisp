@@ -171,14 +171,20 @@ function replEval(repl, input, action, context, callback) {
 }
 
 function replCompleter(_repl, line, context) {
+    const forms = [
+        'and', 'cond', 'defun', 'foreach', 'if',
+        'lambda', 'or', 'progn', 'quote', 'repeat',
+        'setq', 'while', 'list', 'nil'
+    ]
     const symbols = Object.keys(context.symbols).map(s => s.toLowerCase())
+    const completions = forms.concat(symbols)
     const tokens = line.split(' ')
     if (tokens.length) {
         const last = tokens[tokens.length-1].replace('(', '')
-        const hits = symbols.filter(c => c.startsWith(last))
-        return [hits.length ? hits : symbols, last]
+        const hits = completions.filter(c => c.startsWith(last))
+        return [hits.length ? hits : completions, last]
     }
-    return [symbols, line]
+    return [completions, line]
 }
 
 function replWriter(_repl, output) {
