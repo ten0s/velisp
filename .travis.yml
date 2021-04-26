@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - 12
 before_install:
-    sudo apt-get install expect gobject-introspection libgirepository1.0-dev libcairo2 libcairo2-dev libgtk-3-dev libgtk-3.0 xvfb
+    sudo apt-get install expect gobject-introspection libgirepository1.0-dev libcairo2 libcairo2-dev libgtk-3-dev libgtk-3.0 xvfb at-spi2-core
 install:
     make install
 script:
