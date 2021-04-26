@@ -1,0 +1,43 @@
+#!/usr/bin/expect -f
+
+exp_internal 1
+
+spawn node src/main.js test/getreal.lsp
+
+set timeout 5
+
+expect "^Test #1\r\n"
+expect "^Press return: "
+send "\r"
+expect {
+    "^\r\n<|nil|>" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #2\r\n"
+expect "^Enter real: "
+send "abcd\r"
+expect {
+    "^abcd\r\nRequires numeric value\r\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Enter real: "
+send "123\r"
+expect {
+    "^123\r\n<|123.0|>" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #3\r\n"
+send "456.7\r"
+expect {
+    "^456.7\r\n<|456.7|>" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+exit 0

@@ -19,9 +19,16 @@ run:
 tree:
 	node src/main.js --run tree
 
-test:
+test: qunit vl-unit expect-test
+
+qunit:
 	npx qunit
+
+vl-unit:
 	node src/main.js lib/test.lsp
+
+expect-test:
+	test/expect-test.sh
 
 lint:
 	npx eslint {src,test}/{*,*/*}.js

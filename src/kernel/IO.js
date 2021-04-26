@@ -1,3 +1,4 @@
+const VeInfo = require('../VeInfo.js')
 const {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
@@ -16,7 +17,7 @@ exports.initContext = (context) => {
             outFile.close()
 
             const inFile = File.open(FileStream.STDIN, FileMode.READ)
-            const str = inFile.readLine({eol: ' \r\n', echo: true}).value()
+            const str = inFile.readLine({eol: ' \r\n', echo: VeInfo.isRepl}).value()
             inFile.close()
 
             if (!str) {
@@ -54,7 +55,7 @@ exports.initContext = (context) => {
             outFile.close()
 
             const inFile = File.open(FileStream.STDIN, FileMode.READ)
-            const str = inFile.readLine({eol: ' \r\n', echo: true}).value()
+            const str = inFile.readLine({eol: ' \r\n', echo: VeInfo.isRepl}).value()
             inFile.close()
 
             if (!str) {
@@ -89,7 +90,7 @@ exports.initContext = (context) => {
         outFile.close()
 
         const inFile = File.open(FileStream.STDIN, FileMode.READ)
-        const str = inFile.readLine({eol: cr ? '\r\n' : ' \r\n', echo: true})
+        const str = inFile.readLine({eol: cr ? '\r\n' : ' \r\n', echo: VeInfo.isRepl})
         inFile.close()
 
         return str
@@ -237,7 +238,7 @@ exports.initContext = (context) => {
         let close = false
         if (args.length === 0) {
             file = File.open(FileStream.STDIN, FileMode.READ)
-            echo = true
+            echo = VeInfo.isRepl
             close = true
         } else {
             file = ensureType('read-char: `file-desc`', args[0], [File])
@@ -257,7 +258,7 @@ exports.initContext = (context) => {
         let close = false
         if (args.length === 0) {
             file = File.open(FileStream.STDIN, FileMode.READ)
-            echo = true
+            echo = VeInfo.isRepl
             close = true
         } else {
             file = ensureType('read-line: `file-desc`', args[0], [File])

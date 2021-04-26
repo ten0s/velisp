@@ -1,6 +1,8 @@
+const fs = require('fs')
 const os = require('os')
 const path = require('path')
 const {Command} = require('commander')
+const VeInfo = require('./VeInfo.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
 const config = require('../package.json')
@@ -18,10 +20,10 @@ function main() {
             maybeInjectLib(action, context)
             if (file) {
                 //console.log(`Read from ${file}`);
-                const fs = require('fs')
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
+                VeInfo.isRepl = true
                 startRepl(config, action, context)
             } else {
                 //console.log('Read from stdin');
@@ -31,13 +33,13 @@ function main() {
         .parse(process.argv)
 }
 
-function runAction(what, isREPL) {
+function runAction(what, isRepl) {
     switch (what.toLowerCase()) {
     case 'eval':
         return evaluate
     case 'tree':
-        // REPL prints itself
-        if (isREPL) {
+        // Repl prints itself
+        if (isRepl) {
             return tree
         }
         // Let's print for others

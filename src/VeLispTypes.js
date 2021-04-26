@@ -834,8 +834,8 @@ class File {
         if (this.state === FileState.CLOSED || this.mode === FileMode.READ) {
             throw new Error(`write-line: bad file ${this}`)
         }
-        const {EOL} = require('os')
-        this.write(str.concat(new Str(EOL)))
+        this.write(str)
+        this.write(new Str(os.EOL))
     }
 
     // :: () -> Sym
