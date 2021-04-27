@@ -1,6 +1,8 @@
 exp_internal 1
 
-# Behave like in bash: don't replace \n with \r\n and don't echo
+# Don't replace \n with \r\n and don't echo
+# Behaves like:
+# $ node src/main.js test/read-line.lsp | xxd
 set stty_init "raw -echo"
 
 spawn node src/main.js test/read-line.lsp
