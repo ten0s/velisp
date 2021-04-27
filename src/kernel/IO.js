@@ -114,14 +114,12 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('prompt: too many arguments')
         }
-        const arg = ensureType('prompt:', args[0], [Str])
-        let msg = undefined
-        if (arg instanceof Str) {
-            msg = arg.toUnescapedString()
-        } else {
-            msg = arg.toString()
+        const msg = ensureType('prompt:', args[0], [Str]).toUnescapedString()
+        if (msg) {
+            const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+            outFile.write(new Str(msg))
+            outFile.close()
         }
-        console.log(msg)
         return new Bool(false)
     }))
     context.setSym('PRIN1', new Fun('prin1', ['[expr [file-desc]]'], [], (self, args) => {

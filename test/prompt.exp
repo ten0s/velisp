@@ -1,0 +1,38 @@
+exp_internal 1
+
+# Behave like in bash: don't replace \n with \r\n and don't echo
+set stty_init "raw -echo"
+
+spawn node src/main.js test/prompt.lsp
+
+set timeout 5
+
+expect "^Test #1\n"
+expect {
+    "^" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #2\n"
+expect {
+    "^\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #3\n"
+expect {
+    "^Hello: " {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #4\n"
+expect {
+    "^Hello: \n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+exit 0
