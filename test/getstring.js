@@ -4,6 +4,7 @@ TestRunner.run({
     name: 'getstring',
 
     tests: [
+        // See getstring.{exp,lsp}
     ],
 
     errors: [

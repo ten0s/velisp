@@ -1,0 +1,62 @@
+exp_internal 1
+
+# Behave like in bash: don't replace \n with \r\n and don't echo
+set stty_init "raw -echo"
+
+spawn node src/main.js test/getstring.lsp
+
+set timeout 5
+
+expect "^Test #1\n"
+send "\r"
+expect {
+    "^<||>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #2\n"
+send " \r"
+# Reads both SP and CR
+expect {
+    "^<||>\n<||>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #3\n"
+send "abc def\r"
+expect {
+    "^<|abc|>\n<|def|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #4\n"
+expect "^SP and CR: "
+send "abc def\r"
+expect {
+    "^<|abc|>\n<|def|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #5\n"
+expect "^SP and CR: "
+send "abc def\r"
+expect {
+    "^<|abc|>\n<|def|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #6\n"
+expect "^CR: "
+send "abc def\r"
+expect {
+    "^<|abc def|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+exit 0

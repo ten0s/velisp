@@ -80,18 +80,26 @@ exports.initContext = (context) => {
         if (args.length > 2) {
             throw new Error('getstring: too many arguments')
         }
-        let cr = true
+        let cr = false
         let msg = ''
         if (args.length === 1) {
-            msg = ensureType('getstring: `msg`', args[0], [Str]).value()
+            const arg = args[0]
+            if (arg instanceof Bool) {
+                cr = arg.value()
+            } else {
+                msg = ensureType('getstring: `msg`', arg, [Str]).value()
+            }
         }
         if (args.length === 2) {
             cr = ensureType('getstring: `cr`', args[0], [Bool]).value()
             msg = ensureType('getstring: `msg`', args[1], [Str]).value()
         }
-        const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
-        outFile.write(new Str(msg))
-        outFile.close()
+
+        if (msg) {
+            const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+            outFile.write(new Str(msg))
+            outFile.close()
+        }
 
         const inFile = File.open(FileStream.STDIN, FileMode.READ)
         const str = inFile.readLine({eol: cr ? '\r\n' : ' \r\n', echo: VeInfo.isRepl})
