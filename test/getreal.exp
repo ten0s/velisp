@@ -1,5 +1,3 @@
-#!/usr/bin/expect -f
-
 exp_internal 1
 
 spawn node src/main.js test/getreal.lsp

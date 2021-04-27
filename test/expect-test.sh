@@ -3,15 +3,13 @@
 dir=$(dirname $0)
 
 for test in `ls ${dir}/*.exp`; do
-	if [[ -x $test ]]; then
-        echo
-        echo "----------------------"
-        echo "Running ${test}"
-        echo "----------------------"
-        $test
-        echo
-        echo "----------------------"
-        echo "Success"
-        echo "----------------------"
-    fi
+    echo
+    echo "----------------------"
+    echo "Running ${test}"
+    echo "----------------------"
+    expect $test
+    echo
+    echo "----------------------"
+    echo "Success"
+    echo "----------------------"
 done

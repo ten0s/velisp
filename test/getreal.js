@@ -4,6 +4,7 @@ TestRunner.run({
     name: 'getreal',
 
     tests: [
+        // See getreal.{exp,lsp}
     ],
 
     errors: [

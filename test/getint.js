@@ -4,6 +4,7 @@ TestRunner.run({
     name: 'getint',
 
     tests: [
+        // See getint.{exp,lsp}
     ],
 
     errors: [

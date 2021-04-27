@@ -19,7 +19,7 @@ run:
 tree:
 	node src/main.js --run tree
 
-test: qunit vl-unit expect-test
+test: qunit expect-test vl-unit
 
 qunit:
 	npx qunit
