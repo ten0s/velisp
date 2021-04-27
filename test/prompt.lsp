@@ -9,3 +9,6 @@
 
 (princ "Test #4\n")
 (prompt "Hello: \n")
+
+(princ "Test #5\n")
+(prompt "<| \" \r \n \t |>")

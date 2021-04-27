@@ -37,4 +37,11 @@ expect {
     eof {exit 2}
 }
 
+expect "^Test #5\n"
+expect {
+    "^<| \" \r \n \t |>" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
 exit 0
