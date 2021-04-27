@@ -12,9 +12,11 @@ exports.initContext = (context) => {
         }
         let value = undefined
         while (value === undefined) {
-            const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
-            outFile.write(new Str(msg))
-            outFile.close()
+            if (msg) {
+                const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+                outFile.write(new Str(msg))
+                outFile.close()
+            }
 
             const inFile = File.open(FileStream.STDIN, FileMode.READ)
             const str = inFile.readLine({eol: ' \r\n', echo: VeInfo.isRepl}).value()
@@ -50,9 +52,11 @@ exports.initContext = (context) => {
         }
         let value = undefined
         while (value === undefined) {
-            const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
-            outFile.write(new Str(msg))
-            outFile.close()
+            if (msg) {
+                const outFile = File.open(FileStream.STDOUT, FileMode.WRITE)
+                outFile.write(new Str(msg))
+                outFile.close()
+            }
 
             const inFile = File.open(FileStream.STDIN, FileMode.READ)
             const str = inFile.readLine({eol: ' \r\n', echo: VeInfo.isRepl}).value()

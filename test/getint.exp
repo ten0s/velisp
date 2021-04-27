@@ -1,23 +1,26 @@
 exp_internal 1
 
+# Behave like in bash: don't replace \n with \r\n and don't echo
+set stty_init "raw -echo"
+
 spawn node src/main.js test/getint.lsp
 
 set timeout 5
 
-expect "^Test #1\r\n"
+expect "^Test #1\n"
 expect "^Press return: "
 send "\r"
 expect {
-    "^\r\n<|nil|>" {}
+    "^<|nil|>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }
 
-expect "^Test #2\r\n"
+expect "^Test #2\n"
 expect "^Enter int: "
 send "abcd\r"
 expect {
-    "^abcd\r\nRequires an integer value\r\n" {}
+    "^Requires an integer value\n" {}
     timeout {exit 1}
     eof {exit 2}
 }
@@ -25,15 +28,15 @@ expect {
 expect "^Enter int: "
 send "123\r"
 expect {
-    "^123\r\n<|123|>" {}
+    "^<|123|>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }
 
-expect "^Test #3\r\n"
+expect "^Test #3\n"
 send "456\r"
 expect {
-    "^456\r\n<|456|>" {}
+    "^<|456|>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }

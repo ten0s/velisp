@@ -1,19 +1,27 @@
 exp_internal 1
 
+# Behave like in bash: don't replace \n with \r\n and don't echo
+set stty_init "raw -echo"
+
 spawn node src/main.js test/read-line.lsp
 
 set timeout 5
 
 send "Line 1\r"
 expect {
-    "^Line 1\r\n<|Line 1|>$" {}
+    "^<|Line 1|>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }
 
 send "Line 2\rLine 3\r"
 expect {
-    "^Line 2\r\nLine 3\r\n<|Line 2|><|Line 3|>$" {}
+    "^<|Line 2|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+expect {
+    "^<|Line 3|>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }
