@@ -45,7 +45,7 @@ QUnit.test('types', assert => {
 
     assert.equal((new Sym('foo')).toString(), 'FOO')
 
-    assert.equal((new List([])).toString(), '()')
+    assert.equal((new List([])).toString(), 'nil')
     assert.equal(
         (new List([new Int(1), new Real(1.0), new Str('2.0')])).toString(),
         '(1 1.0 "2.0")'

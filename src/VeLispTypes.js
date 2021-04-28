@@ -2,6 +2,9 @@ const fs = require('fs')
 const os = require('os')
 const {find, escape, unescape} = require('./VeUtil.js')
 
+const TRU = 'T'
+const NIL = 'nil'
+
 class Bool {
     // :: (bool)
     constructor(bool) {
@@ -70,7 +73,7 @@ class Bool {
 
     // :: () -> string
     toString() {
-        return this.bool ? 'T' : 'nil'
+        return this.bool ? TRU : NIL
     }
 }
 
@@ -557,6 +560,9 @@ class List {
 
     // :: () -> string
     toString() {
+        if (this.isNil()) {
+            return NIL
+        }
         const arr = this.arr.map(item => item.toString(true))
         return `(${arr.join(' ')})`
     }
