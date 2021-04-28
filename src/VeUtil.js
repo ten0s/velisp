@@ -10,6 +10,30 @@ const find = (y, xs) => {
     return false
 }
 
+// :: (string) -> string
+const escape = (s) => {
+    // TODO: FIXME
+    // Poor man's replaceAll
+    return s
+        .split('\\').join('\\\\')
+        .split('"').join('\\"')
+        //.split('\\r').join('\\\\r')
+        //.split('\\n').join('\\\\n')
+        //.split('\\t').join('\\\\t')
+}
+
+// :: (string) -> string
+const unescape = (s) => {
+    // TODO: FIXME
+    // Poor man's replaceAll
+    return s
+        .split('\\"').join('"')
+        .split('\\\\').join('\\')
+        .split('\\r').join('\r')
+        .split('\\n').join('\n')
+        .split('\\t').join('\t')
+}
+
 // :: (string) -> bool
 // Determine if the given string is recoverable by adding
 // one or more right parentheses.
@@ -60,5 +84,7 @@ const isRecoverableInput = (s) => {
 
 module.exports = {
     find,
+    escape,
+    unescape,
     isRecoverableInput,
 }

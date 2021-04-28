@@ -1,6 +1,6 @@
 const fs = require('fs')
 const os = require('os')
-const {find} = require('./VeUtil.js')
+const {find, escape, unescape} = require('./VeUtil.js')
 
 class Bool {
     // :: (bool)
@@ -422,26 +422,12 @@ class Str {
 
     // :: () -> string
     toUnescapedString()  {
-        // TODO: FIXME
-        // Poor man's replaceAll
-        return this.str
-            .split('\\"').join('"')
-            .split('\\\\').join('\\')
-            .split('\\r').join('\r')
-            .split('\\n').join('\n')
-            .split('\\t').join('\t')
+        return unescape(this.str)
     }
 
     // :: () -> string
     toEscapedString()  {
-        // TODO: FIXME
-        // Poor man's replaceAll
-        const str = this.str
-            .split('\\').join('\\\\')
-            .split('"').join('\\"')
-            //.split('\\r').join('\\\\r')
-            //.split('\\n').join('\\\\n')
-            //.split('\\t').join('\\\\t')
+        const str = escape(this.str)
         return `\\"${str}\\"`
     }
 

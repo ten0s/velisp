@@ -1,11 +1,36 @@
 const QUnit = require('qunit')
-const {find, isRecoverableInput} = require('../src/VeUtil.js')
+const {
+    find,
+    escape,
+    unescape,
+    isRecoverableInput,
+} = require('../src/VeUtil.js')
 
 QUnit.test('VeUtil find', assert => {
     assert.ok(find(1, [1, 2, 3]))
     assert.ok(find(2, [1, 2, 3]))
     assert.ok(find(3, [1, 2, 3]))
     assert.notOk(find(0, [1, 2, 3]))
+})
+
+QUnit.test('VeUtil escape', assert => {
+    assert.equal(escape(''), '')
+    assert.equal(escape('\\'), '\\\\')
+    assert.equal(escape('\"'), '\\"')
+    assert.equal(escape('\\r'), '\\\\r')
+    assert.equal(escape('\\n'), '\\\\n')
+    assert.equal(escape('\\t'), '\\\\t')
+    assert.equal(escape(' \\ \" \\r \\n \\t '), ' \\\\ \\" \\\\r \\\\n \\\\t ')
+})
+
+QUnit.test('VeUtil unescape', assert => {
+    assert.equal(unescape(''), '')
+    assert.equal(unescape('\\\\'), '\\')
+    assert.equal(unescape('\\"'), '\"')
+    assert.equal(unescape('\\\\r'), '\r')
+    assert.equal(unescape('\\\\n'), '\n')
+    assert.equal(unescape('\\\\t'), '\t')
+    assert.equal(unescape(' \\\\ \\" \\\\r \\\\n \\\\t '), ' \\ \" \r \n \t ')
 })
 
 QUnit.test('VeUtil isRecoverableInput', assert => {
