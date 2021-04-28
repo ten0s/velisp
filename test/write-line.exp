@@ -1,0 +1,30 @@
+exp_internal 1
+
+# Don't replace \n with \r\n and don't echo
+# Behaves like:
+# $ node src/main.js test/write-line.lsp | xxd
+set stty_init "raw -echo"
+
+spawn node src/main.js test/write-line.lsp
+
+set timeout 5
+
+expect {
+    "^<|Line 1|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect {
+    "^<|Line 2|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect {
+    "^<|Line 3|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+exit 0
