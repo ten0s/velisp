@@ -1,4 +1,4 @@
-const VeInfo = require('../VeInfo.js')
+const VeSysInfo = require('../VeSysInfo.js')
 const {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
@@ -19,7 +19,7 @@ exports.initContext = (context) => {
             }
 
             const inFile = File.open(FileStream.STDIN, FileMode.READ)
-            const str = inFile.readLine({eol: ' \r\n', echo: VeInfo.isRepl}).value()
+            const str = inFile.readLine({eol: ' \r\n', echo: VeSysInfo.isRepl}).value()
             inFile.close()
 
             if (!str) {
@@ -59,7 +59,7 @@ exports.initContext = (context) => {
             }
 
             const inFile = File.open(FileStream.STDIN, FileMode.READ)
-            const str = inFile.readLine({eol: ' \r\n', echo: VeInfo.isRepl}).value()
+            const str = inFile.readLine({eol: ' \r\n', echo: VeSysInfo.isRepl}).value()
             inFile.close()
 
             if (!str) {
@@ -102,7 +102,7 @@ exports.initContext = (context) => {
         }
 
         const inFile = File.open(FileStream.STDIN, FileMode.READ)
-        const str = inFile.readLine({eol: cr ? '\r\n' : ' \r\n', echo: VeInfo.isRepl})
+        const str = inFile.readLine({eol: cr ? '\r\n' : ' \r\n', echo: VeSysInfo.isRepl})
         inFile.close()
 
         return str
@@ -248,7 +248,7 @@ exports.initContext = (context) => {
         let close = false
         if (args.length === 0) {
             file = File.open(FileStream.STDIN, FileMode.READ)
-            echo = VeInfo.isRepl
+            echo = VeSysInfo.isRepl
             close = true
         } else {
             file = ensureType('read-char: `file-desc`', args[0], [File])
@@ -268,7 +268,7 @@ exports.initContext = (context) => {
         let close = false
         if (args.length === 0) {
             file = File.open(FileStream.STDIN, FileMode.READ)
-            echo = VeInfo.isRepl
+            echo = VeSysInfo.isRepl
             close = true
         } else {
             file = ensureType('read-line: `file-desc`', args[0], [File])

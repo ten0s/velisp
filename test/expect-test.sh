@@ -2,7 +2,7 @@
 
 dir=$(dirname $0)
 
-for test in `ls ${dir}/*.exp`; do
+for test in ${dir}/*.exp; do
     echo
     echo "----------------------"
     echo "Running ${test}"

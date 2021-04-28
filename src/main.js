@@ -2,7 +2,7 @@ const fs = require('fs')
 const os = require('os')
 const path = require('path')
 const {Command} = require('commander')
-const VeInfo = require('./VeInfo.js')
+const VeSysInfo = require('./VeSysInfo.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
 const config = require('../package.json')
@@ -23,7 +23,7 @@ function main() {
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
-                VeInfo.isRepl = true
+                VeSysInfo.isRepl = true
                 startRepl(config, action, context)
             } else {
                 //console.log('Read from stdin');
