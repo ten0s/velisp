@@ -16,21 +16,21 @@ QUnit.test('VeUtil find', assert => {
 QUnit.test('VeUtil escape', assert => {
     assert.equal(escape(''), '')
     assert.equal(escape('\\'), '\\\\')
-    assert.equal(escape('\"'), '\\"')
+    assert.equal(escape('"'), '\\"')
     assert.equal(escape('\\r'), '\\\\r')
     assert.equal(escape('\\n'), '\\\\n')
     assert.equal(escape('\\t'), '\\\\t')
-    assert.equal(escape(' \\ \" \\r \\n \\t '), ' \\\\ \\" \\\\r \\\\n \\\\t ')
+    assert.equal(escape(' \\ " \\r \\n \\t '), ' \\\\ \\" \\\\r \\\\n \\\\t ')
 })
 
 QUnit.test('VeUtil unescape', assert => {
     assert.equal(unescape(''), '')
     assert.equal(unescape('\\\\'), '\\')
-    assert.equal(unescape('\\"'), '\"')
+    assert.equal(unescape('\\"'), '"')
     assert.equal(unescape('\\\\r'), '\r')
     assert.equal(unescape('\\\\n'), '\n')
     assert.equal(unescape('\\\\t'), '\t')
-    assert.equal(unescape(' \\\\ \\" \\\\r \\\\n \\\\t '), ' \\ \" \r \n \t ')
+    assert.equal(unescape(' \\\\ \\" \\\\r \\\\n \\\\t '), ' \\ " \r \n \t ')
 })
 
 QUnit.test('VeUtil isRecoverableInput', assert => {
