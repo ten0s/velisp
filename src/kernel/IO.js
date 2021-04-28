@@ -179,31 +179,33 @@ exports.initContext = (context) => {
         if (args.length > 2) {
             throw new Error('print: too many arguments')
         }
-        if (args.length === 0) {
-            // TODO: should return some null symbol
-            return new Str('')
-        }
-        const arg = args[0]
-        let msg = undefined
-        if (arg instanceof Str) {
-            msg = arg.toString()
-        } else {
-            msg = arg.toString()
-        }
+        let arg0 = undefined
         let file = undefined
         let close = false
-        if (args.length === 1) {
+        if (args.length === 0) {
+            // TODO: should return some null symbol
+            arg0 = new Str('')
             file = File.open(FileStream.STDOUT, FileMode.WRITE)
             close = true
-        } else {
+        }
+        if (args.length === 1) {
+            arg0 = args[0]
+            file = File.open(FileStream.STDOUT, FileMode.WRITE)
+            close = true
+        }
+        if (args.length === 2) {
+            arg0 = args[0]
             file = ensureType('print: `file-desc`', args[1], [File])
         }
+        const msg = arg0.toString()
         const {EOL} = require('os')
-        file.write(new Str(EOL).concat(new Str(msg)).concat(new Str(' ')))
+        file.write(new Str(EOL))
+        file.write(new Str(msg))
+        file.write(new Str(' '))
         if (close) {
             file.close()
         }
-        return arg
+        return arg0
     }))
     context.setSym('OPEN', new Fun('open', ['filename', 'mode'], [], (self, args) => {
         if (args.length < 2) {
