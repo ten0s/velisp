@@ -131,12 +131,7 @@ exports.initContext = (context) => {
             return new Str('')
         }
         const arg = args[0]
-        let msg = undefined
-        if (arg instanceof Str) {
-            msg = arg.toString()
-        } else {
-            msg = arg.toString()
-        }
+        const msg = arg.toString()
         let file = undefined
         let close = false
         if (args.length === 1) {
