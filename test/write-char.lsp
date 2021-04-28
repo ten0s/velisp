@@ -1,0 +1,7 @@
+(princ "Test #1\n")
+(write-char (ascii "H"))
+(write-char (ascii "e"))
+(write-char (ascii "l"))
+(write-char (ascii "l"))
+(write-char (ascii "o"))
+(write-char 10) ; TODO: (ascii "\n")

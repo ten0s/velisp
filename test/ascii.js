@@ -6,6 +6,7 @@ const tests = [
     {test: '(ascii "A")', result: new Int(65)},
     {test: '(ascii "a")', result: new Int(97)},
     {test: '(ascii "BIG")', result: new Int(66)},
+    // TODO (ascii "\n") (ascii "\r") (ascii "\t")
 ]
 
 const errors = [

@@ -1,0 +1,18 @@
+exp_internal 1
+
+# Don't replace \n with \r\n and don't echo
+# Behaves like:
+# $ node src/main.js test/read-char.lsp | xxd
+set stty_init "raw -echo"
+
+spawn node src/main.js test/read-char.lsp
+
+set timeout 5
+
+expect "^Test #1\n"
+send "Hello\n\r"
+expect {
+    "^Hello\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}

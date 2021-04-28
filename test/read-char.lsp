@@ -1,0 +1,8 @@
+(princ "Test #1\n")
+(setq c1 (chr (read-char)))
+(setq c2 (chr (read-char)))
+(setq c3 (chr (read-char)))
+(setq c4 (chr (read-char)))
+(setq c5 (chr (read-char)))
+(setq c6 (chr (read-char)))
+(princ (strcat c1 c2 c3 c4 c5 c6))
