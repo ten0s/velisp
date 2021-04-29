@@ -2,17 +2,17 @@ const VeDigraph = require('./VeDigraph.js')
 const VeDigraphDFS = require('./VeDigraphDFS.js')
 
 // See Algorithms, 4th Edition, 5.4 Regular Expressions for detail
-class VeGlob {
-    constructor(glob) {
-        this.glob = Array.from(glob.toLowerCase())
+class VeWildcard {
+    constructor(wc) {
+        this.wc = Array.from(wc)
         this.G = this.epsilonTransitionDigraph()
     }
 
     epsilonTransitionDigraph() {
-        const M = this.glob.length
+        const M = this.wc.length
         const G = new VeDigraph(M + 1)
         for (let i = 0; i < M; i++) {
-            if (this.glob[i] === '*') {
+            if (this.wc[i] === '*') {
                 G.addEdge(i, i)
                 G.addEdge(i, i + 1)
             }
@@ -30,28 +30,21 @@ class VeGlob {
             }
         }
 
-        const M = this.glob.length
+        const M = this.wc.length
         const N = text.length
         for (let i = 0; i < N; i++) {
-            const char = text.charAt(i).toLowerCase()
+            const char = text.charAt(i)
             const matches = new Set()
             for (let s of states) {
                 if (s === M) {
                     continue
                 }
-                switch (this.glob[s]) {
-                case '*':
+                if (this.wc[s] === char || this.wc[s] === '?') {
+                    matches.add(s + 1)
+                }
+                if (this.wc[s] === '*') {
                     matches.add(s)
                     matches.add(s + 1)
-                    break
-                case '?':
-                    matches.add(s + 1)
-                    break
-                case char:
-                    matches.add(s + 1)
-                    break
-                default:
-                    break
                 }
             }
 
@@ -73,4 +66,4 @@ class VeGlob {
     }
 }
 
-module.exports = VeGlob
+module.exports = VeWildcard

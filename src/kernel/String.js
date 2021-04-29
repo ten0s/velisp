@@ -1,4 +1,5 @@
-const {Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js')
+const VeWildcard = require('../VeWildcard.js')
+const {Bool, Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     context.setSym('ASCII', new Fun('ascii', ['string'], [], (self, args) => {
@@ -114,5 +115,17 @@ exports.initContext = (context) => {
             return string.substring(start - 1, string.length())
         }
         throw new Error('substr: `start` expected positive Int')
+    }))
+    context.setSym('WCMATCH', new Fun('wcmatch', ['str', 'pattern'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('wcmatch: too few arguments')
+        }
+        if (args.length > 2) {
+            throw new Error('wcmatch: too many arguments')
+        }
+        const str = ensureType('wcmatch: `str`', args[0], [Str]).value()
+        const pat = ensureType('wcmatch: `pattern`', args[1], [Str]).value()
+        const wc = new VeWildcard(pat)
+        return new Bool(wc.test(str))
     }))
 }
