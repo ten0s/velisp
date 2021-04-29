@@ -39,12 +39,28 @@ class VeWildcard {
                 if (s === M) {
                     continue
                 }
-                if (this.wc[s] === char || this.wc[s] === '?') {
-                    matches.add(s + 1)
-                }
-                if (this.wc[s] === '*') {
+                switch (this.wc[s]) {
+                case '#':
+                    if (this.isDigit(char)) {
+                        matches.add(s + 1)
+                    }
+                    break
+                //case '@':
+                //    break
+                //case '.':
+                //    break
+                case '*':
                     matches.add(s)
                     matches.add(s + 1)
+                    break
+                case '?':
+                    matches.add(s + 1)
+                    break
+                case char:
+                    matches.add(s + 1)
+                    break
+                default:
+                    break
                 }
             }
 
@@ -63,6 +79,10 @@ class VeWildcard {
             }
         }
         return false
+    }
+
+    isDigit(c) {
+        return c >= '0' && c <= '9'
     }
 }
 

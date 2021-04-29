@@ -8,20 +8,45 @@ QUnit.test('VeWildcard', assert => {
     assert.notOk(wc.test('A'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard a', assert => {
     const wc = new VeWildcard('a')
     assert.ok(wc.test('a'))
     assert.notOk(wc.test('A'))
     assert.notOk(wc.test('aa'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard abc', assert => {
     const wc = new VeWildcard('abc')
     assert.ok(wc.test('abc'))
     assert.notOk(wc.test('aBc'))
     assert.notOk(wc.test('aBC'))
     assert.notOk(wc.test('ABC'))
     assert.notOk(wc.test('abcd'))
+})
+
+QUnit.test('VeWildcard #', assert => {
+    const wc = new VeWildcard('#')
+    assert.ok(wc.test('0'))
+    assert.ok(wc.test('5'))
+    assert.ok(wc.test('9'))
+    assert.notOk(wc.test('a'))
+    assert.notOk(wc.test('z'))
+    assert.notOk(wc.test('A'))
+    assert.notOk(wc.test('Z'))
+    assert.notOk(wc.test('.'))
+    assert.notOk(wc.test('#'))
+})
+
+QUnit.test('VeWildcard ###', assert => {
+    const wc = new VeWildcard('###')
+    assert.ok(wc.test('012'))
+    assert.ok(wc.test('345'))
+    assert.ok(wc.test('678'))
+    assert.ok(wc.test('910'))
+    assert.notOk(wc.test('abc'))
+    assert.notOk(wc.test('zyz'))
+    assert.notOk(wc.test('.,;'))
+    assert.notOk(wc.test('####'))
 })
 
 QUnit.test('VeWildcard', assert => {
