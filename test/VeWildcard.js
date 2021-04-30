@@ -1,6 +1,17 @@
 const QUnit = require('qunit')
 const VeWildcard = require('../src/VeWildcard.js')
 
+const DIGITS = '0123456789'
+const LOWER_ALPHAS = 'abcdefghijklmnopqrstuvwxyz'
+const UPPER_ALPHAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+const ALPHAS = LOWER_ALPHAS + UPPER_ALPHAS
+const ALNUMS = DIGITS + ALPHAS
+const NON_ALNUMS = ' `~!@#$%^&*?()_-+=.,:;\'"\/|[]{}<>'
+const CTRLS = '\n\r\t'
+
+// TODO \e \0 -> ''
+// \a -> (a)
+
 QUnit.test('VeWildcard', assert => {
     const wc = new VeWildcard('')
     assert.ok(wc.test(''))
@@ -26,85 +37,66 @@ QUnit.test('VeWildcard abc', assert => {
 
 QUnit.test('VeWildcard #', assert => {
     const wc = new VeWildcard('#')
-    assert.ok(wc.test('0'))
-    assert.ok(wc.test('5'))
-    assert.ok(wc.test('9'))
-    assert.notOk(wc.test('a'))
-    assert.notOk(wc.test('z'))
-    assert.notOk(wc.test('A'))
-    assert.notOk(wc.test('Z'))
-    assert.notOk(wc.test('.'))
-    assert.notOk(wc.test('#'))
+    assert.ok(Array.from(DIGITS).every(c => wc.test(c)))
+    assert.notOk(Array.from(ALPHAS).some(c => wc.test(c)))
+    assert.notOk(Array.from(NON_ALNUMS).some(c => wc.test(c)))
+    assert.notOk(Array.from(CTRLS).some(c => wc.test(c)))
 })
 
 QUnit.test('VeWildcard ###', assert => {
     const wc = new VeWildcard('###')
-    assert.ok(wc.test('012'))
-    assert.ok(wc.test('345'))
-    assert.ok(wc.test('678'))
-    assert.ok(wc.test('910'))
-    assert.notOk(wc.test('abc'))
-    assert.notOk(wc.test('zyz'))
-    assert.notOk(wc.test('.,;'))
-    assert.notOk(wc.test('####'))
+    assert.ok(wc.test('059'))
 })
 
 QUnit.test('VeWildcard @', assert => {
     const wc = new VeWildcard('@')
-    assert.ok(wc.test('a'))
-    assert.ok(wc.test('g'))
-    assert.ok(wc.test('z'))
-    assert.ok(wc.test('A'))
-    assert.ok(wc.test('G'))
-    assert.ok(wc.test('Z'))
-    assert.notOk(wc.test('0'))
-    assert.notOk(wc.test('9'))
-    assert.notOk(wc.test('.'))
-    assert.notOk(wc.test('\n'))
-    assert.notOk(wc.test('@'))
+    assert.ok(Array.from(ALPHAS).every(c => wc.test(c)))
+    assert.notOk(Array.from(DIGITS).every(c => wc.test(c)))
+    assert.notOk(Array.from(NON_ALNUMS).some(c => wc.test(c)))
+    assert.notOk(Array.from(CTRLS).some(c => wc.test(c)))
 })
 
 QUnit.test('VeWildcard @@@', assert => {
     const wc = new VeWildcard('@@@')
-    assert.ok(wc.test('abc'))
-    assert.ok(wc.test('XYZ'))
-    assert.ok(wc.test('dEf'))
-    assert.ok(wc.test('QwE'))
+    assert.ok(wc.test('aGz'))
+})
+
+QUnit.test('VeWildcard .', assert => {
+    const wc = new VeWildcard('.')
+    assert.ok(Array.from(NON_ALNUMS).every(c => wc.test(c)))
+    assert.ok(Array.from(CTRLS).every(c => wc.test(c)))
+    assert.notOk(Array.from(ALNUMS).every(c => wc.test(c)))
+})
+
+QUnit.test('VeWildcard ...', assert => {
+    const wc = new VeWildcard('...')
+    assert.ok(wc.test('.,;'))
 })
 
 QUnit.test('VeWildcard ?', assert => {
     const wc = new VeWildcard('?')
-    assert.ok(wc.test('.'))
-    assert.ok(wc.test(','))
-    assert.ok(wc.test('A'))
-    assert.ok(wc.test('a'))
-    assert.ok(wc.test('0'))
-    assert.ok(wc.test('9'))
-    assert.notOk(wc.test('aa'))
-    assert.notOk(wc.test('AA'))
+    assert.notOk(wc.test(''))
+    assert.ok(Array.from(DIGITS).every(c => wc.test(c)))
+    assert.ok(Array.from(ALPHAS).every(c => wc.test(c)))
+    assert.ok(Array.from(NON_ALNUMS).every(c => wc.test(c)))
+    assert.ok(Array.from(CTRLS).every(c => wc.test(c)))
 })
 
 QUnit.test('VeWildcard ??', assert => {
     const wc = new VeWildcard('??')
     assert.ok(wc.test('..'))
     assert.ok(wc.test(',;'))
-    assert.ok(wc.test('aa'))
-    assert.ok(wc.test('AA'))
-    assert.ok(wc.test('ab'))
-    assert.ok(wc.test('BA'))
-    assert.ok(wc.test('01'))
-    assert.notOk(wc.test('a'))
-    assert.notOk(wc.test('A'))
+    assert.ok(wc.test('a9'))
+    assert.ok(wc.test('0Z'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard *', assert => {
     const wc = new VeWildcard('*')
     assert.ok(wc.test(''))
-    assert.ok(wc.test('.'))
-    assert.ok(wc.test('..'))
-    assert.ok(wc.test('a'))
-    assert.ok(wc.test('abc'))
-    assert.ok(wc.test('abcdefghijklmnopqrstuvwxyz'))
+    assert.ok(Array.from(DIGITS).every(c => wc.test(c)))
+    assert.ok(Array.from(ALPHAS).every(c => wc.test(c)))
+    assert.ok(Array.from(NON_ALNUMS).every(c => wc.test(c)))
+    assert.ok(Array.from(CTRLS).every(c => wc.test(c)))
 })
 
 QUnit.test('VeWildcard a?', assert => {

@@ -46,12 +46,15 @@ class VeWildcard {
                     }
                     break
                 case '@':
-                    if (this.isLetter(char)) {
+                    if (this.isAlpha(char)) {
                         matches.add(s + 1)
                     }
                     break
-                //case '.':
-                //    break
+                case '.':
+                    if (!this.isAlpha(char) && !this.isDigit(char)) {
+                        matches.add(s + 1)
+                    }
+                    break
                 case '*':
                     matches.add(s)
                     matches.add(s + 1)
@@ -88,7 +91,7 @@ class VeWildcard {
         return c >= '0' && c <= '9'
     }
 
-    isLetter(c) {
+    isAlpha(c) {
         return (c >= 'a' && c <= 'z')
             || (c >= 'A' && c <= 'Z')
     }
