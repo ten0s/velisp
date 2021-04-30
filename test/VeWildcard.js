@@ -6,7 +6,7 @@ const LOWER_ALPHAS = 'abcdefghijklmnopqrstuvwxyz'
 const UPPER_ALPHAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const ALPHAS = LOWER_ALPHAS + UPPER_ALPHAS
 const ALNUMS = DIGITS + ALPHAS
-const NON_ALNUMS = ' `~!@#$%^&*?()_-+=.,:;\'"\/|[]{}<>'
+const NON_ALNUMS = ' `~!@#$%^&*?()_-+=.,:;\'"\\/|[]{}<>'
 const CTRLS = '\n\r\t'
 
 // TODO \e \0 -> ''
