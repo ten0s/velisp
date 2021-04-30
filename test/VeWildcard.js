@@ -49,7 +49,30 @@ QUnit.test('VeWildcard ###', assert => {
     assert.notOk(wc.test('####'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard @', assert => {
+    const wc = new VeWildcard('@')
+    assert.ok(wc.test('a'))
+    assert.ok(wc.test('g'))
+    assert.ok(wc.test('z'))
+    assert.ok(wc.test('A'))
+    assert.ok(wc.test('G'))
+    assert.ok(wc.test('Z'))
+    assert.notOk(wc.test('0'))
+    assert.notOk(wc.test('9'))
+    assert.notOk(wc.test('.'))
+    assert.notOk(wc.test('\n'))
+    assert.notOk(wc.test('@'))
+})
+
+QUnit.test('VeWildcard @@@', assert => {
+    const wc = new VeWildcard('@@@')
+    assert.ok(wc.test('abc'))
+    assert.ok(wc.test('XYZ'))
+    assert.ok(wc.test('dEf'))
+    assert.ok(wc.test('QwE'))
+})
+
+QUnit.test('VeWildcard ?', assert => {
     const wc = new VeWildcard('?')
     assert.ok(wc.test('.'))
     assert.ok(wc.test(','))
@@ -61,7 +84,7 @@ QUnit.test('VeWildcard', assert => {
     assert.notOk(wc.test('AA'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard ??', assert => {
     const wc = new VeWildcard('??')
     assert.ok(wc.test('..'))
     assert.ok(wc.test(',;'))
@@ -75,6 +98,16 @@ QUnit.test('VeWildcard', assert => {
 })
 
 QUnit.test('VeWildcard', assert => {
+    const wc = new VeWildcard('*')
+    assert.ok(wc.test(''))
+    assert.ok(wc.test('.'))
+    assert.ok(wc.test('..'))
+    assert.ok(wc.test('a'))
+    assert.ok(wc.test('abc'))
+    assert.ok(wc.test('abcdefghijklmnopqrstuvwxyz'))
+})
+
+QUnit.test('VeWildcard a?', assert => {
     const wc = new VeWildcard('a?')
     assert.ok(wc.test('aa'))
     assert.ok(wc.test('ab'))
@@ -84,22 +117,12 @@ QUnit.test('VeWildcard', assert => {
     assert.notOk(wc.test('AB'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard a?c', assert => {
     const wc = new VeWildcard('a?c')
     assert.ok(wc.test('abc'))
     assert.ok(wc.test('aXc'))
     assert.notOk(wc.test('Abc'))
     assert.notOk(wc.test('abxC'))
-})
-
-QUnit.test('VeWildcard', assert => {
-    const wc = new VeWildcard('*')
-    assert.ok(wc.test(''))
-    assert.ok(wc.test('.'))
-    assert.ok(wc.test('..'))
-    assert.ok(wc.test('a'))
-    assert.ok(wc.test('abc'))
-    assert.ok(wc.test('abcdefghijklmnopqrstuvwxyz'))
 })
 
 QUnit.test('VeWildcard', assert => {
@@ -111,7 +134,7 @@ QUnit.test('VeWildcard', assert => {
     assert.ok(wc.test('a?c********d'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard *.txt', assert => {
     const wc = new VeWildcard('*.txt')
     assert.ok(wc.test('.txt'))
     assert.ok(wc.test('file.txt'))
