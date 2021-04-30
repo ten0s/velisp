@@ -12,26 +12,65 @@ const find = (y, xs) => {
 
 // :: (string) -> string
 const escape = (s) => {
-    // TODO: FIXME
-    // Poor man's replaceAll
     return s
-        .split('\\').join('\\\\')
-        .split('"').join('\\"')
-        //.split('\\r').join('\\\\r')
-        //.split('\\n').join('\\\\n')
-        //.split('\\t').join('\\\\t')
+        .replaceAll('\\'    , '\\\\')
+        .replaceAll('"'     , '\\"')
+        .replaceAll('\r'    , '\\r')
+        .replaceAll('\n'    , '\\n')
+        .replaceAll('\t'    , '\\t')
+        .replaceAll('\u001b', '\\e')
 }
 
 // :: (string) -> string
 const unescape = (s) => {
-    // TODO: FIXME
-    // Poor man's replaceAll
-    return s
-        .split('\\"').join('"')
-        .split('\\\\').join('\\')
-        .split('\\r').join('\r')
-        .split('\\n').join('\n')
-        .split('\\t').join('\t')
+    const a = Array.from(s)
+    //console.log(a)
+    const b = []
+    for (let i = 0; i < a.length; i++) {
+        if (a[i] === '\\') {
+            switch (a[i + 1]) {
+            case '\\':
+                b.push('\\')
+                i++
+                break
+            case '"':
+                b.push('"')
+                i++
+                break
+            case 'r':
+                b.push('\r')
+                i++
+                break
+            case 'n':
+                b.push('\n')
+                i++
+                break
+            case 't':
+                b.push('\t')
+                i++
+                break
+            case 'e':
+                b.push('\u001b')
+                i++
+                break
+            default:
+                b.push(a[i + 1])
+                i++
+                break
+            }
+        } else {
+            b.push(a[i])
+        }
+    }
+    return b.join('')
+}
+
+// TODO: FIXME
+// Poor man's replaceAll
+if (!String.prototype.replaceAll) {
+    String.prototype.replaceAll = function replaceAll(from, to) {
+        return this.split(from).join(to)
+    }
 }
 
 // :: (string) -> bool

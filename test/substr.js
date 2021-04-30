@@ -17,6 +17,10 @@ const tests = [
     {test: '(substr "abcde" 2 1)', result: new Str('b')},
 
     {test: '(substr "abcde" 3 2)', result: new Str('cd')},
+
+    {test: '(substr "\\r\\n\\t\\e" 1 1)', result: new Str('\r')},
+    {test: '(substr "\\r\\n\\t\\e" 2 1)', result: new Str('\n')},
+    {test: '(substr "\\r\\n\\t\\e" 4 1)', result: new Str('\u001b')},
 ]
 
 const errors = [

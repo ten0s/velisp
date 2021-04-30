@@ -14,8 +14,8 @@ TestRunner.run({
             new Pair(new Sym('ext'),  new Str('.ext'))
         ])},
         {test: '(ve-filename-parse "c:\\\\dir\\\\name.ext")', result: new List([
-            new Pair(new Sym('root'), new Str('c:\\\\')),
-            new Pair(new Sym('dir'),  new Str('c:\\\\dir')),
+            new Pair(new Sym('root'), new Str('c:\\')),    // already unescaped
+            new Pair(new Sym('dir'),  new Str('c:\\dir')), // already unescaped
             new Pair(new Sym('base'), new Str('name.ext')),
             new Pair(new Sym('name'), new Str('name')),
             new Pair(new Sym('ext'),  new Str('.ext'))

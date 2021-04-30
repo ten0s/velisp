@@ -425,18 +425,12 @@ class Str {
 
     // :: () -> string
     toUnescapedString()  {
-        return unescape(this.str)
-    }
-
-    // :: () -> string
-    toEscapedString()  {
-        const str = escape(this.str)
-        return `\\"${str}\\"`
+        return this.str
     }
 
     // :: () -> string
     toString() {
-        return `"${this.str}"`
+        return `"${escape(this.str)}"`
     }
 }
 

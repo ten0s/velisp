@@ -89,7 +89,7 @@ fragment CHAR
          ;
 
 fragment ESCAPE_SEQ
-         : ["\\rnt]
+         : ["\\rnte]
          ;
 
 fragment A : [aA] ;

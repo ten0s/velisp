@@ -20,17 +20,36 @@ QUnit.test('VeUtil escape', assert => {
     assert.equal(escape('\\r'), '\\\\r')
     assert.equal(escape('\\n'), '\\\\n')
     assert.equal(escape('\\t'), '\\\\t')
-    assert.equal(escape(' \\ " \\r \\n \\t '), ' \\\\ \\" \\\\r \\\\n \\\\t ')
+    assert.equal(escape('\\e'), '\\\\e')
+    assert.equal(escape(' \\ " \\r \\n \\t \\e '), ' \\\\ \\" \\\\r \\\\n \\\\t \\\\e ')
 })
 
 QUnit.test('VeUtil unescape', assert => {
     assert.equal(unescape(''), '')
+
     assert.equal(unescape('\\\\'), '\\')
+
     assert.equal(unescape('\\"'), '"')
-    assert.equal(unescape('\\\\r'), '\r')
-    assert.equal(unescape('\\\\n'), '\n')
-    assert.equal(unescape('\\\\t'), '\t')
-    assert.equal(unescape(' \\\\ \\" \\\\r \\\\n \\\\t '), ' \\ " \r \n \t ')
+    assert.equal(unescape('\\\\"'), '\\"')
+    
+    assert.equal(unescape('\\r'), '\r')
+    assert.equal(unescape('\\\\r'), '\\r')
+
+    assert.equal(unescape('\\n'), '\n')
+    assert.equal(unescape('\\\\n'), '\\n')
+
+    assert.equal(unescape('\\t'), '\t')
+    assert.equal(unescape('\\\\t'), '\\t')
+
+    assert.equal(unescape('\\e'), '\u001b')
+    assert.equal(unescape('\\\\e'), '\\e')
+
+    assert.equal(unescape(' \\\\ \\" \\r \\n \\t \\e '), ' \\ " \r \n \t \u001b ')
+
+    assert.equal(
+        unescape('c:\\\\root\\\\to\\\\name\\\\entry.txt'),
+        'c:\\root\\to\\name\\entry.txt'
+    )
 })
 
 QUnit.test('VeUtil isRecoverableInput', assert => {

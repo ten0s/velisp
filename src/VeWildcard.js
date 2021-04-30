@@ -41,28 +41,35 @@ class VeWildcard {
                 }
                 switch (this.wc[s]) {
                 case '#':
+                    // range match
                     if (this.isDigit(char)) {
                         matches.add(s + 1)
                     }
                     break
                 case '@':
+                    // range match
                     if (this.isAlpha(char)) {
                         matches.add(s + 1)
                     }
                     break
                 case '.':
+                    // range match
                     if (!this.isAlpha(char) && !this.isDigit(char)) {
                         matches.add(s + 1)
                     }
                     break
                 case '*':
+                    // many matches
                     matches.add(s)
+                    // any one match
                     matches.add(s + 1)
                     break
                 case '?':
+                    // any one match
                     matches.add(s + 1)
                     break
                 case char:
+                    // exact one match
                     matches.add(s + 1)
                     break
                 default:

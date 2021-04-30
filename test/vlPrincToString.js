@@ -10,9 +10,13 @@ TestRunner.run({
         {test: '(vl-princ-to-string "abc")', result: new Str('abc')},
         {test: '(vl-princ-to-string "/myutilities")', result: new Str('/myutilities')},
         {test: '(vl-princ-to-string \'my-var)', result: new Str('MY-VAR')},
+        {test: '(vl-princ-to-string "\\r")', result: new Str('\r')},
+        {test: '(vl-princ-to-string "\\n")', result: new Str('\n')},
+        {test: '(vl-princ-to-string "\\t")', result: new Str('\t')},
+        {test: '(vl-princ-to-string "\\e")', result: new Str('\u001b')},
         {test: `(setq str "The \\"allowable\\" tolerance is +/- 1/4\\"")
             (vl-princ-to-string str)`, result:
-         new Str('The \\"allowable\\" tolerance is +/- 1/4\\"')},
+         new Str('The "allowable" tolerance is +/- 1/4"')},
     ],
 
     errors: [

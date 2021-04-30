@@ -6,7 +6,10 @@ const tests = [
     {test: '(chr 65)', result: new Str('A')},
     {test: '(chr 66)', result: new Str('B')},
     {test: '(chr 97)', result: new Str('a')},
-    // TODO: (chr 10) (chr 13) (chr 9)
+    {test: '(chr 13)', result: new Str('\r')},
+    {test: '(chr 10)', result: new Str('\n')},
+    {test: '(chr 9)', result: new Str('\t')},
+    {test: '(chr 27)', result: new Str('\u001b')},
 ]
 
 const errors = [

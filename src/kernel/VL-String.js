@@ -10,7 +10,8 @@ exports.initContext = (context) => {
         }
         const arg = args[0]
         if (arg instanceof Str) {
-            return new Str(arg.toEscapedString())
+            // Return new Str with escaped content
+            return new Str(arg.toString())
         }
         return new Str(arg.toString())
     }))
@@ -23,6 +24,7 @@ exports.initContext = (context) => {
         }
         const arg = args[0]
         if (arg instanceof Str) {
+            // Return the same Str
             return arg
         }
         return new Str(arg.toString())

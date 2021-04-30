@@ -1,6 +1,7 @@
 const {VeLispParser} = require('../grammar/VeLispParser.js')
 const {VeLispVisitor} = require('../grammar/VeLispVisitor.js')
 const VeLispContext = require('./VeLispContext.js')
+const {unescape} = require('./VeUtil.js')
 const {Bool, Int, Real, Str, Sym, List, Pair, Fun} = require('./VeLispTypes.js')
 
 class VeLispEvalVisitor extends VeLispVisitor {
@@ -120,7 +121,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         } else if (expr instanceof VeLispParser.StrContext) {
             //console.error('STR:', str);
             // Remove first and last double quotes (")
-            return new Str(str.substring(1, str.length-1))
+            return new Str(unescape(str.substring(1, str.length-1)))
         } else if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
             return new Sym(str)
@@ -286,7 +287,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         } else if (ctx.parentCtx instanceof VeLispParser.StrContext) {
             //console.error('STR:', str);
             // Remove first and last double quotes (")
-            return new Str(str.substring(1, str.length-1))
+            return new Str(unescape(str.substring(1, str.length-1)))
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
             return this.contexts[this.contexts.length-1].getVar(str.toUpperCase())

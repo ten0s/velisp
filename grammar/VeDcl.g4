@@ -101,7 +101,7 @@ fragment CHAR
          ;
 
 fragment ESCAPE_SEQ
-         : ["\\rnt]
+         : ["\\rnte]
          ;
 
 fragment LETTER : LOWER_LETTER | UPPER_LETTER ;
