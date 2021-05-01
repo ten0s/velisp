@@ -1,5 +1,4 @@
 const path = require('path')
-const {escape, unescape} = require('../VeUtil.js')
 const {Sym, Str, List, Pair, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {

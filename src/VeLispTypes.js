@@ -1,6 +1,6 @@
 const fs = require('fs')
 const os = require('os')
-const {find, escape, unescape} = require('./VeUtil.js')
+const {find, escape} = require('./VeUtil.js')
 
 const TRU = 'T'
 const NIL = 'nil'
