@@ -174,6 +174,9 @@ function replEval(repl, input, action, context, callback) {
 
 function replCompleter(_repl, line, context) {
     const forms = [
+        '.break', '.clear', '.context', '.editor',
+        '.exit', '.help', '.inspect', '.load', '.save',
+
         'and', 'cond', 'defun', 'foreach', 'if',
         'lambda', 'or', 'progn', 'quote', 'repeat',
         'setq', 'while', 'list', 'nil'
