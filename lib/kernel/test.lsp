@@ -4,6 +4,7 @@
    (setq b 'a)
    (vlu-assert     (atom nil))
    (vlu-assert     (atom ()))
+   (vlu-assert     (atom '()))
    (vlu-assert     (atom 'a))
    (vlu-assert-not (atom a))
    (vlu-assert     (atom 'b))
