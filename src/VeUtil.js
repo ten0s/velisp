@@ -28,7 +28,7 @@ const unescape = (s) => {
     const b = []
     for (let i = 0; i < a.length; i++) {
         if (a[i] === '\\') {
-            switch (a[i + 1]) {
+            switch (a[i+1]) {
             case '\\':
                 b.push('\\')
                 i++
@@ -54,7 +54,7 @@ const unescape = (s) => {
                 i++
                 break
             default:
-                b.push(a[i + 1])
+                b.push(a[i+1])
                 i++
                 break
             }
