@@ -7,9 +7,9 @@ const UPPER_ALPHAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const ALPHAS = LOWER_ALPHAS + UPPER_ALPHAS
 const ALNUMS = DIGITS + ALPHAS
 const NON_ALNUMS = ' `~!@#$%^&*?()_-+=.,:;\'"\\/|[]{}<>'
-const CTRLS = '\n\r\t'
+const CTRLS = '\n\r\t\u001b'
 
-// TODO \e \0 -> ''
+// TODO \0 -> ''
 // \a -> (a)
 
 QUnit.test('VeWildcard', assert => {
@@ -38,9 +38,10 @@ QUnit.test('VeWildcard abc', assert => {
 QUnit.test('VeWildcard #', assert => {
     const wc = new VeWildcard('#')
     assert.ok(Array.from(DIGITS).every(c => wc.test(c)))
-    assert.notOk(Array.from(ALPHAS).some(c => wc.test(c)))
-    assert.notOk(Array.from(NON_ALNUMS).some(c => wc.test(c)))
-    assert.notOk(Array.from(CTRLS).some(c => wc.test(c)))
+    // Negative cases
+    assert.ok(Array.from(ALPHAS).every(c => !wc.test(c)))
+    assert.ok(Array.from(NON_ALNUMS).every(c => !wc.test(c)))
+    assert.ok(Array.from(CTRLS).every(c => !wc.test(c)))
 })
 
 QUnit.test('VeWildcard ###', assert => {
@@ -51,9 +52,10 @@ QUnit.test('VeWildcard ###', assert => {
 QUnit.test('VeWildcard @', assert => {
     const wc = new VeWildcard('@')
     assert.ok(Array.from(ALPHAS).every(c => wc.test(c)))
-    assert.notOk(Array.from(DIGITS).every(c => wc.test(c)))
-    assert.notOk(Array.from(NON_ALNUMS).some(c => wc.test(c)))
-    assert.notOk(Array.from(CTRLS).some(c => wc.test(c)))
+    // Negative cases
+    assert.ok(Array.from(DIGITS).every(c => !wc.test(c)))
+    assert.ok(Array.from(NON_ALNUMS).every(c => !wc.test(c)))
+    assert.ok(Array.from(CTRLS).every(c => !wc.test(c)))
 })
 
 QUnit.test('VeWildcard @@@', assert => {
@@ -65,7 +67,8 @@ QUnit.test('VeWildcard .', assert => {
     const wc = new VeWildcard('.')
     assert.ok(Array.from(NON_ALNUMS).every(c => wc.test(c)))
     assert.ok(Array.from(CTRLS).every(c => wc.test(c)))
-    assert.notOk(Array.from(ALNUMS).every(c => wc.test(c)))
+    // Negative cases
+    assert.ok(Array.from(ALNUMS).every(c => !wc.test(c)))
 })
 
 QUnit.test('VeWildcard ...', assert => {
