@@ -699,6 +699,7 @@ class File {
         switch (name) {
         case FileStream.STDIN:
             switch (os.platform()) {
+            case 'android':
             case 'linux':
                 return new File(name, mode, fs.openSync('/dev/stdin', mode))
             default:
@@ -727,6 +728,7 @@ class File {
         switch (this.name) {
         case FileStream.STDIN:
             switch (os.platform()) {
+            case 'android':
             case 'linux':
                 fs.closeSync(this.fd)
                 break
