@@ -26,7 +26,7 @@ class VeRegex {
                     string: re[i]
                 }
                 break
-            case ')':
+            case ')': {
                 const ors = new VeStack()
                 for (;;) {
                     const j = stack.pop()
@@ -50,7 +50,8 @@ class VeRegex {
                     string: re[i]
                 }
                 break
-            case '[':
+            }
+            case '[': {
                 RE[i] = undefined
                 let j = i+1
                 let negate = false
@@ -83,9 +84,10 @@ class VeRegex {
                 G.addEdge(i, j)
                 i = j
                 break
+            }
             case '.':
                 RE[i] = {
-                    test: (x) => true,
+                    test: (_) => true,
                     string: '.'
                 }
                 break
@@ -188,7 +190,7 @@ class VeRegex {
     toDot() {
         let s = ''
         s += 'digraph {'
-        s += EOL;
+        s += EOL
         s += '  rankdir=LR'
         s += EOL
 
