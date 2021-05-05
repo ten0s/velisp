@@ -102,6 +102,12 @@ QUnit.test('VeWildcard *', assert => {
     assert.ok(Array.from(CTRLS).every(c => wc.test(c)))
 })
 
+QUnit.test('VeWildcard []', assert => {
+    const wc = new VeWildcard('[]')
+    assert.notOk(wc.test(''))
+    //assert.notOk(wc.test('[]'))
+})
+
 QUnit.test('VeWildcard a?', assert => {
     const wc = new VeWildcard('a?')
     assert.ok(wc.test('aa'))
