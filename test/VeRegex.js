@@ -35,9 +35,33 @@ QUnit.test('VeRegex abc', assert => {
     assert.notOk(re.test('abcd'))
 })
 
-/*
-QUnit.test('VeRegex #', assert => {
-    const re = new VeRegex('#')
+QUnit.test('VeRegex []', assert => {
+    const re = new VeRegex('[]')
+    assert.notOk(re.test(''))
+    assert.notOk(re.test('a')) // anything
+})
+
+QUnit.test('VeRegex [^]', assert => {
+    const re = new VeRegex('[^]')
+    assert.ok(re.test('a'))
+    assert.notOk(re.test(''))
+})
+
+QUnit.test('VeRegex [abcdefghijklmnopqrstuvwxyz]', assert => {
+    const re = new VeRegex('[abcdefghijklmnopqrstuvwxyz]')
+    assert.ok(Array.from(LOWER_ALPHAS).every(c => re.test(c)))
+    // Negative cases
+    assert.ok(Array.from(UPPER_ALPHAS).every(c => !re.test(c)))
+    assert.ok(Array.from(DIGITS).every(c => !re.test(c)))
+    assert.ok(Array.from(NON_ALNUMS).every(c => !re.test(c)))
+    assert.ok(Array.from(CTRLS).every(c => !re.test(c)))
+})
+
+// [a-z]
+// [a-zA-Z]
+
+QUnit.test('VeRegex [0123456789]', assert => {
+    const re = new VeRegex('[0123456789]')
     assert.ok(Array.from(DIGITS).every(c => re.test(c)))
     // Negative cases
     assert.ok(Array.from(ALPHAS).every(c => !re.test(c)))
@@ -45,6 +69,81 @@ QUnit.test('VeRegex #', assert => {
     assert.ok(Array.from(CTRLS).every(c => !re.test(c)))
 })
 
+// [0-9]
+// [a-zA-Z0-9]
+
+QUnit.test('VeRegex [abc][def]', assert => {
+    const re = new VeRegex('[abc][def]')
+    assert.ok(re.test('ad'))
+    assert.ok(re.test('ae'))
+    assert.ok(re.test('af'))
+    assert.ok(re.test('bd'))
+    assert.ok(re.test('be'))
+    assert.ok(re.test('bf'))
+    assert.ok(re.test('cd'))
+    assert.ok(re.test('ce'))
+    assert.ok(re.test('cf'))
+})
+
+QUnit.test('VeRegex [abc]?', assert => {
+    const re = new VeRegex('[abc]?')
+    assert.ok(re.test(''))
+    assert.ok(re.test('a'))
+    assert.ok(re.test('b'))
+    assert.ok(re.test('c'))
+    assert.notOk(re.test('d'))
+})
+
+QUnit.test('VeRegex [abc]+', assert => {
+    const re = new VeRegex('[abc]+')
+    assert.ok(re.test('a'))
+    assert.ok(re.test('b'))
+    assert.ok(re.test('c'))
+
+    assert.ok(re.test('aa'))
+    assert.ok(re.test('ab'))
+    assert.ok(re.test('ac'))
+
+    assert.ok(re.test('aaa'))
+    assert.ok(re.test('aab'))
+    assert.ok(re.test('aac'))
+})
+
+QUnit.test('VeRegex [abc]*', assert => {
+    const re = new VeRegex('[abc]*')
+    assert.ok(re.test(''))
+
+    assert.ok(re.test('a'))
+    assert.ok(re.test('b'))
+    assert.ok(re.test('c'))
+
+    assert.ok(re.test('aa'))
+    assert.ok(re.test('ab'))
+    assert.ok(re.test('ac'))
+
+    assert.ok(re.test('aaa'))
+    assert.ok(re.test('aab'))
+    assert.ok(re.test('aac'))
+})
+
+// [^abc]?
+// [^abc]*
+// [^abc]+
+
+QUnit.test('VeRegex [^abc]', assert => {
+    const re = new VeRegex('[^abc]')
+    assert.ok(re.test('d'))
+    assert.ok(re.test('A'))
+    assert.ok(re.test('0'))
+    assert.ok(re.test('.'))
+
+    assert.notOk(re.test(''))
+    assert.notOk(re.test('a'))
+    assert.notOk(re.test('b'))
+    assert.notOk(re.test('c'))
+})
+
+/*
 QUnit.test('VeRegex ###', assert => {
     const re = new VeRegex('###')
     assert.ok(re.test('059'))
@@ -90,7 +189,7 @@ QUnit.test('VeRegex a*', assert => {
 
     // TODO: re should be '^a*$' to fail
     assert.ok(re.test('a*'))
-    
+
     assert.notOk(re.test('b'))
     assert.notOk(re.test('bb'))
     assert.notOk(re.test('bbbbb'))
@@ -105,7 +204,7 @@ QUnit.test('VeRegex a*b', assert => {
 
     // TODO: re should be '^a*b$' to fail
     assert.ok(re.test('a*b'))
-    
+
     assert.notOk(re.test('bb'))
     assert.notOk(re.test('bbbbb'))
 })
@@ -118,7 +217,7 @@ QUnit.test('VeRegex a+', assert => {
 
     // TODO: re should be '^a+$' to fail
     assert.ok(re.test('a+'))
-    
+
     assert.notOk(re.test(''))
     assert.notOk(re.test('b'))
     assert.notOk(re.test('bb'))
@@ -133,7 +232,7 @@ QUnit.test('VeRegex a+b', assert => {
 
     // TODO: re should be '^a+b$' to fail
     assert.ok(re.test('a+b'))
-    
+
     assert.notOk(re.test('b'))
     assert.notOk(re.test('bb'))
     assert.notOk(re.test('bbbbb'))
