@@ -1,75 +1,35 @@
-const VeDigraph = require('./VeDigraph.js')
-const VeDigraphDFS = require('./VeDigraphDFS.js')
+const VeRegex = require('./VeRegex.js')
 
-// See Algorithms, 4th Edition, 5.4 Regular Expressions for detail
 class VeGlob {
     constructor(glob) {
-        this.glob = Array.from(glob.toLowerCase())
-        this.G = this.epsilonTransitionDigraph()
+        this.glob = glob
+        this.re = this.toRegex(glob)
+        //console.log(this.re)
+        this.Regex = new VeRegex(this.re)
     }
 
-    epsilonTransitionDigraph() {
-        const M = this.glob.length
-        const G = new VeDigraph(M + 1)
-        for (let i = 0; i < M; i++) {
-            if (this.glob[i] === '*') {
-                G.addEdge(i, i)
-                G.addEdge(i, i + 1)
-            }
-        }
-        return G
-    }
-
-    // :: (String) -> Boolean
+    // :: (string) -> bool
     test(text) {
-        let states = new Set()
-        let dfs = new VeDigraphDFS(this.G, 0)
-        for (let v = 0; v < this.G.vertices(); v++) {
-            if (dfs.hasPathTo(v)) {
-                states.add(v)
+        return this.Regex.test(text)
+    }
+
+    // :: (string) -> string
+    toRegex(wc) {
+        const re = []
+        for (let i = 0; i < wc.length; i++) {
+            switch(wc[i]) {
+            case '?':
+                re.push('.')
+                break
+            case '*':
+                re.push('.*')
+                break
+            default:
+                re.push(`[${wc[i].toLowerCase()}${wc[i].toUpperCase()}]`)
+                break
             }
         }
-
-        const M = this.glob.length
-        const N = text.length
-        for (let i = 0; i < N; i++) {
-            const char = text.charAt(i).toLowerCase()
-            const matches = new Set()
-            for (let s of states) {
-                if (s === M) {
-                    continue
-                }
-                switch (this.glob[s]) {
-                case '*':
-                    matches.add(s)
-                    matches.add(s + 1)
-                    break
-                case '?':
-                    matches.add(s + 1)
-                    break
-                case char:
-                    matches.add(s + 1)
-                    break
-                default:
-                    break
-                }
-            }
-
-            states = new Set()
-            dfs = new VeDigraphDFS(this.G, matches)
-            for (let v = 0; v < this.G.vertices(); v++) {
-                if (dfs.hasPathTo(v)) {
-                    states.add(v)
-                }
-            }
-        }
-
-        for (let s of states) {
-            if (s === M) {
-                return true
-            }
-        }
-        return false
+        return re.join('')
     }
 }
 
