@@ -59,14 +59,12 @@ class VeRegex {
 
                 // [^
                 if (re[j] === '^') {
-                    RE[j] = undefined
                     negate = true
                     j++
                 }
 
                 // [^- or [-
                 if (re[j] === '-') {
-                    RE[j] = undefined
                     group.push('-')
                     j++
                 }
@@ -118,7 +116,7 @@ class VeRegex {
                     group.push(re[j])
                     j++
                 }
-                // TODO: RE[[i..j)] = undefined
+                // TODO: RE[(i..j)] = undefined
                 G.addEdge(i, j)
                 i = j
                 break
