@@ -4,7 +4,7 @@ const VeRegex = require('../src/VeRegex.js')
 const not = func => (x) => !(func(x))
 
 const contains = arr => item =>
-      arr.indexOf(item) !== -1
+    arr.indexOf(item) !== -1
 
 if (!Array.prototype.without) {
     Array.prototype.without = function without(items) {
@@ -89,9 +89,6 @@ QUnit.test('VeRegex [abcdefghijklmnopqrstuvwxyz]', assert => {
     assert.ok(CTRLS.every(c => !re.test(c)))
 })
 
-// [a-z]
-// [a-zA-Z]
-
 QUnit.test('VeRegex [0123456789]', assert => {
     const re = new VeRegex('[0123456789]')
     assert.ok(DIGITS.every(c => re.test(c)))
@@ -101,8 +98,122 @@ QUnit.test('VeRegex [0123456789]', assert => {
     assert.ok(CTRLS.every(c => !re.test(c)))
 })
 
-// [0-9]
-// [a-zA-Z0-9]
+QUnit.test('VeRegex [a-z]', assert => {
+    const re = new VeRegex('[a-z]')
+    assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
+    // Negative cases
+    assert.ok(UPPER_ALPHAS.every(c => !re.test(c)))
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [^a-z]', assert => {
+    const re = new VeRegex('[^a-z]')
+    assert.ok(UPPER_ALPHAS.every(c => re.test(c)))
+    assert.ok(DIGITS.every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
+    assert.ok(LOWER_ALPHAS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [a-zA-Z0-9]', assert => {
+    const re = new VeRegex('[a-zA-Z0-9]')
+    assert.ok(ALPHAS.every(c => re.test(c)))
+    assert.ok(DIGITS.every(c => re.test(c)))
+    // Negative cases
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [^a-zA-Z0-9]', assert => {
+    const re = new VeRegex('[^a-zA-Z0-9]')
+    assert.ok(NON_ALNUMS.every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
+    assert.ok(ALPHAS.every(c => !re.test(c)))
+    assert.ok(DIGITS.every(c => !re.test(c)))
+})
+
+// Borders only
+QUnit.test('VeRegex [9-0]', assert => {
+    const re = new VeRegex('[9-0]')
+    assert.ok(re.test('0'))
+    assert.ok(re.test('9'))
+    // Negative cases
+    assert.ok(LOWER_ALPHAS.every(c => !re.test(c)))
+    assert.ok(UPPER_ALPHAS.every(c => !re.test(c)))
+    assert.ok(DIGITS.without(['0', '9']).every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [-]', assert => {
+    const re = new VeRegex('[-]')
+    assert.ok(re.test('-'))
+    // Negative cases
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(ALPHAS.every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.without(['-']).every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [^-]', assert => {
+    const re = new VeRegex('[^-]')
+    assert.ok(DIGITS.every(c => re.test(c)))
+    assert.ok(ALPHAS.every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.without(['-']).every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
+    assert.notOk(re.test('-'))
+})
+
+QUnit.test('VeRegex [-abc]', assert => {
+    const re = new VeRegex('[-abc]')
+    assert.ok(re.test('-'))
+    assert.ok(re.test('a'))
+    assert.ok(re.test('b'))
+    assert.ok(re.test('c'))
+    // Negative cases
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(ALPHAS.without(['a', 'b', 'c']).every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.without(['-']).every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [abc-]', assert => {
+    const re = new VeRegex('[abc-]')
+    assert.ok(re.test('-'))
+    assert.ok(re.test('a'))
+    assert.ok(re.test('b'))
+    assert.ok(re.test('c'))
+    // Negative cases
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(ALPHAS.without(['a', 'b', 'c']).every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.without(['-']).every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+})
+
+QUnit.test('VeRegex [^-abc]', assert => {
+    const re = new VeRegex('[^-abc]')
+    assert.ok(DIGITS.every(c => re.test(c)))
+    assert.ok(ALPHAS.without(['a', 'b', 'c']).every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.without(['-']).every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
+    assert.notOk(re.test('-'))
+})
+
+QUnit.test('VeRegex [^abc-]', assert => {
+    const re = new VeRegex('[^abc-]')
+    assert.ok(DIGITS.every(c => re.test(c)))
+    assert.ok(ALPHAS.without(['a', 'b', 'c']).every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.without(['-']).every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
+    assert.notOk(re.test('-'))
+})
 
 QUnit.test('VeRegex [abc][def]', assert => {
     const re = new VeRegex('[abc][def]')
@@ -158,10 +269,6 @@ QUnit.test('VeRegex [abc]*', assert => {
     assert.ok(re.test('aac'))
 })
 
-// [^abc]?
-// [^abc]*
-// [^abc]+
-
 QUnit.test('VeRegex [^abc]', assert => {
     const re = new VeRegex('[^abc]')
     assert.ok(re.test('d'))
@@ -174,6 +281,10 @@ QUnit.test('VeRegex [^abc]', assert => {
     assert.notOk(re.test('b'))
     assert.notOk(re.test('c'))
 })
+
+// [^abc]?
+// [^abc]*
+// [^abc]+
 
 /*
 QUnit.test('VeRegex ###', assert => {

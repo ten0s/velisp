@@ -55,16 +55,50 @@ class VeRegex {
                 RE[i] = undefined
                 let j = i+1
                 let negate = false
-                if (j < M) {
-                    if (re[j] === '^') {
-                        RE[j] = undefined
-                        negate = true
-                        j++
-                    }
-                }
-                const group = []
-                for (; j < M; j++) {
+                let group = []
+
+                // [^
+                if (re[j] === '^') {
                     RE[j] = undefined
+                    negate = true
+                    j++
+                }
+
+                // [^- or [-
+                if (re[j] === '-') {
+                    RE[j] = undefined
+                    group.push('-')
+                    j++
+                }
+
+                while (j < M) {
+                    // if range
+                    if (re[j+1] === '-') {
+                        // a-z
+                        if (re[j+2] !== ']') {
+                            const from = re[j].charCodeAt()
+                            const to   = re[j+2].charCodeAt()
+                            if (from <= to) {
+                                // build range
+                                for (let k = from; k <= to; k++) {
+                                    group.push(String.fromCharCode(k))
+                                }
+                            } else {
+                                // borders only
+                                group.push(String.fromCharCode(from))
+                                group.push(String.fromCharCode(to))
+                            }
+                            j += 3
+                        // a-]
+                        } else {
+                            group.push(re[j])
+                            group.push('-')
+                            j += 2
+                        }
+                        continue
+                    }
+
+                    // if end
                     if (re[j] === ']') {
                         if (negate) {
                             RE[j] = {
@@ -79,8 +113,12 @@ class VeRegex {
                         }
                         break
                     }
+
+                    // otherwise
                     group.push(re[j])
+                    j++
                 }
+                // TODO: RE[[i..j)] = undefined
                 G.addEdge(i, j)
                 i = j
                 break
