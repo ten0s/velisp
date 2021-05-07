@@ -1,5 +1,5 @@
 const VeWildcard = require('../VeWildcard.js')
-const {Bool, Int, Real, Str, Fun, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     context.setSym('ASCII', new Fun('ascii', ['string'], [], (self, args) => {
@@ -116,16 +116,33 @@ exports.initContext = (context) => {
         }
         throw new Error('substr: `start` expected positive Int')
     }))
-    context.setSym('WCMATCH', new Fun('wcmatch', ['str', 'pattern'], [], (self, args) => {
+    // VeLisp Extension 'flag'
+    context.setSym('WCMATCH', new Fun('wcmatch', ['str', 'pattern', '[flag]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('wcmatch: too few arguments')
         }
-        if (args.length > 2) {
+        if (args.length > 3) {
             throw new Error('wcmatch: too many arguments')
         }
         const str = ensureType('wcmatch: `str`', args[0], [Str]).value()
         const pat = ensureType('wcmatch: `pattern`', args[1], [Str]).value()
         const wc = new VeWildcard(pat)
+        let flag = new Bool(false)
+        if (args.length === 3) {
+            flag = ensureType('wcmatch: `flag`', args[2], [Sym, Bool])
+        }
+        if (flag instanceof Sym) {
+            switch (flag.value()) {
+            case 'REGEX':
+                console.log(wc.toRegex())
+                break
+            case 'DOT':
+                console.log(wc.toDot().trimEnd())
+                break
+            default:
+                break
+            }
+        }
         return new Bool(wc.test(str))
     }))
 }

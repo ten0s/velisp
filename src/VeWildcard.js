@@ -2,30 +2,29 @@ const VeRegex = require('./VeRegex.js')
 
 class VeWildcard {
     constructor(wc) {
-        this.wc = wc
-        this.re = this.toRegex(wc)
-        //console.log(this.re)
-        this.Regex = new VeRegex(this.re)
+        this._wc = wc
+        this._re = this._regex(wc)
+        this._Regex = new VeRegex(this._re)
     }
 
     // :: (string) -> bool
     test(text) {
-        return this.Regex.test(text)
+        return this._Regex.test(text)
     }
 
     // :: (string) -> string
-    toRegex(wc) {
+    _regex(wc) {
         const re = []
         for (let i = 0; i < wc.length; i++) {
             switch(wc[i]) {
             case '#':
-                re.push('[0123456789]')
+                re.push('[0-9]')
                 break
             case '@':
-                re.push('[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]')
+                re.push('[a-zA-Z]')
                 break
             case '.':
-                re.push('[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]')
+                re.push('[^a-zA-Z0-9]')
                 break
             case '?':
                 re.push('.')
@@ -39,6 +38,16 @@ class VeWildcard {
             }
         }
         return re.join('')
+    }
+
+    // :: () -> string
+    toRegex() {
+        return this._re
+    }
+
+    // :: () -> string
+    toDot() {
+        return this._Regex.toDot()
     }
 }
 
