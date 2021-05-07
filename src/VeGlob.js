@@ -24,6 +24,10 @@ class VeGlob {
             case '*':
                 re.push('.*')
                 break
+            // TODO
+            //case '.':
+            //    re.push('\.')
+            //    break
             default:
                 re.push(`[${wc[i].toLowerCase()}${wc[i].toUpperCase()}]`)
                 break
