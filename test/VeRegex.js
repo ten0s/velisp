@@ -1,13 +1,24 @@
 const QUnit = require('qunit')
 const VeRegex = require('../src/VeRegex.js')
 
-const DIGITS = '0123456789'
-const LOWER_ALPHAS = 'abcdefghijklmnopqrstuvwxyz'
-const UPPER_ALPHAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-const ALPHAS = LOWER_ALPHAS + UPPER_ALPHAS
-const ALNUMS = DIGITS + ALPHAS
-const NON_ALNUMS = ' `~!@#$%^&*?()_-+=.,:;\'"\\/|[]{}<>'
-const CTRLS = '\n\r\t\u001b'
+const not = func => (x) => !(func(x))
+
+const contains = arr => item =>
+      arr.indexOf(item) !== -1
+
+if (!Array.prototype.without) {
+    Array.prototype.without = function without(items) {
+        return this.filter(not(contains(items)))
+    }
+}
+
+const DIGITS = Array.from('0123456789')
+const LOWER_ALPHAS = Array.from('abcdefghijklmnopqrstuvwxyz')
+const UPPER_ALPHAS = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+const ALPHAS = LOWER_ALPHAS.concat(UPPER_ALPHAS)
+const ALNUMS = DIGITS.concat(ALPHAS)
+const NON_ALNUMS = Array.from(' `~!@#$%^&*?()_-+=.,:;\'"\\/|[]{}<>')
+const CTRLS = Array.from('\n\r\t\u001b')
 
 // TODO \0 -> ''
 // \a -> (a)
@@ -37,35 +48,45 @@ QUnit.test('VeRegex abc', assert => {
 
 QUnit.test('VeRegex []', assert => {
     const re = new VeRegex('[]')
+    assert.ok(LOWER_ALPHAS.every(c => !re.test(c)))
+    assert.ok(UPPER_ALPHAS.every(c => !re.test(c)))
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
+    // Negative cases
     assert.notOk(re.test(''))
-    assert.notOk(re.test('a')) // anything
 })
 
 QUnit.test('VeRegex [^]', assert => {
     const re = new VeRegex('[^]')
-    assert.ok(re.test('a'))
+    assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
+    assert.ok(UPPER_ALPHAS.every(c => re.test(c)))
+    assert.ok(DIGITS.every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
     assert.notOk(re.test(''))
 })
 
 QUnit.test('VeRegex [^^]', assert => {
     const re = new VeRegex('[^^]')
-    assert.ok(Array.from(LOWER_ALPHAS).every(c => re.test(c)))
-    assert.ok(Array.from(UPPER_ALPHAS).every(c => re.test(c)))
-    assert.ok(Array.from(DIGITS).every(c => re.test(c)))
-    assert.ok(Array.from(NON_ALNUMS).every(c => {
-        return c === '^' ? !re.test(c) : re.test(c)
-    }))
-    assert.ok(Array.from(CTRLS).every(c => re.test(c)))
+    assert.notOk(re.test('^'))
+    // Negative cases
+    assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
+    assert.ok(UPPER_ALPHAS.every(c => re.test(c)))
+    assert.ok(DIGITS.every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.without(['^']).every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
 })
 
 QUnit.test('VeRegex [abcdefghijklmnopqrstuvwxyz]', assert => {
     const re = new VeRegex('[abcdefghijklmnopqrstuvwxyz]')
-    assert.ok(Array.from(LOWER_ALPHAS).every(c => re.test(c)))
+    assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
     // Negative cases
-    assert.ok(Array.from(UPPER_ALPHAS).every(c => !re.test(c)))
-    assert.ok(Array.from(DIGITS).every(c => !re.test(c)))
-    assert.ok(Array.from(NON_ALNUMS).every(c => !re.test(c)))
-    assert.ok(Array.from(CTRLS).every(c => !re.test(c)))
+    assert.ok(UPPER_ALPHAS.every(c => !re.test(c)))
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
 })
 
 // [a-z]
@@ -73,11 +94,11 @@ QUnit.test('VeRegex [abcdefghijklmnopqrstuvwxyz]', assert => {
 
 QUnit.test('VeRegex [0123456789]', assert => {
     const re = new VeRegex('[0123456789]')
-    assert.ok(Array.from(DIGITS).every(c => re.test(c)))
+    assert.ok(DIGITS.every(c => re.test(c)))
     // Negative cases
-    assert.ok(Array.from(ALPHAS).every(c => !re.test(c)))
-    assert.ok(Array.from(NON_ALNUMS).every(c => !re.test(c)))
-    assert.ok(Array.from(CTRLS).every(c => !re.test(c)))
+    assert.ok(ALPHAS.every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
 })
 
 // [0-9]
@@ -162,11 +183,11 @@ QUnit.test('VeRegex ###', assert => {
 
 QUnit.test('VeRegex @', assert => {
     const re = new VeRegex('@')
-    assert.ok(Array.from(ALPHAS).every(c => re.test(c)))
+    assert.ok(ALPHAS.every(c => re.test(c)))
     // Negative cases
-    assert.ok(Array.from(DIGITS).every(c => !re.test(c)))
-    assert.ok(Array.from(NON_ALNUMS).every(c => !re.test(c)))
-    assert.ok(Array.from(CTRLS).every(c => !re.test(c)))
+    assert.ok(DIGITS.every(c => !re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => !re.test(c)))
+    assert.ok(CTRLS.every(c => !re.test(c)))
 })
 
 QUnit.test('VeRegex @@@', assert => {
@@ -177,16 +198,16 @@ QUnit.test('VeRegex @@@', assert => {
 
 QUnit.test('VeRegex .', assert => {
     const re = new VeRegex('.')
-    assert.ok(Array.from(NON_ALNUMS).every(c => re.test(c)))
-    assert.ok(Array.from(CTRLS).every(c => re.test(c)))
-    assert.ok(Array.from(ALNUMS).every(c => re.test(c)))
+    assert.ok(NON_ALNUMS.every(c => re.test(c)))
+    assert.ok(CTRLS.every(c => re.test(c)))
+    assert.ok(ALNUMS.every(c => re.test(c)))
 })
 
 QUnit.test('VeRegex a.b', assert => {
     const re = new VeRegex('a.b')
-    assert.ok(Array.from(NON_ALNUMS).every(c => re.test(`a${c}b`)))
-    assert.ok(Array.from(CTRLS).every(c => re.test(`a${c}b`)))
-    assert.ok(Array.from(ALNUMS).every(c => re.test(`a${c}b`)))
+    assert.ok(NON_ALNUMS.every(c => re.test(`a${c}b`)))
+    assert.ok(CTRLS.every(c => re.test(`a${c}b`)))
+    assert.ok(ALNUMS.every(c => re.test(`a${c}b`)))
     assert.notOk(re.test('ab'))
     assert.notOk(re.test('abc'))
 })
