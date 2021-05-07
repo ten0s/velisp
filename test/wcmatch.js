@@ -6,7 +6,11 @@ TestRunner.run({
 
     tests: [
         {test: '(wcmatch "" "")', result: new Bool(true)},
+
         {test: '(wcmatch "0123456789" "##########")', result: new Bool(true)},
+        {test: '(wcmatch "azAZ" "@@@@")', result: new Bool(true)},
+        {test: '(wcmatch ".,:;" "....")', result: new Bool(false)},
+
         {test: '(wcmatch "Name" "*`,*")', result: new Bool(false)},  // is , inside?
         //{test: '(wcmatch "Name" "*`\\*")', result: new Bool(false)}, // is \ inside?
 
