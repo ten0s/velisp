@@ -124,16 +124,28 @@ class VeRegex {
             case '.':
                 RE[i] = {
                     test: (_) => true,
-                    string: '.'
+                    string: 'any'
                 }
                 break
-            default:
-                RE[i] = {
-                    test: (x) => x === re[i],
-                    string: re[i]
+            case '\\': {
+                RE[i] = undefined
+                G.addEdge(i, i+1)
+                const char = re[i+1]
+                RE[i+1] = {
+                    test: (x) => x === char,
+                    string: char
                 }
+                i += 1
                 break
             }
+            default: {
+                const char = re[i]
+                RE[i] = {
+                    test: (x) => x === char,
+                    string: char
+                }
+                break
+            }}
 
             if (i < M-1) {
                 switch (re[i+1]) {
@@ -163,6 +175,7 @@ class VeRegex {
                     break
                 }
             }
+
             switch (re[i]) {
             case '(':
             case ')':

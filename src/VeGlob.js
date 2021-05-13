@@ -29,10 +29,9 @@ class VeGlob {
             case '*':
                 re.push('.*')
                 break
-            // TODO
-            //case '.':
-            //    re.push('\.')
-            //    break
+            case '.':
+                re.push('\\.')
+                break
             default:
                 if (isalpha(wc[i])) {
                     re.push(`[${wc[i].toLowerCase()}${wc[i].toUpperCase()}]`)
@@ -43,6 +42,16 @@ class VeGlob {
             }
         }
         return re.join('')
+    }
+
+    // :: () -> string
+    toRegex() {
+        return this._re
+    }
+
+    // :: () -> string
+    toDot() {
+        return this._Regex.toDot()
     }
 }
 

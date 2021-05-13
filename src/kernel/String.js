@@ -1,3 +1,4 @@
+const VeGlob = require('../VeGlob.js')
 const VeWildcard = require('../VeWildcard.js')
 const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
@@ -144,5 +145,34 @@ exports.initContext = (context) => {
             }
         }
         return new Bool(wc.test(str))
+    }))
+    // VeLisp Extension
+    context.setSym('GLOBMATCH', new Fun('globmatch', ['str', 'pattern', '[flag]'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('globmatch: too few arguments')
+        }
+        if (args.length > 3) {
+            throw new Error('globmatch: too many arguments')
+        }
+        const str = ensureType('globmatch: `str`', args[0], [Str]).value()
+        const pat = ensureType('globmatch: `pattern`', args[1], [Str]).value()
+        const glob = new VeGlob(pat)
+        let flag = new Bool(false)
+        if (args.length === 3) {
+            flag = ensureType('globmatch: `flag`', args[2], [Sym, Bool])
+        }
+        if (flag instanceof Sym) {
+            switch (flag.value()) {
+            case 'REGEX':
+                console.log(glob.toRegex())
+                break
+            case 'DOT':
+                console.log(glob.toDot().trimEnd())
+                break
+            default:
+                break
+            }
+        }
+        return new Bool(glob.test(str))
     }))
 }
