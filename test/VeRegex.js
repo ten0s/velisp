@@ -441,14 +441,14 @@ QUnit.test('VeRegex xa?c', assert => {
     assert.notOk(re.test('xabc'))
 })
 
-QUnit.test('VeRegex \**', assert => {
+QUnit.test('VeRegex \\**', assert => {
     const re = new VeRegex('\\**')
     assert.ok(re.test(''))
     assert.ok(re.test('*'))
     assert.ok(re.test('*****'))
 })
 
-QUnit.test('VeRegex \.*', assert => {
+QUnit.test('VeRegex \\.*', assert => {
     const re = new VeRegex('\\.*')
     assert.ok(re.test(''))
     assert.ok(re.test('.'))
