@@ -501,15 +501,21 @@ class List {
         return new List([first, ...this.arr])
     }
 
-    // :: (List) -> Any
+    // :: (List) -> Any | Nil
     car() {
-        return this.arr[0]
+        if (this.arr.length > 0) {
+            return this.arr[0]
+        }
+        return new Bool(false)
     }
 
-    // :: (List) -> List
+    // :: (List) -> List | Nil
     cdr() {
-        const [, ...rest] = this.arr
-        return new List(rest)
+        if (this.arr.length > 0) {
+            const [, ...rest] = this.arr
+            return new List(rest)
+        }
+        return new Bool(false)
     }
 
     // :: () -> non_neg_int

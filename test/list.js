@@ -1,6 +1,6 @@
 const QUnit = require('qunit')
 const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Int, Real, Str, List, Pair} = require('../src/VeLispTypes.js')
+const {Bool, Int, Real, Str, List, Pair} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(list)', result: new List([])},
@@ -29,11 +29,17 @@ const tests = [
 
     {test: '(car (list 1 2 3))', result: new Int(1)},
     {test: '(car (cons 1 2))', result: new Int(1)},
+    {test: '(car (list))', result: new Bool(false)},
+    {test: '(car nil)', result: new Bool(false)},
+    {test: '(car ())', result: new Bool(false)},
 
     {test: '(cdr (list 1 2 3))', result: new List([
         new Int(2), new Int(3)
     ])},
     {test: '(cdr (cons 1 2))', result: new Int(2)},
+    {test: '(cdr (list))', result: new Bool(false)},
+    {test: '(cdr nil)', result: new Bool(false)},
+    {test: '(cdr ())', result: new Bool(false)},
 ]
 
 const errors = [
@@ -43,11 +49,11 @@ const errors = [
 
     {test: '(car)', result: new Error('car: too few arguments')},
     {test: '(car (list 1 2) (list 3))', result: new Error('car: too many arguments')},
-    {test: '(car (list))', result: new Error('car: expected non-empty List, Pair')},
+    {test: '(car T)', result: new Error('car: expected List, Pair')},
 
     {test: '(cdr)', result: new Error('cdr: too few arguments')},
     {test: '(cdr (list 1 2) (list 3))', result: new Error('cdr: too many arguments')},
-    {test: '(cdr (list))', result: new Error('cdr: expected non-empty List, Pair')},
+    {test: '(cdr T)', result: new Error('cdr: expected List, Pair')},
 ]
 
 QUnit.test('list', assert => {

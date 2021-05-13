@@ -22,14 +22,14 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('car: too many arguments')
         }
-        const listOrPair = args[0]
-        if (listOrPair instanceof List && listOrPair.length() > 0) {
-            return listOrPair.car()
+        const arg = args[0]
+        if (arg instanceof List || arg instanceof Pair) {
+            return arg.car()
         }
-        if (listOrPair instanceof Pair) {
-            return listOrPair.car()
+        if (arg.isNil()) {
+            return new Bool(false)
         }
-        throw new Error('car: expected non-empty List, Pair')
+        throw new Error('car: expected List, Pair')
     }))
     context.setSym('CDR', new Fun('cdr', ['listorpair'], [], (self, args) => {
         if (args.length === 0) {
@@ -38,14 +38,14 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('cdr: too many arguments')
         }
-        const listOrPair = args[0]
-        if (listOrPair instanceof List && listOrPair.length() > 0) {
-            return listOrPair.cdr()
+        const arg = args[0]
+        if (arg instanceof List || arg instanceof Pair) {
+            return arg.cdr()
         }
-        if (listOrPair instanceof Pair) {
-            return listOrPair.cdr()
+        if (arg.isNil()) {
+            return new Bool(false)
         }
-        throw new Error('cdr: expected non-empty List, Pair')
+        throw new Error('cdr: expected List, Pair')
     }))
     context.setSym('CONS', new Fun('cons', ['first', 'listoratom'], [], (self, args) => {
         if (args.length < 2) {
