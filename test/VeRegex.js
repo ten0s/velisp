@@ -1,16 +1,6 @@
 const QUnit = require('qunit')
+require('../src/VeJsExt.js') // array.without
 const VeRegex = require('../src/VeRegex.js')
-
-const not = func => (x) => !(func(x))
-
-const contains = arr => item =>
-    arr.indexOf(item) !== -1
-
-if (!Array.prototype.without) {
-    Array.prototype.without = function without(items) {
-        return this.filter(not(contains(items)))
-    }
-}
 
 const DIGITS = Array.from('0123456789')
 const LOWER_ALPHAS = Array.from('abcdefghijklmnopqrstuvwxyz')

@@ -32,6 +32,22 @@ class VeWildcard {
             case '*':
                 re.push('.*')
                 break
+
+            case '~':
+                if (wc[i-1] === '[') {
+                    re.push('^')
+                } else {
+                    re.push('~')
+                }
+                break
+            case '^':
+                re.push('\\^')
+                break
+
+            case '`':
+                re.push('\\')
+                break
+
             default:
                 re.push(wc[i])
                 break
