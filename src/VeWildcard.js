@@ -2,14 +2,14 @@ const VeRegex = require('./VeRegex.js')
 
 class VeWildcard {
     constructor(wc) {
-        this._wc = wc
-        this._re = this._regex(wc)
-        this._Regex = new VeRegex(this._re)
+        this._wcs = this._splitByComma(wc)
+        this._res = this._wcs.map(wc => this._regex(wc))
+        this._Regexs = this._res.map(re => new VeRegex(re))
     }
 
     // :: (string) -> bool
     test(text) {
-        return this._Regex.test(text)
+        return this._Regexs.some(Regex => Regex.test(text))
     }
 
     // :: (string) -> string
@@ -32,22 +32,19 @@ class VeWildcard {
             case '*':
                 re.push('.*')
                 break
-
             case '~':
-                if (wc[i-1] === '[') {
+                if (wc[i-1] === '[') { // [~
                     re.push('^')
                 } else {
                     re.push('~')
                 }
                 break
-            case '^':
+            case '^': // literal ^
                 re.push('\\^')
                 break
-
-            case '`':
+            case '`': // escape
                 re.push('\\')
                 break
-
             default:
                 re.push(wc[i])
                 break
@@ -56,14 +53,38 @@ class VeWildcard {
         return re.join('')
     }
 
+    // :: (string) -> [string]
+    _splitByComma(str) {
+        const out = []
+        const arr = Array.from(str)
+        let acc = []
+        let insideGroup = false
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === '[') {
+                insideGroup = true
+            }
+            if (arr[i] === ']') {
+                insideGroup = false
+            }
+            if (arr[i] === ',' && !insideGroup && arr[i-1] !== '`') {
+                out.push(acc.join(''))
+                acc = []
+            } else {
+                acc.push(arr[i])
+            }
+        }
+        out.push(acc.join(''))
+        return out
+    }
+
     // :: () -> string
     toRegex() {
-        return this._re
+        return this._res.join(' <|OR|> ')
     }
 
     // :: () -> string
     toDot() {
-        return this._Regex.toDot()
+        return this._Regexs.map(Regex => Regex.toDot()).join('\n')
     }
 }
 
