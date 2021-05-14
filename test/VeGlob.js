@@ -100,6 +100,5 @@ QUnit.test('VeGlob *.txt', assert => {
     assert.ok(glob.test('FILE.TXT'))
     assert.notOk(glob.test('file.pdf'))
     assert.notOk(glob.test('file.xls'))
-    // TODO: literal .
-    //assert.notOk(glob.test('file_txt'))
+    assert.notOk(glob.test('file_txt'))
 })
