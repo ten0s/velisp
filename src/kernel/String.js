@@ -1,4 +1,5 @@
 const VeGlob = require('../VeGlob.js')
+const VeRegex = require('../VeRegex.js')
 const VeWildcard = require('../VeWildcard.js')
 const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
@@ -134,6 +135,9 @@ exports.initContext = (context) => {
         }
         if (flag instanceof Sym) {
             switch (flag.value()) {
+            case 'INSPECT':
+                console.log(wc)
+                break
             case 'REGEX':
                 console.log(wc.toRegex())
                 break
@@ -163,6 +167,9 @@ exports.initContext = (context) => {
         }
         if (flag instanceof Sym) {
             switch (flag.value()) {
+            case 'INSPECT':
+                console.log(glob)
+                break
             case 'REGEX':
                 console.log(glob.toRegex())
                 break
@@ -174,5 +181,34 @@ exports.initContext = (context) => {
             }
         }
         return new Bool(glob.test(str))
+    }))
+    // VeLisp Extension
+    context.setSym('REMATCH', new Fun('rematch', ['str', 'pattern', '[flag]'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('rematch: too few arguments')
+        }
+        if (args.length > 3) {
+            throw new Error('rematch: too many arguments')
+        }
+        const str = ensureType('rematch: `str`', args[0], [Str]).value()
+        const pat = ensureType('rematch: `pattern`', args[1], [Str]).value()
+        const re = new VeRegex(pat)
+        let flag = new Bool(false)
+        if (args.length === 3) {
+            flag = ensureType('rematch: `flag`', args[2], [Sym, Bool])
+        }
+        if (flag instanceof Sym) {
+            switch (flag.value()) {
+            case 'INSPECT':
+                console.log(re)
+                break
+            case 'DOT':
+                console.log(re.toDot().trimEnd())
+                break
+            default:
+                break
+            }
+        }
+        return new Bool(re.test(str))
     }))
 }
