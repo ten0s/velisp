@@ -11,8 +11,11 @@ TestRunner.run({
         {test: '(wcmatch "azAZ" "@@@@")', result: new Bool(true)},
         {test: '(wcmatch ".,:;" "....")', result: new Bool(true)},
 
-        {test: '(wcmatch "Name" "*`,*")', result: new Bool(false)},  // is , inside?
-        //{test: '(wcmatch "Name" "*`\\*")', result: new Bool(false)}, // is \ inside?
+        {test: '(wcmatch "abcd" "*`,*")', result: new Bool(false)},
+        {test: '(wcmatch "ab,cd" "*`,*")', result: new Bool(true)},
+
+        {test: '(wcmatch "abcd" "*`\\\\*")', result: new Bool(false)},
+        {test: '(wcmatch "ab\\\\cd" "*`\\\\*")', result: new Bool(true)},
 
         {test: '(wcmatch "abc" "abc" nil)', result: new Bool(true)},
         {test: '(wcmatch "abc" "abc" T)', result: new Bool(true)},
