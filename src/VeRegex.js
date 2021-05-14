@@ -28,7 +28,7 @@ class VeRegex {
             case '|':
                 stack.push(i)
                 RE[i] = {
-                    string: re[i]
+                    show: re[i]
                 }
                 break
             case ')': {
@@ -56,7 +56,7 @@ class VeRegex {
                     G.addEdge(or, i)
                 }
                 RE[i] = {
-                    string: re[i]
+                    show: re[i]
                 }
                 break
             }
@@ -110,12 +110,12 @@ class VeRegex {
                         if (negate) {
                             RE[j] = {
                                 test: (x) => group.indexOf(x) === -1,
-                                string: `[^${group.join('')}]`
+                                show: `[^${group.join('')}]`
                             }
                         } else {
                             RE[j] = {
                                 test: (x) => group.indexOf(x) !== -1,
-                                string: `[${group.join('')}]`
+                                show: `[${group.join('')}]`
                             }
                         }
                         break
@@ -133,7 +133,7 @@ class VeRegex {
             case '.':
                 RE[i] = {
                     test: (_) => true,
-                    string: 'any'
+                    show: 'any'
                 }
                 break
             case '\\': {
@@ -142,7 +142,7 @@ class VeRegex {
                 const char = re[i+1]
                 RE[i+1] = {
                     test: (x) => x === char,
-                    string: char
+                    show: char
                 }
                 i++ // escape handled too
                 break
@@ -151,7 +151,7 @@ class VeRegex {
                 const char = re[i]
                 RE[i] = {
                     test: (x) => x === char,
-                    string: char
+                    show: char
                 }
                 break
             }}
@@ -245,13 +245,13 @@ class VeRegex {
         s += EOL
 
         for (let v = 0; v < this.G.vertices(); v++) {
-            const ch = v < this.RE.length ? (this.RE[v] ? this.RE[v].string : ' ') : ' '
+            const ch = v < this.RE.length ? (this.RE[v] ? this.RE[v].show : ' ') : ' '
             s += '  ' + v + ' ' + this.attrs(this.label(ch), this.xlabel(v), this.shape('circle'))
             s += EOL
         }
 
         for (let v = 0; v < this.G.vertices()-1; v++) {
-            if (!this.isMetaChar(this.RE[v] ? this.RE[v].string : ' ')) {
+            if (!this.isMetaChar(this.RE[v] ? this.RE[v].show : ' ')) {
                 s += '  ' + v + ' -> ' + (v+1) + ' ' + this.attrs(this.color('black'))
                 s += EOL
             }
