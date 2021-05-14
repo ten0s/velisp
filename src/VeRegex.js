@@ -166,6 +166,10 @@ class VeRegex {
                 G.addEdge(lp, lp+1)
                 G.addEdge(lp, i+1)
                 G.addEdge(i+1, i+2)
+                RE[i+1] = {
+                    show: re[i+1]
+                }
+                i++
                 break
             case '*':
                 //    lp          i    i+1  i+2
@@ -176,6 +180,10 @@ class VeRegex {
                 G.addEdge(lp, i+1)
                 G.addEdge(i+1, lp)
                 G.addEdge(i+1, i+2)
+                RE[i+1] = {
+                    show: re[i+1]
+                }
+                i++
                 break
             case '+':
                 //    lp          i    i+1  i+2
@@ -184,6 +192,10 @@ class VeRegex {
                 //                     -----^
                 G.addEdge(i+1, lp)
                 G.addEdge(i+1, i+2)
+                RE[i+1] = {
+                    show: re[i+1]
+                }
+                i++
                 break
             default:
                 break
