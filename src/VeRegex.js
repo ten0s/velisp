@@ -283,14 +283,7 @@ class VeRegex {
     }
 
     attrs(...attrs) {
-        let s = ''
-        s += '['
-        for (let i = 0; i < attrs.length; i++) {
-            s += attrs[i]
-            if (i != attrs.length-1) s += ', '
-        }
-        s += ']'
-        return s
+        return `[${attrs.join(', ')}]`
     }
 
     label(o) {

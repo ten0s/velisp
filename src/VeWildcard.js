@@ -60,6 +60,7 @@ class VeWildcard {
         let acc = []
         let insideGroup = false
         for (let i = 0; i < arr.length; i++) {
+            // TODO: support cases like [\]\[]
             if (arr[i] === '[') {
                 insideGroup = true
             }
