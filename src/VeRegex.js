@@ -20,6 +20,11 @@ class VeRegex {
             let lp = i
             switch (re[i]) {
             case '(':
+                //    i    i+1
+                // -> ( -> ...
+                //    -----^
+                G.addEdge(i, i+1)
+                /*eslint no-fallthrough: "error"*/
             case '|':
                 stack.push(i)
                 RE[i] = {
@@ -27,6 +32,10 @@ class VeRegex {
                 }
                 break
             case ')': {
+                //    i    i+1
+                // -> ) -> ...
+                //    -----^
+                G.addEdge(i, i+1)
                 const ors = new VeStack()
                 for (;;) {
                     const j = stack.pop()
@@ -135,7 +144,7 @@ class VeRegex {
                     test: (x) => x === char,
                     string: char
                 }
-                i += 1
+                i++ // escape handled too
                 break
             }
             default: {
@@ -147,42 +156,34 @@ class VeRegex {
                 break
             }}
 
-            if (i < M-1) {
-                switch (re[i+1]) {
-                case '?':
-                    //    lp   lp+1   i    i+1
-                    // -> ( -> ... -> ) -> ? ->
-                    //    -----^
-                    //    -----------------^
-                    G.addEdge(lp, lp+1)
-                    G.addEdge(lp, i+1)
-                    break
-                case '*':
-                    //    lp          i    i+1
-                    // -> ( -> ... -> ) -> * ->
-                    //    -----------------^
-                    //    ^-----------------
-                    G.addEdge(lp, i+1)
-                    G.addEdge(i+1, lp)
-                    break
-                case '+':
-                    //    lp          i    i+1
-                    // -> ( -> ... -> ) -> + ->
-                    //    ^-----------------
-                    G.addEdge(i+1, lp)
-                    break
-                default:
-                    break
-                }
-            }
-
-            switch (re[i]) {
-            case '(':
-            case ')':
+            switch (re[i+1]) {
             case '?':
+                //    lp   lp+1   i    i+1  i+2
+                // -> ( -> ... -> ) -> ? -> ...
+                //    -----^
+                //    -----------------^
+                //                     -----^
+                G.addEdge(lp, lp+1)
+                G.addEdge(lp, i+1)
+                G.addEdge(i+1, i+2)
+                break
             case '*':
+                //    lp          i    i+1  i+2
+                // -> ( -> ... -> ) -> * -> ...
+                //    -----------------^
+                //    ^-----------------
+                //                     -----^
+                G.addEdge(lp, i+1)
+                G.addEdge(i+1, lp)
+                G.addEdge(i+1, i+2)
+                break
             case '+':
-                G.addEdge(i, i+1)
+                //    lp          i    i+1  i+2
+                // -> ( -> ... -> ) -> + -> ...
+                //    ^-----------------
+                //                     -----^
+                G.addEdge(i+1, lp)
+                G.addEdge(i+1, i+2)
                 break
             default:
                 break
