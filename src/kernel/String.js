@@ -1,6 +1,7 @@
 const VeGlob = require('../VeGlob.js')
 const VeRegex = require('../VeRegex.js')
 const VeWildcard = require('../VeWildcard.js')
+const {inspect} = require('../VeUtil.js')
 const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
@@ -136,15 +137,16 @@ exports.initContext = (context) => {
         if (flag instanceof Sym) {
             switch (flag.value()) {
             case 'INSPECT':
-                console.log(wc)
+                console.error(inspect(wc))
                 break
             case 'REGEX':
-                console.log(wc.toRegex())
+                console.error(inspect(wc.toRegex()))
                 break
             case 'DOT':
-                console.log(wc.toDot().trimEnd())
+                console.error(wc.toDot().trimEnd())
                 break
             default:
+                console.error(`Unknown flag: ${flag.value()}`)
                 break
             }
         }
@@ -168,15 +170,16 @@ exports.initContext = (context) => {
         if (flag instanceof Sym) {
             switch (flag.value()) {
             case 'INSPECT':
-                console.log(glob)
+                console.error(inspect(glob))
                 break
             case 'REGEX':
-                console.log(glob.toRegex())
+                console.error(inspect(glob.toRegex()))
                 break
             case 'DOT':
-                console.log(glob.toDot().trimEnd())
+                console.error(glob.toDot().trimEnd())
                 break
             default:
+                console.error(`Unknown flag: ${flag.value()}`)
                 break
             }
         }
@@ -200,12 +203,13 @@ exports.initContext = (context) => {
         if (flag instanceof Sym) {
             switch (flag.value()) {
             case 'INSPECT':
-                console.log(re)
+                console.error(inspect(re))
                 break
             case 'DOT':
-                console.log(re.toDot().trimEnd())
+                console.error(re.toDot().trimEnd())
                 break
             default:
+                console.error(`Unknown flag: ${flag.value()}`)
                 break
             }
         }

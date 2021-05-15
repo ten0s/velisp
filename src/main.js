@@ -3,6 +3,7 @@ const os = require('os')
 const path = require('path')
 const {Command} = require('commander')
 const VeSysInfo = require('./VeSysInfo.js')
+const {inspect} = require('./VeUtil.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
 const config = require('../package.json')
@@ -133,7 +134,7 @@ function startRepl(config, action, context) {
                     try {
                         const result = action(input, context)
                         if (result !== null) {
-                            console.log(result)
+                            console.log(inspect(result))
                         }
                     } catch (e) {
                         console.error(e)

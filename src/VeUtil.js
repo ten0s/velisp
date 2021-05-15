@@ -73,6 +73,14 @@ if (!String.prototype.replaceAll) {
     }
 }
 
+const inspect = (obj) => {
+    const util = require('util')
+    // Don't show hidden
+    // Show all level
+    // Colorize
+    return util.inspect(obj, false, null, true)
+}
+
 // :: (string) -> bool
 // Determine if the given string is recoverable by adding
 // one or more right parentheses.
@@ -125,5 +133,6 @@ module.exports = {
     find,
     escape,
     unescape,
+    inspect,
     isRecoverableInput,
 }
