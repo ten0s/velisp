@@ -1,6 +1,6 @@
 const QUnit = require('qunit')
 const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Int, Str} = require('../src/VeLispTypes.js')
+const {Int, Str, List} = require('../src/VeLispTypes.js')
 
 const tests = [
     {test: '(apply (defun foo () "foo") (list))', result: new Str('foo')},
@@ -10,6 +10,10 @@ const tests = [
     {test: '(apply (lambda (x) (* x x)) (list 3))', result: new Int(9)},
     {test: '(apply \'(lambda (x) (* x x)) (list 3))', result: new Int(9)},
     {test: '(apply \'+ (list 1 2 3))', result: new Int(6)},
+    {test: '(apply \'append \'((97) (96 44) (98) (96 44) (99)))', result: new List([
+        new Int(97), new Int(96), new Int(44), new Int(98),
+        new Int(96), new Int(44), new Int(99)
+    ])},
 ]
 
 const errors = [
