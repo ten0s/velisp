@@ -106,7 +106,7 @@ class VeRegex {
                     }
 
                     // if end
-                    if (re[j] === ']') {
+                    if (re[j] === ']' && re[j-1] !== '\\') {
                         if (negate) {
                             RE[j] = {
                                 test: (x) => group.indexOf(x) === -1,

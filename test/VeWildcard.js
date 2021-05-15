@@ -223,6 +223,24 @@ QUnit.test('VeWildcard [~-]', assert => {
     assert.ok(CTRLS.every(c => wc.test(c)))
 })
 
+QUnit.test('VeWildcard [`[]', assert => {
+    const wc = new VeWildcard('[`[]')
+    assert.ok(wc.test('['))
+})
+
+QUnit.test('VeWildcard [`]]', assert => {
+    const wc = new VeWildcard('[`]]')
+    assert.ok(wc.test(']'))
+})
+
+QUnit.test('VeWildcard [`[`]]+', assert => {
+    const wc = new VeWildcard('[`[`]]+')
+    assert.ok(wc.test('['))
+    assert.ok(wc.test(']'))
+    assert.ok(wc.test('[]'))
+    assert.ok(wc.test(']['))
+})
+
 QUnit.test('VeWildcard [0-9a-zA-Z]', assert => {
     const wc = new VeWildcard('[0-9a-zA-Z]')
     assert.ok(ALPHAS.every(c => wc.test(c)))
