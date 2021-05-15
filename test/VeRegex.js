@@ -432,17 +432,17 @@ QUnit.test('VeRegex xa?c', assert => {
     assert.notOk(re.test('xabc'))
 })
 
-QUnit.test('VeRegex \\r\\n\\t\\e', assert => {
-    const re = new VeRegex('\\r\\n\\t\\e')
-    assert.ok(re.test('\\r\\n\\t\\e'))
+QUnit.test('VeRegex \\r\\n\\t\\u001b', assert => {
+    const re = new VeRegex('\r\n\t\u001b')
+    assert.ok(re.test('\r\n\t\u001b'))
 })
 
-QUnit.test('VeRegex [\\r\\n\\t\\e]', assert => {
-    const re = new VeRegex('[\\r\\n\\t\\e]')
-    assert.ok(re.test('\\r'))
-    assert.ok(re.test('\\n'))
-    assert.ok(re.test('\\t'))
-    assert.ok(re.test('\\e'))
+QUnit.test('VeRegex [\\r\\n\\t\\u001b]', assert => {
+    const re = new VeRegex('[\r\n\t\u001b]')
+    assert.ok(re.test('\r'))
+    assert.ok(re.test('\n'))
+    assert.ok(re.test('\t'))
+    assert.ok(re.test('\u001b'))
 })
 
 QUnit.test('VeRegex \\**', assert => {

@@ -64,9 +64,6 @@ class VeWildcard {
             case '`':  // escape
                 re.push('\\')
                 break
-            case '\\': // literal /
-                re.push('\\\\')
-                break
             default:
                 re.push(wc[i])
                 break
