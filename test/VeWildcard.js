@@ -79,11 +79,12 @@ QUnit.test('VeWildcard ...', assert => {
 
 QUnit.test('VeWildcard ?', assert => {
     const wc = new VeWildcard('?')
-    assert.notOk(wc.test(''))
     assert.ok(DIGITS.every(c => wc.test(c)))
     assert.ok(ALPHAS.every(c => wc.test(c)))
     assert.ok(NON_ALNUMS.every(c => wc.test(c)))
     assert.ok(CTRLS.every(c => wc.test(c)))
+    // Negative cases
+    assert.notOk(wc.test(''))
 })
 
 QUnit.test('VeWildcard ??', assert => {
@@ -121,7 +122,7 @@ QUnit.test('VeWildcard a?c', assert => {
     assert.notOk(wc.test('abxC'))
 })
 
-QUnit.test('VeWildcard', assert => {
+QUnit.test('VeWildcard a?c*d', assert => {
     const wc = new VeWildcard('a?c*d')
     assert.ok(wc.test('abcd'))
     assert.ok(wc.test('aXcYd'))
@@ -140,6 +141,28 @@ QUnit.test('VeWildcard *.txt', assert => {
 
 QUnit.test('VeWildcard []', assert => {
     const wc = new VeWildcard('[]')
+    assert.notOk(wc.test(''))
+})
+
+// Behaves like '?'
+QUnit.test('VeWildcard [~]', assert => {
+    const wc = new VeWildcard('[~]')
+    assert.ok(DIGITS.every(c => wc.test(c)))
+    assert.ok(ALPHAS.every(c => wc.test(c)))
+    assert.ok(NON_ALNUMS.every(c => wc.test(c)))
+    assert.ok(CTRLS.every(c => wc.test(c)))
+    // Negative cases
+    assert.notOk(wc.test(''))
+})
+
+// Behaves like '?'
+QUnit.test('VeWildcard #,@,.', assert => {
+    const wc = new VeWildcard('#,@,.')
+    assert.ok(DIGITS.every(c => wc.test(c)))
+    assert.ok(ALPHAS.every(c => wc.test(c)))
+    assert.ok(NON_ALNUMS.every(c => wc.test(c)))
+    assert.ok(CTRLS.every(c => wc.test(c)))
+    // Negative cases
     assert.notOk(wc.test(''))
 })
 
@@ -250,7 +273,7 @@ QUnit.test('VeWildcard [0-9a-zA-Z]', assert => {
     assert.ok(CTRLS.every(c => !wc.test(c)))
 })
 
-// Like above
+// Behaves like '[0-9a-zA-Z]'
 QUnit.test('VeWildcard [0-9],[a-z],[A-Z]', assert => {
     const wc = new VeWildcard('[0-9],[a-z],[A-Z]')
     assert.ok(ALPHAS.every(c => wc.test(c)))
@@ -301,4 +324,37 @@ QUnit.test('VeWildcard ab`,cd,ef`,gh', assert => {
     const wc = new VeWildcard('ab`,cd,ef`,gh')
     assert.ok(wc.test('ab,cd'))
     assert.ok(wc.test('ef,gh'))
+})
+
+QUnit.test('VeWildcard [`[`]]+', assert => {
+    const wc = new VeWildcard('[`[`]]+')
+    assert.ok(wc.test('['))
+    assert.ok(wc.test(']'))
+    assert.ok(wc.test('[]'))
+    assert.ok(wc.test(']['))
+})
+
+QUnit.test('VeWildcard [0-9`],`[a-z]', assert => {
+    const wc = new VeWildcard('[0-9`],`[a-z]')
+    assert.ok(DIGITS.every(c => wc.test(c)))
+    assert.ok(LOWER_ALPHAS.every(c => wc.test(c)))
+    assert.ok(['[', ']', ','].every(c => wc.test(c)))
+})
+
+QUnit.test('VeWildcard [0-9],[a-z]', assert => {
+    const wc = new VeWildcard('[0-9],[a-z]')
+    assert.ok(DIGITS.every(c => wc.test(c)))
+    assert.ok(LOWER_ALPHAS.every(c => wc.test(c)))
+    // Negative cases
+    assert.ok(['[', ']', ','].every(c => !wc.test(c)))
+})
+
+QUnit.test('VeWildcard [\\\\[-\\\\]]', assert => {
+    const wc = new VeWildcard('[\\[-\\]]')
+    assert.ok(['[', '\\', ']'].every(c => wc.test(c)))
+    // Negative cases
+    assert.ok(ALPHAS.every(c => !wc.test(c)))
+    assert.ok(DIGITS.every(c => !wc.test(c)))
+    assert.ok(NON_ALNUMS.without(['[', '\\', ']']).every(c => !wc.test(c)))
+    assert.ok(CTRLS.every(c => !wc.test(c)))
 })

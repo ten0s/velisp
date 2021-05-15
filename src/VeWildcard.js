@@ -58,11 +58,14 @@ class VeWildcard {
                     re.push('~')
                 }
                 break
-            case '^': // literal ^
+            case '^':  // literal ^
                 re.push('\\^')
                 break
-            case '`': // escape
+            case '`':  // escape
                 re.push('\\')
+                break
+            case '\\': // literal /
+                re.push('\\\\')
                 break
             default:
                 re.push(wc[i])
@@ -82,11 +85,10 @@ class VeWildcard {
         let acc = []
         let insideGroup = false
         for (let i = 0; i < arr.length; i++) {
-            // TODO: support cases like [\]\[]
-            if (arr[i] === '[') {
+            if (arr[i] === '[' && arr[i-1] !== '`') {
                 insideGroup = true
             }
-            if (arr[i] === ']') {
+            if (arr[i] === ']' && arr[i-1] !== '`') {
                 insideGroup = false
             }
             if (arr[i] === ',' && !insideGroup && arr[i-1] !== '`') {

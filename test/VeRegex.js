@@ -50,7 +50,7 @@ QUnit.test('VeRegex []', assert => {
     assert.notOk(re.test(''))
 })
 
-// Behaves like .
+// Behaves like '.'
 QUnit.test('VeRegex [^]', assert => {
     const re = new VeRegex('[^]')
     assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
@@ -281,6 +281,24 @@ QUnit.test('VeRegex [^abc]', assert => {
 // [^abc]*
 // [^abc]+
 
+QUnit.test('VeRegex [\\\\[]', assert => {
+    const wc = new VeRegex('[\\[]')
+    assert.ok(wc.test('['))
+})
+
+QUnit.test('VeRegex [\\\\]]', assert => {
+    const wc = new VeRegex('[\\]]')
+    assert.ok(wc.test(']'))
+})
+
+QUnit.test('VeRegex [\\\\[\\\\]]+', assert => {
+    const wc = new VeRegex('[\\[\\]]+')
+    assert.ok(wc.test('['))
+    assert.ok(wc.test(']'))
+    assert.ok(wc.test('[]'))
+    assert.ok(wc.test(']['))
+})
+
 QUnit.test('VeRegex .', assert => {
     const re = new VeRegex('.')
     assert.ok(NON_ALNUMS.every(c => re.test(c)))
@@ -414,17 +432,17 @@ QUnit.test('VeRegex xa?c', assert => {
     assert.notOk(re.test('xabc'))
 })
 
-QUnit.test('VeRegex \r\n\t\e', assert => {
-    const re = new VeRegex('\r\n\t\e')
-    assert.ok(re.test('\r\n\t\e'))
+QUnit.test('VeRegex \\r\\n\\t\\e', assert => {
+    const re = new VeRegex('\\r\\n\\t\\e')
+    assert.ok(re.test('\\r\\n\\t\\e'))
 })
 
 QUnit.test('VeRegex [\\r\\n\\t\\e]', assert => {
-    const re = new VeRegex('[\r\n\t\e]')
-    assert.ok(re.test('\r'))
-    assert.ok(re.test('\n'))
-    assert.ok(re.test('\t'))
-    assert.ok(re.test('\e'))
+    const re = new VeRegex('[\\r\\n\\t\\e]')
+    assert.ok(re.test('\\r'))
+    assert.ok(re.test('\\n'))
+    assert.ok(re.test('\\t'))
+    assert.ok(re.test('\\e'))
 })
 
 QUnit.test('VeRegex \\**', assert => {
