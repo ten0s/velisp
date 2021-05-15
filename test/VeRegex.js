@@ -50,6 +50,7 @@ QUnit.test('VeRegex []', assert => {
     assert.notOk(re.test(''))
 })
 
+// Behaves like .
 QUnit.test('VeRegex [^]', assert => {
     const re = new VeRegex('[^]')
     assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
@@ -63,13 +64,13 @@ QUnit.test('VeRegex [^]', assert => {
 
 QUnit.test('VeRegex [^^]', assert => {
     const re = new VeRegex('[^^]')
-    assert.notOk(re.test('^'))
-    // Negative cases
     assert.ok(LOWER_ALPHAS.every(c => re.test(c)))
     assert.ok(UPPER_ALPHAS.every(c => re.test(c)))
     assert.ok(DIGITS.every(c => re.test(c)))
     assert.ok(NON_ALNUMS.without(['^']).every(c => re.test(c)))
     assert.ok(CTRLS.every(c => re.test(c)))
+    // Negative cases
+    assert.notOk(re.test('^'))
 })
 
 QUnit.test('VeRegex [abcdefghijklmnopqrstuvwxyz]', assert => {
@@ -443,7 +444,7 @@ QUnit.test('VeRegex \\.?', assert => {
     assert.notOk(re.test('..'))
 })
 
-QUnit.test('VeRegex', assert => {
+QUnit.test('VeRegex a?c*d', assert => {
     const re = new VeRegex('a?c*d')
     assert.ok(re.test('d'))
 
