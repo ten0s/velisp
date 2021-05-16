@@ -83,13 +83,13 @@ NEWLINE : '\r'? '\n' -> skip ;
 WHITESPACE : [ \t]+ -> skip ;
 
 fragment CHAR
-         : ~["\\\r\n]
+         : ~[\\"\r\n]
          | '\\' ESCAPE_SEQ
          | NEWLINE
          ;
 
 fragment ESCAPE_SEQ
-         : ["\\rnte]
+         : [\\"rnte0] // See VeUtil.js::unescape
          ;
 
 fragment A : [aA] ;

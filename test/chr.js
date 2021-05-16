@@ -3,6 +3,7 @@ const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Str} = require('../src/VeLispTypes.js')
 
 const tests = [
+    {test: '(chr 0)', result: new Str('')},
     {test: '(chr 65)', result: new Str('A')},
     {test: '(chr 66)', result: new Str('B')},
     {test: '(chr 97)', result: new Str('a')},

@@ -46,6 +46,10 @@ QUnit.test('VeUtil unescape', assert => {
 
     assert.equal(unescape(' \\\\ \\" \\r \\n \\t \\e '), ' \\ " \r \n \t \u001b ')
 
+    assert.equal(unescape('\\0'), '')
+    assert.equal(unescape('\\\\0'), '\\0')
+    assert.equal(unescape('abc\\0def'), 'abc')
+
     assert.equal(
         unescape('c:\\\\root\\\\to\\\\name\\\\entry.txt'),
         'c:\\root\\to\\name\\entry.txt'

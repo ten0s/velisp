@@ -8,6 +8,7 @@ const tests = [
     {test: '(strlen "" "")', result: new Int(0)},
     {test: '(strlen "abcd")', result: new Int(4)},
     {test: '(strlen "one" "two" "four")', result: new Int(10)},
+    {test: '(strlen "abc\\0def")', result: new Int(3)},
 ]
 
 const errors = [

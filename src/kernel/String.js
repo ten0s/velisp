@@ -14,7 +14,7 @@ exports.initContext = (context) => {
         }
         const str = ensureType('ascii:', args[0], [Str]).value()
         if (!str.length) {
-            throw new Error('ascii: expected non-empty Str')
+            return new Int(0)
         }
         return new Int(str.charCodeAt())
     }))
@@ -26,6 +26,9 @@ exports.initContext = (context) => {
             throw new Error('chr: too many arguments')
         }
         const int = ensureType('chr:', args[0], [Int]).value()
+        if (int === 0) {
+            return new Str('')
+        }
         return new Str(String.fromCharCode(int))
     }))
     context.setSym('ITOA', new Fun('itoa', ['int'], [], (self, args) => {

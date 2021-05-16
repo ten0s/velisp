@@ -25,8 +25,10 @@ const escape = (s) => {
 const unescape = (s) => {
     const a = Array.from(s)
     //console.log(a)
+    let stop = false
     const b = []
-    for (let i = 0; i < a.length; i++) {
+    for (let i = 0; i < a.length && !stop; i++) {
+        // See VeLisp.g4 ESCAPE_SEQ
         if (a[i] === '\\') {
             switch (a[i+1]) {
             case '\\':
@@ -52,6 +54,10 @@ const unescape = (s) => {
             case 'e':
                 b.push('\u001b')
                 i++
+                break
+            case '0':
+                // simulate null char behavior
+                stop = true
                 break
             default:
                 b.push(a[i+1])
