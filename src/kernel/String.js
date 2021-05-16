@@ -53,6 +53,16 @@ exports.initContext = (context) => {
         } catch (e) {}
         return new Int(0)
     }))
+    // VeLisp Extension
+    context.setSym('FTOA', new Fun('ftoa', ['real'], [], (self, args) => {
+        if (args.length === 0) {
+            throw new Error('ftoa: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('ftoa: too many arguments')
+        }
+        return new Str(ensureType('ftoa:', args[0], [Int, Real]).toString())
+    }))
     context.setSym('ATOF', new Fun('atof', ['str'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('atof: too few arguments')
