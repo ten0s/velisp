@@ -80,11 +80,13 @@ if (!String.prototype.replaceAll) {
 }
 
 const inspect = (obj) => {
+    // https://nodejs.org/api/util.html#util_util_inspect_object_showhidden_depth_colors
     const util = require('util')
-    // Don't show hidden
-    // Show all level
-    // Colorize
-    return util.inspect(obj, false, null, true)
+    return util.inspect(obj, {
+        showHidden: false,
+        depth: null,
+        colors: true,
+    })
 }
 
 // :: (string) -> bool
