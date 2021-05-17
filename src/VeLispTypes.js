@@ -11,7 +11,7 @@ class Bool {
         this.bool = bool
     }
 
-    // :: () -> Sym | nil
+    // :: () -> Sym | Nil
     type() {
         if (this.bool) {
             return new Sym('sym')
@@ -51,11 +51,26 @@ class Bool {
     }
 
     // :: (Any) -> Bool
-    eq(that) {
+    equalTo(that) {
+        return this.eq(that)
+    }
+
+    // :: (Any) -> Bool
+    lessThan(that) {
         if (that instanceof Bool) {
-            return new Bool(this.bool === that.bool)
+            return new Bool(this.bool < that.bool)
         }
-        return new Bool(false)
+        if (that instanceof List) {
+            if (that.isNil()) {
+                return new Bool(!this.isNil())
+            }
+        }
+        return new Bool(true)
+    }
+
+    // :: (Any) -> Bool
+    eq(that) {
+        return this.equal(that)
     }
 
     // :: (Any) -> Bool
@@ -165,18 +180,17 @@ class Int {
         throw new Error(`Not implemented (- ${this} ${that})`)
     }
 
-    // TODO: support string
-    equalTo(that) {
-        if (that instanceof Int) {
-            return new Bool(this.int === that.int)
-        }
-        if (that instanceof Real) {
-            return new Bool(this.int === that.real)
-        }
-        throw new Error(`Not implemented (= ${this} ${that})`)
+    // :: () -> Int
+    bitwiseNot() {
+        return new Int(~this.int)
     }
 
-    // TODO: support string
+    // :: (Any) -> Bool
+    equalTo(that) {
+        return this.eq(that)
+    }
+
+    // :: (Any) -> Bool
     lessThan(that) {
         if (that instanceof Int) {
             return new Bool(this.int < that.int)
@@ -184,12 +198,7 @@ class Int {
         if (that instanceof Real) {
             return new Bool(this.int < that.real)
         }
-        throw new Error(`Not implemented (< ${this} ${that})`)
-    }
-
-    // :: () -> Int
-    bitwiseNot() {
-        return new Int(~this.int)
+        throwTypeError('<:', that, [Int, Real])
     }
 
     // :: (Any) -> Bool
@@ -298,18 +307,12 @@ class Real {
         throw new Error(`Not implemented (+ ${this} ${that})`)
     }
 
-    // TODO: support List
+    // :: (Any) -> Bool
     equalTo(that) {
-        if (that instanceof Int) {
-            return new Bool(this.real === that.int)
-        }
-        if (that instanceof Real) {
-            return new Bool(this.real === that.real)
-        }
-        throw new Error(`Not implemented (= ${this} ${that})`)
+        return this.eq(that)
     }
 
-    // TODO: support List
+    // :: (Any) -> Bool
     lessThan(that) {
         if (that instanceof Int) {
             return new Bool(this.real < that.int)
@@ -317,7 +320,7 @@ class Real {
         if (that instanceof Real) {
             return new Bool(this.real < that.real)
         }
-        throw new Error(`Not implemented (< ${this} ${that})`)
+        throwTypeError('<:', that, [Int, Real])
     }
 
     // :: (Any) -> Bool
@@ -394,20 +397,17 @@ class Str {
         return new Str(this.str.toLowerCase())
     }
 
-    // TODO: support Int & Real
+    // :: (Any) -> Bool
     equalTo(that) {
-        if (that instanceof Str) {
-            return new Bool(this.str === that.str)
-        }
-        throw new Error(`Not implemented (= ${this} ${that})`)
+        return this.eq(that)
     }
 
-    // TODO: support Int & Real
+    // :: (Any) -> Bool
     lessThan(that) {
         if (that instanceof Str) {
             return new Bool(this.str < that.str)
         }
-        throw new Error(`Not implemented (< ${this} ${that})`)
+        throwTypeError('<:', that, [Str])
     }
 
     // :: (Any) -> Bool
@@ -453,6 +453,11 @@ class Sym {
     // :: () -> string
     value() {
         return this.sym
+    }
+
+    // :: (Any) -> Bool
+    equalTo(that) {
+        return this.eq(that)
     }
 
     // :: (Any) -> Bool
@@ -535,7 +540,23 @@ class List {
     }
 
     // :: (Any) -> Bool
+    equalTo(that) {
+        return this.eq(that)
+    }
+
+    // :: (Any) -> Bool
+    lessThan(that) {
+        if (that instanceof List) {
+            return new Bool(this.arr < that.arr)
+        }
+        throwTypeError('<:', that, [List])
+    }
+
+    // :: (Any) -> Bool
     eq(that) {
+        if (that.isNil()) {
+            return new Bool(this.isNil())
+        }
         return new Bool(this === that)
     }
 
@@ -601,6 +622,11 @@ class Pair {
     }
 
     // :: (Any) -> Bool
+    equalTo(that) {
+        return this.eq(that)
+    }
+
+    // :: (Any) -> Bool
     eq(that) {
         return new Bool(this === that)
     }
@@ -648,6 +674,11 @@ class Fun {
     }
 
     // :: (Any) -> Bool
+    equalTo(that) {
+        return this.eq(that)
+    }
+
+    // :: (Any) -> Bool
     eq(that) {
         return new Bool(this === that)
     }
@@ -655,7 +686,7 @@ class Fun {
     // :: (Any) -> Bool
     equal(that) {
         if (that instanceof Fun) {
-            return new Bool(this === that)
+            return new Bool(this.toString() === that.toString())
         }
         return new Bool(false)
     }
@@ -867,8 +898,14 @@ function ensureType(prefix, argValue, argTypes) {
             return argValue
         }
     }
+    throwTypeError(prefix, argValue, argTypes)
+}
+
+function throwTypeError(prefix, argValue, argTypes) {
     const typeNames = argTypes.map(type => type.name).join(', ')
-    throw new Error(`${prefix} expected ${typeNames}`)
+    throw new Error(
+        `${prefix} expected ${typeNames}`//, but saw ${argValue.constructor.name}: ${argValue}`
+    )
 }
 
 module.exports = {
@@ -884,4 +921,5 @@ module.exports = {
     FileMode,
     File,
     ensureType,
+    throwTypeError,
 }
