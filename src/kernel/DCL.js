@@ -4,8 +4,6 @@ const VeDclContext = require('../VeDclContext.js')
 const VeDclLoader = require('../VeDclLoader.js')
 const {ListOperation} = require('../VeDclTiles.js')
 
-//const util = require('util')
-
 // global dclId index
 let _dclId = 0
 const _dclFiles = {}
@@ -77,7 +75,6 @@ exports.initContext = (context) => {
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context)
 
         const dclDialogs = VeDclLoader.load(dclFile.value(), context)
-        //console.log(util.inspect(dclDialogs, {showHidden: false, depth: null}));
         const dclMap = {}
         for (const dclDialog of dclDialogs) {
             dclMap[dclDialog.id] = dclDialog
