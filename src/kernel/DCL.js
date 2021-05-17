@@ -108,7 +108,7 @@ exports.initContext = (context) => {
                     _dialogs.push(dclDialog.clone())
                     return withDialog(dialog => {
                         const position = [point.value()[0].value(), point.value()[1].value()]
-                        dialog.gtkInitWidget(action.value(), position, context)
+                        dialog.gtkInitWidget(action.value(), position, self.contexts[self.contexts.length-1])
                         return new Bool(true)
                     })
                 } catch (e) {
@@ -179,7 +179,7 @@ exports.initContext = (context) => {
         //console.log(action.toUnescapedString());
         return withDialog(dialog => {
             try {
-                dialog.actionTile(key.value(), action.value(), context)
+                dialog.actionTile(key.value(), action.value(), self.contexts[self.contexts.length-1])
                 return new Bool(true)
             } catch (e) {
                 console.error(e)
