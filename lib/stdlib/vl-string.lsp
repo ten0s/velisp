@@ -40,3 +40,8 @@
   (vl-string-left-trim
    char-set
    (vl-string-right-trim char-set str)))
+
+(defun vl-string-elt (str pos)
+  ; TODO: assert str is STR
+  ; TODO: assert pos is INT
+  (nth pos (vl-string->list str)))

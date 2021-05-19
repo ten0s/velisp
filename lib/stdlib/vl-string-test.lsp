@@ -42,3 +42,7 @@
                      (vl-string-trim "this is junk" "this is junk Don't call this junk! this is junk"))
    (vlu-assert-equal "Too many spaces"
                      (vl-string-trim " " "   Too many spaces  "))))
+
+(vlu-add-test
+ (defun vl-string-elt-test ()
+   (vlu-assert-equal 70 (vl-string-elt "May the Force be with you" 8))))
