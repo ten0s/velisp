@@ -111,8 +111,8 @@
 (defun %vlu-show-assert-fail-message (expected actual)
   (princ
    (strcat
-    "Expected: " (vl-princ-to-string expected)
-    " but saw: " (vl-princ-to-string actual)
+    "Expected: " (vl-prin1-to-string expected)
+    " but saw: " (vl-prin1-to-string actual)
     EOL)))
 
 (defun %vlu-show-test-result-message (test-fn)
