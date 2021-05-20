@@ -7,6 +7,9 @@ const tests = [
     {test: '(mapcar \'+ ())', result: new List([])},
     {test: '(mapcar \'+ \'())', result: new List([])},
 
+    {test: '(mapcar \'(lambda (x) x) \'(1 2 3))', result: new List([
+        new Int(1), new Int(2), new Int(3)
+    ])},
     {test: '(mapcar \'+ \'(1 2 3))', result: new List([
         new Int(1), new Int(2), new Int(3)
     ])},

@@ -299,13 +299,6 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
     }
 
-    getValue(expr) {
-        if (expr instanceof Array) {
-            return this.getValue(expr[0])
-        }
-        return expr
-    }
-
     makeFun(name, ctx) {
         const params = []
         const locals = []
@@ -335,10 +328,17 @@ class VeLispEvalVisitor extends VeLispVisitor {
             }
             let result = new Bool(false)
             for (let i = 0; i < ctx.expr().length; i++) {
-                result = self.visit(ctx.expr(i))
+                result = this.getValue(self.visit(ctx.expr(i)))
             }
             return result
         })
+    }
+
+    getValue(expr) {
+        if (expr instanceof Array) {
+            return this.getValue(expr[0])
+        }
+        return expr
     }
 }
 
