@@ -34,27 +34,61 @@ class VeWildcard {
             i++
         }
         const re = []
+        let insideGroup = false
         for (; i < wc.length; i++) {
             switch(wc[i]) {
+            case '[':
+                insideGroup = true
+                re.push(wc[i])
+                break
+            case ']':
+                insideGroup = false
+                re.push(wc[i])
+                break
+
             case '`':  // escape
-                re.push('\\')
-                re.push(wc[i+1])
+                if (wc[i+1] === '`') {
+                    re.push('`')
+                } else {
+                    re.push('\\')
+                    re.push(wc[i+1])
+                }
                 i++
                 break
             case '#':
-                re.push('[0-9]')
+                if (insideGroup) {
+                    re.push('#')
+                } else {
+                    re.push('[0-9]')
+                }
                 break
             case '@':
-                re.push('[a-zA-Z]')
+                if (insideGroup) {
+                    re.push('@')
+                } else {
+                    re.push('[a-zA-Z]')
+                }
                 break
             case '.':
-                re.push('[^a-zA-Z0-9]')
+                if (insideGroup) {
+                    re.push('.')
+                } else {
+                    re.push('[^a-zA-Z0-9]')
+                }
                 break
             case '?':
-                re.push('.')
+                if (insideGroup) {
+                    re.push('?')
+                } else {
+                    re.push('.')
+                }
                 break
             case '*':
-                re.push('.*')
+                if (insideGroup) {
+                    re.push('*')
+                } else {
+                    re.push('.*')
+                }
                 break
             case '~':
                 if (wc[i-1] === '[') { // [~
