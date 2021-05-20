@@ -59,19 +59,19 @@ exports.initContext = (context) => {
             }
             fromEnd = ensureType('vl-string-position: `from-end-p`', args[3], [Bool]).value()
         }
-        let shifted = string
+        let suffix = string
         if (startPos > 0) {
-            shifted = string.slice(startPos)
+            suffix = string.slice(startPos)
         }
         if (!fromEnd) {
-            for (let i = 0; i < shifted.length; i++) {
-                if (shifted.charCodeAt(i) === code) {
+            for (let i = 0; i < suffix.length; i++) {
+                if (suffix.charCodeAt(i) === code) {
                     return new Int(i + startPos)
                 }
             }
         } else {
-            for (let i = shifted.length - 1; i >= 0; i--) {
-                if (shifted.charCodeAt(i) === code) {
+            for (let i = suffix.length - 1; i >= 0; i--) {
+                if (suffix.charCodeAt(i) === code) {
                     return new Int(i + startPos)
                 }
             }
@@ -94,11 +94,11 @@ exports.initContext = (context) => {
                 throw new Error('vl-string-search: `start-pos` expected non-negative Int')
             }
         }
-        let shifted = string
+        let suffix = string
         if (startPos > 0) {
-            shifted = string.slice(startPos)
+            suffix = string.slice(startPos)
         }
-        const pos = shifted.indexOf(pattern)
+        const pos = suffix.indexOf(pattern)
         if (pos >= 0) {
             return new Int(pos + startPos)
         }
