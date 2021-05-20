@@ -36,6 +36,11 @@ class VeWildcard {
         const re = []
         for (; i < wc.length; i++) {
             switch(wc[i]) {
+            case '`':  // escape
+                re.push('\\')
+                re.push(wc[i+1])
+                i++
+                break
             case '#':
                 re.push('[0-9]')
                 break
@@ -60,9 +65,6 @@ class VeWildcard {
                 break
             case '^':  // literal ^
                 re.push('\\^')
-                break
-            case '`':  // escape
-                re.push('\\')
                 break
             default:
                 re.push(wc[i])
