@@ -104,4 +104,30 @@ exports.initContext = (context) => {
         }
         return new Bool(false)
     }))
+    context.setSym('VL-STRING-SUBST', new Fun('vl-string-subst', ['new-str', 'pattern', 'str', '[start-pos]'], [], (self, args) => {
+        if (args.length < 3) {
+            throw new Error('vl-string-subst: too few arguments')
+        }
+        if (args.length > 4) {
+            throw new Error('vl-string-subst: too many arguments')
+        }
+        const newstr = ensureType('vl-string-subst: `new-str`', args[0], [Str]).value()
+        const pattern = ensureType('vl-string-subst: `pattern`', args[1], [Str]).value()
+        const string = ensureType('vl-string-subst: `str`', args[2], [Str]).value()
+        let startPos = 0
+        if (args.length === 4) {
+            startPos = ensureType('vl-string-subst: `start-pos`', args[3], [Int]).value()
+            if (startPos < 0) {
+                throw new Error('vl-string-subst: `start-pos` expected non-negative Int')
+            }
+        }
+        let prefix = ''
+        let suffix = string
+        if (startPos > 0) {
+            prefix = string.slice(0, startPos)
+            suffix = string.slice(startPos)
+        }
+        suffix = suffix.replace(pattern, newstr)
+        return new Str(prefix + suffix)
+    }))
 }
