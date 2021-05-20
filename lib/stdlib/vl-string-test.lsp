@@ -46,3 +46,14 @@
 (vlu-add-test
  (defun vl-string-elt-test ()
    (vlu-assert-equal 70 (vl-string-elt "May the Force be with you" 8))))
+
+(vlu-add-test
+ (defun vl-string-translate-test ()
+   (vlu-assert-equal "A is a, B is b, C is C"
+                     (vl-string-translate "" "" "A is a, B is b, C is C"))
+   (vlu-assert-equal "A is a, B is b, C is C"
+                     (vl-string-translate "abcABC" "" "A is a, B is b, C is C"))
+   (vlu-assert-equal "A is a, B is b, C is C"
+                     (vl-string-translate "" "abcABC" "A is a, B is b, C is C"))
+   (vlu-assert-equal "1 is 1, 2 is 2, 3 is 3"
+                     (vl-string-translate "abcABC" "123123" "A is a, B is b, C is C"))))

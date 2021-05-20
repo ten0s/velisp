@@ -45,3 +45,17 @@
   ; TODO: assert str is STR
   ; TODO: assert pos is INT
   (nth pos (vl-string->list str)))
+
+(defun vl-string-translate (src-set dst-set str / set-list translate)
+  ; TODO: assert src-set is STR
+  ; TODO: assert dst-set is STR
+  ; TODO: assert str is STR
+  (setq set-list
+        (mapcar 'cons
+                (vl-string->list src-set)
+                (vl-string->list dst-set)))
+  (defun translate (from / to)
+    (setq to (assoc from set-list))
+    (if to (cdr to) from))
+  (vl-list->string
+   (mapcar 'translate (vl-string->list str))))
