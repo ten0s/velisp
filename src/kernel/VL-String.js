@@ -29,6 +29,51 @@ exports.initContext = (context) => {
         }
         return new Str(arg.toString())
     }))
+    context.setSym('VL-STRING-MISMATCH', new Fun('vl-string-mismatch', ['str1', 'str1', '[pos1]', '[pos2]', '[ignore-case-p]'], [], (self, args) => {
+        if (args.length < 2) {
+            throw new Error('vl-string-mismatch: too few arguments')
+        }
+        if (args.length > 5) {
+            throw new Error('vl-string-mismatch: too many arguments')
+        }
+        let str1 = ensureType('vl-string-mismatch: `str1`', args[0], [Str]).value()
+        let str2 = ensureType('vl-string-mismatch: `str2`', args[1], [Str]).value()
+        let pos1 = 0
+        let pos2 = 0
+        let icase = false
+        if (args.length > 2) {
+            pos1 = ensureType('vl-string-mismatch: `pos1`', args[2], [Int]).value()
+            if (pos1 < 0) {
+                throw new Error('vl-string-mismatch: `pos1` expected non-negative Int')
+            }
+        }
+        if (args.length > 3) {
+            pos2 = ensureType('vl-string-mismatch: `pos2`', args[3], [Int]).value()
+            if (pos2 < 0) {
+                throw new Error('vl-string-mismatch: `pos2` expected non-negative Int')
+            }
+        }
+        if (args.length > 4) {
+            icase = ensureType('vl-string-mismatch: `ignore-case-p`', args[4], [Bool]).value()
+        }
+        if (icase) {
+            str1 = str1.toLowerCase()
+            str2 = str2.toLowerCase()
+        }
+        if (pos1 > 0) {
+            str1 = str1.slice(pos1)
+        }
+        if (pos2 > 0) {
+            str2 = str2.slice(pos2)
+        }
+        const len = Math.min(str1.length, str2.length)
+        for (let i = 0; i < len; i++) {
+            if (str1.charCodeAt(i) !== str2.charCodeAt(i)) {
+                return new Int(i)
+            }
+        }
+        return new Int(len)
+    }))
     context.setSym('VL-STRING-POSITION', new Fun('vl-string-position', ['char-code', 'string', '[start-pos [from-end-p]]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-string-position: too few arguments')
