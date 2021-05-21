@@ -1,5 +1,5 @@
 const {TestRunner} = require('./test-runner.js')
-const {Bool, Int} = require('../src/VeLispTypes.js')
+const {Int} = require('../src/VeLispTypes.js')
 
 TestRunner.run({
     name: 'vl-string-mismatch',
