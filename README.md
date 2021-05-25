@@ -69,6 +69,11 @@ REPL history.
 * VELISP_REPL_HISTORY_SIZE: Controls how many lines of history will be persisted
 if history is available. Must be a positive number. Default: 1000.
 
+## Function References
+
+* [AutoLISP Functions](AutoLISP-Functions.md)
+* [DCL Functions](DCL-Functions.md)
+
 ## Create Linux, Windows and MacOS executables that can be run without Node.js installed
 
 
