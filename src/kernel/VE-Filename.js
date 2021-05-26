@@ -3,14 +3,14 @@ const {Sym, Str, List, Pair, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     // VeLisp Extension
-    context.setSym('VE-FILENAME-PARSE', new Fun('ve-filename-parse', ['filename'], [], (self, args) => {
+    context.setSym('FILENAME-PARSE', new Fun('filename-parse', ['filename'], [], (self, args) => {
         if (args.length === 0) {
-            throw new Error('ve-filename-parse: too few arguments')
+            throw new Error('filename-parse: too few arguments')
         }
         if (args.length > 1) {
-            throw new Error('ve-filename-parse: too many arguments')
+            throw new Error('filename-parse: too many arguments')
         }
-        const filename = ensureType('ve-filename-parse:', args[0], [Str]).value()
+        const filename = ensureType('filename-parse:', args[0], [Str]).value()
         const parsed = path.win32.parse(filename)
         return new List([
             new Pair(new Sym('root'), new Str(parsed['root'])),

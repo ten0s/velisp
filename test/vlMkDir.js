@@ -10,10 +10,10 @@ TestRunner.run({
     },
 
     teardown: () => {
-        evaluate('(ve-rmdir "d1/a/b")')
-        evaluate('(ve-rmdir "d1/a")')
-        evaluate('(ve-rmdir "d1")')
-        evaluate('(ve-rmdir "d2")')
+        evaluate('(rmdir "d1/a/b")')
+        evaluate('(rmdir "d1/a")')
+        evaluate('(rmdir "d1")')
+        evaluate('(rmdir "d2")')
     },
 
     tests: [

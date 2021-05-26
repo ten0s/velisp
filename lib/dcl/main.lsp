@@ -23,7 +23,7 @@
   (princ  (strcat "  : paragraph {             " EOL) file)
   (princ  (strcat "    alignment = centered;   " EOL) file)
 
-  (foreach line (ve-string-split EOL message)
+  (foreach line (split EOL message)
            (princ  (strcat "    : text_part  {         " EOL) file)
            (princ  (strcat "      label = \"" line "\";" EOL) file)
            (princ  (strcat "      alignment = centered;" EOL) file)

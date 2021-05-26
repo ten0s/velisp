@@ -3,14 +3,14 @@ const {Bool, Str, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     // VeLisp Extension
-    context.setSym('VE-RMDIR', new Fun('ve-rmdir', ['dirname'], [], (self, args) => {
+    context.setSym('RMDIR', new Fun('rmdir', ['dirname'], [], (self, args) => {
         if (args.length === 0) {
-            throw new Error('ve-rmdir: too few arguments')
+            throw new Error('rmdir: too few arguments')
         }
         if (args.length > 1) {
-            throw new Error('ve-rmdir: too many arguments')
+            throw new Error('rmdir: too many arguments')
         }
-        const dirname = ensureType('ve-rmdir:', args[0], [Str]).value()
+        const dirname = ensureType('rmdir:', args[0], [Str]).value()
         try {
             fs.rmdirSync(dirname)
             return new Bool(true)

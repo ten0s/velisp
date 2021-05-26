@@ -7,7 +7,7 @@ $ node --inspect-brk src/main.js
 ## How to see VeLisp extensions?
 
 ```
-$ grep -A1 'VeLisp Extension' {lib,src}/**/*
+$ grep 'VeLisp Extension' AutoLISP-Functions.md DCL-Functions.md
 ```
 
 ## How to see parse tree?

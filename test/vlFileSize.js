@@ -12,7 +12,7 @@ TestRunner.run({
 
     teardown: () => {
         evaluate('(vl-file-delete "f1")')
-        evaluate('(ve-rmdir "d1")')
+        evaluate('(rmdir "d1")')
     },
 
     tests: [

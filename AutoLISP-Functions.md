@@ -49,6 +49,7 @@
 | (cvunit value from to) | Converts a value from one unit of measurement to another | Expected in v0.8.0 |
 | (distof string [mode]) | Converts a string that represents a real (floating-point) value into a real value | Expected in v0.8.0 |
 | (itoa int) | Returns the conversion of an integer into a string | |
+| (ftoa int) | Returns the conversion of a real into a string | VeLisp Extension |
 | (rtos number [mode [precision]]) | Converts a number into a string | v0.8.0 |
 | (trans pt from to [disp]) | Translates a point (or a displacement) from one coordinate system to another | Expected in v0.8.0 |
 
@@ -100,12 +101,18 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
+| (chdir dirname) | Changes current working directory | VeLisp Extension |
 | (close file-desc) | Closes an open file | |
+| (cwd) | Returns current working directory | VeLisp Extension |
 | (findfile filename) | Searches the AutoCAD library path for the specified file | Expected in vTBD |
 | (findtrustedfile filename) | Searches the AutoCAD trusted file paths for the specified file | Expected in vTBD |
+| (homedir) | Returns user's home directory | VeLisp Extension |
 | (open filename mode) | Opens a file for access by the AutoLISP I/O functions | |
 | (read-char [file-desc]) | Returns the decimal ASCII code representing the character read from the keyboard input buffer or from an open file | |
 | (read-line [file-desc]) | Reads a string from the keyboard or from an open file | |
+| (tmpdir) | Returns user's temp directory | VeLisp Extension |
+| (filename-parse filename) | Returns the root, the name, the directory and the extension from a file name | VeLisp Extension |
+| (rmdir dirname) | Removes directory | VeLisp Extension |
 | (vl-directory-files [ directory pattern directories]) | Lists all files in a given directory | |
 | (vl-file-copy "source-filename" "destination-filename" [append]) | Copies or appends the contents of one file to another file | |
 | (vl-file-delete "filename") | Deletes a file | |
@@ -154,6 +161,7 @@
 | (cdr lst) | Returns the specified list, except for the first element of the list | |
 | (cons new-first-element lst) | The basic list constructor | |
 | (foreach name lst [expr ...]) | Evaluates expressions for all members of a list | |
+| (join delim lst) | Joins a list using the delimiter | VeLisp Extension: Expected in v0.6.0 |
 | (last lst) | Returns the last element in a list | |
 | (length lst) | Returns an integer indicating the number of elements in a list | |
 | (list [expr ...]) | Takes any number of expressions and combines them into one list | |
@@ -193,7 +201,10 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
-| (read [string]) | Returns the first list or atom obtained from a string | |
+| (globmatch string pattern [flag]) | Performs a glob pattern match on a string | VeLisp Extension |
+| (read [string]) | Returns the first list or atom obtained from a string | Expected in vTBD |
+| (rematch string pattern [flag]) | Performs a regular expression pattern match on a string | VeLisp Extension |
+| (split delim str) | Splits a string using the delimiter | VeLisp Extension |
 | (strcase string [which]) | Returns a string where all alphabetic characters have been converted to uppercase or lowercase | |
 | (strcat [string1 [string2 ...]) | Returns a string that is the concatenation of multiple strings | |
 | (strlen [string ...]) | Returns an integer that is the number of characters in a string | |
@@ -210,7 +221,7 @@
 | (vl-string-subst new-str pattern string [start-pos]) | Substitutes one string for another, within a string | |
 | (vl-string-translate source-set dest-set str) | Replaces characters in a string with a specified set of characters | |
 | (vl-string-trim char-set str) | Removes the specified characters from the beginning and end of a string | |
-| (wcmatch string pattern) | Performs a wild-card pattern match on a string | |
+| (wcmatch string pattern [flag]) | Performs a wild-card pattern match on a string | VeLisp Extension: added optional flag |
 
 ### Symbol-Handling Functions Reference
 

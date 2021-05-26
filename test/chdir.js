@@ -14,9 +14,9 @@ TestRunner.run({
 
     teardown: (cwd) => {
         process.chdir(cwd)
-        evaluate('(ve-rmdir "d1/a/b")')
-        evaluate('(ve-rmdir "d1/a")')
-        evaluate('(ve-rmdir "d1")')
+        evaluate('(rmdir "d1/a/b")')
+        evaluate('(rmdir "d1/a")')
+        evaluate('(rmdir "d1")')
     },
 
     tests: [

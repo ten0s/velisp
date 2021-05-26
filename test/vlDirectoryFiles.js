@@ -20,8 +20,8 @@ TestRunner.run({
         evaluate('(vl-file-delete "d1/f3")')
         evaluate('(vl-file-delete "d1/.f2.conf")')
         evaluate('(vl-file-delete "d1/.f1")')
-        evaluate('(ve-rmdir "d1/d2")')
-        evaluate('(ve-rmdir "d1")')
+        evaluate('(rmdir "d1/d2")')
+        evaluate('(rmdir "d1")')
     },
 
     tests: [

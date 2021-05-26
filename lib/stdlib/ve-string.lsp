@@ -1,5 +1,5 @@
 ;; VeLisp Extension
-(defun ve-string-split (delim str / delim-len do-split)
+(defun split (delim str / delim-len do-split)
   ;; Split a string using a delimiter
   (setq delim-len (strlen delim))
   (defun do-split (str / pos)
@@ -11,5 +11,5 @@
       (mapcar 'chr (vl-string->list str))
     (do-split str)))
 
-;; TODO: (defun ve-list-join (delim list))
-;; (ve-list-join "," '("a", "b", "c")) => "abc"
+;; TODO: (defun join (delim list))
+;; (join "," '("a", "b", "c")) => "abc"
