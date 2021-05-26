@@ -218,7 +218,7 @@
 |----------|-------------|------|
 | (atom item) | Verifies that an item is an atom | |
 | (atoms-family format [symlist]) | Returns a list of the currently defined symbols | Expected in v0.6.0 |
-| (boundp sym) | Verifies whether a value is bound to a symbol | Expected in v0.6.0 |
+| (boundp sym) | Verifies whether a value is bound to a symbol | Symbol is not automatically created if unbound |
 | (not item) | Verifies that an item evaluates to nil | |
 | (null item) | Verifies that an item is bound to nil | |
 | (numberp item) | Verifies that an item is a real or an integer | |
