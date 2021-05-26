@@ -49,7 +49,7 @@
 | (cvunit value from to) | Converts a value from one unit of measurement to another | Expected in v0.8.0 |
 | (distof string [mode]) | Converts a string that represents a real (floating-point) value into a real value | Expected in v0.8.0 |
 | (itoa int) | Returns the conversion of an integer into a string | |
-| (ftoa int) | Returns the conversion of a real into a string | VeLisp Extension |
+| (ftoa real) | Returns the conversion of a real into a string | VeLisp Extension |
 | (rtos number [mode [precision]]) | Converts a number into a string | v0.8.0 |
 | (trans pt from to [disp]) | Translates a point (or a displacement) from one coordinate system to another | Expected in v0.8.0 |
 
@@ -86,10 +86,10 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
-| (*error* string) | A user-definable error-handling function | Expected in v0.7.0 |
-| (*pop-error-mode*) | Error-handling function that ends the previous call to *push-error-using-command* or *push-error-using-stack* | Expected in v0.7.0 |
-| (*push-error-using-command*) | Error-handling function that indicates the use of the command function within a custom *error* handler | Expected in v0.7.0 |
-| (*push-error-using-stack*) | Error-handling function that indicates the use of variables from the AutoLISP stack within a custom *error* handler | Expected in v0.7.0 |
+| (\*error\* string) | A user-definable error-handling function | Expected in v0.7.0 |
+| (\*pop-error-mode\*) | Error-handling function that ends the previous call to \*push-error-using-command\* or \*push-error-using-stack\* | Expected in v0.7.0 |
+| (\*push-error-using-command\*) | Error-handling function that indicates the use of the command function within a custom \*error\* handler | Expected in v0.7.0 |
+| (\*push-error-using-stack\*) | Error-handling function that indicates the use of variables from the AutoLISP stack within a custom \*error\* handler | Expected in v0.7.0 |
 | (alert string) | Displays an alert dialog box with the error or warning message passed as a string | |
 | (exit) | Forces the current application to quit | |
 | (quit) | Forces the current application to quit | |
@@ -112,7 +112,7 @@
 | (read-line [file-desc]) | Reads a string from the keyboard or from an open file | |
 | (tmpdir) | Returns user's temp directory | VeLisp Extension |
 | (filename-parse filename) | Returns the root, the name, the directory and the extension from a file name | VeLisp Extension |
-| (rmdir dirname) | Removes directory | VeLisp Extension |
+| (rmdir dirname) | Removes a directory | VeLisp Extension |
 | (vl-directory-files [ directory pattern directories]) | Lists all files in a given directory | |
 | (vl-file-copy "source-filename" "destination-filename" [append]) | Copies or appends the contents of one file to another file | |
 | (vl-file-delete "filename") | Deletes a file | |
