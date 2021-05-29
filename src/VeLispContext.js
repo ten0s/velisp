@@ -54,6 +54,15 @@ class VeLispContext {
     getSym(name) {
         return this.getVar(name)
     }
+
+    // :: () -> [string]
+    getSyms() {
+        let syms = Object.keys(this.symbols).map(s => s.toUpperCase())
+        if (this.parent) {
+            syms = syms.concat(this.parent.getSyms())
+        }
+        return syms
+    }
 }
 
 module.exports = VeLispContext
