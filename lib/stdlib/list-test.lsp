@@ -157,4 +157,14 @@
    (vlu-assert-equal nil (assoc 'four '((one 1) (two 2) (three 3))))
    (vlu-assert-equal '(one . 1) (assoc 'one '((one . 1) (two . 2) (three . 3))))
    (vlu-assert-equal '(three . 3) (assoc 'three '((one . 1) (two . 2) (three . 3))))
-   (vlu-assert-equal nil (assoc 'four '((one . 1) (two . 2) (three . 3)))))))
+   (vlu-assert-equal nil (assoc 'four '((one . 1) (two . 2) (three . 3))))))
+
+(vlu-add-test
+ (defun subst-test ()
+   (vlu-assert-equal nil (subst 'one 1 '()))
+   (vlu-assert-equal '(one) (subst 'one 1 '(1)))
+   (vlu-assert-equal '(one 2 3) (subst 'one 1 '(1 2 3)))
+   (vlu-assert-equal '(1 two 3) (subst 'two 2 '(1 2 3)))
+   (vlu-assert-equal '(1 2 three) (subst 'three 3 '(1 2 3)))
+   (vlu-assert-equal '(1 2 3) (subst 'four 4 '(1 2 3)))
+   (vlu-assert-equal '(1 two 3) (subst 'two '(2) '(1 (2) 3)))))

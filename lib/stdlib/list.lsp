@@ -126,3 +126,12 @@
   (cond ((null alst) nil)
         ((equal elm (caar alst)) (car alst))
         (t (assoc elm (cdr alst)))))
+
+(defun subst (newitem olditem lst)
+  (cond ((null lst) nil)
+        ((equal (car lst) olditem)
+         (cons newitem
+               (subst newitem olditem (cdr lst))))
+        (t
+         (cons (car lst)
+               (subst newitem olditem (cdr lst))))))
