@@ -7,10 +7,15 @@ const tests = [
     {test: '(Foreach n (list 1 2 3))', result: new Bool(false)},
     {test: '(FOreach n (list 1 2 3))', result: new Bool(false)},
     {test: '(FOReach n (list 1 2 3))', result: new Bool(false)},
-    {test: '(FOREach n (list 1 2 3))', result: new Bool(false)},    
+    {test: '(FOREach n (list 1 2 3))', result: new Bool(false)},
     {test: '(FOREAch n (list 1 2 3))', result: new Bool(false)},
     {test: '(FOREACh n (list 1 2 3))', result: new Bool(false)},
     {test: '(FOREACH n (list 1 2 3))', result: new Bool(false)},
+
+    {test: '(foreach n (list))', result: new Bool(false)},
+    {test: '(foreach n \'())', result: new Bool(false)},
+    {test: '(foreach n ())', result: new Bool(false)},
+    {test: '(foreach n nil)', result: new Bool(false)},
 
     {test: '(foreach n (list 1 2 3) n)', result: new Int(3)},
     {test: '(foreach n (list 1 2 3) N)', result: new Int(3)},

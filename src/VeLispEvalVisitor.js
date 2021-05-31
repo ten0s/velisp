@@ -47,6 +47,9 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const name = this.visit(ctx.foreachName().ID()).toUpperCase()
         const list = this.getValue(this.visit(ctx.foreachList()))
         //console.error(`foreach: ${name} ${list}`);
+        if (list.isNil()) {
+            return new Bool(false)
+        }
         if (list instanceof List) {
             let result = new Bool(false)
             // Push new context with 'name' = nil
@@ -67,7 +70,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop()
             return result
         }
-        throw new Error('foreach: list must be List')
+        throw new Error('foreach: `list` expected List')
     }
 
     visitIf(ctx) {
