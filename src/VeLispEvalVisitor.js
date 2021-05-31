@@ -73,6 +73,21 @@ class VeLispEvalVisitor extends VeLispVisitor {
         throw new Error('foreach: `list` expected List')
     }
 
+    visitFunction(ctx) {
+        const expr = ctx.expr()
+        const str = expr.getText()
+        if (expr instanceof VeLispParser.IdContext) {
+            //console.error('ID:', str);
+            return new Sym(str)
+        }
+        if (expr instanceof VeLispParser.LambdaContext) {
+            return this.visitLambda(expr)
+        }
+        //console.error(str);
+        //console.error(ctx.expr());
+        throw new Error('function: expected Fun')
+    }
+
     visitIf(ctx) {
         const test = this.getValue(this.visit(ctx.ifTest()))
         //console.error('if test:', test);
@@ -175,6 +190,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
                    expr instanceof VeLispParser.CondContext ||
                    expr instanceof VeLispParser.DefunContext ||
                    expr instanceof VeLispParser.ForeachContext ||
+                   expr instanceof VeLispParser.FunctionContext ||
                    expr instanceof VeLispParser.IfContext ||
                    expr instanceof VeLispParser.OrContext ||
                    expr instanceof VeLispParser.PrognContext ||

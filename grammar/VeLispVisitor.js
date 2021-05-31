@@ -42,6 +42,12 @@ VeLispVisitor.prototype.visitForeach = function(ctx) {
 };
 
 
+// Visit a parse tree produced by VeLispParser#function.
+VeLispVisitor.prototype.visitFunction = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by VeLispParser#if.
 VeLispVisitor.prototype.visitIf = function(ctx) {
   return this.visitChildren(ctx);

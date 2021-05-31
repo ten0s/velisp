@@ -9,6 +9,7 @@ expr :
      | '(' COND condTestResult* ')'                                               # cond
      | '(' DEFUN funName '(' funParam* ( ' / ' funLocal* )? ')' expr+ ')'         # defun
      | '(' FOREACH foreachName foreachList expr* ')'                              # foreach
+     | '(' FUNCTION expr ')'                                                      # function
      | '(' IF ifTest ifThen ifElse? ')'                                           # if
      | '(' LAMBDA '(' funParam* ( ' / ' funLocal* )? ')' expr+ ')'                # lambda
      | '(' OR expr* ')'                                                           # or
@@ -60,6 +61,7 @@ AND : A N D ;
 COND : C O N D ;
 DEFUN : D E F U N ;
 FOREACH : F O R E A C H ;
+FUNCTION : F U N C T I O N ;
 IF : I F ;
 LAMBDA : L A M B D A ;
 OR : O R ;
