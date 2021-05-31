@@ -161,7 +161,7 @@
 | (cdr lst) | Returns the specified list, except for the first element of the list | |
 | (cons new-first-element lst) | The basic list constructor | |
 | (foreach name lst [expr ...]) | Evaluates expressions for all members of a list | |
-| (join delim lst) | Joins a list using the delimiter | VeLisp Extension: Expected in v0.6.0 |
+| (join delim lst) | Joins a list using the delimiter | VeLisp Extension |
 | (last lst) | Returns the last element in a list | |
 | (length lst) | Returns an integer indicating the number of elements in a list | |
 | (list [expr ...]) | Takes any number of expressions and combines them into one list | |
