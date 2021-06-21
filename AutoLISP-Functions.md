@@ -172,8 +172,8 @@
 | (reverse lst) | Returns a list with its elements reversed | |
 | (subst newitem olditem lst) | Searches a list for an old item and returns a copy of the list with a new item substituted in place of every occurrence of the old item | |
 | (vl-consp list) | Determines whether or not a list is nil | |
-| (vl-every predicate-function list [ more-lists ...]) | Checks whether the predicate is true for every element combination | Expected in v0.6.0 |
-| (vl-list* object [more-objects ...]) | Constructs and returns a list | Expected in v0.6.0 |
+| (vl-every predicate-function list [list ...]) | Checks whether the predicate is true for every element combination | Expected in v0.6.0 |
+| (vl-list* object [object ...]) | Constructs and returns a list | |
 | (vl-list->string char-codes-list) | Combines the characters associated with a list of integers into a string | |
 | (vl-list-length list-or-cons-object) | Calculates list length of a true list | Expected in v0.6.0 |
 | (vl-member-if predicate-function list) | Determines whether the predicate is true for one of the list members | Expected in v0.6.0 |

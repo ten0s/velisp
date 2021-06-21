@@ -17,4 +17,27 @@ exports.initContext = (context) => {
         }
         return new Bool(false)
     }))
+    context.setSym('VL-LIST*', new Fun('vl-list*', ['object', '[object ...]'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('vl-list*: too few arguments')
+        }
+        if (args.length === 1) {
+            return args[0]
+        }
+        let result = undefined
+        let last = args[args.length-1]
+        let prelast = args[args.length-2]
+        if (last.isNil()) {
+            result = new List([prelast])
+        }
+        if (last instanceof List || last instanceof Pair) {
+            result = last.cons(prelast)
+        } else {
+            result = new Pair(prelast, last)
+        }
+        for (let i = args.length-3; i >= 0; i--) {
+            result = result.cons(args[i])
+        }
+        return result
+    }))
 }
