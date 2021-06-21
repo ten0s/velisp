@@ -1,4 +1,4 @@
-const {Bool, List, Pair, Fun} = require('../VeLispTypes.js')
+const {Bool, Int, List, Pair, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     context.setSym('VL-CONSP', new Fun('vl-consp', ['list'], [], (self, args) => {
@@ -39,5 +39,27 @@ exports.initContext = (context) => {
             result = result.cons(args[i])
         }
         return result
+    }))
+    context.setSym('VL-LIST-LENGTH', new Fun('vl-list-length', ['list-or-cons-object'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('vl-list-length: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('vl-list-length: too many arguments')
+        }
+        const arg = args[0]
+        if (arg.isNil()) {
+            return new Int(0)
+        }
+        if (arg instanceof List) {
+            if (arg.last() instanceof Pair) {
+                return new Bool(false)
+            }
+            return new Int(arg.length())
+        }
+        if (arg instanceof Pair) {
+            return new Bool(false)
+        }
+        ensureType('vl-list-length:', arg, [List, Pair])
     }))
 }

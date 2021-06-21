@@ -175,7 +175,7 @@
 | (vl-every predicate-function list [list ...]) | Checks whether the predicate is true for every element combination | Expected in v0.6.0 |
 | (vl-list* object [object ...]) | Constructs and returns a list | |
 | (vl-list->string char-codes-list) | Combines the characters associated with a list of integers into a string | |
-| (vl-list-length list-or-cons-object) | Calculates list length of a true list | Expected in v0.6.0 |
+| (vl-list-length list-or-cons-object) | Calculates list length of a true list | |
 | (vl-member-if predicate-function list) | Determines whether the predicate is true for one of the list members | Expected in v0.6.0 |
 | (vl-member-if-not predicate-function list) | Determines whether the predicate is nil for one of the list members | Expected in v0.6.0 |
 | (vl-position symbol list) | Returns the index of the specified list item | Expected in v0.6.0 |

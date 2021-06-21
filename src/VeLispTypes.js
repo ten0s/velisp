@@ -528,6 +528,11 @@ class List {
         return this.arr.length
     }
 
+    // :: () -> Any
+    last() {
+        return this.arr[this.arr.length-1]
+    }
+
     // :: (List) -> List
     concat(that) {
         if (that.isNil()) {
