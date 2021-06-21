@@ -172,7 +172,7 @@
 | (reverse lst) | Returns a list with its elements reversed | |
 | (subst newitem olditem lst) | Searches a list for an old item and returns a copy of the list with a new item substituted in place of every occurrence of the old item | |
 | (vl-consp list) | Determines whether or not a list is nil | |
-| (vl-every predicate-function list [list ...]) | Checks whether the predicate is true for every element combination | Expected in v0.6.0 |
+| (vl-every predicate list [list ...]) | Checks whether the predicate is true for every element combination | |
 | (vl-list* object [object ...]) | Constructs and returns a list | |
 | (vl-list->string char-codes-list) | Combines the characters associated with a list of integers into a string | |
 | (vl-list-length list-or-cons-object) | Calculates list length of a true list | |
@@ -182,7 +182,7 @@
 | (vl-remove element-to-remove list) | Removes elements from a list | Expected in v0.6.0 |
 | (vl-remove-if predicate-function list) | Returns all elements of the supplied list that fail the test function | Expected in v0.6.0 |
 | (vl-remove-if-not predicate-function list) | Returns all elements of the supplied list that pass the test function | Expected in v0.6.0 |
-| (vl-some predicate-function list [more-lists ...]) | Checks whether the predicate is not nil for one element combination | Expected in v0.6.0 |
+| (vl-some predicate list [list ...]) | Checks whether the predicate is not nil for one element combination | |
 | (vl-sort list comparison-function) | Sorts the elements in a list according to a given compare function | Expected in v0.6.0 |
 | (vl-sort-i list comparison-function) | Sorts the elements in a list according to a given compare function, and returns the element index numbers | Expected in v0.6.0 |
 | (vl-string->list string) | Converts a string into a list of character codes | |
