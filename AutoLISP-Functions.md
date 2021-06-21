@@ -166,7 +166,7 @@
 | (length lst) | Returns an integer indicating the number of elements in a list | |
 | (list [expr ...]) | Takes any number of expressions and combines them into one list | |
 | (listp item) | Verifies that an item is a list | |
-| (mapcar function list1 ... listn) | Returns a list of the result of executing a function with the individual elements of a list or lists supplied as arguments to the function | |
+| (mapcar function list [list ...]) | Returns a list of the result of executing a function with the individual elements of a list or lists supplied as arguments to the function | |
 | (member expr lst) | Searches a list for an occurrence of an expression and returns the remainder of the list, starting with the first occurrence of the expression | |
 | (nth n lst) | Returns the nth element of a list | |
 | (reverse lst) | Returns a list with its elements reversed | |
