@@ -23,3 +23,13 @@
   ;; 'predicate-if-not' must not be equal to 'predicate',
   ;; otherwise the stack overflow occurs
   (vl-remove-if (lambda (x) (not (predicate-if-not x))) lst))
+
+(defun vl-sort (lst cmp)
+  (sort cmp lst))
+
+(defun vl-sort-i (lst cmp-i)
+  ;; Since there's not function closure implemented
+  ;; 'cmp-i' must not be equal to 'cmp'
+  (mapcar 'car
+          (sort (lambda (x y) (cmp-i (cdr x) (cdr y)))
+                (enumerate lst))))

@@ -187,8 +187,8 @@
 | (vl-remove-if predicate list) | Returns all elements of the supplied list that fail the test function | |
 | (vl-remove-if-not predicate list) | Returns all elements of the supplied list that pass the test function | |
 | (vl-some predicate list [list ...]) | Checks whether the predicate is not nil for one element combination | |
-| (vl-sort list comparison-function) | Sorts the elements in a list according to a given compare function | Expected in v0.6.0 |
-| (vl-sort-i list comparison-function) | Sorts the elements in a list according to a given compare function, and returns the element index numbers | Expected in v0.6.0 |
+| (vl-sort list comparison-function) | Sorts the elements in a list according to a given compare function | Duplicates are not removed. Use usort or uniq functions instead  |
+| (vl-sort-i list comparison-function) | Sorts the elements in a list according to a given compare function, and returns the element index numbers | |
 | (vl-string->list string) | Converts a string into a list of character codes | |
 
 ### Query and Command Functions
