@@ -48,3 +48,12 @@
            (if (not (member item set))
                (setq set (cons item set))))
   (reverse set))
+
+;; VeLisp Extension
+(defun enumerate (lst / i ilst)
+  ;; Adds a zero-based counter to each item in a list
+  (setq i 0 ilst '())
+  (foreach item lst
+           (setq ilst (cons (cons i item) ilst)
+                 i (1+ i)))
+  (reverse ilst))

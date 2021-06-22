@@ -160,6 +160,7 @@
 | (car lst) | Returns the first element of a list | |
 | (cdr lst) | Returns the specified list, except for the first element of the list | |
 | (cons new-first-element lst) | The basic list constructor | |
+| (enumerate lst) | Adds a zero-based counter to each item in a list | VeLisp Extension |
 | (foreach name lst [expr ...]) | Evaluates expressions for all members of a list | |
 | (join delim lst) | Joins a list using the delimiter | VeLisp Extension |
 | (last lst) | Returns the last element in a list | |

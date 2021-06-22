@@ -60,3 +60,12 @@
    (vlu-assert-equal '(1 2 3) (uniq '(1 1 2 2 3 3)))
    (vlu-assert-equal '(3 2 1) (uniq '(3 3 2 2 1 1)))
 ))
+
+(vlu-add-test
+ (defun enumerate-test ()
+   (vlu-assert-equal '() (enumerate '()))
+   (vlu-assert-equal '((0 . 1) (1 . 2) (2 . 3)) (enumerate '(1 2 3)))
+   (vlu-assert-equal '((0 . 3) (1 . 2) (2 . 1)) (enumerate '(3 2 1)))
+   (vlu-assert-equal '((0 . "a") (1 . "b") (2 . "c")) (enumerate '("a" "b" "c")))
+   (vlu-assert-equal '((0 . a) (1 . b) (2 . c)) (enumerate '(a b c)))
+))
