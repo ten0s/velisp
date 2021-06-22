@@ -1,6 +1,6 @@
 # VeLisp
 
-[![Build Status](https://travis-ci.org/ten0s/velisp.svg?branch=master)](https://travis-ci.org/ten0s/velisp)
+[![Build Status](https://travis-ci.com/ten0s/velisp.svg?branch=master)](https://travis-ci.com/ten0s/velisp)
 
 **VeLisp** is AutoLISP / DCL compatible interpreter to run AutoCAD independent code.
 
