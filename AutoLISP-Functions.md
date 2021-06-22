@@ -182,7 +182,7 @@
 | (vl-list-length list-or-cons-object) | Calculates list length of a true list | |
 | (vl-member-if predicate list) | Determines whether the predicate is true for one of the list members | |
 | (vl-member-if-not predicate list) | Determines whether the predicate is nil for one of the list members | |
-| (vl-position symbol list) | Returns the index of the specified list item | Expected in v0.6.0 |
+| (vl-position symbol list) | Returns the index of the specified list item | |
 | (vl-remove element-to-remove list) | Removes elements from a list | |
 | (vl-remove-if predicate list) | Returns all elements of the supplied list that fail the test function | |
 | (vl-remove-if-not predicate list) | Returns all elements of the supplied list that pass the test function | |

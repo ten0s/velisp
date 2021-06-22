@@ -13,6 +13,16 @@
 ))
 
 (vlu-add-test
+ (defun vl-position-test ()
+   (vlu-assert-equal nil (vl-position 0 '()))
+   (vlu-assert-equal nil (vl-position 0 '(1 2 3)))
+   (vlu-assert-equal 0 (vl-position 1 '(1 2 3)))
+   (vlu-assert-equal 2 (vl-position 3 '(1 2 3)))
+   (vlu-assert-equal 1 (vl-position "c" '("a" "c" "b")))
+   (vlu-assert-equal 1 (vl-position 'b '(a b c)))
+))
+
+(vlu-add-test
  (defun vl-remove-test ()
    (vlu-assert-equal nil (vl-remove 1 '()))
    (vlu-assert-equal '(2 3 4) (vl-remove 1 '(1 2 3 4 1)))

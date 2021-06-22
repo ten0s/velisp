@@ -9,6 +9,13 @@
   ;; otherwise the stack overflow occurs
   (vl-member-if (lambda (x) (not (predicate-if-not x))) lst))
 
+(defun vl-position (elm lst / index)
+  (defun index (pos lst)
+    (cond ((null lst) nil)
+          ((equal elm (car lst)) pos)
+          (t (index (1+ pos) (cdr lst)))))
+  (index 0 lst))
+
 (defun vl-remove (elm lst)
   (vl-remove-if (lambda (x) (equal x elm)) lst))
 
