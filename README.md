@@ -25,7 +25,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.5.1 on linux
+VeLisp 0.6.0 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -69,11 +69,6 @@ REPL history.
 * VELISP_REPL_HISTORY_SIZE: Controls how many lines of history will be persisted
 if history is available. Must be a positive number. Default: 1000.
 
-## Function References
-
-* [AutoLISP Functions](AutoLISP-Functions.md)
-* [DCL Functions](DCL-Functions.md)
-
 ## Create Linux, Windows and MacOS executables that can be run without Node.js installed
 
 
@@ -86,10 +81,10 @@ $ make pkgMacOS
 
 ```
 $ ls velisp*
-velisp-0.5.1-linux-x64 velisp-0.5.1-macos-x64 velisp-0.5.1-win-x64.exe velisp-0.5.1-win-x86.exe
+velisp-0.6.0-linux-x64 velisp-0.6.0-macos-x64 velisp-0.6.0-win-x64.exe velisp-0.6.0-win-x86.exe
 ```
 
 ```
-$ ./velisp-0.5.1-linux-x64 examples/fib.lsp
+$ ./velisp-0.6.0-linux-x64 examples/fib.lsp
 55
 ```
