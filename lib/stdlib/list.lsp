@@ -104,7 +104,7 @@
   (defun aux (lst acc)
     (cond ((null lst) acc)
           (t (aux (cdr lst) (cons (car lst) acc)))))
-  (aux lst (list)))
+  (aux lst '()))
 
 (defun last (lst / aux)
   (defun aux (lst last)
