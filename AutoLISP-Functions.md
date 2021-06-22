@@ -152,7 +152,7 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
-| (acad_strlsort lst) | Sorts a list of strings by alphabetical order | Expected in v0.6.0 |
+| (acad_strlsort lst) | Sorts a list of strings by alphabetical order | |
 | (append lst ...) | Takes any number of lists and runs them together as one list | |
 | (assoc item alist) | Searches an association list for an element and returns that association list entry | |
 | (caddr lst) | Returns the third element of a list | |

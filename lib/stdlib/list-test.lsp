@@ -167,4 +167,21 @@
    (vlu-assert-equal '(1 two 3) (subst 'two 2 '(1 2 3)))
    (vlu-assert-equal '(1 2 three) (subst 'three 3 '(1 2 3)))
    (vlu-assert-equal '(1 2 3) (subst 'four 4 '(1 2 3)))
-   (vlu-assert-equal '(1 two 3) (subst 'two '(2) '(1 (2) 3)))))
+   (vlu-assert-equal '(1 two 3) (subst 'two '(2) '(1 (2) 3)))
+))
+
+(vlu-add-test
+ (defun acad_strlsort-test ()
+   (vlu-assert-equal '() (acad_strlsort '()))
+
+   (vlu-assert-equal '("1" "2" "3") (acad_strlsort '("1" "2" "3")))
+   (vlu-assert-equal '("1" "2" "3") (acad_strlsort '("2" "3" "1")))
+   (vlu-assert-equal '("1" "2" "3") (acad_strlsort '("2" "3" "1")))
+
+   (vlu-assert-equal '("1" "1" "2" "2" "3" "3") (acad_strlsort '("1" "2" "3" "1" "2" "3")))
+   (vlu-assert-equal '("1" "1" "2" "2" "3" "3") (acad_strlsort '("3" "2" "1" "1" "2" "3")))
+
+   (vlu-assert-equal
+    '("Apr" "Aug" "Dec" "Feb" "Jan" "Jul" "Jun" "Mar" "May" "Nov" "Oct" "Sep")
+    (acad_strlsort '("Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec")))
+))

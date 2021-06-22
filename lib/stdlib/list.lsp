@@ -135,3 +135,6 @@
         (t
          (cons (car lst)
                (subst newitem olditem (cdr lst))))))
+
+(defun acad_strlsort (lst)
+  (sort '< lst))
