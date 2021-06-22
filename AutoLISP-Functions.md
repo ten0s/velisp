@@ -176,12 +176,12 @@
 | (vl-list* object [object ...]) | Constructs and returns a list | |
 | (vl-list->string char-codes-list) | Combines the characters associated with a list of integers into a string | |
 | (vl-list-length list-or-cons-object) | Calculates list length of a true list | |
-| (vl-member-if predicate-function list) | Determines whether the predicate is true for one of the list members | Expected in v0.6.0 |
-| (vl-member-if-not predicate-function list) | Determines whether the predicate is nil for one of the list members | Expected in v0.6.0 |
+| (vl-member-if predicate list) | Determines whether the predicate is true for one of the list members | |
+| (vl-member-if-not predicate list) | Determines whether the predicate is nil for one of the list members | |
 | (vl-position symbol list) | Returns the index of the specified list item | Expected in v0.6.0 |
-| (vl-remove element-to-remove list) | Removes elements from a list | Expected in v0.6.0 |
-| (vl-remove-if predicate-function list) | Returns all elements of the supplied list that fail the test function | Expected in v0.6.0 |
-| (vl-remove-if-not predicate-function list) | Returns all elements of the supplied list that pass the test function | Expected in v0.6.0 |
+| (vl-remove element-to-remove list) | Removes elements from a list | |
+| (vl-remove-if predicate list) | Returns all elements of the supplied list that fail the test function | |
+| (vl-remove-if-not predicate list) | Returns all elements of the supplied list that pass the test function | |
 | (vl-some predicate list [list ...]) | Checks whether the predicate is not nil for one element combination | |
 | (vl-sort list comparison-function) | Sorts the elements in a list according to a given compare function | Expected in v0.6.0 |
 | (vl-sort-i list comparison-function) | Sorts the elements in a list according to a given compare function, and returns the element index numbers | Expected in v0.6.0 |
