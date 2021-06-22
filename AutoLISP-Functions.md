@@ -91,8 +91,8 @@
 | (\*push-error-using-command\*) | Error-handling function that indicates the use of the command function within a custom \*error\* handler | Expected in v0.7.0 |
 | (\*push-error-using-stack\*) | Error-handling function that indicates the use of variables from the AutoLISP stack within a custom \*error\* handler | Expected in v0.7.0 |
 | (alert string) | Displays an alert dialog box with the error or warning message passed as a string | |
-| (exit) | Forces the current application to quit | |
-| (quit) | Forces the current application to quit | |
+| (exit [code]) | Forces the current application to quit | VeLisp Extension: added optional exit code |
+| (quit [code]) | Forces the current application to quit | VeLisp Extension: added optional exit code |
 | (vl-catch-all-apply 'function list) | Passes a list of arguments to a specified function and traps any exceptions | Expected in v0.7.0 |
 | (vl-catch-all-error-message error-obj) | Returns a string from an error object | Expected in v0.7.0 |
 | (vl-catch-all-error-p arg) | Determines whether an argument is an error object returned from vl-catch-all-apply | Expected in v0.7.0 |
