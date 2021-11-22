@@ -88,19 +88,16 @@ REPL history.
 * VELISP_REPL_HISTORY_SIZE: Controls how many lines of history will be persisted
 if history is available. Must be a positive number. Default: 1000.
 
-## Create Linux, Windows and MacOS executables that can be run without Node.js installed
+## Create Linux executables that can be run without Node.js installed
 
 
 ```
 $ make pkgLinux
-$ make pkgWin86
-$ make pkgWin64
-$ make pkgMacOS
 ```
 
 ```
 $ ls velisp*
-velisp-0.6.0-linux-x64 velisp-0.6.0-macos-x64 velisp-0.6.0-win-x64.exe velisp-0.6.0-win-x86.exe
+velisp-0.6.0-linux-x64
 ```
 
 ```
