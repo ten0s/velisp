@@ -112,6 +112,7 @@
 | (read-line [file-desc]) | Reads a string from the keyboard or from an open file | |
 | (tmpdir) | Returns user's temp directory | VeLisp Extension |
 | (filename-parse filename) | Returns the root, the name, the directory and the extension from a file name | VeLisp Extension |
+| (mkdir dirname) | Creates a directory | VeLisp Extension |
 | (rmdir dirname) | Removes a directory | VeLisp Extension |
 | (vl-directory-files [ directory pattern directories]) | Lists all files in a given directory | |
 | (vl-file-copy "source-filename" "destination-filename" [append]) | Copies or appends the contents of one file to another file | |
