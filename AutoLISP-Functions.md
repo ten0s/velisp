@@ -124,6 +124,7 @@
 | (vl-filename-directory "filename") | Returns the directory path of a file, after stripping out the name and extension | |
 | (vl-filename-extension "filename") | Returns the extension from a file name, after stripping out the rest of the name | |
 | (vl-filename-mktemp ["pattern" "directory" "extension"]) | Calculates a unique file name to be used for a temporary file | |
+| (vl-mkdir dirname) | Creates a directory | |
 | (write-char num [file-desc]) | Writes one character to the screen or to an open file | |
 | (write-line string [file-desc]) | Writes a string to the screen or to an open file | |
 
