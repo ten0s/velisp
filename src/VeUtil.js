@@ -1,3 +1,4 @@
+const path = require('path')
 const VeStack = require('./VeStack.js')
 
 // :: (any, [any]) -> bool
@@ -137,10 +138,30 @@ const isRecoverableInput = (s) => {
     return true
 }
 
+// :: (string, string) -> string
+const ensureExt = (name, ext) => {
+    if (path.extname(name)) {
+        return name
+    }
+    return name + ext
+}
+
+// :: (string) -> string
+const ensureLspExt = (name) => {
+    return ensureExt(name, '.lsp')
+}
+
+// :: (string) -> string
+const ensureDclExt = (name) => {
+    return ensureExt(name, '.dcl')
+}
+
 module.exports = {
     find,
     escape,
     unescape,
     inspect,
     isRecoverableInput,
+    ensureLspExt,
+    ensureDclExt,
 }

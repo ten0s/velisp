@@ -5,6 +5,7 @@ const VeStack = require('../VeStack.js')
 const VeDclContext = require('../VeDclContext.js')
 const VeDclLoader = require('../VeDclLoader.js')
 const {ListOperation} = require('../VeDclTiles.js')
+const {ensureDclExt} = require('../VeUtil.js')
 
 // global dclId index
 let _dclId = 0
@@ -52,13 +53,6 @@ const withImage = (ifFunc, elseFunc = null) => {
         return elseFunc()
     }
     throw new Error('No current image')
-}
-
-const ensureDclExt = (filename) => {
-    if (path.extname(filename)) {
-        return filename
-    }
-    return filename + '.dcl'
 }
 
 exports.initContext = (context) => {

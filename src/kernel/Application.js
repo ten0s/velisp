@@ -4,13 +4,7 @@ const path = require('path')
 const {Str, Sym, Fun} = require('../VeLispTypes.js')
 const Evaluator = require('../VeLispEvaluator.js')
 const {fmtError} = require('../VeLispError.js')
-
-const ensureLspExt = (filename) => {
-    if (path.extname(filename)) {
-        return filename
-    }
-    return filename + '.lsp'
-}
+const {ensureLspExt} = require('../VeUtil.js')
 
 exports.initContext = (context) => {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
