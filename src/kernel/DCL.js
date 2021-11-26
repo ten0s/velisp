@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 
 const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
@@ -67,9 +68,10 @@ exports.initContext = (context) => {
         // Win32 workaround
         dclFile = dclFile.split('\\').join('/')
         if (!path.isAbsolute(dclFile)) {
-            const lspFile = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
-            dclFile = path.join(path.dirname(lspFile), dclFile)
-            dclFile = new Str(dclFile)
+            if (!fs.existsSync(dclFile)) {
+                const lspFile = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
+                dclFile = path.join(path.dirname(lspFile), dclFile)
+            }
         }
         // Return a positive integer, or a negative integer on error
         const context = new VeDclContext()
@@ -81,7 +83,7 @@ exports.initContext = (context) => {
         VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context)
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context)
 
-        const dclDialogs = VeDclLoader.load(dclFile.value(), context)
+        const dclDialogs = VeDclLoader.load(dclFile, context)
         const dclMap = {}
         for (const dclDialog of dclDialogs) {
             dclMap[dclDialog.id] = dclDialog

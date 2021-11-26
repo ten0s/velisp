@@ -21,6 +21,12 @@ exports.initContext = (context) => {
         let filename = ensureLspExt(args[0].value())
         // Win32 workaround
         filename = filename.split('\\').join('/')
+        if (!path.isAbsolute(filename)) {
+            if (!fs.existsSync(filename)) {
+                const parent = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
+                filename = path.join(path.dirname(parent), filename)
+            }
+        }
         try {
             const data = fs.readFileSync(filename).toString()
             // FunCall pushes new context just before the call
