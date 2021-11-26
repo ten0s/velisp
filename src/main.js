@@ -2,8 +2,9 @@ const fs = require('fs')
 const os = require('os')
 const path = require('path')
 const {Command} = require('commander')
+
 const VeSysInfo = require('./VeSysInfo.js')
-const {inspect} = require('./VeUtil.js')
+const {ensureLspExt, inspect} = require('./VeUtil.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
 const config = require('../package.json')
@@ -21,7 +22,8 @@ function main() {
             maybeInjectLib(action, context)
             if (file) {
                 //console.log(`Read from ${file}`);
-                context.setSym('%VELISP_LSP_FILE%', path.resolve(file))
+                file = ensureLspExt(path.resolve(file))
+                context.setSym('%VELISP_LSP_FILE%', file)
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
