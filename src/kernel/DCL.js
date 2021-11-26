@@ -1,3 +1,5 @@
+const path = require('path')
+
 const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
 const VeStack = require('../VeStack.js')
 const VeDclContext = require('../VeDclContext.js')
@@ -60,14 +62,18 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('load_dialog: too many arguments')
         }
-        const dclFile = ensureType('load_dialog:', args[0], [Str])
-        // TODO: add .dcl extension if not provided
-        // TODO: ensure file exists and loads,
-        // return a positive integer, or a negative integer on error
+        let dclFile = ensureType('load_dialog:', args[0], [Str]).value()
+        // Win32 workaround
+        dclFile = dclFile.split('\\').join('/')
+        if (!path.isAbsolute(dclFile)) {
+            const lspFile = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
+            dclFile = path.join(path.dirname(lspFile), dclFile)
+            dclFile = new Str(dclFile)
+        }
+        // Return a positive integer, or a negative integer on error
         const context = new VeDclContext()
 
         // Inject lib/dcl/{base,acad}.dcl
-        const path = require('path')
         let rootdir = path.join(__dirname, '../..')
         // Win32 workaround
         rootdir = rootdir.split('\\').join('/')
