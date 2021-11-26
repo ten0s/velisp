@@ -21,13 +21,18 @@ function main() {
             maybeInjectLib(action, context)
             if (file) {
                 //console.log(`Read from ${file}`);
+                context.setSym('%VELISP_LSP_FILE%', path.resolve(file))
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
                 VeSysInfo.isRepl = true
+                const file = path.join(process.cwd(), "__REPL__")
+                context.setSym('%VELISP_LSP_FILE%', file)
                 startRepl(config, action, context)
             } else {
                 //console.log('Read from stdin');
+                const file = path.join(process.cwd(), "__STDIN__")
+                context.setSym('%VELISP_LSP_FILE%', file)
                 readStream(process.stdin, action, context)
             }
         })
