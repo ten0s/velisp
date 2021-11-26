@@ -54,6 +54,13 @@ const withImage = (ifFunc, elseFunc = null) => {
     throw new Error('No current image')
 }
 
+const ensureDclExt = (filename) => {
+    if (path.extname(filename)) {
+        return filename
+    }
+    return filename + '.dcl'
+}
+
 exports.initContext = (context) => {
     context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dclfile'], [], (self, args) => {
         if (args.length < 1) {
@@ -62,7 +69,7 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('load_dialog: too many arguments')
         }
-        let dclFile = ensureType('load_dialog:', args[0], [Str]).value()
+        let dclFile = ensureDclExt(ensureType('load_dialog:', args[0], [Str]).value())
         // Win32 workaround
         dclFile = dclFile.split('\\').join('/')
         if (!path.isAbsolute(dclFile)) {
