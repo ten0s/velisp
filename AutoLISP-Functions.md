@@ -201,7 +201,7 @@
 | (getenv "variable-name") | Returns the string value assigned to an environment variable | |
 | (setcfg cfgname cfgval) | Writes application data to the AppData section of the acadXXXX.cfg file | Expected in vTBD |
 | (setenv "varname" "value") | Sets an environment variable to a specified value | |
-| (ver) | Returns a string that contains the current AutoLISP version number | Expected in vTBD |
+| (ver) | Returns a string that contains the current AutoLISP version number | |
 
 ### String-Handling Functions
 

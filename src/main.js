@@ -7,13 +7,12 @@ const VeSysInfo = require('./VeSysInfo.js')
 const {ensureLspExt, inspect} = require('./VeUtil.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
-const config = require('../package.json')
 
 main()
 
 function main() {
     const program = new Command()
-    program.version(config.version)
+    program.version(VeSysInfo.version)
         .option('-r, --run <command>', 'eval | tree', 'eval')
         .arguments('[file]')
         .action((file) => {
@@ -30,7 +29,7 @@ function main() {
                 VeSysInfo.isRepl = true
                 const file = path.join(process.cwd(), "__REPL__")
                 context.setSym('%VELISP_LSP_FILE%', file)
-                startRepl(config, action, context)
+                startRepl(action, context)
             } else {
                 //console.log('Read from stdin');
                 const file = path.join(process.cwd(), "__STDIN__")
@@ -89,8 +88,8 @@ function readStream(stream, action, context) {
     })
 }
 
-function startRepl(config, action, context) {
-    console.log(`${config.name} ${config.version} on ${process.platform}`)
+function startRepl(action, context) {
+    console.log(`${VeSysInfo.name} ${VeSysInfo.version} on ${process.platform}`)
     console.log('Type ".help" for more information')
 
     let historyFile = process.env['VELISP_REPL_HISTORY']
