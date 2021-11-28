@@ -7,6 +7,7 @@ const VeSysInfo = require('./VeSysInfo.js')
 const {ensureLspExt, inspect} = require('./VeUtil.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
+const {Str} = require('./VeLispTypes.js')
 
 main()
 
@@ -22,18 +23,18 @@ function main() {
             if (file) {
                 //console.log(`Read from ${file}`);
                 file = ensureLspExt(path.resolve(file))
-                context.setSym('%VELISP_LSP_FILE%', file)
+                context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
                 VeSysInfo.isRepl = true
                 const file = path.join(process.cwd(), "__REPL__")
-                context.setSym('%VELISP_LSP_FILE%', file)
+                context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 startRepl(action, context)
             } else {
                 //console.log('Read from stdin');
                 const file = path.join(process.cwd(), "__STDIN__")
-                context.setSym('%VELISP_LSP_FILE%', file)
+                context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 readStream(process.stdin, action, context)
             }
         })

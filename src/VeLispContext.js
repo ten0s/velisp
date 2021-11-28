@@ -8,6 +8,7 @@ class VeLispContext {
     }
 
     // Init variable in the current context only.
+    // :: (string, Type) -> ()
     initVar(name, value) {
         //console.log(`initVar(${name}, ${value})`, this);
         this.symbols[name] = value
@@ -16,6 +17,7 @@ class VeLispContext {
     // Set variable into the current context, if defined.
     // If not defined, set into the parent context, if available.
     // Otherwise, set into the current (global) context.
+    // :: (string, Type) -> ()
     setVar(name, value) {
         //console.log(`setVar(${name}, ${value})`, this);
         if (this.symbols[name]) {
@@ -30,6 +32,7 @@ class VeLispContext {
     // Get variable from the current context, if defined.
     // If not defined, get variable from the parent context, if available.
     // Otherwise, return nil.
+    // :: (string) -> Type | Nil
     getVar(name) {
         let value = this.symbols[name]
         if (value) {
@@ -44,6 +47,7 @@ class VeLispContext {
     // Set symbol into the current context, if defined.
     // If not defined, set into the parent context, if available.
     // Otherwise, set into the current (global) context.
+    // :: (string, Type) -> ()
     setSym(name, value) {
         this.setVar(name, value)
     }
@@ -51,6 +55,7 @@ class VeLispContext {
     // Get symbol from the current context, if defined.
     // If not defined, get symbol from the parent context, if available.
     // Otherwise, return nil.
+    // :: (string) -> Type | Nil
     getSym(name) {
         return this.getVar(name)
     }
