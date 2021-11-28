@@ -25,7 +25,9 @@ exports.initContext = (context) => {
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
                 const parent = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
-                filename = path.join(path.dirname(parent), filename)
+                if (parent instanceof Str) {
+                    filename = path.join(path.dirname(parent.value()), filename)
+                }
             }
         }
         try {

@@ -70,7 +70,9 @@ exports.initContext = (context) => {
         if (!path.isAbsolute(dclFile)) {
             if (!fs.existsSync(dclFile)) {
                 const lspFile = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
-                dclFile = path.join(path.dirname(lspFile), dclFile)
+                if (lspFile instanceof Str) {
+                    dclFile = path.join(path.dirname(lspFile.value()), dclFile)
+                }
             }
         }
         // Return a positive integer, or a negative integer on error
