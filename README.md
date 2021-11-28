@@ -20,7 +20,7 @@ Build Done
 
 ```
 $ ls velisp*
-velisp-0.6.2-linux-x64
+velisp-0.6.3-linux-x64
 ```
 
 ## Run **VeLisp**
@@ -28,8 +28,8 @@ velisp-0.6.2-linux-x64
 ### Run REPL (Read–Eval–Print Loop)
 
 ```
-$ ./velisp-0.6.2-linux-x64
-VeLisp 0.6.2 on linux
+$ ./velisp-0.6.3-linux-x64
+VeLisp 0.6.3 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -51,19 +51,19 @@ Int { int: 3 }
 ### Run code from file
 
 ```
-$ ./velisp-0.6.2-linux-x64 examples/fib.lsp
+$ ./velisp-0.6.3-linux-x64 examples/fib.lsp
 55
 ```
 
 ### Run code from standard input
 
 ```
-$ cat examples/fib.lsp | ./velisp-0.6.2-linux-x64
+$ cat examples/fib.lsp | ./velisp-0.6.3-linux-x64
 55
 ```
 
 ```
-$ echo '(alert "Hi from VeLisp!")' | ./velisp-0.6.2-linux-x64
+$ echo '(alert "Hi from VeLisp!")' | ./velisp-0.6.3-linux-x64
 ```
 
 ![Alert Hello Image](/images/alert-hello.png)
