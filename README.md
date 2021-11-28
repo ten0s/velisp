@@ -44,7 +44,7 @@ $ make test
 
 ```
 $ npm start
-VeLisp 0.6.1 on linux
+VeLisp 0.6.2 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -97,10 +97,10 @@ $ make pkgLinux
 
 ```
 $ ls velisp*
-velisp-0.6.1-linux-x64
+velisp-0.6.2-linux-x64
 ```
 
 ```
-$ ./velisp-0.6.1-linux-x64 examples/fib.lsp
+$ ./velisp-0.6.2-linux-x64 examples/fib.lsp
 55
 ```
