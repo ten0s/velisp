@@ -31,7 +31,7 @@ $ sudo apt-get install build-essential libgtk-3-dev gobject-introspection libgir
 ## Build
 
 ```
-$ make install
+$ make
 ```
 
 ## Run tests

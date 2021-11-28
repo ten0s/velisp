@@ -4,7 +4,7 @@ BRANCH := ${shell git branch --no-color | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'}
 VERSION := ${shell jq -r .version package.json}
 NODE := ${shell node --version | sed -E 's/v([0-9]+)\..*/node\1/'}
 
-all: install compile
+all: install
 
 install:
 	npm install
