@@ -28,12 +28,12 @@ function main() {
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
                 VeSysInfo.isRepl = true
-                const file = path.join(process.cwd(), "__REPL__")
+                const file = path.join(process.cwd(), '__REPL__')
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 startRepl(action, context)
             } else {
                 //console.log('Read from stdin');
-                const file = path.join(process.cwd(), "__STDIN__")
+                const file = path.join(process.cwd(), '__STDIN__')
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 readStream(process.stdin, action, context)
             }

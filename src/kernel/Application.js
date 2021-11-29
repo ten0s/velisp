@@ -55,7 +55,7 @@ exports.initContext = (context) => {
             throw new Error(fmtError('load', e))
         }
     }))
-    context.setSym('VER', new Fun('ver', [], [], (self, args) => {
+    context.setSym('VER', new Fun('ver', [], [], (_self, _args) => {
         return new Str(`${VeSysInfo.name} ${VeSysInfo.version}`)
     }))
 }
