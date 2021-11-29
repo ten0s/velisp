@@ -5,11 +5,14 @@ const Evaluator = require('./VeLispEvaluator.js')
 
 const gi = require('node-gtk')
 const Gtk = gi.require('Gtk', '3.0')
-const Gdk = gi.require('Gdk')
+const Gdk = gi.require('Gdk', '3.0')
+// Required under X11?
+//const Gdk = gi.require('GdkX11', '3.0')
 const GObject = gi.require('GObject')
 
 gi.startLoop()
 Gtk.init()
+Gdk.init([])
 
 const TileMode = {
     ENABLE_TILE: 0,

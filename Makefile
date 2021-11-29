@@ -1,4 +1,4 @@
-.PHONY: test
+.PHONY: install test
 
 BRANCH := ${shell git branch --no-color | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'}
 VERSION := ${shell jq -r .version package.json}
