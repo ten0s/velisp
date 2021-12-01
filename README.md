@@ -55,6 +55,12 @@ $ ./velisp-0.6.3-linux-x64 examples/fib.lsp
 55
 ```
 
+```
+$ ./velisp-0.6.3-linux-x64 examples/calc.lsp
+```
+
+![App Calc Image](/images/app-calc.png)
+
 ### Run code from standard input
 
 ```
