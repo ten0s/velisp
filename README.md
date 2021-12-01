@@ -105,6 +105,13 @@ $ nvm install 12
 $ sudo apt-get install build-essential libgtk-3-dev gobject-introspection libgirepository1.0-dev libcairo2 libcairo2-dev
 ```
 
+### [ANTLR](https://www.antlr.org/)
+
+[ANTLR](https://www.antlr.org/) is only needed for making changes in grammars:
+
+* [VeLisp.g4](/grammar/VeLisp.g4)
+* [VeDcl.g4](/grammar/VeDcl.g4)
+
 ## Build
 
 ```
