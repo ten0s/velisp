@@ -107,7 +107,7 @@ $ sudo apt-get install build-essential libgtk-3-dev gobject-introspection libgir
 
 ### [ANTLR](https://www.antlr.org/)
 
-[ANTLR](https://www.antlr.org/) is only needed for making changes in grammars:
+[ANTLR](https://www.antlr.org/) is only needed for making changes in the grammars:
 
 * [VeLisp.g4](/grammar/VeLisp.g4)
 * [VeDcl.g4](/grammar/VeDcl.g4)
