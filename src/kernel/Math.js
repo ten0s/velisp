@@ -142,6 +142,9 @@ exports.initContext = (context) => {
             throw new Error('sqrt: too many arguments')
         }
         const num = ensureType('sqrt:', args[0], [Int, Real])
+        if (num.value() < 0) {
+            throw new Error('sqrt: expected positive Int, Real')
+        }
         return new Real(Math.sqrt(num))
     }))
 }
