@@ -37,13 +37,7 @@ Type ".help" for more information
 5555
 > (defun add (a b) (+ a b))
 ADD
-> .inspect 'add
-Sym { sym: 'ADD' }
-> .inspect add
-Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
-> .inspect (add 1 2)
-Int { int: 3 }
-> (mapcar '(lambda (x y) (itoa (+ x y))) '(1 2 3) '(9 8 7))
+> (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 ("10" "10" "10")
 > (quit)
 ```
@@ -74,6 +68,10 @@ $ echo '(alert "Hi from VeLisp!")' | ./velisp-{{version}}-linux-x64
 
 ![Alert Hello Image](/images/alert-hello.png)
 
+## Implemented functions
+
+* [AutoLISP Functions](/AutoLISP-Functions.md)
+* [DCL Functions](DCL-Functions.md)
 
 ## Environment variables
 

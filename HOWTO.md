@@ -1,3 +1,22 @@
+## How to inspect types?
+
+```
+> (defun add (a b) (+ a b))
+ADD
+> .inspect 'add
+Sym { sym: 'ADD' }
+> .inspect add
+Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
+> .inspect (add 1 2)
+Int { int: 3 }
+```
+
+## How to inspect global context?
+
+```
+> .context
+```
+
 ## How to run debugger?
 
 ```
