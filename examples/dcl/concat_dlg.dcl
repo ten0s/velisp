@@ -4,13 +4,14 @@ concat_dlg : dialog {
     key = "edit1";
     label = "Enter text:";
     value = "Change me";
-    edit_limit = 10;
-    edit_width = 10;
+    edit_limit = 20;
+    edit_width = 20;
   }
   : edit_box {
     key = "edit2";
     label = "Enter text:";
-    value = "Change me too";
+    value = "And me too";
+    justify = "right";
     edit_limit = 15;
     edit_width = 15;
   }

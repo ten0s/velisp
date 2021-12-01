@@ -36,6 +36,12 @@ const Alignment = {
     FILLED: 'filled', // GTK specific
 }
 
+// GTK specific
+const Justify = {
+    LEFT: 'left',
+    RIGHT: 'right',
+}
+
 const ListOperation = {
     CHANGE: 1,
     APPEND: 2,
@@ -103,6 +109,18 @@ class Tile {
             return 'fill'
         default:
             throw new Error(`Invalid alignment: ${alignment}`)
+        }
+    }
+
+    _xalign(justify) {
+        switch (justify) {
+        case Justify.LEFT:
+            return 0
+        case Justify.RIGHT:
+            return 1
+        default:
+            console.error(`Error: Invalid justify '${justify}'. Defaulting to '${Justify.LEFT}'`)
+            return this._xalign(Justify.LEFT)
         }
     }
 
@@ -1220,6 +1238,7 @@ class EditBox extends Tile {
         //this.allow_accept = false
         this.edit_limit = 132
         this.edit_width = 0
+        this.justify = Justify.LEFT // GTK specific
         //this.fixed_height = false
         //this.fixed_width = false
         this.height = -1
@@ -1291,7 +1310,7 @@ class EditBox extends Tile {
       <property name="can_focus">False</property>
       <property name="label">${this._escape(this.label)}</property>
       <property name="justify">left</property>
-      <property name="margin_right">4</property>
+      <property name="margin_right">${this.label ? 4 : 0}</property>
     </object>
     <packing>
       <property name="fill">True</property>
@@ -1308,6 +1327,7 @@ class EditBox extends Tile {
       <property name="max_length">${this.edit_limit}</property>
       <property name="width_chars">${this.edit_width}</property>
       <property name="text">${this.value}</property>
+      <property name="xalign">${this._xalign(this.justify)}</property>
     </object>
     <packing>
       <property name="fill">True</property>
