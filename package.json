@@ -11,7 +11,7 @@
     "dependencies": {
         "antlr4": "4.8.0",
         "commander": "6.2.1",
-        "node-gtk": "0.7.0",
+        "node-gtk": "0.10.0",
         "temp": "0.9.4"
     },
     "devDependencies": {

@@ -1366,7 +1366,10 @@ class Image extends Tile {
                 new FillImage(0, 0, this._width(this.width), this._height(this.height), this.color)
             ])
         }
-        gtkWidget.on('draw', (ctx) => this.gtkDraw(gtkWidget, ctx))
+        gtkWidget.on('draw', (ctx) => {
+            this.gtkDraw(gtkWidget, ctx)
+            return false
+        })
     }
 
     gtkXml({layout}) {
@@ -1428,10 +1431,12 @@ class ImageButton extends Tile {
     gtkInitWidget(gtkWidget) {
         this._action = this.action
         gtkWidget.on('button-press-event', (event) => {
-            if (event.type === Gdk.EventType['BUTTON_PRESS']) {
+            if (event.type === Gdk.EventType.BUTTON_PRESS) {
                 this._x = Math.round(event.x | 0)
                 this._y = Math.round(event.y | 0)
+                return false
             }
+            return true
         })
         if (this.color) {
             this.gtkAppendDrawOperations([
@@ -1439,7 +1444,10 @@ class ImageButton extends Tile {
             ])
         }
         const gtkChild = gtkWidget.getChildren()[0]
-        gtkChild.on('draw', (ctx) => this.gtkDraw(gtkChild, ctx))
+        gtkChild.on('draw', (ctx) => {
+            this.gtkDraw(gtkChild, ctx)
+            return false
+        })
         // For mnemonic see accelerator in gtkXml()
     }
 
@@ -1677,7 +1685,7 @@ class ListBox extends Tile {
         const [rows, ] = selection.getSelectedRows()
         return rows.map(row => row.toString()).join(' ')
     }
-     
+
     gtkSetTile(gtkWidget, value) {
         const selection = gtkWidget.getSelection()
         // TODO: support unselect for single
