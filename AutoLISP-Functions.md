@@ -31,8 +31,10 @@
 | (max [number number ...]) | Returns the largest of the numbers given | |
 | (min [number number ...]) | Returns the smallest of the numbers given | |
 | (minusp number) | Verifies that a number is negative | |
+| (rand) | Returns a pseudo-random integral number in the range between 0 and 32767 | VeLisp Extension |
 | (rem [num1 num2 ...]) | Divides the first number by the second, and returns the remainder | |
 | (sin ang) | Returns the sine of an angle as a real expressed in radians | |
+| (srand seed) | Initializes pseudo-random number generator | VeLisp Extension |
 | (sqrt number) | Returns the square root of a number as a real | |
 | (zerop number) | Verifies that a number evaluates to zero | |
 

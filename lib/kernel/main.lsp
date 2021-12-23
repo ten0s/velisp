@@ -36,3 +36,25 @@
 (defun gcd (a b)
   (if (= b 0) (abs a)
     (gcd b (rem a b))))
+
+;;;
+;;; Pseudo-random number generator
+;;; https://en.wikipedia.org/wiki/Linear_congruential_generator
+;;; https://rosettacode.org/wiki/Linear_congruential_generator
+;;; Microsoft formula
+;;;
+
+;; (Int) -> Int
+(defun srand (seed / m)
+  (setq m 2147483648
+        %VELISP_RAND_SEED% (rem seed m)))
+(srand 0)
+
+;; () -> 0 ... 32767
+(defun rand ( / a c m d)
+  (setq a 214013
+        c 2531011
+        m 2147483648
+        d 65536
+        %VELISP_RAND_SEED% (rem (+ (* %VELISP_RAND_SEED% a) c) m))
+  (/ %VELISP_RAND_SEED% d))
