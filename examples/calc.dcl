@@ -107,9 +107,10 @@ calc_dlg : dialog {
   }
   : spacer {}
   : column {
-    : ok_button {
+    : cancel_button {
       label = "Exit";
       alignment = centered;
+      is_default = true;
     }
   }
 }
