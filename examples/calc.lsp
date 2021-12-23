@@ -5,7 +5,7 @@
 (setq *ZERO*   "0")
 (setq *PERIOD* ".")
 (setq *MINUS*  "-")
-(setq *ERROR*  "Error")
+(setq *ERR*    "Error")
 
 (setq *LHS* nil)
 (setq *OPER* nil)
@@ -42,7 +42,7 @@
 
 (defun get_input ( / input)
   (setq input (get_tile "input"))
-  (if (= input *ERROR*)
+  (if (= input *ERR*)
       *ZERO*
     input))
 
@@ -120,7 +120,7 @@
    (lambda (input)
      (setq input (atof input))
      (if (< input 0)
-         *ERROR*
+         *ERR*
        (ftoa
         (compact-float
          (sqrt input)))))))
@@ -140,7 +140,7 @@
         (setq *LHS* nil)
         (setq *OPER* nil)
         (if (and (= oper '/) (= rhs 0))
-            *ERROR*
+            *ERR*
           (ftoa
            (compact-float
             (oper lhs rhs)))))))))
