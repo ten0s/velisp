@@ -1,5 +1,5 @@
 calc_button : button {
-  width = 7;
+  width = 9;
   height = 3;
 }
 
@@ -20,15 +20,15 @@ calc_dlg : dialog {
         key = "clear";
       }
       : calc_button {
-        label = "←";
+        label = "Back";
         key = "backspace";
       }
       : calc_button {
-        label = "√";
+        label = "Sqrt";
         key = "sqrt";
       }
       : calc_button {
-        label = "±";
+        label = "+/-";
         key = "negate";
       }
     }
@@ -103,6 +103,13 @@ calc_dlg : dialog {
         label = "+";
         key = "add";
       }
+    }
+  }
+  : spacer {}
+  : column {
+    : ok_button {
+      label = "Exit";
+      alignment = centered;
     }
   }
 }

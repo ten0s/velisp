@@ -14,6 +14,11 @@
 ;;; Utilities
 ;;;
 
+;; Define ftoa function if not defined
+(if (not ftoa)
+    (defun ftoa (num)
+      (rtos num 2)))
+
 (defun drop-last (lst)
   (reverse
    (cdr
@@ -84,28 +89,28 @@
   (with_input
    (lambda (input)
      (setq *LHS* input)
-     (setq *OPER* '/)
+     (setq *OPER* /)
      *ZERO*)))
 
 (defun do_multiply ()
   (with_input
    (lambda (input)
      (setq *LHS* input)
-     (setq *OPER* '*)
+     (setq *OPER* *)
      *ZERO*)))
 
 (defun do_subtract ()
   (with_input
    (lambda (input)
      (setq *LHS* input)
-     (setq *OPER* '-)
+     (setq *OPER* -)
      *ZERO*)))
 
 (defun do_add ()
   (with_input
    (lambda (input)
      (setq *LHS* input)
-     (setq *OPER* '+)
+     (setq *OPER* +)
      *ZERO*)))
 
 (defun do_negate ()
@@ -139,7 +144,7 @@
         (setq oper *OPER*)
         (setq *LHS* nil)
         (setq *OPER* nil)
-        (if (and (= oper '/) (= rhs 0))
+        (if (and (= oper /) (= rhs 0))
             *ERR*
           (ftoa
            (compact-float
