@@ -1426,14 +1426,20 @@ class ImageButton extends Tile {
         this._callback = null
         this._x = 0
         this._y = 0
+        this._reason = -1
     }
 
     gtkInitWidget(gtkWidget) {
         this._action = this.action
         gtkWidget.on('button-press-event', (event) => {
-            if (event.type === Gdk.EventType.BUTTON_PRESS) {
+            this._reason = ActionReason.TILE_SELECTED
+            if (event.type === Gdk.EventType.BUTTON_PRESS ||
+                event.type === Gdk.EventType.DOUBLE_BUTTON_PRESS) {
                 this._x = Math.round(event.x | 0)
                 this._y = Math.round(event.y | 0)
+                if (event.type === Gdk.EventType.DOUBLE_BUTTON_PRESS) {
+                    this._reason = ActionReason.TILE_DOUBLE_CLICKED
+                }
                 return false
             }
             return true
@@ -1460,8 +1466,7 @@ class ImageButton extends Tile {
             context.setVar('$X', new Int(this._x))
             context.setVar('$Y', new Int(this._y))
             context.setVar('$DATA', new Str(this._clientData))
-            // TODO: Implement reason 4 - Image Button double-clicked?
-            context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
+            context.setVar('$REASON', new Int(this._reason))
             Evaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('clicked', this._callback)
