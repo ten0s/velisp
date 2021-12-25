@@ -52,7 +52,7 @@
 | (distof string [mode]) | Converts a string that represents a real (floating-point) value into a real value | Expected in v0.8.0 |
 | (itoa int) | Returns the conversion of an integer into a string | |
 | (ftoa real) | Returns the conversion of a real into a string | VeLisp Extension |
-| (rtos number [mode [precision]]) | Converts a number into a string | v0.8.0 |
+| (rtos number [mode [precision]]) | Converts a number into a string | Expected in v0.8.0 |
 | (trans pt from to [disp]) | Translates a point (or a displacement) from one coordinate system to another | Expected in v0.8.0 |
 
 ### Display Control Functions
