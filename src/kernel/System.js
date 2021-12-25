@@ -1,5 +1,5 @@
 const os = require('os')
-const {Bool, Int, Str, Fun, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
     // VeLisp Extension
@@ -64,6 +64,27 @@ exports.initContext = (context) => {
             return new Bool(false)
         }
         return new Str(value)
+    }))
+    context.setSym('GETVAR', new Fun('getvar', ['name'], [], (self, args) => {
+        if (args.length === 0) {
+            throw new Error('getvar: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('getvar: too many arguments')
+        }
+        const name = ensureType('getvar:', args[0], [Str, Sym]).value().toLowerCase()
+        switch (name) {
+        case 'cdate': {
+            const d = new Date()
+            const a = d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
+            const b = d.getHours() * 10000 + d.getMinutes() * 100 + d.getSeconds()
+            return new Real(a + b / 1000000)
+        }
+        case 'millisecs':
+            return new Int(os.uptime() * 1000)
+        default:
+            return new Bool(false)
+        }
     }))
     context.setSym('QUIT', new Fun('quit', ['[code]'], [], (self, args) => {
         if (args.length > 1) {

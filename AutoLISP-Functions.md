@@ -201,7 +201,7 @@
 |----------|-------------|------|
 | (getcfg cfgname) | Retrieves application data from the AppData section of the acadXXXX.cfg file | Expected in vTBD |
 | (getenv varname) | Returns the string value assigned to an environment variable | |
-| (getvar varname) | Retrieves the value of an AutoCAD system variable | Expected in vTBD |
+| (getvar varname) | Retrieves the value of an AutoCAD system variable | CDATE, MILLISECS |
 | (setcfg cfgname cfgval) | Writes application data to the AppData section of the acadXXXX.cfg file | Expected in vTBD |
 | (setenv varname value) | Sets an environment variable to a specified value | |
 | (setvar varname value) | Sets an AutoCAD system variable to a specified value | Expected in vTBD |
