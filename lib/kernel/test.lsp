@@ -128,4 +128,10 @@
    (vlu-assert-equal 18467 (rand))
    (vlu-assert-equal 6334 (rand))
    (vlu-assert-equal 26500 (rand))
+   (vlu-assert-equal 19169 (rand))
+   (srand 1.9) ; will fix to 1
+   (vlu-assert-equal 41 (rand))
+   (vlu-assert-equal 18467 (rand))
+   (vlu-assert-equal 6334 (rand))
+   (vlu-assert-equal 26500 (rand))
    (vlu-assert-equal 19169 (rand))))

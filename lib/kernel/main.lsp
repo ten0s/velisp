@@ -44,10 +44,10 @@
 ;;; Microsoft formula
 ;;;
 
-;; (Int) -> Int
+;; (Int | Real) -> Int
 (defun srand (seed / m)
   (setq m 2147483648
-        %VELISP_RAND_SEED% (rem seed m)))
+        %VELISP_RAND_SEED% (rem (fix seed) m)))
 (srand 0)
 
 ;; () -> 0 ... 32767
