@@ -64,7 +64,7 @@ class Tile {
         this.id = id
         this.height = -1
         this.width = -1
-        // Locals
+        // Locals (must be explicitly re-assigned in `clone')
         this._clientData = ''
         this._drawOperations = []
     }
@@ -78,7 +78,10 @@ class Tile {
     }
 
     clone() {
-        return Object.assign(Object.create(Object.getPrototypeOf(this)), this)
+        const clone = Object.assign(Object.create(Object.getPrototypeOf(this)), this)
+        clone._clientData = ''
+        clone._drawOperations = []
+        return clone
     }
 
     _child(xml) {
