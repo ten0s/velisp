@@ -1426,7 +1426,7 @@ class ImageButton extends Tile {
         this._callback = null
         this._x = 0
         this._y = 0
-        this._reason = -1
+        this._reason = ActionReason.TILE_SELECTED
     }
 
     gtkInitWidget(gtkWidget) {
