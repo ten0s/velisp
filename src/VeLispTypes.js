@@ -631,6 +631,17 @@ class Pair {
         return this.eq(that)
     }
 
+    // :: (Pair) -> Bool
+    lessThan(that) {
+        if (that instanceof Pair) {
+            return new Bool(
+                this.fst < that.fst &&
+                this.snd < that.snd
+            )
+        }
+        throwTypeError('<:', that, [Pair])
+    }
+
     // :: (Any) -> Bool
     eq(that) {
         return new Bool(this === that)
