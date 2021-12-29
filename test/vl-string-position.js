@@ -29,7 +29,7 @@ TestRunner.run({
         {test: '(vl-string-position "b" "bar")', result:
          new Error('vl-string-position: `char-code` expected Int')},
         
-        {test: '(vl-string-position 98 \bar)', result:
+        {test: '(vl-string-position 98 nil)', result:
          new Error('vl-string-position: `string` expected Str')},
 
         {test: '(vl-string-position 98 "bar" "1")', result:

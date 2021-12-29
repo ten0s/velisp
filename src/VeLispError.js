@@ -1,3 +1,15 @@
+const path = require('path')
+const {Str} = require('./VeLispTypes.js')
+
+function makeError(message, context) {
+    let file = context.getVar('%VELISP_LSP_FILE%')
+    if (file instanceof Str) {
+        file = path.basename(file.value())
+        return `file: ${file} ${message}`
+    }
+    return message
+}
+
 function fmtError(name, error) {
     //console.error(error);
     let message = `${name}: `
@@ -34,5 +46,6 @@ function perror(errCode) {
 }
 
 module.exports = {
+    makeError,
     fmtError,
 }

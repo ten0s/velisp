@@ -1,6 +1,7 @@
 const {VeLispParser} = require('../grammar/VeLispParser.js')
 const {VeLispVisitor} = require('../grammar/VeLispVisitor.js')
 const VeLispContext = require('./VeLispContext.js')
+const {makeError} = require('./VeLispError.js')
 const {unescape} = require('./VeUtil.js')
 const {Bool, Int, Real, Str, Sym, List, Pair, Fun} = require('./VeLispTypes.js')
 
@@ -70,7 +71,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop()
             return result
         }
-        throw new Error('foreach: `list` expected List')
+        throw new Error(makeError(
+            'foreach: `list` expected List',
+            this.contexts[this.contexts.length-1]
+        ))
     }
 
     visitFunction(ctx) {
@@ -85,7 +89,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
         //console.error(str);
         //console.error(ctx.expr());
-        throw new Error('function: expected Fun')
+        throw new Error(makeError(
+            'function: expected Fun',
+            this.contexts[this.contexts.length-1]
+        ))
     }
 
     visitIf(ctx) {
@@ -198,7 +205,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
                    expr instanceof VeLispParser.SetQContext ||
                    expr instanceof VeLispParser.WhileContext) {
             const name = expr.children[1].getText()
-            throw new Error(`quote: \`${name}\` not supported`)
+            throw new Error(makeError(
+                `quote: \`${name}\` not supported`,
+                this.contexts[this.contexts.length-1]
+            ))
         } else {
             //console.error(str);
             //console.error(ctx.expr());
@@ -217,7 +227,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 }
             }
         } else {
-            throw new Error(`repeat: num expected to be positive integer, but saw ${count}`)
+            throw new Error(makeError(
+                `repeat: num expected to be positive integer, but saw ${count}`,
+                this.contexts[this.contexts.length-1]
+            ))
         }
         return result
     }
@@ -286,7 +299,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop()
             return result
         }
-        throw new Error(`${name}: function not defined`)
+        throw new Error(makeError(
+            `${name}: function not defined`,
+            this.contexts[this.contexts.length-1]
+        ))
     }
 
     visitTerminal(ctx) {
@@ -334,9 +350,15 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
         return new Fun(name, params, locals, (self, args) => {
             if (args.length < params.length) {
-                throw new Error(`${name}: too few arguments`)
+                throw new Error(makeError(
+                    `${name}: too few arguments`,
+                    this.contexts[this.contexts.length-1]
+                ))
             } else if (args.length > params.length) {
-                throw new Error(`${name}: too many arguments`)
+                throw new Error(makeError(
+                    `${name}: too many arguments`,
+                    this.contexts[this.contexts.length-1]
+                ))
             }
             // Since locals with the same names as params will reset the values, init locals first.
             for (let i = 0; i < locals.length; i++) {

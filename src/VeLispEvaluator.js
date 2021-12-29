@@ -7,7 +7,7 @@ const VeLispErrorListener = require('./VeLispErrorListener.js')
 
 function evaluate(input, context = new VeLispGlobalContext()) {
     input = preprocess(input)
-    const {tree} = parseInput(input)
+    const {tree} = parseInput(input, context)
     const allResults = tree.accept(new VeLispEvalVisitor(context))
     //console.log('allResults:', allResults);
     const result = lastResult(allResults)
@@ -15,20 +15,22 @@ function evaluate(input, context = new VeLispGlobalContext()) {
     return result
 }
 
-function tree(input, _context = null) {
-    const {parser, tree} = parseInput(input)
+function tree(input, context = new VeLispGlobalContext()) {
+    const {parser, tree} = parseInput(input, context)
     return tree.toStringTree(parser.ruleNames)
 }
 
-function parseInput(input) {
+function parseInput(input, context) {
     const chars = new antlr4.InputStream(input)
     const lexer = new VeLispLexer(chars)
+    lexer.removeErrorListeners()
+    lexer.addErrorListener(new VeLispErrorListener(context))
     // Don't use JavaScript strictMode
     //lexer.strictMode = false;
     const tokens = new antlr4.CommonTokenStream(lexer)
     const parser = new VeLispParser(tokens)
     parser.removeErrorListeners()
-    parser.addErrorListener(new VeLispErrorListener())
+    parser.addErrorListener(new VeLispErrorListener(context))
     return {
         lexer,
         tokens,
