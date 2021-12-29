@@ -175,6 +175,7 @@
 | (member expr lst) | Searches a list for an occurrence of an expression and returns the remainder of the list, starting with the first occurrence of the expression | |
 | (nth n lst) | Returns the nth element of a list | |
 | (reverse lst) | Returns a list with its elements reversed | |
+| (shuffle lst) | Returns a list with its elements shuffled randomly | VeList Extension |
 | (sort cmp lst) | Sorts the elements in a list according to a given compare function | VeLisp Extension |
 | (subst newitem olditem lst) | Searches a list for an old item and returns a copy of the list with a new item substituted in place of every occurrence of the old item | |
 | (uniq lst) | Removes duplicates from a list | VeLisp Extension |

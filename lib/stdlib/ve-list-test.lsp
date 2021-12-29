@@ -69,3 +69,11 @@
    (vlu-assert-equal '((0 . "a") (1 . "b") (2 . "c")) (enumerate '("a" "b" "c")))
    (vlu-assert-equal '((0 . a) (1 . b) (2 . c)) (enumerate '(a b c)))
 ))
+
+(vlu-add-test
+ (defun shuffle-test ()
+   (vlu-assert-equal '() (shuffle '()))
+   (vlu-assert-equal '(1) (shuffle '(1)))
+   (srand 0)
+   (vlu-assert-equal '(1 4 2 5 3) (shuffle '(1 2 3 4 5)))
+   (vlu-assert-equal '(2 4 1 5 3) (shuffle '(1 2 3 4 5)))))
