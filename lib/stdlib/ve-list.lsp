@@ -63,4 +63,4 @@
   ;; Shuffles randomly the elements in a list
   (mapcar 'cdr
           (sort (lambda (l r) (< (car l) (car r)))
-                (mapcar (lambda (x) (cons (rand) x)) lst))))
+                (mapcar '(lambda (x) (cons (rand) x)) lst))))
