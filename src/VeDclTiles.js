@@ -626,6 +626,9 @@ class Dialog extends Cluster {
     // DCL
     endImage({tile, operations}) {
         tile.gtkAppendDrawOperations(operations)
+        // Kick redraw
+        const gtkWidget = this.gtkFindWidget(tile.key)
+        gtkWidget.queueDraw()
     }
 
     // GTK
