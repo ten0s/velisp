@@ -482,11 +482,11 @@
   (show_score "You Lost!")
   (show_hint "Start over or exit"))
 
-(defun check_game_won ( / all flags open)
+(defun check_game_won ( / all flags opened)
   (setq all (* ROWS COLS)
         flags (calc_flag_cells)
-        open (calc_open_cells))
-  (if (= (- all flags open) 0)
+        opened (calc_open_cells))
+  (if (= (- all flags opened) 0)
       (game_won)))
 
 (defun is_game_started ()
