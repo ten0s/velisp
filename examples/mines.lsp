@@ -501,7 +501,7 @@
         (mapcar '(lambda (key state) (cons key state))
                 (make_keys ROWS COLS)
                 (shuffle (append
-                          (duplicate (- (* ROWS COLS) mines) 'NONE)
+                          (duplicate (- (* ROWS COLS) MINES) 'NONE)
                           (duplicate MINES 'MINE)))))
   (println (list "Hidden states:\n" hidden_states)))
 
