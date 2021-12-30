@@ -577,7 +577,7 @@
 
 (defun draw_cell (key state / draw_fun)
   (setq draw_fun (shown_state_to_draw_fun state))
-  (apply draw_fun (list key)))
+  (draw_fun key))
 
 (defun draw_all_cells ()
   (foreach key (make_keys ROWS COLS)
