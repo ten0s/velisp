@@ -445,8 +445,9 @@
 (defun show_hint (message)
   (set_tile "error" (strcat "Hint: " message)))
 
-(defun start_game ()
-  (srand (getvar "MILLISECS"))
+(defun start_game ( / seed)
+  (setq seed (srand (fix (* (getvar "CDATE") 1000000))))
+  (println (list "Rand seed: " seed))
 
   (setq hidden_states nil)
   (init_shown_states)
