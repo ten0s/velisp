@@ -55,6 +55,12 @@ $ ./velisp-0.6.5-linux-x64 examples/calc.lsp
 
 ![App Calc Image](/images/app-calc.png)
 
+```
+$ ./velisp-0.6.5-linux-x64 examples/mines.lsp
+```
+
+![App Mines Image](/images/app-mines.png)
+
 ### Run code from standard input
 
 ```
