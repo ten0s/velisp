@@ -46,12 +46,14 @@
 
 ;; (Int | Real) -> Int
 (defun srand (seed / m)
+  ;; Initializes pseudo-random number generator
   (setq m 2147483648
         %VELISP_RAND_SEED% (rem (fix seed) m)))
 (srand 0)
 
 ;; () -> 0 ... 32767
 (defun rand ( / a c m d)
+  ;; Returns a pseudo-random integral number in the range between 0 and 32767
   (setq a 214013
         c 2531011
         m 2147483648
