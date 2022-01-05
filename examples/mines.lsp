@@ -21,7 +21,7 @@
             m 2147483648
             d 65536
             %VELISP_RAND_SEED% (rem (+ (* %VELISP_RAND_SEED% a) c) m))
-      (/ %VELISP_RAND_SEED% d)))
+      (fix (/ %VELISP_RAND_SEED% d))))
 
 (if (not sort)
     (defun sort (cmp lst / insert len)
@@ -500,7 +500,7 @@
   (set_tile "error" (strcat "Hint: " message)))
 
 (defun start_game ( / seed)
-  (setq seed (srand (fix (* (getvar "CDATE") 1000000))))
+  (setq seed (srand (getvar "MILLISECS")))
   (println (list "Rand seed: " seed))
 
   (setq hidden_states nil)
