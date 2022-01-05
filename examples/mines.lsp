@@ -672,7 +672,7 @@
       (update_score)
       (check_game_won))))
 
-(defun fold_around_cells (key fun init / acc coord i j di dj around_key)
+(defun fold_around_cells (key fun init / acc coord i j k l)
   (setq acc init
         coord (parse_key key)
         i (car coord)
@@ -685,10 +685,11 @@
                (-1 .  1)
                ( 0 .  1)
                ( 1 .  1))
-           (setq di (car d)
-                 dj (cdr d)
-                 around_key (make_key (+ i di) (+ j dj))
-                 acc (fun around_key acc)))
+           (setq k (+ i (car d))
+                 l (+ j (cdr d)))
+           (if (and (>= k 1) (<= k ROWS)
+                    (>= l 1) (<= l COLS))
+               (setq acc (fun (make_key k l) acc))))
   acc)
 
 (defun mines_around (key)
