@@ -480,8 +480,8 @@
 (defun make_score (flags mines)
   (strcat (itoa flags) "/" (itoa mines)))
 
-(defun update_score ()
-  (show_score (make_score (calc_flag_cells) MINES)))
+(defun update_score (flags mines)
+  (show_score (make_score flags mines)))
 
 (defun change_difficulty ()
   (setq MINES (get_difficulty))
@@ -536,11 +536,13 @@
   (show_score "You Lost!")
   (show_hint "Start over or exit"))
 
-(defun check_game_won ( / all flags opened)
+(defun check_game_won ( / all flags_and_opens flags opens)
   (setq all (* ROWS COLS)
-        flags (calc_flag_cells)
-        opened (calc_open_cells))
-  (if (= (- all flags opened) 0)
+        flags_and_opens (calc_flag_and_open_cells)
+        flags (car flags_and_opens)
+        opens (cdr flags_and_opens))
+  (update_score flags MINES)
+  (if (= (- all flags opens) 0)
       (game_won)))
 
 (defun is_game_started ()
@@ -637,19 +639,15 @@
   (foreach key (make_keys ROWS COLS)
            (draw_cell key (get_shown_state key))))
 
-(defun calc_flag_cells ( / acc)
-  (setq acc 0)
+;; () -> (flags . opens)
+(defun calc_flag_and_open_cells ( / flags opens)
+  (setq flags 0 opens 0)
   (foreach key (make_keys ROWS COLS)
            (if (= (get_shown_state key) 'FLAG)
-               (setq acc (1+ acc))))
-  acc)
-
-(defun calc_open_cells ( / acc)
-  (setq acc 0)
-  (foreach key (make_keys ROWS COLS)
+               (setq flags (1+ flags)))
            (if (not (is_cell_closed key))
-               (setq acc (1+ acc))))
-  acc)
+               (setq opens (1+ opens))))
+  (cons flags opens))
 
 (defun open_cell (key / hidden_state old_state new_state)
   (setq hidden_state (get_hidden_state key))
@@ -669,7 +667,6 @@
       (draw_cell key new_state)
       (if (= new_state 0) ; if no mines around
           (open_around_cells key))
-      (update_score)
       (check_game_won))))
 
 (defun fold_around_cells (key fun init / acc coord i j k l)
@@ -751,7 +748,6 @@
         (println (list old_state " -> " new_state))
         (set_shown_state key new_state)
         (draw_cell key new_state)
-        (update_score)
         (check_game_won))))
 
 (defun double_click_handler (key)
