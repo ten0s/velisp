@@ -1,5 +1,5 @@
 ;;;
-;;; Consts
+;;; Defines
 ;;;
 (setq ROWS 8 COLS 8 MINES 8)
 
