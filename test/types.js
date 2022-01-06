@@ -25,8 +25,26 @@ const tests = [
     {test: '(list 1 2 3)', result: new List([
         new Int(1), new Int(2), new Int(3)
     ])},
+    {test: '\'(1 2 3)', result: new List([
+        new Int(1), new Int(2), new Int(3)
+    ])},
 
     {test: '(cons 1 \'a)', result: new Pair(new Int(1), new Sym('a'))},
+    {test: '\'(1 . a)', result: new Pair(new Int(1), new Sym('a'))},
+
+    {test: '\'(1 2 . 3)', result: new List([
+        new Int(1), new Pair(new Int(2), new Int(3))
+    ])},
+
+    {test: '\'((1 . 2) (3 . 4))', result: new List([
+        new Pair(new Int(1), new Int(2)),
+        new Pair(new Int(3), new Int(4))
+    ])},
+
+    {test: '\'((1 2 . 3) (4 5 . 6))', result: new List([
+        new List([new Int(1), new Pair(new Int(2), new Int(3))]),
+        new List([new Int(4), new Pair(new Int(5), new Int(6))])
+    ])},
 ]
 
 QUnit.test('types', assert => {
@@ -56,6 +74,18 @@ QUnit.test('types', assert => {
         (new List([new Int(1), new Pair(new Int(2), new Sym('z'))])).toString(),
         '(1 2 . Z)'
     )
+
+    // TODO: this is wrong, should be ((1 . 2) (3 . 4))
+    assert.equal((new List([
+        new Pair(new Int(1), new Int(2)),
+        new Pair(new Int(3), new Int(4))
+    ])).toString(), '(1 . 2 3 . 4)')
+
+    // This is right, see above
+    assert.equal((new List([
+        new List([new Int(1), new Pair(new Int(2), new Int(3))]),
+        new List([new Int(4), new Pair(new Int(5), new Int(6))])
+    ])).toString(), '((1 2 . 3) (4 5 . 6))')
 
     assert.equal((new Fun('name', [], [], () => {})).toString(), '(defun name ())')
     assert.equal((new Fun('name', ['x'], [], () => {})).toString(), '(defun name (x))')

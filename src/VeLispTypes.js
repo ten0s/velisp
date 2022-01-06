@@ -589,7 +589,7 @@ class List {
         if (this.isNil()) {
             return NIL
         }
-        const arr = this.arr.map(item => item.toString(true))
+        const arr = this.arr.map(item => item.toString({insideList: true}))
         return `(${arr.join(' ')})`
     }
 }
@@ -656,7 +656,9 @@ class Pair {
     }
 
     // :: () -> string
-    toString(insideList) {
+    toString({insideList} = {insideList: false}) {
+        // TODO: wrong output for '((1 . 2) (3 . 4))
+        //       see tests/types.js
         if (insideList) {
             return `${this.fst} . ${this.snd}`
         } else {
@@ -676,7 +678,7 @@ class Fun {
 
     // :: () -> Sym
     type() {
-        // TODO: subclass KFun (kernel) & UFun (user) and add 'usubr'
+        // TODO?: subclass KFun (kernel) & UFun (user) and add 'usubr'
         return new Sym('subr')
     }
 
