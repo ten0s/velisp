@@ -1,11 +1,11 @@
-;;;
-;;; Defines
-;;;
+;;;;
+;;;; Defines
+;;;;
 (setq ROWS 8 COLS 8 MINES 8)
 
-;;;
-;;; VeLisp functions missing in AutoCAD
-;;;
+;;;;
+;;;; VeLisp functions missing in AutoCAD
+;;;;
 
 (if (not srand)
     (defun srand (seed / m)
@@ -57,9 +57,9 @@
           (mapcar 'chr (vl-string->list str))
         (do-split str))))
 
-;;;
-;;; Graphics
-;;;
+;;;;
+;;;; Graphics
+;;;;
 
 (setq BLACK_COLOR       0)
 (setq RED_COLOR         1)
@@ -433,9 +433,9 @@
      (draw_open key)
      (draw_glyph key MINE_GLYPH RED_COLOR))))
 
-;;;
-;;; Utilities
-;;;
+;;;;
+;;;; Utilities
+;;;;
 
 (defun seq (a b / aux)
   (defun aux (a b acc)
@@ -467,12 +467,17 @@
   (foreach str lst (princ str))
   (princ "\n"))
 
-;;;
-;;; Main Logic
-;;;
+;;;;
+;;;; Main Logic
+;;;;
 
-(setq hidden_states nil)
-(setq shown_states  nil)
+;;; Global states
+(setq hidden_states nil
+      shown_states  nil)
+
+(defun reset_states ()
+  (setq hidden_states nil
+        shown_states  nil))
 
 (defun show_score (message)
   (set_tile "score_text" message))
@@ -503,7 +508,7 @@
   (setq seed (srand (getvar "MILLISECS")))
   (println (list "Rand seed: " seed))
 
-  (setq hidden_states nil)
+  (reset_states)
   (init_shown_states)
   (draw_all_cells)
 
@@ -639,7 +644,7 @@
   (foreach key (make_keys ROWS COLS)
            (draw_cell key (get_shown_state key))))
 
-;; () -> (flags . opens)
+;;; () -> (flags . opens)
 (defun calc_flag_and_open_cells ( / flags opens)
   (setq flags 0 opens 0)
   (foreach key (make_keys ROWS COLS)
@@ -713,9 +718,9 @@
                      (open_around_cells around_key)))))))
    'ignored))
 
-;;;
-;;; DCL Dialog
-;;;
+;;;;
+;;;; DCL Dialog
+;;;;
 
 (setq dcl_file "mines.dcl")
 (setq dlg_id "mines")
