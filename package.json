@@ -1,6 +1,6 @@
 {
     "name": "VeLisp",
-    "version": "0.6.6",
+    "version": "0.6.7",
     "description": "AutoLISP / DCL compatible interpreter to run AutoCAD independent code",
     "main": "src/main.js",
     "scripts": {
