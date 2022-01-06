@@ -23,7 +23,7 @@
   (setq len (length lst))
   (cond ((= len 0) lst)
         ((= len 1) lst)
-        (t (insert (car lst) (sort cmp (cdr lst))))))
+        (T (insert (car lst) (sort cmp (cdr lst))))))
 
 ;; VeLisp Extension
 (defun usort (cmp lst / uinsert len)
@@ -38,7 +38,7 @@
   (setq len (length lst))
   (cond ((= len 0) lst)
         ((= len 1) lst)
-        (t (uinsert (car lst) (usort cmp (cdr lst))))))
+        (T (uinsert (car lst) (usort cmp (cdr lst))))))
 
 ;; VeLisp Extension
 (defun uniq (lst / set)
@@ -50,13 +50,13 @@
   (reverse set))
 
 ;; VeLisp Extension
-(defun enumerate (lst / i ilst)
+(defun enumerate (lst / i acc)
   ;; Adds a zero-based counter to each item in a list
-  (setq i 0 ilst '())
+  (setq i 0)
   (foreach item lst
-           (setq ilst (cons (cons i item) ilst)
+           (setq acc (cons (cons i item) acc)
                  i (1+ i)))
-  (reverse ilst))
+  (reverse acc))
 
 ;; VeLisp Extension
 (defun shuffle (lst)

@@ -116,7 +116,7 @@
 | (filename-parse filename) | Returns the root, the name, the directory and the extension from a file name | VeLisp Extension |
 | (mkdir dirname) | Creates a directory | VeLisp Extension |
 | (rmdir dirname) | Removes a directory | VeLisp Extension |
-| (vl-directory-files [ directory pattern directories]) | Lists all files in a given directory | |
+| (vl-directory-files [directory pattern directories]) | Lists all files in a given directory | |
 | (vl-file-copy "source-filename" "destination-filename" [append]) | Copies or appends the contents of one file to another file | |
 | (vl-file-delete "filename") | Deletes a file | |
 | (vl-file-directory-p "filename") | Determines if a file name refers to a directory | |
@@ -175,11 +175,11 @@
 | (member expr lst) | Searches a list for an occurrence of an expression and returns the remainder of the list, starting with the first occurrence of the expression | |
 | (nth n lst) | Returns the nth element of a list | |
 | (reverse lst) | Returns a list with its elements reversed | |
-| (shuffle lst) | Returns a list with its elements shuffled randomly | VeList Extension |
-| (sort cmp lst) | Sorts the elements in a list according to a given compare function | VeLisp Extension |
+| (shuffle lst) | Returns a list with its elements shuffled randomly | VeLisp Extension |
+| (sort cmp lst) | Returns a list with its elements sorted according to a given compare function | VeLisp Extension |
 | (subst newitem olditem lst) | Searches a list for an old item and returns a copy of the list with a new item substituted in place of every occurrence of the old item | |
-| (uniq lst) | Removes duplicates from a list | VeLisp Extension |
-| (usort cmp lst) | Uniquely sorts the elements in a list according to a given compare function | VeLisp Extension |
+| (uniq lst) | Returns a list without duplicate elements | VeLisp Extension |
+| (usort cmp lst) | Returns a list with its elements sorted according to a given compare function and without duplicate elements | VeLisp Extension |
 | (vl-consp list) | Determines whether or not a list is nil | |
 | (vl-every predicate list [list ...]) | Checks whether the predicate is true for every element combination | |
 | (vl-list* object [object ...]) | Constructs and returns a list | |
