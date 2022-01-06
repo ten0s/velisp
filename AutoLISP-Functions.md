@@ -165,6 +165,7 @@
 | (cdr lst) | Returns the specified list, except for the first element of the list | |
 | (cons new-first-element lst) | The basic list constructor | |
 | (enumerate lst) | Adds a zero-based counter to each item in a list | VeLisp Extension |
+| (drop n lst) | Returns a sublist with the first n elements dropped | VeLisp Extension |
 | (foreach name lst [expr ...]) | Evaluates expressions for all members of a list | |
 | (join delim lst) | Joins a list using the delimiter | VeLisp Extension |
 | (last lst) | Returns the last element in a list | |
@@ -177,7 +178,9 @@
 | (reverse lst) | Returns a list with its elements reversed | |
 | (shuffle lst) | Returns a list with its elements shuffled randomly | VeLisp Extension |
 | (sort cmp lst) | Returns a list with its elements sorted according to a given compare function | VeLisp Extension |
+| (sublist start len lst) | Returns a sublist of a list | VeLisp Extension |
 | (subst newitem olditem lst) | Searches a list for an old item and returns a copy of the list with a new item substituted in place of every occurrence of the old item | |
+| (take n lst) | Returns the first n elements in a list | VeLisp Extension |
 | (uniq lst) | Returns a list without duplicate elements | VeLisp Extension |
 | (usort cmp lst) | Returns a list with its elements sorted according to a given compare function and without duplicate elements | VeLisp Extension |
 | (vl-consp list) | Determines whether or not a list is nil | |

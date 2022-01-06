@@ -64,3 +64,27 @@
   (mapcar 'cdr
           (sort (lambda (l r) (< (car l) (car r)))
                 (mapcar '(lambda (x) (cons (rand) x)) lst))))
+
+;; VeLisp Extension
+(defun take (n lst / acc)
+  ;; Returns the first n elements in a list
+  ;; TODO: assert n is int
+  (while (and (not (null lst)) (> n 0))
+    (setq acc (cons (car lst) acc)
+          lst (cdr lst)
+          n (1- n)))
+  (reverse acc))
+
+;; VeLisp Extension
+(defun drop (n lst)
+  ;; Returns a sublist with the first n elements dropped
+  ;; TODO: assert n is int
+  (while (and (not (null lst)) (> n 0))
+    (setq lst (cdr lst)
+          n (1- n)))
+  lst)
+
+;; VeLisp Extension
+(defun sublist (start len lst)
+  ;; Returns a sublist of a list
+  (take len (drop start lst)))

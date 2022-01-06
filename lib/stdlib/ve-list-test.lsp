@@ -77,3 +77,48 @@
    (srand 0)
    (vlu-assert-equal '(1 4 2 5 3) (shuffle '(1 2 3 4 5)))
    (vlu-assert-equal '(2 4 1 5 3) (shuffle '(1 2 3 4 5)))))
+
+(vlu-add-test
+ (defun take-test ()
+   (vlu-assert-equal '() (take -1 '()))
+   (vlu-assert-equal '() (take 0 '()))
+   (vlu-assert-equal '() (take 1 '()))
+   
+   (vlu-assert-equal '() (take -1 '(1 2 3)))
+   (vlu-assert-equal '() (take 0 '(1 2 3)))
+   (vlu-assert-equal '(1) (take 1 '(1 2 3)))
+
+   (vlu-assert-equal '(1 2 3) (take 3 '(1 2 3)))
+   (vlu-assert-equal '(1 2 3) (take 5 '(1 2 3)))))
+
+(vlu-add-test
+ (defun drop-test ()
+   (vlu-assert-equal '() (drop -1 '()))
+   (vlu-assert-equal '() (drop 0 '()))
+   (vlu-assert-equal '() (drop 1 '()))
+
+   (vlu-assert-equal '(1 2 3) (drop -1 '(1 2 3)))
+   (vlu-assert-equal '(1 2 3) (drop 0 '(1 2 3)))
+   (vlu-assert-equal '(2 3) (drop 1 '(1 2 3)))
+
+   (vlu-assert-equal '(3) (drop 2 '(1 2 3)))
+   (vlu-assert-equal '() (drop 5 '(1 2 3)))))
+
+(vlu-add-test
+ (defun sublist-test ()
+   (vlu-assert-equal '() (sublist -1 0 '()))
+   (vlu-assert-equal '() (sublist 0 -1 '()))
+   (vlu-assert-equal '() (sublist 0 0 '()))
+   (vlu-assert-equal '() (sublist 1 0 '()))
+   (vlu-assert-equal '() (sublist 0 1 '()))
+
+   (vlu-assert-equal '() (sublist 0 0 '(1 2 3 4 5)))
+   (vlu-assert-equal '() (sublist 1 0 '(1 2 3 4 5)))
+
+   (vlu-assert-equal '(1) (sublist 0 1 '(1 2 3 4 5)))
+   (vlu-assert-equal '(1 2 3 4 5) (sublist 0 5 '(1 2 3 4 5)))
+   (vlu-assert-equal '(1 2 3 4 5) (sublist 0 10 '(1 2 3 4 5)))
+   (vlu-assert-equal '(2 3 4 5) (sublist 1 4 '(1 2 3 4 5)))
+
+   (vlu-assert-equal '(5) (sublist 4 1 '(1 2 3 4 5)))
+   (vlu-assert-equal '() (sublist 5 10 '(1 2 3 4 5)))))
