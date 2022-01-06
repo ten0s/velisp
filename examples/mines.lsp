@@ -30,12 +30,12 @@
       (defun insert (item sorted-lst)
         (cond ((null sorted-lst) (list item))
               ((cmp item (car sorted-lst)) (cons item sorted-lst))
-              (t (cons (car sorted-lst)
+              (T (cons (car sorted-lst)
                        (insert item (cdr sorted-lst))))))
       (setq len (length lst))
       (cond ((= len 0) lst)
             ((= len 1) lst)
-            (t (insert (car lst) (sort cmp (cdr lst)))))))
+            (T (insert (car lst) (sort cmp (cdr lst)))))))
 
 (if (not shuffle)
     (defun shuffle (lst)
@@ -56,6 +56,12 @@
       (if (zerop delim-len)
           (mapcar 'chr (vl-string->list str))
         (do-split str))))
+
+;;;;
+;;;; Binary Search Tree
+;;;;
+
+(load "bst.lsp")
 
 ;;;;
 ;;;; Graphics
@@ -557,57 +563,61 @@
   (member (get_shown_state key)
           '(HIDDEN FLAG QUESTION)))
 
+;; () -> ((key . MINE | NONE))
+(defun gen_hidden_states ()
+  (mapcar '(lambda (key state) (cons key state))
+          (make_keys ROWS COLS)
+          (shuffle (append
+                    (duplicate (- (* ROWS COLS) MINES) 'NONE)
+                    (duplicate MINES 'MINE)))))
+
+;; () -> (key . HIDDEN)
+(defun gen_shown_states ()
+  (mapcar '(lambda (key) (cons key 'HIDDEN))
+          (make_keys ROWS COLS)))
+
 (defun init_hidden_states ()
   (setq hidden_states
-        (mapcar '(lambda (key state) (cons key state))
-                (make_keys ROWS COLS)
-                (shuffle (append
-                          (duplicate (- (* ROWS COLS) MINES) 'NONE)
-                          (duplicate MINES 'MINE)))))
+        (bst_from_list (gen_hidden_states)))
   (println (list "Hidden states:\n" hidden_states)))
 
 (defun calc_mines_around_hidden_states ()
   (setq hidden_states
-        (mapcar '(lambda (pair / key state)
-                   (setq key (car pair)
-                         state (cdr pair))
+        (bst_map (lambda (key state)
                    (if (= state 'NONE)
-                       (cons key (mines_around key))
-                     pair))
-                hidden_states))
+                       (mines_around key)
+                     state))
+                 hidden_states))
   (println (list "Hidden states:\n" hidden_states)))
 
 (defun init_shown_states ()
   (setq shown_states
-        (mapcar '(lambda (key) (cons key 'HIDDEN))
-                (make_keys ROWS COLS)))
+        (bst_from_list (gen_shown_states)))
   (println (list "Shown states:\n" shown_states)))
 
 (defun calc_final_shown_states ()
   (setq shown_states
-        (mapcar '(lambda (pair / key shown_state hidden_state)
-                   (setq key (car pair)
-                         shown_state (cdr pair))
+        (bst_map (lambda (key shown_state / hidden_state)
                    (if (is_cell_closed key)
                        (progn
                          (setq hidden_state (get_hidden_state key))
                          (if (= hidden_state 'MINE)
                              (if (= shown_state 'FLAG)
-                                 (cons key 'FOUND_MINE)
-                               (cons key 'MISSED_MINE))
-                           (cons key hidden_state)))
-                     (cons key shown_state)))
+                                 'FOUND_MINE
+                               'MISSED_MINE)
+                           hidden_state))
+                     shown_state))
                 shown_states))
   (println (list "Shown states:\n" shown_states)))
 
 (defun get_hidden_state (key)
-  (cdr (assoc key hidden_states)))
+  (bst_get key hidden_states))
 
 (defun get_shown_state (key)
-  (cdr (assoc key shown_states)))
+  (bst_get key shown_states))
 
 (defun set_shown_state (key state)
-  (setq shown_states (cons (cons key state) shown_states))
+  (setq shown_states (bst_set key state shown_states))
   (println (list "Shown states:\n" shown_states)))
 
 (defun next_shown_state (state)
