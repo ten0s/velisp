@@ -37,8 +37,12 @@ exports.initContext = (context) => {
             // Since (load filename) can defun other functions
             // we need to store them in the parent context.
             const context = self.contexts[self.contexts.length-2]
+            const parent = context.getSym('%VELISP_LSP_FILE%')
             context.setSym('%VELISP_LSP_FILE%', new Str(path.resolve(filename)))
-            return Evaluator.evaluate(data, context)
+            const result = Evaluator.evaluate(data, context)
+            // Restore back source file.
+            context.setSym('%VELISP_LSP_FILE%', parent)
+            return result
         } catch (e) {
             if (args.length === 2) {
                 let onfailure = args[1]
