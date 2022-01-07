@@ -325,7 +325,7 @@
         gh (glyph_height glyph)
         x0 (center tw gw)
         y0 (center th gh))
-  (mapcar '(lambda (lst / x1 y1 x2 x2)
+  (mapcar '(lambda (lst / x1 y1 x2 y2)
              (setq x1 (car lst)
                    y1 (cadr lst)
                    x2 (caddr lst)
