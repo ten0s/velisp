@@ -745,10 +745,6 @@
     (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
     (exit 1)))
 
-(action_tile "new_game" "(start_game)")
-(set_tile "difficulty" (itoa MINES))
-(action_tile "difficulty" "(change_difficulty)")
-
 (defun button_handler (key reason)
   (cond ((= reason 1) (single_click_handler key))
         ((= reason 4) (double_click_handler key))
@@ -780,6 +776,10 @@
     )
   (if (is_cell_closed key)
       (open_cell key)))
+
+(action_tile "new_game" "(start_game)")
+(set_tile "difficulty" (itoa MINES))
+(action_tile "difficulty" "(change_difficulty)")
 
 (start_game)
 
