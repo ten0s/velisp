@@ -1,6 +1,6 @@
-;;;
-;;; Globals
-;;;
+;;;;
+;;;; Globals
+;;;;
 
 (setq *ZERO*   "0")
 (setq *PERIOD* ".")
@@ -10,11 +10,11 @@
 (setq *LHS* nil)
 (setq *OPER* nil)
 
-;;;
-;;; Utilities
-;;;
+;;;;
+;;;; Utilities
+;;;;
 
-;; Define ftoa function if not defined
+;;; Define ftoa function if not defined
 (if (not ftoa)
     (defun ftoa (num)
       (rtos num 2)))
@@ -41,9 +41,9 @@
   (setq int (fix num))
   (if (equal int num) int num))
 
-;;;
-;;; DCL Helpers
-;;;
+;;;;
+;;;; DCL Helpers
+;;;;
 
 (defun get_input ( / input)
   (setq input (get_tile "input"))
@@ -57,9 +57,9 @@
 (defun with_input (func)
   (set_input (func (get_input))))
 
-;;; 
-;;; Action Handlers
-;;;
+;;;;
+;;;; Action Handlers
+;;;;
 
 (defun do_clear ()
   (with_input (lambda (_) *ZERO*)))
@@ -149,9 +149,9 @@
           (ftoa
            (compact-float
             (oper lhs rhs)))))))))
-;;;
-;;; DCL Dialog
-;;;
+;;;;
+;;;; DCL Dialog
+;;;;
 
 (setq dcl_file "calc.dcl")
 (setq dlg_id "calc_dlg")

@@ -1,9 +1,9 @@
-//
-// Simplified version of
-// https://documentation.help/AutoCAD-ALISP-VLISP/WS73099cc142f4875516d84be10ebc87a53f-79d8.htm
-//
+;;;;
+;;;; Simplified version of
+;;;; https://documentation.help/AutoCAD-ALISP-VLISP/WS73099cc142f4875516d84be10ebc87a53f-79d8.htm
+;;;;
 
-; BASE converts from a decimal integer to a string in another base.
+;;; BASE converts from a decimal integer to a string in another base.
 (defun BASE (bas int / ret yyy zot)
   (defun zot (i1 i2 / xxx)
     (if (> (setq xxx (rem i2 i1)) 9)
