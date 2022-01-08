@@ -589,7 +589,12 @@ class List {
         if (this.isNil()) {
             return NIL
         }
-        const arr = this.arr.map(item => item.toString({insideList: true}))
+        const arr = this.arr.map((item, idx) => item.toString({
+            insideList: true,
+            listLength: this.arr.length,
+            listIndex: idx,
+            listPrevItem: idx > 0 ? this.arr[idx-1] : null,
+        }))
         return `(${arr.join(' ')})`
     }
 }
@@ -656,10 +661,16 @@ class Pair {
     }
 
     // :: () -> string
-    toString({insideList} = {insideList: false}) {
-        // TODO: wrong output for '((1 . 2) (3 . 4))
-        //       see tests/types.js
-        if (insideList) {
+    toString({insideList, listLength, listIndex, listPrevItem} = {
+        insideList: false,
+        listLength: 0,
+        listIndex: -1,
+        listPrevItem: null,
+    }) {
+        if (insideList                 &&
+            listLength > 1             &&
+            listIndex === listLength-1 &&
+            !(listPrevItem instanceof Pair)) {
             return `${this.fst} . ${this.snd}`
         } else {
             return `(${this.fst} . ${this.snd})`
