@@ -67,6 +67,14 @@ $ ./velisp-0.6.7-linux-x64 examples/mines.lsp
 
 ![App Mines Image](/images/app-mines.png)
 
+Run Fifteen Puzzle
+
+```
+$ ./velisp-0.6.7-linux-x64 examples/fifteen.lsp
+```
+
+![App Fifteen Image](/images/app-fifteen.png)
+
 ### Run code from standard input
 
 ```
