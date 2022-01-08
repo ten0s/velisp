@@ -44,16 +44,22 @@ ADD
 
 ### Run code from file
 
+Calculate 10th Fibonacci number
+
 ```
 $ ./velisp-0.6.7-linux-x64 examples/fib.lsp
 55
 ```
+
+Run Calculator
 
 ```
 $ ./velisp-0.6.7-linux-x64 examples/calc.lsp
 ```
 
 ![App Calc Image](/images/app-calc.png)
+
+Run Minesweeper
 
 ```
 $ ./velisp-0.6.7-linux-x64 examples/mines.lsp
