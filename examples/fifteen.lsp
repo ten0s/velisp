@@ -8,55 +8,11 @@
 ;;;; VeLisp functions missing in AutoCAD
 ;;;;
 
-(if (not srand)
-    (defun srand (seed / m)
-      ;; Initializes pseudo-random number generator
-      (setq m 2147483648
-            %VELISP_RAND_SEED% (rem (fix seed) m))))
-
-(if (not rand)
-    (defun rand ( / a c m d)
-      ;; Returns a pseudo-random integral number in the range between 0 and 32767
-      (setq a 214013
-            c 2531011
-            m 2147483648
-            d 65536
-            %VELISP_RAND_SEED% (rem (+ (* %VELISP_RAND_SEED% a) c) m))
-      (fix (/ %VELISP_RAND_SEED% d))))
-
-(if (not sort)
-    (defun sort (cmp lst / insert len)
-      ;; Sorts the elements in a list by the insertion sort
-      ;; according to a given compare function
-      (defun insert (item sorted-lst)
-        (cond ((null sorted-lst) (list item))
-              ((cmp item (car sorted-lst)) (cons item sorted-lst))
-              (T (cons (car sorted-lst)
-                       (insert item (cdr sorted-lst))))))
-      (setq len (length lst))
-      (cond ((= len 0) lst)
-            ((= len 1) lst)
-            (T (insert (car lst) (sort cmp (cdr lst)))))))
-
-(if (not shuffle)
-    (defun shuffle (lst)
-      ;; Shuffles randomly the elements in a list
-      (mapcar 'cdr
-              (sort (lambda (l r) (< (car l) (car r)))
-                    (mapcar '(lambda (x) (cons (rand) x)) lst)))))
-
-(if (not split)
-    (defun split (delim str / delim-len do-split)
-      ;; Split a string using a delimiter
-      (setq delim-len (strlen delim))
-      (defun do-split (str / pos)
-        (if (setq pos (vl-string-search delim str))
-            (cons (substr str 1 pos)
-                  (do-split (substr str (+ pos 1 delim-len))))
-          (list str)))
-      (if (zerop delim-len)
-          (mapcar 'chr (vl-string->list str))
-        (do-split str))))
+(if (not (getvar "VELISP_LSP_FILE"))
+    (progn
+      (load "../lib/velisp/list.lsp")
+      (load "../lib/velisp/random.lsp")
+      (load "../lib/velisp/string.lsp")))
 
 ;;;;
 ;;;; Binary Search Tree
