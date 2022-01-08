@@ -430,6 +430,10 @@
   (foreach str lst (princ str))
   (princ "\n"))
 
+(defun inspect (msg val)
+  (println (list msg val))
+  val)
+
 (defun filter (fun lst / acc)
   (foreach elm lst
            (if (fun elm)
@@ -465,7 +469,7 @@
           (shuffle (win_positions))))
 
 ;;; Determining solvability
-;;; http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+;;; https://web.archive.org/web/20201009161204/http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
 ;;; If the grid width is odd, then the number of inversions in a solvable situation is even
 ;;; If the grid width is even, and the blank is on an even row counting from the bottom
 ;;; (second-last, fourth-last etc), then the number of inversions in a solvable situation is odd
@@ -479,7 +483,8 @@
       (setq x (car xs))
       (+ (length (filter (lambda (y) (> x y)) xs))
          (aux (cdr xs))))))
-  (aux (mapcar 'cdr state)))
+  (aux (filter (lambda (x) (/= x BLANK))
+                 (mapcar 'cdr state))))
 
 (defun get_blank_key (state)
   (caar (vl-member-if
@@ -487,18 +492,20 @@
 
 (defun is_solvable (state / invers_num blank_y blank_row)
   (setq invers_num (inversions state)
-        blank_y    (cdr (parse_key (get_blank_key state)))
-        blank_row  (+ (- ROWS blank_y) 1))
-  (cond ((oddp COLS)       (evenp invers_num))
-        ((evenp blank_row) (oddp invers_num))
-        (T                 (evenp invers_num))))
+        blank_y    (1- (car (parse_key (get_blank_key state))))
+        blank_row  (- ROWS blank_y))
+  ;(println (list invers_num " " blank_y " " blank_row))
+  (if (oddp COLS)
+      (evenp invers_num)
+    (= (oddp blank_row) (evenp invers_num))))
 
 (defun init_state ( / state)
   (setq state (gen_state))
   (while (not (is_solvable state))
     (setq state (gen_state)))
-  (setq game_state
-        (bst_from_list state))
+  (setq game_state (bst_from_list state)))
+
+(defun print_state ()
   (println (list "State:\n" (bst_to_list game_state))))
 
 (defun reset_state ()
@@ -508,8 +515,7 @@
   (bst_get key game_state))
 
 (defun set_state (key state)
-  (setq game_state (bst_set key state game_state))
-  (println (list "State:\n" (bst_to_list game_state))))
+  (setq game_state (bst_set key state game_state)))
 
 (defun is_game_started ()
   (/= game_state nil))
@@ -526,6 +532,7 @@
 
   (reset_state)
   (init_state)
+  (print_state)
   (draw_all_tiles)
 
   (show_hint (strcat "Move tiles to order them from 1 to 15, then\n"
@@ -623,15 +630,16 @@
   (if (and (is_game_started) (not (is_blank_tile key)))
       (progn
         (setq old_state (get_state key)
-              blank_key (nearby_blank_key key))
+              blank_key (inspect "Blank: " (nearby_blank_key key)))
         (if blank_key
             (progn
               (setq new_state BLANK)
               (println (list key ": " old_state " -> " new_state))
-              (set_state key new_state)
-              (draw_tile key new_state)
               (println (list blank_key ": " BLANK " -> " old_state))
+              (set_state key new_state)
               (set_state blank_key old_state)
+              (print_state)
+              (draw_tile key new_state)
               (draw_tile blank_key old_state)
               (check_game_over))))))
 
