@@ -23,143 +23,11 @@
 ;;;; Graphics
 ;;;;
 
-(setq BLACK_COLOR       0)
-(setq RED_COLOR         1)
-(setq BLUE_COLOR        5)
-(setq WHITE_COLOR       255)
-(setq LIGHT_GREY_COLOR  254)
-(setq MIDDLE_GREY_COLOR 253)
-(setq DARK_GREY_COLOR   252)
+(load "color.lsp")
+(load "glyph.lsp")
+(load "image-button.lsp")
 
-(setq ONE_GLYPH
-      '((1 0 3 0)
-        (0 1 3 1)
-        (2 2 3 2)
-        (2 3 3 3)
-        (2 4 3 4)
-        (2 5 3 5)
-        (2 6 3 6)
-        (2 7 3 7)
-        (2 8 3 8)
-        (2 9 3 9)
-        (2 10 3 10)
-        (2 11 3 11)
-        (0 12 5 12)
-        (0 13 5 13)))
-
-(setq TWO_GLYPH
-      '((1 0 7 0)
-        (0 1 8 1)
-        (0 2 1 2) (7 2 8 2)
-        (7 3 8 3)
-        (7 4 8 4)
-        (6 5 8 5)
-        (5 6 7 6)
-        (4 7 6 7)
-        (3 8 5 8)
-        (2 9 4 9)
-        (1 10 3 10)
-        (0 11 2 11)
-        (0 12 8 12)
-        (0 13 8 13)))
-
-(setq THREE_GLYPH
-      '((0 0 8 0)
-        (0 1 8 1)
-        (6 2 8 2)
-        (5 3 7 3)
-        (4 4 6 4)
-        (3 5 5 5)
-        (2 6 7 6)
-        (2 7 8 7)
-        (7 8 8 8)
-        (7 9 8 9)
-        (7 10 8 10)
-        (0 11 1 11) (7 11 8 11)
-        (0 12 8 12)
-        (1 13 7 13)))
-
-(setq FOUR_GLYPH
-      '((5 0 7 0)
-        (4 1 7 1)
-        (3 2 4 2) (6 2 7 2)
-        (3 3 4 3) (6 3 7 3)
-        (2 4 3 4) (6 4 7 4)
-        (2 5 3 5) (6 5 7 5)
-        (1 6 2 6) (6 6 7 6)
-        (1 7 2 7) (6 7 7 7)
-        (0 8 1 8) (6 8 7 8)
-        (0 9 9 9)
-        (0 10 9 10)
-        (6 11 7 11)
-        (6 12 7 12)
-        (6 13 7 13)))
-
-(setq FIVE_GLYPH
-      '((0 0 8 0)
-        (0 1 8 1)
-        (0 2 1 2)
-        (0 3 1 3)
-        (0 4 1 4)
-        (0 5 1 5)
-        (0 6 7 6)
-        (1 7 8 7)
-        (7 8 8 8)
-        (7 9 8 9)
-        (7 10 8 10)
-        (0 11 1 11) (7 11 8 11)
-        (0 12 8 12)
-        (1 13 7 13)))
-
-(setq SIX_GLYPH
-      '((1 0 7 0)
-        (0 1 8 1)
-        (0 2 1 2) (7 2 8 2)
-        (0 3 1 3)
-        (0 4 1 4)
-        (0 5 1 5)
-        (0 6 7 6)
-        (0 7 1 7) (1 7 8 7)
-        (0 8 1 8) (7 8 8 8)
-        (0 9 1 9) (7 9 8 9)
-        (0 10 1 10) (7 10 8 10)
-        (0 11 1 11) (7 11 8 11)
-        (0 12 8 12)
-        (1 13 7 13)))
-
-(setq SEVEN_GLYPH
-      '((0 0 8 0)
-        (0 1 8 1)
-        (7 2 8 2)
-        (6 3 7 3)
-        (6 4 7 4)
-        (5 5 6 5)
-        (5 6 6 6)
-        (4 7 5 7)
-        (4 8 5 8)
-        (3 9 4 9)
-        (3 10 4 10)
-        (2 11 3 11)
-        (2 12 3 12)
-        (2 13 3 13)))
-
-(setq EIGHT_GLYPH
-      '((1 0 7 0)
-        (0 1 8 1)
-        (0 2 1 2) (7 2 8 2)
-        (0 3 1 3) (7 3 8 3)
-        (0 4 1 4) (7 4 8 4)
-        (0 5 1 5) (7 5 8 5)
-        (1 6 7 6)
-        (1 7 7 7)
-        (0 8 1 8) (7 8 8 8)
-        (0 9 1 9) (7 9 8 9)
-        (0 10 1 10) (7 10 8 10)
-        (0 11 1 11) (7 11 8 11)
-        (0 12 8 12)
-        (1 13 7 13)))
-
-(setq FLAG_GLYPH
+(setq GLYPH_FLAG
       '((0 0 4 0)
         (0 1 5 1)
         (0 2 6 2)
@@ -177,7 +45,7 @@
         (0 14 1 14)
         (0 15 1 15)))
 
-(setq QUESTION_GLYPH
+(setq GLYPH_QUESTION
       '((1 0 7 0)
         (0 1 8 1)
         (0 2 1 2) (7 2 8 2)
@@ -193,7 +61,7 @@
         (3 14 4 14)
         (3 15 4 15)))
 
-(setq MINE_GLYPH
+(setq GLYPH_MINE
       '((9 0 10 0)
         (9 1 10 1)
         (9 2 10 2)
@@ -215,144 +83,67 @@
         (9 18 10 18)
         (9 19 10 19)))
 
-(defun glyph_max (glyph fun1 fun2)
-  (apply 'max
-         (mapcar '(lambda (lst / x1 x2)
-                    (setq x1 (fun1 lst)
-                          x2 (fun2 lst))
-                    (max x1 x2))
-          glyph)))
-
-(defun glyph_width (glyph)
-  (glyph_max glyph car caddr))
-
-(defun glyph_height (glyph)
-  (glyph_max glyph cadr cadddr))
-
-(defun center (outer inner)
-  (fix (/ (- outer inner) 2)))
-
-(defun with_image (key draw_fun)
-  (start_image key)
-  (draw_fun)
-  (end_image))
-
-(defun draw_closed (key / tw th)
-  (setq tw (dimx_tile key)
-        th (dimy_tile key))
-
-  (fill_image 0 0 tw th WHITE_COLOR)
-  (fill_image 4 4 (- tw 4) (- th 4) LIGHT_GREY_COLOR)
-
-  ;; Vertical right edge
-  (vector_image tw 0 tw th MIDDLE_GREY_COLOR)
-  (vector_image (- tw 1) 1 (- tw 1) (- th 1) MIDDLE_GREY_COLOR)
-  (vector_image (- tw 2) 2 (- tw 2) (- th 2) MIDDLE_GREY_COLOR)
-  (vector_image (- tw 3) 3 (- tw 3) (- th 3) MIDDLE_GREY_COLOR)
-
-  ;; Horizontal botton edge
-  (vector_image 0 th tw th MIDDLE_GREY_COLOR)
-  (vector_image 1 (- th 1) (- tw 1) (- th 1) MIDDLE_GREY_COLOR)
-  (vector_image 2 (- th 2) (- tw 2) (- th 2) MIDDLE_GREY_COLOR)
-  (vector_image 3 (- th 3) (- tw 3) (- th 3) MIDDLE_GREY_COLOR))
-
-(defun draw_open (key / tw th)
-  (setq tw (dimx_tile key)
-        th (dimy_tile key))
-
-  (fill_image 0 0 tw th WHITE_COLOR)
-
-  ;; Vertical left edge
-  (vector_image 0 0 0 th LIGHT_GREY_COLOR)
-  (vector_image 1 1 1 (- th 1) LIGHT_GREY_COLOR)
-  (vector_image 2 2 2 (- th 2) LIGHT_GREY_COLOR)
-  (vector_image 3 3 3 (- th 3) LIGHT_GREY_COLOR)
-
-  ;; Horizontal top edge
-  (vector_image 0 0 tw 0 LIGHT_GREY_COLOR)
-  (vector_image 1 1 (- tw 1) 1 LIGHT_GREY_COLOR)
-  (vector_image 2 2 (- tw 2) 2 LIGHT_GREY_COLOR)
-  (vector_image 3 3 (- tw 3) 3 LIGHT_GREY_COLOR))
-
-(defun draw_glyph (key glyph color / tw th gw gh x0 y0)
-  (setq tw (dimx_tile key)
-        th (dimy_tile key)
-        gw (glyph_width glyph)
-        gh (glyph_height glyph)
-        x0 (center tw gw)
-        y0 (center th gh))
-  (mapcar '(lambda (lst / x1 y1 x2 y2)
-             (setq x1 (car lst)
-                   y1 (cadr lst)
-                   x2 (caddr lst)
-                   y2 (cadddr lst))
-             (vector_image (+ x0 x1)
-                           (+ y0 y1)
-                           (+ x0 x2)
-                           (+ y0 y2) color))
-   glyph))
-
 (defun draw_empty (key)
   (with_image
    key
    (lambda ()
      (draw_open key))))
 
-(defun draw_one (key)
+(defun draw_1 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key ONE_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_1 BLACK_COLOR))))
 
-(defun draw_two (key)
+(defun draw_2 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key TWO_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_2 BLACK_COLOR))))
 
-(defun draw_three (key)
+(defun draw_3 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key THREE_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_3 BLACK_COLOR))))
 
-(defun draw_four (key)
+(defun draw_4 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key FOUR_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_4 BLACK_COLOR))))
 
-(defun draw_five (key)
+(defun draw_5 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key FIVE_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_5 BLACK_COLOR))))
 
-(defun draw_six (key)
+(defun draw_6 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key SIX_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_6 BLACK_COLOR))))
 
-(defun draw_seven (key)
+(defun draw_7 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key SEVEN_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_7 BLACK_COLOR))))
 
-(defun draw_eight (key)
+(defun draw_8 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key EIGHT_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_8 BLACK_COLOR))))
 
 (defun draw_hidden (key)
   (with_image
@@ -365,35 +156,35 @@
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key FLAG_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_FLAG BLACK_COLOR))))
 
 (defun draw_question (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key QUESTION_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_QUESTION BLACK_COLOR))))
 
 (defun draw_found_mine (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key MINE_GLYPH BLUE_COLOR))))
+     (draw_glyph key GLYPH_MINE BLUE_COLOR))))
 
 (defun draw_missed_mine (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key MINE_GLYPH BLACK_COLOR))))
+     (draw_glyph key GLYPH_MINE BLACK_COLOR))))
 
 (defun draw_exploded_mine (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key MINE_GLYPH RED_COLOR))))
+     (draw_glyph key GLYPH_MINE RED_COLOR))))
 
 ;;;;
 ;;;; Utilities
@@ -477,7 +268,7 @@
   (with_image
    "score_flag"
    (lambda ()
-     (draw_glyph key FLAG_GLYPH BLACK_COLOR)))
+     (draw_glyph key GLYPH_FLAG BLACK_COLOR)))
   (enable_difficulty)
   (setq MINES (get_difficulty))
   (show_score (make_score 0 MINES))
@@ -489,7 +280,7 @@
   (with_image
    "score_flag"
    (lambda ()
-     (draw_glyph key FLAG_GLYPH BLUE_COLOR)))
+     (draw_glyph key GLYPH_FLAG BLUE_COLOR)))
   (show_score "You Won!")
   (show_hint "Start over or exit"))
 
@@ -499,7 +290,7 @@
   (with_image
    "score_flag"
    (lambda ()
-     (draw_glyph key FLAG_GLYPH RED_COLOR)))
+     (draw_glyph key GLYPH_FLAG RED_COLOR)))
   (show_score "You Lost!")
   (show_hint "Start over or exit"))
 
@@ -592,14 +383,14 @@
         ((= state 'MISSED_MINE)   draw_missed_mine)
         ((= state 'EXPLODED_MINE) draw_exploded_mine)
         ((= state 0)              draw_empty)
-        ((= state 1)              draw_one)
-        ((= state 2)              draw_two)
-        ((= state 3)              draw_three)
-        ((= state 4)              draw_four)
-        ((= state 5)              draw_five)
-        ((= state 6)              draw_six)
-        ((= state 7)              draw_seven)
-        ((= state 8)              draw_eight)
+        ((= state 1)              draw_1)
+        ((= state 2)              draw_2)
+        ((= state 3)              draw_3)
+        ((= state 4)              draw_4)
+        ((= state 5)              draw_5)
+        ((= state 6)              draw_6)
+        ((= state 7)              draw_7)
+        ((= state 8)              draw_8)
         (T (println (list "Unknown state: " state)))))
 
 (defun draw_cell (key state / draw_fun)
