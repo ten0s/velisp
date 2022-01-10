@@ -7,7 +7,7 @@
 ;;;; VeLisp functions missing in AutoCAD
 ;;;;
 
-(if (not (getvar "VELISP_LSP_FILE"))
+(if (null %VELISP_LSP_FILE%)
     (progn
       (load "../lib/velisp/list.lsp")
       (load "../lib/velisp/random.lsp")
