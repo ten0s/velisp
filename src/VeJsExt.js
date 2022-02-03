@@ -4,7 +4,7 @@ const contains = arr => item =>
     arr.indexOf(item) !== -1
 
 if (!Array.prototype.with) {
-    Array.prototype.with = function without(items) {
+    Array.prototype.with = function vvith(items) {
         return this.filter(contains(items))
     }
 }
