@@ -4,6 +4,8 @@ const {
     escape,
     unescape,
     isRecoverableInput,
+    ensureLspExt,
+    ensureDclExt,
 } = require('../src/VeUtil.js')
 
 QUnit.test('VeUtil find', assert => {
@@ -31,7 +33,7 @@ QUnit.test('VeUtil unescape', assert => {
 
     assert.equal(unescape('\\"'), '"')
     assert.equal(unescape('\\\\"'), '\\"')
-    
+
     assert.equal(unescape('\\r'), '\r')
     assert.equal(unescape('\\\\r'), '\\r')
 
@@ -73,4 +75,18 @@ QUnit.test('VeUtil isRecoverableInput', assert => {
     assert.notOk(isRecoverableInput(')'))
     assert.notOk(isRecoverableInput(')('))
     assert.notOk(isRecoverableInput('(()))'))
+})
+
+QUnit.test('VeUtil ensureLspExt', assert => {
+    assert.equal(ensureLspExt(''), '.lsp')
+    assert.equal(ensureLspExt('file'), 'file.lsp')
+    assert.equal(ensureLspExt('file.lsp'), 'file.lsp')
+    assert.equal(ensureLspExt('file.LSP'), 'file.LSP')
+})
+
+QUnit.test('VeUtil ensureDclExt', assert => {
+    assert.equal(ensureDclExt(''), '.dcl')
+    assert.equal(ensureDclExt('file'), 'file.dcl')
+    assert.equal(ensureDclExt('file.dcl'), 'file.dcl')
+    assert.equal(ensureDclExt('file.DCL'), 'file.DCL')
 })

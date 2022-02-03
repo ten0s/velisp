@@ -141,6 +141,7 @@ const isRecoverableInput = (s) => {
 // :: (string, string) -> string
 const ensureExt = (name, ext) => {
     if (path.extname(name)) {
+        // there's some extention
         return name
     }
     return name + ext
