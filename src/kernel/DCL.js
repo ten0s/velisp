@@ -6,7 +6,7 @@ const VeStack = require('../VeStack.js')
 const VeDclContext = require('../VeDclContext.js')
 const VeDclLoader = require('../VeDclLoader.js')
 const {ListOperation} = require('../VeDclTiles.js')
-const {ensureDclExt} = require('../VeUtil.js')
+const {ensureDclExt, fixWinPath} = require('../VeUtil.js')
 
 // global dclId index
 let _dclId = 0
@@ -64,9 +64,8 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('load_dialog: too many arguments')
         }
-        let dclFile = ensureDclExt(ensureType('load_dialog:', args[0], [Str]).value())
-        // Win32 workaround
-        dclFile = dclFile.split('\\').join('/')
+        let dclFile = ensureDclExt(fixWinPath(
+            ensureType('load_dialog:', args[0], [Str]).value()))
         if (!path.isAbsolute(dclFile)) {
             if (!fs.existsSync(dclFile)) {
                 const lspFile = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
@@ -79,9 +78,7 @@ exports.initContext = (context) => {
         const context = new VeDclContext()
 
         // Inject lib/dcl/{base,acad}.dcl
-        let rootdir = path.join(__dirname, '../..')
-        // Win32 workaround
-        rootdir = rootdir.split('\\').join('/')
+        let rootdir = fixWinPath(path.join(__dirname, '../..'))
         VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context)
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context)
 

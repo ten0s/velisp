@@ -4,7 +4,7 @@ const path = require('path')
 const {Command} = require('commander')
 
 const VeSysInfo = require('./VeSysInfo.js')
-const {ensureLspExt, inspect} = require('./VeUtil.js')
+const {ensureLspExt, inspect, fixWinPath} = require('./VeUtil.js')
 const VeLispGlobalContext = require('./VeLispGlobalContext.js')
 const {evaluate, tree} = require('./VeLispEvaluator.js')
 const {Str} = require('./VeLispTypes.js')
@@ -62,9 +62,7 @@ function runAction(what, isRepl) {
 
 function maybeInjectLib(action, context) {
     if (action === evaluate) {
-        let rootdir = path.join(__dirname, '..')
-        // Win32 workaround
-        rootdir = rootdir.split('\\').join('/')
+        let rootdir = fixWinPath(path.join(__dirname, '..'))
         process.env['VELISP_ROOT'] = rootdir
         evaluate(`(load "${rootdir}/lib/main.lsp")`, context)
     }

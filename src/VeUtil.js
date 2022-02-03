@@ -157,6 +157,12 @@ const ensureDclExt = (name) => {
     return ensureExt(name, '.dcl')
 }
 
+// :: (string) -> string
+const fixWinPath = (path) => {
+    // Win32 workaround
+    return path.split('\\').join('/')
+}
+
 module.exports = {
     find,
     escape,
@@ -165,4 +171,5 @@ module.exports = {
     isRecoverableInput,
     ensureLspExt,
     ensureDclExt,
+    fixWinPath,
 }

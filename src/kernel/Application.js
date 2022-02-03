@@ -5,7 +5,7 @@ const {Str, Sym, Fun} = require('../VeLispTypes.js')
 const Evaluator = require('../VeLispEvaluator.js')
 const {fmtError} = require('../VeLispError.js')
 const VeSysInfo = require('../VeSysInfo.js')
-const {ensureLspExt} = require('../VeUtil.js')
+const {ensureLspExt, fixWinPath} = require('../VeUtil.js')
 
 exports.initContext = (context) => {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
@@ -19,9 +19,7 @@ exports.initContext = (context) => {
         if (!(args[0] instanceof Str)) {
             throw new Error('load: `filename` expected Str')
         }
-        let filename = ensureLspExt(args[0].value())
-        // Win32 workaround
-        filename = filename.split('\\').join('/')
+        let filename = ensureLspExt(fixWinPath(args[0].value()))
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
                 const parent = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
