@@ -22,7 +22,7 @@ function main() {
             maybeInjectLib(action, context)
             if (file) {
                 //console.log(`Read from ${file}`);
-                file = ensureLspExt(path.resolve(file))
+                file = ensureLspExt(path.resolve(fixWinPath(file)))
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
