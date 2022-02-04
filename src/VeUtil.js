@@ -160,7 +160,7 @@ const ensureDclExt = (name) => {
 // :: (string) -> string
 const fixWinPath = (path) => {
     // Win32 workaround
-    return path.split('\\').join('/')
+    return path.replaceAll('\\', '/')
 }
 
 module.exports = {

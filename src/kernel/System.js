@@ -33,10 +33,10 @@ exports.initContext = (context) => {
             throw new Error('homedir: too many arguments')
         }
         // Check under WSL
-        if (process.env["WSLENV"]) {
+        if (process.env['WSLENV']) {
             // Expected that called with at least
             // set WSLENV=TEMP/pu:TMP/pu:USERNAME/u:USERPROFILE/pu
-            return new Str(process.env["USERPROFILE"])
+            return new Str(process.env['USERPROFILE'])
         }
         return new Str(os.homedir())
     }))
