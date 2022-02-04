@@ -4,12 +4,6 @@
 
 **VeLisp** is AutoLISP / DCL compatible interpreter to run AutoCAD independent code.
 
-## Prerequisites
-
-In order to build **VeLisp** you need to have
-[Docker](https://docs.docker.com/installation/#installation) with [non-root access](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
-installed.
-
 ## Run **VeLisp**
 
 ### Download
@@ -108,6 +102,10 @@ if history is available. Must be a positive number. Default: 1000.
 ## Development
 
 ### Build in Docker
+
+In order to build **VeLisp** you need to have
+[Docker](https://docs.docker.com/installation/#installation) with [non-root access](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
+installed.
 
 ```
 $ ./build-in-docker.sh
