@@ -10,20 +10,14 @@ In order to build **VeLisp** you need to have
 [Docker](https://docs.docker.com/installation/#installation) with [non-root access](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
 installed.
 
-## Build **VeLisp**
-
-```
-$ ./build-in-docker.sh
-...
-Build Done
-```
-
-```
-$ ls velisp*
-velisp-0.6.9-linux-x64
-```
-
 ## Run **VeLisp**
+
+### Download
+
+```
+$ wget https://github.com/ten0s/velisp/releases/download/0.6.9/velisp-0.6.9-linux-x64
+$ chmod +x velisp-0.6.9-linux-x64
+```
 
 ### Run REPL (Read–Eval–Print Loop)
 
@@ -93,6 +87,13 @@ $ echo '(alert "Hi from VeLisp!")' | ./velisp-0.6.9-linux-x64
 * [AutoLISP Functions](/AutoLISP-Functions.md)
 * [DCL Functions](DCL-Functions.md)
 
+## Versioning
+
+For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready
+comparing to the reference implementation.
+
+## Known issues and limitations
+
 ## Environment variables
 
 Various behaviors can be customized using the following environment variables:
@@ -106,39 +107,54 @@ if history is available. Must be a positive number. Default: 1000.
 
 ## Development
 
-### Build deps
+### Build in Docker
+
+```
+$ ./build-in-docker.sh
+...
+Build Done
+```
+
+```
+$ ls velisp*
+velisp-0.6.9-linux-x64
+```
+
+### Build on host
+
+#### Build deps
 
 ```
 $ sudo apt install jq make
 ```
 
-### [Node.js 12.x](https://nodejs.org/dist/latest-v12.x/)
+#### [Node.js 12.x](https://nodejs.org/dist/latest-v12.x/)
 
 ```
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 $ nvm install 12
 ```
 
-### [GTK+3](https://www.gtk.org/) deps
+#### [GTK+3](https://www.gtk.org/) deps
 
 ```
 $ sudo apt-get install build-essential libgtk-3-dev gobject-introspection libgirepository1.0-dev libcairo2 libcairo2-dev
 ```
 
-### [ANTLR](https://www.antlr.org/)
+#### [ANTLR](https://www.antlr.org/)
 
 [ANTLR](https://www.antlr.org/) is only needed for making changes in the grammars:
 
 * [VeLisp.g4](/grammar/VeLisp.g4)
 * [VeDcl.g4](/grammar/VeDcl.g4)
 
-## Build
+#### Build
 
 ```
 $ make
 ```
 
-## Run tests
+#### Run tests
 
 ```
 $ make test
