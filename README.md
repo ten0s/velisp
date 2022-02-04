@@ -6,12 +6,18 @@
 
 ## Run **VeLisp**
 
-### Download
+### Installation
+
+#### Linux
 
 ```
 $ wget https://github.com/ten0s/velisp/releases/download/0.6.9/velisp-0.6.9-linux-x64
 $ chmod +x velisp-0.6.9-linux-x64
 ```
+
+#### Windows
+
+TODO
 
 ### Run REPL (Read–Eval–Print Loop)
 
