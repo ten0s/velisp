@@ -93,3 +93,8 @@ For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready
 comparing to the reference implementation.
 
 ## Known issues and limitations
+
+## See also
+
+* [Development](/DEVEL.md)
+* [How To](/HOWTO.md)
