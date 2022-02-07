@@ -41,5 +41,5 @@ COPY package-lock.json velisp/
 RUN echo "Building VeLisp..."
 
 WORKDIR velisp
-RUN make          && \
+RUN make production && \
     make pkgLinux

@@ -9,6 +9,9 @@ all: install
 install:
 	npm install
 
+production:
+	npm install --production
+
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
 	antlr4 -Dlanguage=JavaScript -lib grammar -no-visitor -listener grammar/VeDcl.g4
