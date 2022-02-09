@@ -89,10 +89,12 @@ $ echo '(alert "Hi from VeLisp!")' | ./velisp-{{version}}-linux-x64
 
 ## Versioning
 
-For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready
-comparing to the reference implementation.
+The version reflects subjective the percentage of completeness.
+For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready.
 
 ## Known issues and limitations
+
+* Integers are signed numbers with values ranging from -9,007,199,254,740,991 (-2<sup>53</sup>+1) to +9,007,199,254,740,991 (+2<sup>53</sup>-1)
 
 ## See also
 
