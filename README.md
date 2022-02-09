@@ -89,7 +89,7 @@ $ echo '(alert "Hi from VeLisp!")' | ./velisp-0.6.9-linux-x64
 
 ## Versioning
 
-The version reflects subjective the percentage of completeness.
+The version reflects subjective percentage of completeness.
 For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready.
 
 ## Known issues and limitations
