@@ -1,7 +1,22 @@
 const os = require('os')
-const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
+const {Bool, Int, Real, Str, Sym, List, Fun, ensureType} = require('../VeLispTypes.js')
 
 exports.initContext = (context) => {
+    // VeLisp Extension
+    context.setSym('ARGV', new Fun('argv', [], [], (self, args) => {
+        if (args.length > 0) {
+            throw new Error('argv: too many arguments')
+        }
+        const argv = [...process.argv].slice(2)
+        // devel mode  : $ node src/main.js test.js 1 two
+        // release mode: $ velisp test.js 1 two
+        // ("test.js" "1" "two")
+
+        // stdin mode  : $ velisp -- 1 two
+        // tty mode    : $ cat test.js | velisp -- 1 two
+        // ("--" "1" "two")
+        return new List(argv.map(s => new Str(s)))
+    }))
     // VeLisp Extension
     context.setSym('CWD', new Fun('cwd', [], [], (self, args) => {
         if (args.length > 0) {

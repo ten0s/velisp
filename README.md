@@ -38,11 +38,18 @@ ADD
 
 ### Run code from file
 
-Calculate 10th Fibonacci number
+Calculate 10th (default) Fibonacci number
 
 ```
 $ ./velisp-0.6.9-linux-x64 examples/fib.lsp
 55
+```
+
+Calculate 11th Fibonacci number
+
+```
+$ ./velisp-0.6.9-linux-x64 examples/fib.lsp 11
+89
 ```
 
 Run Calculator
@@ -77,10 +84,21 @@ $ cat examples/fib.lsp | ./velisp-0.6.9-linux-x64
 ```
 
 ```
-$ echo '(alert "Hi from VeLisp!")' | ./velisp-0.6.9-linux-x64
+$ cat examples/fib.lsp | ./velisp-0.6.9-linux-x64 -- 11
+89
 ```
 
-![Alert Hello Image](/images/alert-hello.png)
+```
+$ echo '(alert "Hello from VeLisp!")' | ./velisp-0.6.9-linux-x64
+```
+
+![Alert Hello From VeLisp Image](/images/alert-hello-velisp.png)
+
+```
+$ echo '(alert (strcat "Hello from " (nth 1 (argv)) "!"))' | ./velisp-0.6.9-linux-x64 -- Arg
+```
+
+![Alert Hello From Arg Image](/images/alert-hello-arg.png)
 
 ## Implemented functions
 

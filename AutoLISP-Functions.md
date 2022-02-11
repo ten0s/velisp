@@ -103,6 +103,7 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
+| (argv) | Returns command line arguments | VeLisp Extension |
 | (chdir dirname) | Changes current working directory | VeLisp Extension |
 | (close file-desc) | Closes an open file | |
 | (cwd) | Returns current working directory | VeLisp Extension |

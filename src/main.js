@@ -12,6 +12,7 @@ const {Str} = require('./VeLispTypes.js')
 main()
 
 function main() {
+    const [init, ] = preProcessArgv()
     const program = new Command()
     program.version(VeSysInfo.version)
         .option('-r, --run <command>', 'eval | tree', 'eval')
@@ -38,7 +39,21 @@ function main() {
                 readStream(process.stdin, action, context)
             }
         })
-        .parse(process.argv)
+        .parse(init)
+}
+
+function preProcessArgv() {
+    const argv = process.argv
+    let init = [...argv]
+    let rest = []
+    const i = argv.indexOf('-')
+    const j = argv.indexOf('--')
+    const k = i !== -1 ? i : j
+    if (k !== -1) {
+        init = argv.slice(0, k)
+        rest = argv.slice(k)
+    }
+    return [init, rest]
 }
 
 function runAction(what, isRepl) {
