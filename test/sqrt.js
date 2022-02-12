@@ -1,26 +1,20 @@
-const QUnit = require('qunit')
+const {TestRunner} = require('./test-runner.js')
 const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Real} = require('../src/VeLispTypes.js')
 
-const tests = [
-    {test: '(sqrt 0)', result: new Real(0.0)},
-    {test: '(sqrt 4)', result: new Real(2.0)},
-    {test: '(sqrt 2.0)', result: new Real(Math.sqrt(2.0))},
-]
+TestRunner.run({
+    name: 'sqrt',
 
-const errors = [
-    {test: '(sqrt)', result: new Error('sqrt: too few arguments')},
-    {test: '(sqrt -1)', result: new Error('sqrt: expected positive Int, Real')},
-    {test: '(sqrt 2 4)', result: new Error('sqrt: too many arguments')},
-    {test: '(sqrt "2")', result: new Error('sqrt: expected Int, Real')},
-]
+    tests: [
+        {test: '(sqrt 0)', result: new Real(0.0)},
+        {test: '(sqrt 4)', result: new Real(2.0)},
+        {test: '(sqrt 2.0)', result: new Real(Math.sqrt(2.0))},
+    ],
 
-QUnit.test('sqrt', assert => {
-    tests.forEach(t => {
-        assert.deepEqual(evaluate(t.test), t.result, t.test)
-    })
-
-    errors.forEach(t => {
-        assert.throws(() => evaluate(t.test), t.result, t.test)
-    })
+    errors: [
+        {test: '(sqrt)', result: new Error('sqrt: too few arguments')},
+        {test: '(sqrt -1)', result: new Error('sqrt: expected positive Int, Real')},
+        {test: '(sqrt 2 4)', result: new Error('sqrt: too many arguments')},
+        {test: '(sqrt "2")', result: new Error('sqrt: expected Int, Real')},
+    ]
 })

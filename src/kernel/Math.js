@@ -16,7 +16,7 @@ exports.initContext = (context) => {
             }
             num1 = num1.divide(num2)
         }
-        return new Real(Math.atan(num1))
+        return new Real(Math.atan(num1.value()))
     }))
     context.setSym('COS', new Fun('cos', ['ang'], [], (self, args) => {
         if (args.length === 0) {
@@ -25,7 +25,7 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('cos: too many arguments')
         }
-        const ang = ensureType('cos:', args[0], [Int, Real])
+        const ang = ensureType('cos:', args[0], [Int, Real]).value()
         return new Real(Math.cos(ang))
     }))
     context.setSym('EXP', new Fun('exp', ['num'], [], (self, args) => {
@@ -35,7 +35,7 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('exp: too many arguments')
         }
-        const num = ensureType('exp:', args[0], [Int, Real])
+        const num = ensureType('exp:', args[0], [Int, Real]).value()
         return new Real(Math.exp(num))
     }))
     context.setSym('EXPT', new Fun('expt', ['num', 'power'], [], (self, args) => {
@@ -48,7 +48,7 @@ exports.initContext = (context) => {
         const num = ensureType('expt: `num`', args[0], [Int, Real])
         const power = ensureType('expt: `power`', args[1], [Int, Real])
         const isReal = num instanceof Real || power instanceof Real
-        const result = Math.pow(num, power)
+        const result = Math.pow(num.value(), power.value())
         if (isReal) {
             return new Real(result)
         }
@@ -61,7 +61,7 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('fix: too many arguments')
         }
-        const num = ensureType('fix:', args[0], [Int, Real])
+        const num = ensureType('fix:', args[0], [Int, Real]).value()
         return new Int(Math.floor(num))
     }))
     context.setSym('LOG', new Fun('log', ['num'], [], (self, args) => {
@@ -71,8 +71,8 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('log: too many arguments')
         }
-        const num = ensureType('log:', args[0], [Int, Real])
-        if (num.value() <= 0) {
+        const num = ensureType('log:', args[0], [Int, Real]).value()
+        if (num <= 0) {
             throw new Error('log: expected positive Int, Real')
         }
         return new Real(Math.log(num))
@@ -131,7 +131,7 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('sin: too many arguments')
         }
-        const ang = ensureType('sin:', args[0], [Int, Real])
+        const ang = ensureType('sin:', args[0], [Int, Real]).value()
         return new Real(Math.sin(ang))
     }))
     context.setSym('SQRT', new Fun('sqrt', ['num'], [], (self, args) => {
@@ -141,8 +141,8 @@ exports.initContext = (context) => {
         if (args.length > 1) {
             throw new Error('sqrt: too many arguments')
         }
-        const num = ensureType('sqrt:', args[0], [Int, Real])
-        if (num.value() < 0) {
+        const num = ensureType('sqrt:', args[0], [Int, Real]).value()
+        if (num < 0) {
             throw new Error('sqrt: expected positive Int, Real')
         }
         return new Real(Math.sqrt(num))

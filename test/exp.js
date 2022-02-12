@@ -1,25 +1,19 @@
-const QUnit = require('qunit')
+const {TestRunner} = require('./test-runner.js')
 const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Real} = require('../src/VeLispTypes.js')
 
-const tests = [
-    {test: '(exp 1)', result: new Real(Math.exp(1))},
-    {test: '(exp 1.0)', result: new Real(Math.exp(1.0))},
-    {test: '(exp 2.2)', result: new Real(Math.exp(2.2))},
-    {test: '(exp -0.4)', result: new Real(Math.exp(-0.4))},
-]
+TestRunner.run({
+    name: 'exp',
 
-const errors = [
-    {test: '(exp)', result: new Error('exp: too few arguments')},
-    {test: '(exp 0 1)', result: new Error('exp: too many arguments')},
-]
+    tests: [
+        {test: '(exp 1)', result: new Real(Math.exp(1))},
+        {test: '(exp 1.0)', result: new Real(Math.exp(1.0))},
+        {test: '(exp 2.2)', result: new Real(Math.exp(2.2))},
+        {test: '(exp -0.4)', result: new Real(Math.exp(-0.4))},
+    ],
 
-QUnit.test('exp', assert => {
-    tests.forEach(t => {
-        assert.deepEqual(evaluate(t.test), t.result, t.test)
-    })
-
-    errors.forEach(t => {
-        assert.throws(() => evaluate(t.test), t.result, t.test)
-    })
+    errors: [
+        {test: '(exp)', result: new Error('exp: too few arguments')},
+        {test: '(exp 0 1)', result: new Error('exp: too many arguments')},
+    ]
 })
