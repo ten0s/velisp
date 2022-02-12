@@ -3,18 +3,29 @@ const {Bool, Int, Real, Str, Sym, List, Fun, ensureType} = require('../VeLispTyp
 
 exports.initContext = (context) => {
     // VeLisp Extension
-    context.setSym('ARGV', new Fun('argv', [], [], (self, args) => {
-        if (args.length > 0) {
-            throw new Error('argv: too many arguments')
-        }
-        const argv = [...process.argv].slice(2)
+    context.setSym('ARGV', new Fun('argv', ['[n]'], [], (self, args) => {
         // devel mode  : $ node src/main.js test.js 1 two
         // release mode: $ velisp test.js 1 two
         // ("test.js" "1" "two")
-
         // stdin mode  : $ velisp -- 1 two
         // tty mode    : $ cat test.js | velisp -- 1 two
         // ("--" "1" "two")
+        if (args.length > 1) {
+            throw new Error('argv: too many arguments')
+        }
+        const argv = [...process.argv].slice(2)
+        if (args.length === 1) {
+            const n = ensureType('argv:', args[0], [Int]).value()
+            if (n < 0) {
+                throw new Error('argv: expected positive Int')
+            }
+            const arg = argv[n]
+            if (arg) {
+                return new Str(arg)
+            } else {
+                return new Bool(false)
+            }
+        }
         return new List(argv.map(s => new Str(s)))
     }))
     // VeLisp Extension

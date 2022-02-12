@@ -95,7 +95,7 @@ $ echo '(alert "Hello from VeLisp!")' | ./velisp-0.6.10-linux-x64
 ![Alert Hello From VeLisp Image](/images/alert-hello-velisp.png)
 
 ```
-$ echo '(alert (strcat "Hello from " (nth 1 (argv)) "!"))' | ./velisp-0.6.10-linux-x64 -- Arg
+$ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp-0.6.10-linux-x64 -- Arg
 ```
 
 ![Alert Hello From Arg Image](/images/alert-hello-arg.png)

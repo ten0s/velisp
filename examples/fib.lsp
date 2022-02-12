@@ -7,6 +7,6 @@
 
 (setq n 10)
 (if (> (length (argv)) 1)
-    (setq n (atoi (nth 1 (argv)))))
+    (setq n (atoi (argv 1))))
 
 (princ (fib n))
