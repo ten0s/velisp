@@ -25,9 +25,9 @@
 | (float number) | Returns the conversion of a number into a real | |
 | (gcd int1 int2) | Returns the greatest common denominator of two integers | |
 | (log number) | Returns the natural log of a number as a real | |
-| (logand [int int ...]) | Returns the result of the logical bitwise AND of a list of integers | Expected in v0.8.0 |
-| (logior [int int ...]) | Returns the result of the logical bitwise inclusive OR of a list of integers | Expected in v0.8.0 |
-| (lsh [int numbits]) | Returns the logical bitwise shift of an integer by a specified number of bits | Expected in v0.8.0 |
+| (logand [int int ...]) | Returns the result of the logical bitwise AND of a list of integers | Expected in vTBD |
+| (logior [int int ...]) | Returns the result of the logical bitwise inclusive OR of a list of integers | Expected in vTBD |
+| (lsh [int numbits]) | Returns the logical bitwise shift of an integer by a specified number of bits | Expected in vTBD |
 | (max [number number ...]) | Returns the largest of the numbers given | |
 | (min [number number ...]) | Returns the smallest of the numbers given | |
 | (minusp number) | Verifies that a number is negative | |
@@ -42,18 +42,18 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
-| (angtof string [mode]) | Converts a string representing an angle into a real (floating-point) value in radians | Expected in v0.8.0 |
-| (angtos angle [mode [precision]]) | Converts an angular value in radians into a string | Expected in v0.8.0 |
+| (angtof string [mode]) | Converts a string representing an angle into a real (floating-point) value in radians | Expected in vTBD |
+| (angtos angle [mode [precision]]) | Converts an angular value in radians into a string | Expected in vTBD |
 | (ascii string) | Returns the conversion of the first character of a string into its ASCII character code (an integer) | |
 | (atof string) | Returns the conversion of a string into a real | |
 | (atoi string) | Returns the conversion of a string into an integer | |
-| (chr integer) | Returns the conversion of an integer representing an ASCII character code into a single-character string | Expected in v0.8.0 |
-| (cvunit value from to) | Converts a value from one unit of measurement to another | Expected in v0.8.0 |
-| (distof string [mode]) | Converts a string that represents a real (floating-point) value into a real value | Expected in v0.8.0 |
+| (chr integer) | Returns the conversion of an integer representing an ASCII character code into a single-character string | |
+| (cvunit value from to) | Converts a value from one unit of measurement to another | Expected in vTBD |
+| (distof string [mode]) | Converts a string that represents a real (floating-point) value into a real value | Expected in vTBD |
 | (itoa int) | Returns the conversion of an integer into a string | |
 | (ftoa real) | Returns the conversion of a real into a string | VeLisp Extension |
-| (rtos number [mode [precision]]) | Converts a number into a string | Expected in v0.8.0 |
-| (trans pt from to [disp]) | Translates a point (or a displacement) from one coordinate system to another | Expected in v0.8.0 |
+| (rtos number [mode [precision]]) | Converts a number into a string | Expected in vTBD |
+| (trans pt from to [disp]) | Translates a point (or a displacement) from one coordinate system to another | Expected in vTBD |
 
 ### Display Control Functions
 
@@ -75,7 +75,7 @@
 | (> numstr [numstr ...]) | Returns T if each argument is numerically greater than the argument to its right, and returns nil otherwise | |
 | (>= numstr [numstr ...]) | Returns T if each argument is numerically greater than or equal to the argument to its right, and returns nil otherwise | |
 | (and [expr ...]) | Returns the logical AND of a list of expressions | |
-| (boole func int1 [int2 ...]) | Serves as a general bitwise Boolean function | Expected in v0.8.0 |
+| (boole func int1 [int2 ...]) | Serves as a general bitwise Boolean function | Expected in vTBD |
 | (cond [(test result ...) ...]) | Serves as the primary conditional function for AutoLISP | |
 | (eq expr1 expr2) | Determines whether two expressions are identical | |
 | (equal expr1 expr2 [fuzz]) | Determines whether two expressions are equal | |
@@ -88,16 +88,16 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
-| (\*error\* string) | A user-definable error-handling function | Expected in v0.7.0 |
-| (\*pop-error-mode\*) | Error-handling function that ends the previous call to \*push-error-using-command\* or \*push-error-using-stack\* | Expected in v0.7.0 |
-| (\*push-error-using-command\*) | Error-handling function that indicates the use of the command function within a custom \*error\* handler | Expected in v0.7.0 |
-| (\*push-error-using-stack\*) | Error-handling function that indicates the use of variables from the AutoLISP stack within a custom \*error\* handler | Expected in v0.7.0 |
+| (\*error\* string) | A user-definable error-handling function | Expected in vTBD |
+| (\*pop-error-mode\*) | Error-handling function that ends the previous call to \*push-error-using-command\* or \*push-error-using-stack\* | Expected in vTBD |
+| (\*push-error-using-command\*) | Error-handling function that indicates the use of the command function within a custom \*error\* handler | Expected in vTBD |
+| (\*push-error-using-stack\*) | Error-handling function that indicates the use of variables from the AutoLISP stack within a custom \*error\* handler | Expected in vTBD |
 | (alert string) | Displays an alert dialog box with the error or warning message passed as a string | |
 | (exit [code]) | Forces the current application to quit | VeLisp Extension: added optional exit code |
 | (quit [code]) | Forces the current application to quit | VeLisp Extension: added optional exit code |
-| (vl-catch-all-apply 'function list) | Passes a list of arguments to a specified function and traps any exceptions | Expected in v0.7.0 |
-| (vl-catch-all-error-message error-obj) | Returns a string from an error object | Expected in v0.7.0 |
-| (vl-catch-all-error-p arg) | Determines whether an argument is an error object returned from vl-catch-all-apply | Expected in v0.7.0 |
+| (vl-catch-all-apply 'function list) | Passes a list of arguments to a specified function and traps any exceptions | Expected in vTBD |
+| (vl-catch-all-error-message error-obj) | Returns a string from an error object | Expected in vTBD |
+| (vl-catch-all-error-p arg) | Determines whether an argument is an error object returned from vl-catch-all-apply | Expected in vTBD |
 
 ### File-Handling Functions
 
@@ -148,10 +148,10 @@
 
 | Function | Description | Info |
 |----------|-------------|------|
-| (angle pt1 pt2) | Returns an angle in radians of a line defined by two endpoints | Expected in v0.8.0 |
-| (distance pt1 pt2) | Returns the 3D distance between two points | Expected in v0.8.0 |
-| (inters pt1 pt2 pt3 pt4 [onseg]) | Finds the intersection of two lines | Expected in v0.8.0 |
-| (polar pt ang dist) | Returns the UCS 3D point at a specified angle and distance from a point | Expected in v0.8.0 |
+| (angle pt1 pt2) | Returns an angle in radians of a line defined by two endpoints | Expected in vTBD |
+| (distance pt1 pt2) | Returns the 3D distance between two points | Expected in vTBD |
+| (inters pt1 pt2 pt3 pt4 [onseg]) | Finds the intersection of two lines | Expected in vTBD |
+| (polar pt ang dist) | Returns the UCS 3D point at a specified angle and distance from a point | Expected in vTBD |
 
 ### List Manipulation Functions
 
