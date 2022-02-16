@@ -1,9 +1,8 @@
 const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Real} = require('../src/VeLispTypes.js')
 
 TestRunner.run({
-    name: 'atan',
+    name: 'cos',
 
     tests: [
         {test: '(cos 1)', result: new Real(Math.cos(1))},

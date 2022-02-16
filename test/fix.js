@@ -1,5 +1,4 @@
 const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
 const {Int} = require('../src/VeLispTypes.js')
 
 TestRunner.run({

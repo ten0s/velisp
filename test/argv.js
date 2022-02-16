@@ -1,6 +1,5 @@
 const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Str, List} = require('../src/VeLispTypes.js')
+const {Bool, List} = require('../src/VeLispTypes.js')
 
 TestRunner.run({
     name: 'argv',
