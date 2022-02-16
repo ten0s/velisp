@@ -3,16 +3,27 @@ const RGB = require('./VeDclRGB.js')
 const {unescape} = require('./VeUtil.js')
 const Evaluator = require('./VeLispEvaluator.js')
 
-const gi = require('node-gtk')
-const Gtk = gi.require('Gtk', '3.0')
-const Gdk = gi.require('Gdk', '3.0')
-// Required under X11?
-//const Gdk = gi.require('GdkX11', '3.0')
-const GObject = gi.require('GObject')
+let Gtk = null
+let Gdk = null
+let GObject = null
 
-gi.startLoop()
-Gtk.init()
-Gdk.init([])
+const InitGtk = () => {
+    if (!Gtk || !Gdk || !GObject) {
+        const gi = require('node-gtk')
+        Gtk = gi.require('Gtk', '3.0')
+        Gdk = gi.require('Gdk', '3.0')
+        // Required under X11?
+        //Gdk = gi.require('GdkX11', '3.0')
+        GObject = gi.require('GObject')
+
+        gi.startLoop()
+        Gtk.init()
+        Gdk.init([])
+    }
+}
+// TODO: Lazy load from Tile constructor
+// examples/dcl/run_all.sh doesn't work
+InitGtk()
 
 const TileMode = {
     ENABLE_TILE: 0,
