@@ -210,6 +210,7 @@
 | (setcfg cfgname cfgval) | Writes application data to the AppData section of the acadXXXX.cfg file | Expected in vTBD |
 | (setenv varname value) | Sets an environment variable to a specified value | |
 | (setvar varname value) | Sets an AutoCAD system variable to a specified value | Expected in vTBD |
+| (sleep millisecs) | Sleeps for some milliseconds, like (command "_.DELAY" 1000) | VeLisp Extension |
 | (ver) | Returns a string that contains the current AutoLISP version number | |
 
 ### String-Handling Functions

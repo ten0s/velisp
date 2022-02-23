@@ -140,6 +140,21 @@ exports.initContext = (context) => {
         process.env[name.value()] = value.value()
         return value
     }))
+    context.setSym('SLEEP', new Fun('sleep', ['millisecs'], [], (self, args) => {
+        if (args.length < 1) {
+            throw new Error('sleep: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('sleep: too many arguments')
+        }
+        const msecs = ensureType('sleep:', args[0], [Int]).value()
+        if (msecs < 0) {
+            throw new Error('sleep: expected positive Int')
+        }
+        // Thanks to https://www.npmjs.com/package/sleep
+        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, msecs)
+        return new Bool(false)
+    }))
     context.setSym('STARTAPP', new Fun('startapp', ['cmd', '[file]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
