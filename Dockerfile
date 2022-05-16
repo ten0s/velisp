@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+ARG GID=1000
+ARG UID=1000
+ARG USER=user
+
 ENV TZ=UTC
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -24,9 +28,10 @@ RUN echo "Installing Node.js v12..."
 RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get -y install nodejs
 
-RUN useradd --shell /bin/bash --create-home user
-USER user
-WORKDIR /home/user
+RUN groupadd --gid $GID $USER
+RUN useradd --shell /bin/bash --create-home --gid $GID --uid $UID $USER
+USER $USER
+WORKDIR /home/$USER
 
 RUN echo "Copying source code..."
 
