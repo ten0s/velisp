@@ -1,244 +1,238 @@
-// Generated from grammar/VeLisp.g4 by ANTLR 4.8
+// Generated from grammar/VeLisp.g4 by ANTLR 4.9.3
 // jshint ignore: start
-var antlr4 = require('antlr4/index');
+import antlr4 from 'antlr4';
 
 // This class defines a complete generic visitor for a parse tree produced by VeLispParser.
 
-function VeLispVisitor() {
-	antlr4.tree.ParseTreeVisitor.call(this);
-	return this;
+export default class VeLispVisitor extends antlr4.tree.ParseTreeVisitor {
+
+	// Visit a parse tree produced by VeLispParser#file.
+	visitFile(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#and.
+	visitAnd(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#cond.
+	visitCond(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#defun.
+	visitDefun(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#foreach.
+	visitForeach(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#function.
+	visitFunction(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#if.
+	visitIf(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#lambda.
+	visitLambda(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#or.
+	visitOr(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#progn.
+	visitProgn(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#quote.
+	visitQuote(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#repeat.
+	visitRepeat(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#setQ.
+	visitSetQ(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#while.
+	visitWhile(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#dotList.
+	visitDotList(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#list.
+	visitList(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#nil.
+	visitNil(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#tru.
+	visitTru(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#int.
+	visitInt(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#real.
+	visitReal(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#str.
+	visitStr(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#id.
+	visitId(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#tick.
+	visitTick(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#condTestResult.
+	visitCondTestResult(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#condTest.
+	visitCondTest(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#condResult.
+	visitCondResult(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#funName.
+	visitFunName(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#funParam.
+	visitFunParam(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#funLocal.
+	visitFunLocal(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#foreachName.
+	visitForeachName(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#foreachList.
+	visitForeachList(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#ifTest.
+	visitIfTest(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#ifThen.
+	visitIfThen(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#ifElse.
+	visitIfElse(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#repeatNum.
+	visitRepeatNum(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#setqNameExpr.
+	visitSetqNameExpr(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#whileTest.
+	visitWhileTest(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by VeLispParser#listExpr.
+	visitListExpr(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+
 }
-
-VeLispVisitor.prototype = Object.create(antlr4.tree.ParseTreeVisitor.prototype);
-VeLispVisitor.prototype.constructor = VeLispVisitor;
-
-// Visit a parse tree produced by VeLispParser#file.
-VeLispVisitor.prototype.visitFile = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#and.
-VeLispVisitor.prototype.visitAnd = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#cond.
-VeLispVisitor.prototype.visitCond = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#defun.
-VeLispVisitor.prototype.visitDefun = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#foreach.
-VeLispVisitor.prototype.visitForeach = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#function.
-VeLispVisitor.prototype.visitFunction = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#if.
-VeLispVisitor.prototype.visitIf = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#lambda.
-VeLispVisitor.prototype.visitLambda = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#or.
-VeLispVisitor.prototype.visitOr = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#progn.
-VeLispVisitor.prototype.visitProgn = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#quote.
-VeLispVisitor.prototype.visitQuote = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#repeat.
-VeLispVisitor.prototype.visitRepeat = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#setQ.
-VeLispVisitor.prototype.visitSetQ = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#while.
-VeLispVisitor.prototype.visitWhile = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#dotList.
-VeLispVisitor.prototype.visitDotList = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#list.
-VeLispVisitor.prototype.visitList = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#nil.
-VeLispVisitor.prototype.visitNil = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#tru.
-VeLispVisitor.prototype.visitTru = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#int.
-VeLispVisitor.prototype.visitInt = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#real.
-VeLispVisitor.prototype.visitReal = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#str.
-VeLispVisitor.prototype.visitStr = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#id.
-VeLispVisitor.prototype.visitId = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#tick.
-VeLispVisitor.prototype.visitTick = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#condTestResult.
-VeLispVisitor.prototype.visitCondTestResult = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#condTest.
-VeLispVisitor.prototype.visitCondTest = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#condResult.
-VeLispVisitor.prototype.visitCondResult = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#funName.
-VeLispVisitor.prototype.visitFunName = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#funParam.
-VeLispVisitor.prototype.visitFunParam = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#funLocal.
-VeLispVisitor.prototype.visitFunLocal = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#foreachName.
-VeLispVisitor.prototype.visitForeachName = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#foreachList.
-VeLispVisitor.prototype.visitForeachList = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#ifTest.
-VeLispVisitor.prototype.visitIfTest = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#ifThen.
-VeLispVisitor.prototype.visitIfThen = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#ifElse.
-VeLispVisitor.prototype.visitIfElse = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#repeatNum.
-VeLispVisitor.prototype.visitRepeatNum = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#setqNameExpr.
-VeLispVisitor.prototype.visitSetqNameExpr = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#whileTest.
-VeLispVisitor.prototype.visitWhileTest = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by VeLispParser#listExpr.
-VeLispVisitor.prototype.visitListExpr = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-
-exports.VeLispVisitor = VeLispVisitor;
