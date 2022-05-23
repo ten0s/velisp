@@ -17,13 +17,14 @@
     },
     "devDependencies": {
         "eslint": "8.16.0",
-        "pkg": "5.5.1",
+        "pkg": "5.7.0",
         "qunit": "2.19.1"
     },
     "pkg": {
         "assets": [
             "lib/**/*"
         ],
+        "options": [],
         "scripts": []
     }
 }

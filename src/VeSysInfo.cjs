@@ -1,3 +1,5 @@
+// -*- mode: js -*-
+
 const config = require('../package.json')
 
 const VeSysInfo = {

@@ -1,10 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import {fileURLToPath} from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
+import __rootdir from '../VeRootDir.cjs'
 import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
 import VeStack from '../VeStack.js'
 import VeDclContext from '../VeDclContext.js'
@@ -82,7 +79,7 @@ export const initContext = (context) => {
         const context = new VeDclContext()
 
         // Inject lib/dcl/{base,acad}.dcl
-        let rootdir = fixWinPath(path.join(__dirname, '../..'))
+        let rootdir = fixWinPath(__rootdir)
         VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context)
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context)
 

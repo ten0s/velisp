@@ -4,10 +4,7 @@ import path from 'path'
 import repl from 'repl'
 import {Command} from 'commander'
 
-import {fileURLToPath} from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
+import __rootdir from './VeRootDir.cjs'
 import VeSysInfo from './VeSysInfo.cjs'
 import {ensureLspExt, inspect, isRecoverableInput, fixWinPath} from './VeUtil.js'
 import VeLispGlobalContext from './VeLispGlobalContext.js'
@@ -82,7 +79,7 @@ function runAction(what, isRepl) {
 
 function maybeInjectLib(action, context) {
     if (action === evaluate) {
-        let rootdir = fixWinPath(path.join(__dirname, '..'))
+        let rootdir = fixWinPath(__rootdir)
         process.env['VELISP_ROOT'] = rootdir
         evaluate(`(load "${rootdir}/lib/main.lsp")`, context)
     }
