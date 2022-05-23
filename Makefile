@@ -98,4 +98,7 @@ treeDclJava: compileJava
 cleanJava:
 	rm -f grammar/*.class grammar/*.java
 
-clean: cleanJava cleanPkg
+cleanDeps:
+	rm -rf node_modules
+
+clean: cleanDeps cleanJava cleanPkg
