@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import temp from 'temp';
+import temp from 'temp'
 import {Bool, Str, Fun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
