@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool, Real} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool, Real} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-symbol-value',

@@ -1,4 +1,4 @@
-const {Bool} = require('./VeLispTypes.js')
+import {Bool} from './VeLispTypes.js'
 
 // VeLisp is a Lisp-1
 class VeLispContext {
@@ -70,4 +70,4 @@ class VeLispContext {
     }
 }
 
-module.exports = VeLispContext
+export default VeLispContext

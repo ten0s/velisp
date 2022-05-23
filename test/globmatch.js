@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'globmatch',
@@ -9,17 +9,17 @@ TestRunner.run({
 
         {test: '(globmatch "a" "a")', result: new Bool(true)},
         {test: '(globmatch "abc" "abc")', result: new Bool(true)},
-        
+
         {test: '(globmatch "abc" "a?c")', result: new Bool(true)},
         {test: '(globmatch "a_c" "a?c")', result: new Bool(true)},
-        
+
         {test: '(globmatch "abc.txt" "abc.txt")', result: new Bool(true)},
         {test: '(globmatch "abc_txt" "abc.txt")', result: new Bool(false)},
-        
+
         {test: '(globmatch "abc" "*")', result: new Bool(true)},
         {test: '(globmatch "abc.txt" "*.txt")', result: new Bool(true)},
         {test: '(globmatch "abc.txt" "???.txt")', result: new Bool(true)},
-        
+
         {test: '(globmatch "abc" "abc" nil)', result: new Bool(true)},
         {test: '(globmatch "abc" "abc" T)', result: new Bool(true)},
         {test: '(globmatch "abc" "abc" \'regex)', result: new Bool(true)},

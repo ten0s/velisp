@@ -1,5 +1,5 @@
-const QUnit = require('qunit')
-const {
+import QUnit from 'qunit'
+import {
     find,
     escape,
     unescape,
@@ -7,7 +7,7 @@ const {
     ensureLspExt,
     ensureDclExt,
     fixWinPath,
-} = require('../src/VeUtil.js')
+} from '../src/VeUtil.js'
 
 QUnit.test('VeUtil find', assert => {
     assert.ok(find(1, [1, 2, 3]))

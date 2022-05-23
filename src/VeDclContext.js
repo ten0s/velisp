@@ -1,4 +1,4 @@
-const VeStack = require('./VeStack.js')
+import VeStack from './VeStack.js'
 
 class VeDclContext {
     constructor() {
@@ -8,4 +8,4 @@ class VeDclContext {
     }
 }
 
-module.exports = VeDclContext
+export default VeDclContext

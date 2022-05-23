@@ -1,7 +1,7 @@
-const {EOL} = require('os')
-const {Bool, Real, Str} = require('../VeLispTypes.js')
+import {EOL} from 'os'
+import {Bool, Real, Str} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('T', new Bool(true))
     context.setSym('PI', new Real(Math.PI))
     // VeLisp Extension

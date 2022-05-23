@@ -303,4 +303,4 @@ const symbolics = {
     white:   colors[7], graphics_foreground: colors[7],
 }
 
-module.exports = RGB
+export default RGB

@@ -1,6 +1,6 @@
-const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Str, List} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Str, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-directory-files',

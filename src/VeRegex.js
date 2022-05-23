@@ -1,7 +1,7 @@
-const {EOL} = require('os')
-const VeStack = require('./VeStack.js')
-const VeDigraph = require('./VeDigraph.js')
-const VeDigraphDFS = require('./VeDigraphDFS.js')
+import {EOL} from 'os'
+import VeStack from './VeStack.js'
+import VeDigraph from './VeDigraph.js'
+import VeDigraphDFS from './VeDigraphDFS.js'
 
 // See Algorithms, 4th Edition, 5.4 Regular Expressions for detail
 class VeRegex {
@@ -315,4 +315,4 @@ class VeRegex {
     }
 }
 
-module.exports = VeRegex
+export default VeRegex

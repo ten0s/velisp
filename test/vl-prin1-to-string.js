@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Str} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Str} from '../src/VeLispTypes.js'
 
 // TODO: Implement +/- 1/4 ~= \261 \274
 

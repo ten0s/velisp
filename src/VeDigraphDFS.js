@@ -24,7 +24,7 @@ class VeDigraphDFS {
             if (!this._marked[w]) {
                 this._dfs(G, w)
             }
-        }        
+        }
     }
 
     hasPathTo(v) {
@@ -32,4 +32,4 @@ class VeDigraphDFS {
     }
 }
 
-module.exports = VeDigraphDFS
+export default VeDigraphDFS

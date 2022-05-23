@@ -1,7 +1,9 @@
-const {Int, Str} = require('./VeLispTypes.js')
-const RGB = require('./VeDclRGB.js')
-const {unescape} = require('./VeUtil.js')
-const Evaluator = require('./VeLispEvaluator.js')
+import {Int, Str} from './VeLispTypes.js'
+import RGB from './VeDclRGB.js'
+import {unescape} from './VeUtil.js'
+import * as VeLispEvaluator from './VeLispEvaluator.js'
+
+import gi from 'node-gtk'
 
 let Gtk = null
 let Gdk = null
@@ -9,7 +11,6 @@ let GObject = null
 
 const InitGtk = () => {
     if (!Gtk || !Gdk || !GObject) {
-        const gi = require('node-gtk')
         Gtk = gi.require('Gtk', '3.0')
         Gdk = gi.require('Gdk', '3.0')
         // Required under X11?
@@ -1197,7 +1198,7 @@ class Button extends Tile {
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('clicked', this._callback)
     }
@@ -1291,7 +1292,7 @@ class EditBox extends Tile {
             context.setVar('$DATA', new Str(this._clientData))
             // TODO: Implement reason 2 - Edit Box lost focus?
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('changed', this._callback)
     }
@@ -1484,7 +1485,7 @@ class ImageButton extends Tile {
             context.setVar('$Y', new Int(this._y))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(this._reason))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('clicked', this._callback)
     }
@@ -1574,7 +1575,7 @@ class PopupList extends Tile {
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('changed', this._callback)
     }
@@ -1697,7 +1698,7 @@ class ListBox extends Tile {
             context.setVar('$DATA', new Str(this._clientData))
             // TODO: Implement reason 4 - List Box double-clicked?
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         selection.on('changed', this._callback)
     }
@@ -1834,7 +1835,7 @@ class RadioCluster extends Cluster {
                         context.setVar('$VALUE', new Str(this._tiles[i].key))
                         context.setVar('$DATA', new Str(this._clientData))
                         context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-                        Evaluator.evaluate(unescape(this._action), context)
+                        VeLispEvaluator.evaluate(unescape(this._action), context)
                     }
                 }
                 child.on('clicked', tile._callback)
@@ -2128,7 +2129,7 @@ class RadioButton extends Tile {
                 context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
                 context.setVar('$DATA', new Str(this._clientData))
                 context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-                Evaluator.evaluate(unescape(this._action), context)
+                VeLispEvaluator.evaluate(unescape(this._action), context)
             }
         }
         gtkWidget.on('clicked', this._callback)
@@ -2218,7 +2219,7 @@ class Slider extends Tile {
             // Should take into account small big and increments
             // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-F208561B-5C2E-47FE-BD24-520DF75DE92A
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('value-changed', this._callback)
     }
@@ -2320,7 +2321,7 @@ class Toggle extends Tile {
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
-            Evaluator.evaluate(unescape(this._action), context)
+            VeLispEvaluator.evaluate(unescape(this._action), context)
         }
         gtkWidget.on('clicked', this._callback)
     }
@@ -2404,7 +2405,7 @@ const buildTile = (tileName, tileId) => {
     return tileCtor(tileId)
 }
 
-module.exports = {
+export {
     Dialog,
     ListOperation,
     buildTile,

@@ -1,5 +1,5 @@
-const VeLispContext = require('./VeLispContext.js')
-const Kernel = require('./kernel/Kernel.js')
+import VeLispContext from './VeLispContext.js'
+import * as Kernel from './kernel/Kernel.js'
 
 class VeLispGlobalContext extends VeLispContext {
     constructor() {
@@ -8,4 +8,4 @@ class VeLispGlobalContext extends VeLispContext {
     }
 }
 
-module.exports = VeLispGlobalContext
+export default VeLispGlobalContext

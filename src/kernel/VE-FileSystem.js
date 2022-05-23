@@ -1,7 +1,7 @@
-const fs = require('fs')
-const {Bool, Str, Fun, ensureType} = require('../VeLispTypes.js')
+import fs from 'fs'
+import {Bool, Str, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     // VeLisp Extension
     context.setSym('RMDIR', new Fun('rmdir', ['dirname'], [], (self, args) => {
         if (args.length === 0) {

@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Int, List} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Int, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'mapcar',

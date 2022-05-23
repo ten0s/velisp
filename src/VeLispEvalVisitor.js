@@ -1,9 +1,9 @@
-const {VeLispParser} = require('../grammar/VeLispParser.js')
-const {VeLispVisitor} = require('../grammar/VeLispVisitor.js')
-const VeLispContext = require('./VeLispContext.js')
-const {makeError} = require('./VeLispError.js')
-const {unescape} = require('./VeUtil.js')
-const {Bool, Int, Real, Str, Sym, List, Pair, Fun} = require('./VeLispTypes.js')
+import VeLispParser from '../grammar/VeLispParser.js'
+import VeLispVisitor from '../grammar/VeLispVisitor.js'
+import VeLispContext from './VeLispContext.js'
+import {makeError} from './VeLispError.js'
+import {unescape} from './VeUtil.js'
+import {Bool, Int, Real, Str, Sym, List, Pair, Fun} from './VeLispTypes.js'
 
 class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
@@ -383,4 +383,4 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 }
 
-module.exports = VeLispEvalVisitor
+export default VeLispEvalVisitor

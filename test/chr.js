@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Str} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Str} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(chr 0)', result: new Str('')},

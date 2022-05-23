@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Str} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Str} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-string-subst',
@@ -29,7 +29,7 @@ TestRunner.run({
 
         {test: '(vl-string-subst 122 "r" "bar")', result:
          new Error('vl-string-subst: `new-str` expected Str')},
-        
+
         {test: '(vl-string-subst "z" 114 "bar")', result:
          new Error('vl-string-subst: `pattern` expected Str')},
 

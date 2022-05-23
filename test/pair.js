@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Int, Sym, Pair} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Int, Sym, Pair} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(cons 1 \'a)', result: new Pair(new Int(1), new Sym('a'))},
@@ -13,4 +13,3 @@ QUnit.test('pair', assert => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
     })
 })
-

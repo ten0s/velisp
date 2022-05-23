@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Int, Str} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Int, Str} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(repeat 1)', result: new Bool(false)},
@@ -16,7 +16,7 @@ const tests = [
     {test: '(repeat 5 "done")', result: new Str('done')},
     {test: '(repeat 5 "do" "done")', result: new Str('done')},
     {test: `(setq a 10 b 100)
-            (repeat 4 
+            (repeat 4
               (setq a (+ a 10))
               (setq b (+ b 100)))`, result: new Int(500)},
 ]

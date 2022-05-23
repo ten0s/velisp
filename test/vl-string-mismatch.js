@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Int} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Int} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-string-mismatch',
@@ -28,7 +28,7 @@ TestRunner.run({
 
         {test: '(vl-string-mismatch "bar" \'baz)', result:
          new Error('vl-string-mismatch: `str2` expected Str')},
-        
+
         {test: '(vl-string-mismatch "bar" "baz" "0")', result:
          new Error('vl-string-mismatch: `pos1` expected Int')},
         {test: '(vl-string-mismatch "bar" "baz" -1)', result:

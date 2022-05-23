@@ -1,6 +1,6 @@
-const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Int, List} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Int, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-file-copy',
@@ -23,13 +23,13 @@ TestRunner.run({
 
         // Copy to existing
         {test: '(vl-file-copy "f1" "f2")', result: new Bool(false)},
-        
+
         // Copy to non-existing
         {test: '(vl-file-copy "f1" "f3")', result: new Int(6)},
 
         // Append to non-existing
         {test: '(vl-file-copy "f2" "f3" T)', result: new Int(4)},
-        
+
         // Copy + Append
         {test: `(list
                   (vl-file-copy "f1" "f3")

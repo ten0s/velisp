@@ -1,6 +1,6 @@
-const fs = require('fs')
-const {TestRunner} = require('./test-runner.js')
-const {Bool, Int, List} = require('../src/VeLispTypes.js')
+import fs from 'fs'
+import {TestRunner} from './test-runner.js'
+import {Bool, Int, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-file-systime',

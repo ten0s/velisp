@@ -1,6 +1,6 @@
-const {Bool, Int, Sym, List, Pair, Fun, ensureType} = require('../VeLispTypes.js')
+import {Bool, Int, Sym, List, Pair, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('VL-CONSP', new Fun('vl-consp', ['list'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-consp: too few arguments')

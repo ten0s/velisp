@@ -3,6 +3,7 @@
     "version": "0.6.11",
     "description": "AutoLISP / DCL compatible interpreter to run AutoCAD independent code",
     "main": "src/main.js",
+    "type": "module",
     "scripts": {
         "start": "node src/main.js"
     },

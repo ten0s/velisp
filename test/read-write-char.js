@@ -1,6 +1,7 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Str} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import fs from 'fs'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Str} from '../src/VeLispTypes.js'
 
 const tests = [
     {test:`
@@ -43,7 +44,7 @@ const errors = [
      new Error('read-char: bad file #<file "file.txt" w:o>')},
     {test: '(setq f (open "file.txt" "a")) (read-char f)', result:
      new Error('read-char: bad file #<file "file.txt" a:o>')},
-    
+
     {test: '(write-char)', result:
      new Error('write-char: too few arguments')},
     {test: '(setq f (open "file.txt" "w")) (write-char 65 f f)', result:
@@ -59,7 +60,6 @@ const errors = [
 ]
 
 QUnit.test('read-write-char', assert => {
-    const fs = require('fs')
     // Setup
     fs.closeSync(fs.openSync('file.txt', 'w'))
 

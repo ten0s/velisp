@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool, Int} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool, Int} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-list-length',
@@ -11,7 +11,7 @@ TestRunner.run({
         {test: '(vl-list-length \'(1))', result: new Int(1)},
         {test: '(vl-list-length \'(1 2))', result: new Int(2)},
         {test: '(vl-list-length \'(1 . nil))', result: new Int(1)},
-        
+
         {test: '(vl-list-length \'(1 . 2))', result: new Bool(false)},
 
         {test: '(vl-list-length \'(1 (2 . 3) 4))', result: new Int(3)},

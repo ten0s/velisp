@@ -1,12 +1,16 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
-const VeStack = require('../VeStack.js')
-const VeDclContext = require('../VeDclContext.js')
-const VeDclLoader = require('../VeDclLoader.js')
-const {ListOperation} = require('../VeDclTiles.js')
-const {ensureDclExt, fixWinPath} = require('../VeUtil.js')
+import {fileURLToPath} from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
+import VeStack from '../VeStack.js'
+import VeDclContext from '../VeDclContext.js'
+import * as VeDclLoader from '../VeDclLoader.js'
+import {ListOperation} from '../VeDclTiles.js'
+import {ensureDclExt, fixWinPath} from '../VeUtil.js'
 
 // global dclId index
 let _dclId = 0
@@ -56,7 +60,7 @@ const withImage = (ifFunc, elseFunc = null) => {
     throw new Error('No current image')
 }
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dclfile'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('load_dialog: too few arguments')

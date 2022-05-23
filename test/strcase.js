@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Str} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Str} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(strcase "Sample")', result: new Str('SAMPLE')},
@@ -17,7 +17,7 @@ const errors = [
     {test: '(strcase "one" \'nil "two")', result: new Error('strcase: too many arguments')},
     {test: '(strcase \'one)', result: new Error('strcase: expected Str')},
 ]
-    
+
 QUnit.test('strcase', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)

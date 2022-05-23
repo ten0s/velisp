@@ -1,9 +1,9 @@
-const fs = require('fs')
-const path = require('path')
-const temp = require('temp').track()
-const {Bool, Str, Fun, ensureType} = require('../VeLispTypes.js')
+import fs from 'fs'
+import path from 'path'
+import temp from 'temp';
+import {Bool, Str, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('VL-FILENAME-MKTEMP', new Fun('vl-filename-mktemp', ['pattern', 'directory', 'extention'], [], (self, args) => {
         if (args.length > 3) {
             throw new Error('vl-filename-mktemp: too many arguments')
@@ -65,7 +65,7 @@ exports.initContext = (context) => {
             }
         }
         // TODO: check out https://www.npmjs.com/package/tmp package
-        const {path: tmpFile} = temp.openSync({
+        const {path: tmpFile} = temp.track().openSync({
             dir   : dir  ? dir  : DEFAULT_DIR,
             prefix: name ? name : DEFAULT_NAME,
             suffix: ext  ? ext  : DEFAULT_EXT,

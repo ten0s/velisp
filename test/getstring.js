@@ -1,4 +1,4 @@
-const {TestRunner} = require('./test-runner.js')
+import {TestRunner} from './test-runner.js'
 
 TestRunner.run({
     name: 'getstring',

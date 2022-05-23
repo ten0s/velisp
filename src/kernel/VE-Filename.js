@@ -1,7 +1,7 @@
-const path = require('path')
-const {Sym, Str, List, Pair, Fun, ensureType} = require('../VeLispTypes.js')
+import path from 'path'
+import {Sym, Str, List, Pair, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     // VeLisp Extension
     context.setSym('FILENAME-PARSE', new Fun('filename-parse', ['filename'], [], (self, args) => {
         if (args.length === 0) {

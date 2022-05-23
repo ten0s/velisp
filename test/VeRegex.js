@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-require('../src/VeJsExt.js') // array.without
-const VeRegex = require('../src/VeRegex.js')
+import QUnit from 'qunit'
+import '../src/VeJsExt.js' // array.without
+import VeRegex from '../src/VeRegex.js'
 
 const DIGITS = Array.from('0123456789')
 const LOWER_ALPHAS = Array.from('abcdefghijklmnopqrstuvwxyz')

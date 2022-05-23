@@ -1,5 +1,5 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
 
 class TestRunner {
     static run({name = 'test-name', setup = () => {}, teardown = () => {}, tests = [], errors = []}) {
@@ -32,4 +32,6 @@ class TestRunner {
     }
 }
 
-module.exports.TestRunner = TestRunner
+export {
+    TestRunner,
+}

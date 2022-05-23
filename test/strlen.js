@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Int} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Int} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(strlen)', result: new Int(0)},
@@ -13,11 +13,11 @@ const tests = [
 
 const errors = [
     {test: '(strlen \'one)', result: new Error('strlen: expected Str')},
-    {test: '(strlen "one" \'two)', result: new Error('strlen: expected Str')},    
+    {test: '(strlen "one" \'two)', result: new Error('strlen: expected Str')},
     {test: '(strlen "one" "two" \'four)', result: new Error('strlen: expected Str')},
     {test: '(strlen "one" \'two "four")', result: new Error('strlen: expected Str')},
 ]
-    
+
 QUnit.test('strlen', assert => {
     tests.forEach(t => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)

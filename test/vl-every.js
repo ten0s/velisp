@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-every',
@@ -12,7 +12,7 @@ TestRunner.run({
         {test: '(vl-every (lambda (x) (= (rem x 2) 0)) nil)', result: new Bool(true)},
         {test: '(vl-every (lambda (x) (= (rem x 2) 0)) ())', result: new Bool(true)},
         {test: '(vl-every (lambda (x) (= (rem x 2) 0)) \'())', result: new Bool(true)},
-        
+
         // Diff length
         {test: '(vl-every \'= \'(1 2 3) \'(1 2))', result: new Bool(true)},
         {test: '(vl-every \'= \'(1 2 3) \'(1))', result: new Bool(true)},

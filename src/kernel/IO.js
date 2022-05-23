@@ -1,7 +1,8 @@
-const VeSysInfo = require('../VeSysInfo.js')
-const {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} = require('../VeLispTypes.js')
+import {EOL} from 'os'
+import VeSysInfo from '../VeSysInfo.cjs'
+import {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('GETINT', new Fun('getint', ['[msg]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('getint: too many arguments')
@@ -198,7 +199,6 @@ exports.initContext = (context) => {
             file = ensureType('print: `file-desc`', args[1], [File])
         }
         const msg = arg0.toString()
-        const {EOL} = require('os')
         file.write(new Str(EOL))
         file.write(new Str(msg))
         file.write(new Str(' '))

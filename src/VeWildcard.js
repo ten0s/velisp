@@ -1,4 +1,4 @@
-const VeRegex = require('./VeRegex.js')
+import VeRegex from './VeRegex.js'
 
 class VeWildcard {
     constructor(wc) {
@@ -148,4 +148,4 @@ class VeWildcard {
     }
 }
 
-module.exports = VeWildcard
+export default VeWildcard

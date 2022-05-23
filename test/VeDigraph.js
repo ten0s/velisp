@@ -1,5 +1,5 @@
-const QUnit = require('qunit')
-const VeDigraph = require('../src/VeDigraph.js')
+import QUnit from 'qunit'
+import VeDigraph from '../src/VeDigraph.js'
 
 QUnit.test('VeDigraph', assert => {
     const G = new VeDigraph(10)
@@ -33,7 +33,7 @@ QUnit.test('VeDigraph', assert => {
     let outdegree0 = 0
     G.adjacent(0).forEach(_ => outdegree0++)
     assert.equal(2, outdegree0)
-    
+
     let outdegree1 = 0
     G.adjacent(1).forEach(_ => outdegree1++)
     assert.equal(4, outdegree1)

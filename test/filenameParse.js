@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Sym, Str, List, Pair} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Sym, Str, List, Pair} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'filename-parse',

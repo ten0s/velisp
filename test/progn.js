@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Int} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Int} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(progn)', result: new Bool(false)},
@@ -23,4 +23,3 @@ QUnit.test('progn', assert => {
         assert.deepEqual(evaluate(t.test), t.result, t.test)
     })
 })
-

@@ -1,4 +1,4 @@
-const {EOL} = require('os')
+import {EOL} from 'os'
 
 class VeDigraph {
     constructor(V) {
@@ -59,4 +59,4 @@ class VeDigraph {
     }
 }
 
-module.exports = VeDigraph
+export default VeDigraph

@@ -1,4 +1,4 @@
-const VeRegex = require('./VeRegex.js')
+import VeRegex from './VeRegex.js'
 
 // :: (char) -> bool
 const isalpha = (c) => {
@@ -55,4 +55,4 @@ class VeGlob {
     }
 }
 
-module.exports = VeGlob
+export default VeGlob

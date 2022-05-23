@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Int, Sym, Pair} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Int, Sym, Pair} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(set \'a 1)', result: new Int(1)},

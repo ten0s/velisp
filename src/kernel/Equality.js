@@ -1,6 +1,6 @@
-const {Bool, Fun} = require('../VeLispTypes.js')
+import {Bool, Fun} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('=', new Fun('=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('=: too few arguments')

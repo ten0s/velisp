@@ -1,13 +1,18 @@
-const fs = require('fs')
-const os = require('os')
-const path = require('path')
-const {Command} = require('commander')
+import fs from 'fs'
+import os from 'os'
+import path from 'path'
+import repl from 'repl'
+import {Command} from 'commander'
 
-const VeSysInfo = require('./VeSysInfo.js')
-const {ensureLspExt, inspect, fixWinPath} = require('./VeUtil.js')
-const VeLispGlobalContext = require('./VeLispGlobalContext.js')
-const {evaluate, tree} = require('./VeLispEvaluator.js')
-const {Str} = require('./VeLispTypes.js')
+import {fileURLToPath} from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+import VeSysInfo from './VeSysInfo.cjs'
+import {ensureLspExt, inspect, isRecoverableInput, fixWinPath} from './VeUtil.js'
+import VeLispGlobalContext from './VeLispGlobalContext.js'
+import {evaluate, tree} from './VeLispEvaluator.js'
+import {Str} from './VeLispTypes.js'
 
 main()
 
@@ -124,7 +129,6 @@ function startRepl(action, context) {
         }
     }
 
-    const repl = require('repl')
     const replServer = repl.start({
         prompt: '> ',
         useGlobal: true,
@@ -219,6 +223,5 @@ function replWriter(_repl, output) {
 }
 
 function isRecoverable(input, _error) {
-    const {isRecoverableInput} = require('./VeUtil.js')
     return isRecoverableInput(input)
 }

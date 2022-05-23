@@ -1,7 +1,8 @@
-const os = require('os')
-const {Bool, Int, Real, Str, Sym, List, Fun, ensureType} = require('../VeLispTypes.js')
+import os from 'os'
+import {spawn} from 'child_process'
+import {Bool, Int, Real, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     // VeLisp Extension
     context.setSym('ARGV', new Fun('argv', ['[n]'], [], (self, args) => {
         // devel mode  : $ node src/main.js test.js 1 two
@@ -167,7 +168,6 @@ exports.initContext = (context) => {
         if (args.length === 2) {
             file = ensureType('startapp: `file`', args[1], [Str]).value()
         }
-        const {spawn} = require('child_process')
         const child = spawn(cmd, file ? [file] : [], {
             detached: true,
             stdio: 'ignore',

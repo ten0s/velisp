@@ -1,6 +1,6 @@
-const {Sym, List, Fun} = require('../VeLispTypes.js')
+import {Sym, List, Fun} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('APPLY', new Fun('apply', ['function', 'list'], [], (self, args) => {
         //console.log('apply args', args);
         if (args.length < 2) {

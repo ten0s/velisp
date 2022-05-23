@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'eq',

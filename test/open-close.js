@@ -1,6 +1,7 @@
-const QUnit = require('qunit')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Sym} = require('../src/VeLispTypes.js')
+import QUnit from 'qunit'
+import fs from 'fs'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Sym} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(type (open "file.txt" "r"))', result: new Sym('file')},
@@ -26,7 +27,6 @@ const errors = [
 ]
 
 QUnit.test('open-close', assert => {
-    const fs = require('fs')
     // Setup
     fs.closeSync(fs.openSync('file.txt', 'w'))
     try { fs.unlinkSync('unknown.txt') } catch { }

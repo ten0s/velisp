@@ -1,6 +1,6 @@
-const {Int, Real, Fun, ensureType} = require('../VeLispTypes.js')
+import {Int, Real, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('*', new Fun('*', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)

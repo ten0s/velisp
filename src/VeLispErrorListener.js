@@ -1,5 +1,5 @@
-const antlr4 = require('antlr4')
-const {makeError} = require('./VeLispError.js')
+import antlr4 from 'antlr4'
+import {makeError} from './VeLispError.js'
 
 class VeLispErrorListener extends antlr4.error.ErrorListener {
     constructor(context) {
@@ -14,4 +14,4 @@ class VeLispErrorListener extends antlr4.error.ErrorListener {
     }
 }
 
-module.exports = VeLispErrorListener
+export default VeLispErrorListener

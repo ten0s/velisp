@@ -1,6 +1,6 @@
-const os = require('os')
-const {TestRunner} = require('./test-runner.js')
-const {Str} = require('../src/VeLispTypes.js')
+import os from 'os'
+import {TestRunner} from './test-runner.js'
+import {Str} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'tmpdir',

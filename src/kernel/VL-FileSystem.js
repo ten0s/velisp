@@ -1,8 +1,8 @@
-const fs = require('fs')
-const VeGlob = require('../VeGlob.js')
-const {Bool, Int, Str, List, Fun, ensureType} = require('../VeLispTypes.js')
+import fs from 'fs'
+import VeGlob from '../VeGlob.js'
+import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('VL-DIRECTORY-FILES', new Fun('vl-directory-files', ['[directory]', '[pattern]', '[what]'], [], (self, args) => {
         if (args.length > 3) {
             throw new Error('vl-directory-files: too many arguments')

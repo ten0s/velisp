@@ -1,6 +1,6 @@
-const {Bool, Int, Str, Sym, List, Fun, ensureType} = require('../VeLispTypes.js')
+import {Bool, Int, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('ATOMS-FAMILY', new Fun('atoms-family', ['format', '[symlist]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('atoms-family: too few arguments')

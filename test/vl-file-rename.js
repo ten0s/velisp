@@ -1,6 +1,6 @@
-const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool, Int, List} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool, Int, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-file-rename',
@@ -22,7 +22,7 @@ TestRunner.run({
 
         // Rename to existing
         {test: '(vl-file-rename "f1" "f2")', result: new Bool(false)},
-        
+
         // Rename to non-existing
         {test: '(vl-file-rename "f1" "f3")', result: new Bool(true)},
 

@@ -1,13 +1,13 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const {Str, Sym, Fun} = require('../VeLispTypes.js')
-const Evaluator = require('../VeLispEvaluator.js')
-const {fmtError} = require('../VeLispError.js')
-const VeSysInfo = require('../VeSysInfo.js')
-const {ensureLspExt, fixWinPath} = require('../VeUtil.js')
+import {Str, Sym, Fun} from '../VeLispTypes.js'
+import * as VeLispEvaluator from '../VeLispEvaluator.js'
+import {fmtError} from '../VeLispError.js'
+import VeSysInfo from '../VeSysInfo.cjs'
+import {ensureLspExt, fixWinPath} from '../VeUtil.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
         //console.log('load args:', args)
         if (args.length === 0) {
@@ -37,7 +37,7 @@ exports.initContext = (context) => {
             const context = self.contexts[self.contexts.length-2]
             const parent = context.getSym('%VELISP_LSP_FILE%')
             context.setSym('%VELISP_LSP_FILE%', new Str(path.resolve(filename)))
-            const result = Evaluator.evaluate(data, context)
+            const result = VeLispEvaluator.evaluate(data, context)
             // Restore back source file.
             context.setSym('%VELISP_LSP_FILE%', parent)
             return result

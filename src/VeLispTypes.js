@@ -1,6 +1,6 @@
-const fs = require('fs')
-const os = require('os')
-const {find, escape} = require('./VeUtil.js')
+import fs from 'fs'
+import os from 'os'
+import {find, escape} from './VeUtil.js'
 
 const TRU = 'T'
 const NIL = 'nil'
@@ -937,7 +937,7 @@ function throwTypeError(prefix, argValue, argTypes) {
     )
 }
 
-module.exports = {
+export {
     Bool,
     Int,
     Real,

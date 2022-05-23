@@ -1,5 +1,5 @@
-const path = require('path')
-const {Str} = require('./VeLispTypes.js')
+import path from 'path'
+import {Str} from './VeLispTypes.js'
 
 function makeError(message, context) {
     let file = context.getVar('%VELISP_LSP_FILE%')
@@ -45,7 +45,7 @@ function perror(errCode) {
     }
 }
 
-module.exports = {
+export {
     makeError,
     fmtError,
 }

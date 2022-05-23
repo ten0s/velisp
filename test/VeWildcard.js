@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-require('../src/VeJsExt.js') // array.without
-const VeWildcard = require('../src/VeWildcard.js')
+import QUnit from 'qunit'
+import '../src/VeJsExt.js' // array.without
+import VeWildcard from '../src/VeWildcard.js'
 
 const DIGITS = Array.from('0123456789')
 const LOWER_ALPHAS = Array.from('abcdefghijklmnopqrstuvwxyz')

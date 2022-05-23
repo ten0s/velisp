@@ -1,5 +1,6 @@
-const path = require('path')
-const VeStack = require('./VeStack.js')
+import path from 'path'
+import util from 'util'
+import VeStack from './VeStack.js'
 
 // :: (any, [any]) -> bool
 const find = (y, xs) => {
@@ -82,7 +83,6 @@ if (!String.prototype.replaceAll) {
 
 const inspect = (obj) => {
     // https://nodejs.org/api/util.html#util_util_inspect_object_showhidden_depth_colors
-    const util = require('util')
     return util.inspect(obj, {
         showHidden: false,
         depth: null,
@@ -163,7 +163,7 @@ const fixWinPath = (path) => {
     return path.replaceAll('\\', '/')
 }
 
-module.exports = {
+export {
     find,
     escape,
     unescape,

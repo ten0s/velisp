@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool, Str, Sym, List} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool, Str, Sym, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'atoms-family',

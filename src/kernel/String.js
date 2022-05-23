@@ -1,10 +1,10 @@
-const VeGlob = require('../VeGlob.js')
-const VeRegex = require('../VeRegex.js')
-const VeWildcard = require('../VeWildcard.js')
-const {inspect} = require('../VeUtil.js')
-const {Bool, Int, Real, Str, Sym, Fun, ensureType} = require('../VeLispTypes.js')
+import VeGlob from '../VeGlob.js'
+import VeRegex from '../VeRegex.js'
+import VeWildcard from '../VeWildcard.js'
+import {inspect} from '../VeUtil.js'
+import {Bool, Int, Real, Str, Sym, Fun, ensureType} from '../VeLispTypes.js'
 
-exports.initContext = (context) => {
+export const initContext = (context) => {
     context.setSym('ASCII', new Fun('ascii', ['string'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('ascii: too few arguments')

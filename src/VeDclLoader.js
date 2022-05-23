@@ -1,9 +1,9 @@
-const fs = require('fs')
-const antlr4 = require('antlr4')
-const {VeDclLexer} = require('../grammar/VeDclLexer.js')
-const {VeDclParser} = require('../grammar/VeDclParser.js')
-const {VeDclListener} = require('../grammar/VeDclListener.js')
-const {Dialog, buildTile} = require('./VeDclTiles.js')
+import fs from 'fs'
+import antlr4 from 'antlr4'
+import VeDclLexer from '../grammar/VeDclLexer.js'
+import VeDclParser from '../grammar/VeDclParser.js'
+import VeDclListener from '../grammar/VeDclListener.js'
+import {Dialog, buildTile} from './VeDclTiles.js'
 
 class VeDclLoader extends VeDclListener {
     constructor(context) {
@@ -183,7 +183,7 @@ function parseDcl(dcl) {
     }
 }
 
-module.exports = {
+export {
     load,
     tree,
 }

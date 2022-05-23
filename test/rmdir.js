@@ -1,6 +1,6 @@
-const {TestRunner} = require('./test-runner.js')
-const {evaluate} = require('../src/VeLispEvaluator.js')
-const {Bool} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Bool} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'rmdir',
@@ -22,9 +22,9 @@ TestRunner.run({
     tests: [
         {test: '(rmdir "d1")', result: new Bool(false)},
         {test: '(rmdir "d1/a")', result: new Bool(false)},
-        
+
         {test: '(rmdir "d2")', result: new Bool(true)},
-        
+
         {test: '(rmdir "d1/a/b")', result: new Bool(true)},
         {test: '(rmdir "d1/a/b") (rmdir "d1/a") (rmdir "d1")', result: new Bool(true)},
     ],

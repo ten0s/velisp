@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool, Int} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool, Int} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'vl-string-position',
@@ -13,7 +13,7 @@ TestRunner.run({
         {test: '(vl-string-position (ascii "z") "azbzc" 0)', result: new Int(1)},
         {test: '(vl-string-position (ascii "z") "azbzc" nil)', result: new Int(1)},
         {test: '(vl-string-position (ascii "z") "azbzc" 2)', result: new Int(3)},
-        
+
         {test: '(vl-string-position (ascii "z") "azbzlmnqc" nil T)', result: new Int(3)},
     ],
 
@@ -28,7 +28,7 @@ TestRunner.run({
 
         {test: '(vl-string-position "b" "bar")', result:
          new Error('vl-string-position: `char-code` expected Int')},
-        
+
         {test: '(vl-string-position 98 nil)', result:
          new Error('vl-string-position: `string` expected Str')},
 

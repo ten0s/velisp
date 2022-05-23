@@ -1,6 +1,6 @@
-const QUnit = require('qunit')
-const VeDigraph = require('../src/VeDigraph.js')
-const VeDigraphDFS = require('../src/VeDigraphDFS.js')
+import QUnit from 'qunit'
+import VeDigraph from '../src/VeDigraph.js'
+import VeDigraphDFS from '../src/VeDigraphDFS.js'
 
 QUnit.test('VeDigraphDFS', assert => {
     const G = new VeDigraph(13)

@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Real} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Real} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'log',

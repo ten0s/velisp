@@ -1,5 +1,5 @@
-const {TestRunner} = require('./test-runner.js')
-const {Bool, Int, Str} = require('../src/VeLispTypes.js')
+import {TestRunner} from './test-runner.js'
+import {Bool, Int, Str} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'while',
