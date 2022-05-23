@@ -20,11 +20,11 @@ Build Done
 $ sudo apt install jq make
 ```
 
-#### [Node.js 12.x](https://nodejs.org/dist/latest-v12.x/)
+#### [Node.js 14.x](https://nodejs.org/dist/latest-v14.x/)
 
 ```
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-$ nvm install 12
+$ nvm install 14
 ```
 
 #### [GTK+3](https://www.gtk.org/) deps

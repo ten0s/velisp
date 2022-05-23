@@ -22,10 +22,10 @@ RUN apt-get update         &&  \
         libcairo2-dev          \
         make
 
-RUN echo "Installing Node.js v12..."
+RUN echo "Installing Node.js v14..."
 
 # https://github.com/nodesource/distributions/blob/master/README.md#deb
-RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get -y install nodejs
 
 RUN groupadd --gid $GID $USER
