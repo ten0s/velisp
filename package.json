@@ -10,7 +10,7 @@
     "author": "Dmitry Klionsky",
     "license": "",
     "dependencies": {
-        "antlr4": "4.9.3",
+        "antlr4": "4.10.1",
         "commander": "6.2.1",
         "node-gtk": "^0.10.0",
         "temp": "0.9.4"
