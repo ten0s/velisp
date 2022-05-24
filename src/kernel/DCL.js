@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import __rootdir from '../VeRootDir.cjs'
+import __rootdir from '../VeRootDir.js'
 import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
 import VeStack from '../VeStack.js'
 import VeDclContext from '../VeDclContext.js'

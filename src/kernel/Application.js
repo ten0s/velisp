@@ -4,7 +4,7 @@ import path from 'path'
 import {Str, Sym, Fun} from '../VeLispTypes.js'
 import * as VeLispEvaluator from '../VeLispEvaluator.js'
 import {fmtError} from '../VeLispError.js'
-import VeSysInfo from '../VeSysInfo.cjs'
+import VeSysInfo from '../VeSysInfo.js'
 import {ensureLspExt, fixWinPath} from '../VeUtil.js'
 
 export const initContext = (context) => {

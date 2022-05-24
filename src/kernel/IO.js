@@ -1,5 +1,5 @@
 import {EOL} from 'os'
-import VeSysInfo from '../VeSysInfo.cjs'
+import VeSysInfo from '../VeSysInfo.js'
 import {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
