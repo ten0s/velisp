@@ -42,9 +42,13 @@ COPY src/              velisp/src/
 COPY Makefile          velisp/
 COPY package.json      velisp/
 COPY package-lock.json velisp/
+COPY package.json.template velisp/
+COPY rollup.config.js  velisp/
 
 RUN echo "Building VeLisp..."
 
 WORKDIR velisp
-RUN make production && \
+RUN make install && \
+    make prePkg && \
+    make production && \
     make pkgLinux

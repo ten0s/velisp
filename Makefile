@@ -56,8 +56,15 @@ roll:
 readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
 
+prePkg:
+	mkdir -p pkg/src/
+	cp -r lib/ pkg/
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" package.json.template > pkg/package.json
+	npx rollup -c
+
 pkgLinux:
-	npx pkg -c package.json -t ${NODE}-linux-x64 -o velisp-${VERSION}-linux-x64 src/main.js
+	# make prePkg MUST be run first
+	npx pkg -c package.json -t ${NODE}-linux-x64 -o velisp-${VERSION}-linux-x64 pkg/src/bundle.js
 
 pkgWin86:
 	# https://github.com/vercel/pkg-fetch/issues/68
@@ -70,6 +77,7 @@ pkgMacOS:
 	npx pkg -c package.json -t ${NODE}-macos -o velisp-${VERSION}-macos-x64 src/main.js
 
 cleanPkg:
+	rm -rf pkg/
 	rm -f velisp*
 
 compileJava:
@@ -99,6 +107,6 @@ cleanJava:
 	rm -f grammar/*.class grammar/*.java
 
 cleanDeps:
-	rm -rf node_modules
+	rm -rf node_modules/
 
 clean: cleanDeps cleanJava cleanPkg
