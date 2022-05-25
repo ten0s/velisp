@@ -20,11 +20,11 @@ Build Done
 $ sudo apt install jq make
 ```
 
-#### [Node.js 14.x](https://nodejs.org/dist/latest-v14.x/)
+#### [Node.js 16.x](https://nodejs.org/dist/latest-v16.x/)
 
 ```
-$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-$ nvm install 14
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+$ nvm install 16
 ```
 
 #### [GTK+3](https://www.gtk.org/) deps

@@ -22,11 +22,14 @@ RUN apt-get update         &&  \
         libcairo2-dev          \
         make
 
-RUN echo "Installing Node.js v14..."
+ENV NODE_VERSION=16
+
+RUN echo "Installing Node.js v${NODE_VERSION}..."
 
 # https://github.com/nodesource/distributions/blob/master/README.md#deb
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
 RUN apt-get -y install nodejs
+RUN npm install -g npm
 
 RUN groupadd --gid $GID $USER
 RUN useradd --shell /bin/bash --create-home --gid $GID --uid $UID $USER
@@ -36,19 +39,19 @@ WORKDIR /home/$USER
 RUN echo "Copying source code..."
 
 RUN mkdir -p velisp
-COPY grammar/          velisp/grammar/
-COPY lib/              velisp/lib/
-COPY src/              velisp/src/
-COPY Makefile          velisp/
-COPY package.json      velisp/
-COPY package-lock.json velisp/
+COPY grammar/              velisp/grammar/
+COPY lib/                  velisp/lib/
+COPY src/                  velisp/src/
+COPY Makefile              velisp/
+COPY package.json          velisp/
+COPY package-lock.json     velisp/
 COPY package.json.template velisp/
-COPY rollup.config.js  velisp/
+COPY rollup.config.js      velisp/
 
 RUN echo "Building VeLisp..."
 
 WORKDIR velisp
-RUN make install && \
-    make prePkg && \
-    make production && \
+RUN make clean-install && \
+    make prePkg        && \
+    make production    && \
     make pkgLinux
