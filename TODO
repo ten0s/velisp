@@ -1,4 +1,3 @@
-* Update antrl4 to 4.9.0+ after moving to Node.js 14
 * Update commander
 * Handle at least Backspace in read-line, getstring, getint, getreal
 * How to run VeLisp in the browser?
