@@ -8,12 +8,18 @@ all: install
 
 install:
 	npm install
+	$(MAKE) apply-patches
 
 clean-install:
 	npm clean-install
+	$(MAKE) apply-patches
 
 prod-install:
-	npm clean-install --only=prod
+	npm clean-install --omit=dev
+	$(MAKE) apply-patches
+
+apply-patches:
+	patches/apply-patches.sh
 
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4

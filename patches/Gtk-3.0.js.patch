@@ -1,0 +1,9 @@
+34a35,42
+> 
+>         /*
+>          * To keep the nodejs event loop alive, we need to have something running.
+>          */
+>         if (placeholderIntervalID === undefined) {
+>           placeholderIntervalID = setInterval(() => { /* noop */ }, 60 * 60 * 1000)
+>         }
+> 
