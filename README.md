@@ -13,8 +13,8 @@ AutoLISP programs outside of AutoCAD.
 #### Linux
 
 ```
-$ wget https://github.com/ten0s/velisp/releases/download/0.6.12/velisp-0.6.12-linux-x64
-$ chmod +x velisp-0.6.12-linux-x64
+$ wget https://github.com/ten0s/velisp/releases/download/0.6.13/velisp-0.6.13-linux-x64
+$ chmod +x velisp-0.6.13-linux-x64
 ```
 
 #### Windows
@@ -30,15 +30,15 @@ Run:
 1. Windows: Install a Windows X-Server like VcXsrv: https://sourceforge.net/projects/vcxsrv
 3. Windows: Start the X-Server with: 'vcxsrv :0 -ac -terminate -lesspointer -multiwindow -clipboard -dpi auto'
 4. Windows: Open CMD and run: 'bash' in order to start the WSL-bash
-5. WSL-Bash: run: 'DISPLAY=:0 velisp-0.6.12-linux-x64'
+5. WSL-Bash: run: 'DISPLAY=:0 velisp-0.6.13-linux-x64'
 
 TODO
 
 ### Run REPL (Read–Eval–Print Loop)
 
 ```
-$ ./velisp-0.6.12-linux-x64
-VeLisp 0.6.12 on linux
+$ ./velisp-0.6.13-linux-x64
+VeLisp 0.6.13 on linux
 Type ".help" for more information
 > (+ 1 2)
 3
@@ -56,21 +56,21 @@ ADD
 Calculate 10th (default) Fibonacci number
 
 ```
-$ ./velisp-0.6.12-linux-x64 examples/fib.lsp
+$ ./velisp-0.6.13-linux-x64 examples/fib.lsp
 55
 ```
 
 Calculate 11th Fibonacci number
 
 ```
-$ ./velisp-0.6.12-linux-x64 examples/fib.lsp 11
+$ ./velisp-0.6.13-linux-x64 examples/fib.lsp 11
 89
 ```
 
 Run Calculator
 
 ```
-$ ./velisp-0.6.12-linux-x64 examples/calc.lsp
+$ ./velisp-0.6.13-linux-x64 examples/calc.lsp
 ```
 
 ![App Calc Image](/images/app-calc.png)
@@ -78,7 +78,7 @@ $ ./velisp-0.6.12-linux-x64 examples/calc.lsp
 Run Minesweeper
 
 ```
-$ ./velisp-0.6.12-linux-x64 examples/mines.lsp
+$ ./velisp-0.6.13-linux-x64 examples/mines.lsp
 ```
 
 ![App Mines Image](/images/app-mines.png)
@@ -86,7 +86,7 @@ $ ./velisp-0.6.12-linux-x64 examples/mines.lsp
 Run Fifteen Puzzle
 
 ```
-$ ./velisp-0.6.12-linux-x64 examples/fifteen.lsp
+$ ./velisp-0.6.13-linux-x64 examples/fifteen.lsp
 ```
 
 ![App Fifteen Image](/images/app-fifteen.png)
@@ -94,23 +94,23 @@ $ ./velisp-0.6.12-linux-x64 examples/fifteen.lsp
 ### Run code from standard input
 
 ```
-$ cat examples/fib.lsp | ./velisp-0.6.12-linux-x64
+$ cat examples/fib.lsp | ./velisp-0.6.13-linux-x64
 55
 ```
 
 ```
-$ cat examples/fib.lsp | ./velisp-0.6.12-linux-x64 -- 11
+$ cat examples/fib.lsp | ./velisp-0.6.13-linux-x64 -- 11
 89
 ```
 
 ```
-$ echo '(alert "Hello from VeLisp!")' | ./velisp-0.6.12-linux-x64
+$ echo '(alert "Hello from VeLisp!")' | ./velisp-0.6.13-linux-x64
 ```
 
 ![Alert Hello From VeLisp Image](/images/alert-hello-velisp.png)
 
 ```
-$ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp-0.6.12-linux-x64 -- Arg
+$ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp-0.6.13-linux-x64 -- Arg
 ```
 
 ![Alert Hello From Arg Image](/images/alert-hello-arg.png)
