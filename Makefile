@@ -12,8 +12,8 @@ install:
 clean-install:
 	npm clean-install
 
-production:
-	npm clean-install --production
+prod-install:
+	npm clean-install --only=prod
 
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4

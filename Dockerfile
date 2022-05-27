@@ -53,5 +53,5 @@ RUN echo "Building VeLisp..."
 WORKDIR velisp
 RUN make clean-install && \
     make prePkg        && \
-    make production    && \
+    make prod-install  && \
     make pkgLinux
