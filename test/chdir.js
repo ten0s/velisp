@@ -23,10 +23,18 @@ TestRunner.run({
         // Existing dir
         {test: '(eq (chdir ".") (cwd))', result: new Bool(true)},
         {test: '(chdir "d1")', result: (act) => act.value().endsWith('d1')},
-        {test: '(chdir "d1/a")', result: (act) => act.value().endsWith('d1/a')},
-        {test: '(chdir "d1/a/b")', result: (act) => act.value().endsWith('d1/a/b')},
         // Non-existing dir
         {test: '(chdir "d2")', result: new Bool(false)},
+    ],
+
+    testsLinux: [
+        {test: '(chdir "d1/a")', result: (act) => act.value().endsWith('d1/a')},
+        {test: '(chdir "d1/a/b")', result: (act) => act.value().endsWith('d1/a/b')},
+    ],
+
+    testsWindows: [
+        {test: '(chdir "d1/a")', result: (act) => act.value().endsWith('d1\\a')},
+        {test: '(chdir "d1/a/b")', result: (act) => act.value().endsWith('d1\\a\\b')},
     ],
 
     errors: [
