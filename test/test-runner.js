@@ -10,23 +10,23 @@ class TestRunner {
 
         tests = [],
         testsLinux = [],
-        testsWin = [],
-        testsMac = [],
+        testsWindows = [],
+        testsMacOS = [],
 
         errors = [],
         errorsLinux = [],
-        errorsWin = [],
-        errorsMac = [],
+        errorsWindows = [],
+        errorsMacOS = [],
 
     }) {
         if (tests.length       ||
             testsLinux.length  ||
-            testsWin.length    ||
-            testsMac.length    ||
+            testsWindows.length    ||
+            testsMacOS.length    ||
             errors.length      ||
             errorsLinux.length ||
-            errorsWin.length   ||
-            errorsMac.length) {
+            errorsWindows.length   ||
+            errorsMacOS.length) {
             QUnit.test(name, assert => {
                 const platform = process.platform
 
@@ -39,10 +39,10 @@ class TestRunner {
                     testsLinux.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 case 'win32':
-                    testsWin.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    testsWindows.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 case 'darwin':
-                    testsMac.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    testsMacOS.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 default:
                     throw new Error(`Unknown platform: ${platform}`)
@@ -57,10 +57,10 @@ class TestRunner {
                     errorsLinux.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 case 'win32':
-                    errorsWin.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    errorsWindows.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 case 'darwin':
-                    errorsMac.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    errorsMacOS.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 default:
                     throw new Error(`Unknown platform: ${platform}`)
