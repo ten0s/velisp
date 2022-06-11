@@ -58,7 +58,12 @@ TestRunner.run({
         {test: '(setenv "TMP" "") (setenv "TEMP" "") (vl-filename-mktemp)', result: (act) => {
             //console.log(act)
             return act instanceof Str
-                && act.value().startsWith(`${process.cwd()}/velisp-`)
+                && act.value().startsWith(`${os.tmpdir()}/velisp-`)
+        }},
+        {test: '(setenv "TMP" ".") (setenv "TEMP" ".") (vl-filename-mktemp)', result: (act) => {
+            //console.log(act)
+            return act instanceof Str
+                && act.value().startsWith('velisp-')
         }},
 
         // Test `directory`

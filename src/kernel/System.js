@@ -1,6 +1,7 @@
 import os from 'os'
 import {spawn} from 'child_process'
 import {Bool, Int, Real, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'
+import {tmpDir} from '../VeSystem.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
@@ -72,7 +73,7 @@ export const initContext = (context) => {
         if (args.length > 0) {
             throw new Error('tmpdir: too many arguments')
         }
-        return new Str(os.tmpdir())
+        return new Str(tmpDir())
     }))
     context.setSym('EXIT', new Fun('exit', ['[code]'], [], (self, args) => {
         if (args.length > 1) {

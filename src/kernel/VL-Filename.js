@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import temp from 'temp'
 import {Bool, Str, Fun, ensureType} from '../VeLispTypes.js'
+import {tmpDir} from '../VeSystem.js'
 
 export const initContext = (context) => {
     context.setSym('VL-FILENAME-MKTEMP', new Fun('vl-filename-mktemp', ['pattern', 'directory', 'extention'], [], (self, args) => {
@@ -72,12 +73,4 @@ export const initContext = (context) => {
         })
         return new Str(tmpFile)
     }))
-}
-
-const tmpDir = () => {
-    const tmp = process.env['TMP']
-    if (fs.existsSync(tmp)) { return tmp }
-    const temp = process.env['TEMP']
-    if (fs.existsSync(temp)) { return temp }
-    return process.cwd()
 }
