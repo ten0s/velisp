@@ -75,15 +75,11 @@ pkgLinux:
 	# make prePkg MUST be run first
 	npx pkg -c package.json -t ${NODE}-linux-x64 -o velisp-${VERSION}-linux-x64 pkg/src/bundle.js
 
-pkgWin86:
-	# https://github.com/vercel/pkg-fetch/issues/68
-	npx pkg -c package.json -t ${NODE}-win-x86 -o velisp-${VERSION}-win-x86 --no-bytecode --public --public-packages '*' src/main.js
-
-pkgWin64:
-	npx pkg -c package.json -t ${NODE}-win-x64 -o velisp-${VERSION}-win-x64 src/main.js
+pkgWindows:
+	npx pkg -c package.json -t ${NODE}-win-x64 -o velisp-${VERSION}-win-x64 pkg/src/bundle.js
 
 pkgMacOS:
-	npx pkg -c package.json -t ${NODE}-macos -o velisp-${VERSION}-macos-x64 src/main.js
+	npx pkg -c package.json -t ${NODE}-macos -o velisp-${VERSION}-macos-x64 pkg/src/bundle.js
 
 cleanPkg:
 	rm -rf pkg/
