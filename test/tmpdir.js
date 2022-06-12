@@ -13,8 +13,16 @@ TestRunner.run({
     },
 
     teardown: ({oldtmp, oldtemp}) => {
-        process.env['TMP'] = oldtmp
-        process.env['TEMP'] = oldtemp
+        if (oldtmp !== undefined) {
+            process.env['TMP'] = oldtmp
+        } else {
+            delete process.env['TMP']
+        }
+        if (oldtemp !== undefined) {
+            process.env['TEMP'] = oldtemp
+        } else {
+            delete process.env['TEMP']
+        }
     },
 
     tests: [
