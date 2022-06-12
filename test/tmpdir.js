@@ -1,4 +1,3 @@
-import os from 'os'
 import {TestRunner} from './test-runner.js'
 import {Str} from '../src/VeLispTypes.js'
 import {tmpDir} from '../src/VeSystem.js'
