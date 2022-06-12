@@ -6,7 +6,7 @@ TestRunner.run({
     name: 'homedir',
 
     tests: [
-        {test: '(homedir)', result: new Str(homedir())},
+        {test: '(homedir)', result: new Str(homeDir())},
     ],
 
     errors: [
