@@ -1,7 +1,7 @@
 import os from 'os'
 import {spawn} from 'child_process'
 import {Bool, Int, Real, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'
-import {tmpDir} from '../VeSystem.js'
+import {homeDir, tmpDir} from '../VeSystem.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
@@ -60,13 +60,7 @@ export const initContext = (context) => {
         if (args.length > 0) {
             throw new Error('homedir: too many arguments')
         }
-        // Check under WSL
-        if (process.env['WSLENV']) {
-            // Expected that called with at least
-            // set WSLENV=TEMP/pu:TMP/pu:USERNAME/u:USERPROFILE/pu
-            return new Str(process.env['USERPROFILE'])
-        }
-        return new Str(os.homedir())
+        return new Str(homeDir())
     }))
     // VeLisp Extension
     context.setSym('TMPDIR', new Fun('tmpdir', [], [], (self, args) => {
