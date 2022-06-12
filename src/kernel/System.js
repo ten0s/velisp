@@ -92,10 +92,17 @@ export const initContext = (context) => {
         if (args.length > 1) {
             throw new Error('getenv: too many arguments')
         }
-        const name = ensureType('getenv:', args[0], [Str])
-        const value = process.env[name.value()]
+        const name = ensureType('getenv:', args[0], [Str]).value()
+        const value = process.env[name]
         if (value === undefined) {
-            return new Bool(false)
+            switch (name) {
+            // Linux doesn't have TMP and TEMP env vars
+            case 'TMP':
+            case 'TEMP':
+                return new Str(tmpDir())
+            default:
+                return new Bool(false)
+            }
         }
         return new Str(value)
     }))
