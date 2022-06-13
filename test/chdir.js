@@ -1,3 +1,4 @@
+import path from 'path'
 import {TestRunner} from './test-runner.js'
 import {evaluate} from '../src/VeLispEvaluator.js'
 import {Bool} from '../src/VeLispTypes.js'
@@ -23,18 +24,10 @@ TestRunner.run({
         // Existing dir
         {test: '(eq (chdir ".") (cwd))', result: new Bool(true)},
         {test: '(chdir "d1")', result: (act) => act.value().endsWith('d1')},
+        {test: '(chdir "d1/a")', result: (act) => act.value().endsWith(`d1${path.sep}a`)},
+        {test: '(chdir "d1/a/b")', result: (act) => act.value().endsWith(`d1${path.sep}a${path.sep}b`)},
         // Non-existing dir
         {test: '(chdir "d2")', result: new Bool(false)},
-    ],
-
-    testsLinux: [
-        {test: '(chdir "d1/a")', result: (act) => act.value().endsWith('d1/a')},
-        {test: '(chdir "d1/a/b")', result: (act) => act.value().endsWith('d1/a/b')},
-    ],
-
-    testsWindows: [
-        {test: '(chdir "d1/a")', result: (act) => act.value().endsWith('d1\\a')},
-        {test: '(chdir "d1/a/b")', result: (act) => act.value().endsWith('d1\\a\\b')},
     ],
 
     errors: [
