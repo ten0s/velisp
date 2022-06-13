@@ -858,7 +858,13 @@ class File {
             str += buf.toString()
 
             if (find(buf[0], stops)) {
-                break
+                if (str.length === 1) {
+                    // Read only EOL. Trim it and read again
+                    str = ''
+                } else {
+                    // Read more than EOL
+                    break
+                }
             }
             if (echo) {
                 fs.writeSync(process.stdout.fd, buf, 0, 1)
