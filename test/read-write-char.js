@@ -6,46 +6,46 @@ TestRunner.run({
     name: 'read-write-char',
 
     setup: () => {
-        touch('f1.txt')
-        touch('f2.txt')
-        tryTouch('f3.txt')
-        touch('f4.txt')
-        tryTouch('f5.txt')
-        tryTouch('f6.txt')
-        tryTouch('f7.txt')
-        touch('f8.txt')
-        touch('f9.txt')
+        touch('rwc1.txt')
+        touch('rwc2.txt')
+        tryTouch('rwc3.txt')
+        touch('rwc4.txt')
+        tryTouch('rwc5.txt')
+        tryTouch('rwc6.txt')
+        tryTouch('rwc7.txt')
+        touch('rwc8.txt')
+        tryTouch('rwc9.txt')
     },
 
     teardown: () => {
-        rm('f1.txt')
-        rm('f2.txt')
-        tryRm('f3.txt')
-        rm('f4.txt')
-        tryRm('f5.txt')
-        tryRm('f6.txt')
-        tryRm('f7.txt')
-        rm('f8.txt')
-        rm('f9.txt')
+        rm('rwc1.txt')
+        rm('rwc2.txt')
+        tryRm('rwc3.txt')
+        rm('rwc4.txt')
+        tryRm('rwc5.txt')
+        tryRm('rwc6.txt')
+        tryRm('rwc7.txt')
+        rm('rwc8.txt')
+        tryRm('rwc9.txt')
     },
 
     tests: [
         {test:`
-(setq f (open "f1.txt" "r"))
+(setq f (open "rwc1.txt" "r"))
 (setq res (read-char f))
 (close f)
 res
 `, result: new Bool(false)},
 
         {test: `
-(setq f (open "f2.txt" "w"))
+(setq f (open "rwc2.txt" "w"))
 (write-char (ascii "H") f)
 (write-char (ascii "e") f)
 (write-char (ascii "l") f)
 (write-char (ascii "l") f)
 (write-char (ascii "o") f)
 (close f)
-(setq f (open "f2.txt" "r"))
+(setq f (open "rwc2.txt" "r"))
 (setq c1 (chr (read-char f)))
 (setq c2 (chr (read-char f)))
 (setq c3 (chr (read-char f)))
@@ -61,30 +61,30 @@ res
         //{test: '(read-char)', result:
         // new Error('read-char: too few arguments')},
 
-        // Doesn't close f3.txt
-        {test: '(setq f (open "f3.txt" "r")) (read-char f f)', result:
+        // Doesn't close file
+        {test: '(setq f (open "rwc3.txt" "r")) (read-char f f)', result:
          new Error('read-char: too many arguments')},
 
         {test: '(read-char 0)', result:
          new Error('read-char: `file-desc` expected File')},
 
         // Read from closed file
-        {test: '(setq f (open "f4.txt" "r")) (close f) (read-char f)', result:
-         new Error('read-char: bad file #<file "f4.txt" r:c>')},
+        {test: '(setq f (open "rwc4.txt" "r")) (close f) (read-char f)', result:
+         new Error('read-char: bad file #<file "rwc4.txt" r:c>')},
 
-        // Doesn't close f5.txt
-        {test: '(setq f (open "f5.txt" "w")) (read-char f)', result:
-         new Error('read-char: bad file #<file "f5.txt" w:o>')},
+        // Doesn't close file
+        {test: '(setq f (open "rwc5.txt" "w")) (read-char f)', result:
+         new Error('read-char: bad file #<file "rwc5.txt" w:o>')},
 
-        // Doesn't close f6.txt
-        {test: '(setq f (open "f6.txt" "a")) (read-char f)', result:
-         new Error('read-char: bad file #<file "f6.txt" a:o>')},
+        // Doesn't close file
+        {test: '(setq f (open "rwc6.txt" "a")) (read-char f)', result:
+         new Error('read-char: bad file #<file "rwc6.txt" a:o>')},
 
         {test: '(write-char)', result:
          new Error('write-char: too few arguments')},
 
-        // Doesn't close f7.txt
-        {test: '(setq f (open "f7.txt" "w")) (write-char 65 f f)', result:
+        // Doesn't close file
+        {test: '(setq f (open "rwc7.txt" "w")) (write-char 65 f f)', result:
          new Error('write-char: too many arguments')},
 
         {test: '(write-char "A" 1)', result:
@@ -93,10 +93,12 @@ res
         {test: '(write-char 65  1)', result:
          new Error('write-char: `file-desc` expected File')},
 
-        {test: '(setq f (open "f8.txt" "w")) (close f) (write-char 65 f)', result:
-         new Error('write-char: bad file #<file "f8.txt" w:c>')},
+        // Write to closed file
+        {test: '(setq f (open "rwc8.txt" "w")) (close f) (write-char 65 f)', result:
+         new Error('write-char: bad file #<file "rwc8.txt" w:c>')},
 
-        {test: '(setq f (open "f9.txt" "r")) (write-char 65 f)', result:
-         new Error('write-char: bad file #<file "f9.txt" r:o>')},
+        // Doesn't close file
+        {test: '(setq f (open "rwc9.txt" "r")) (write-char 65 f)', result:
+         new Error('write-char: bad file #<file "rwc9.txt" r:o>')},
     ]
 })
