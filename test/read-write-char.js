@@ -1,6 +1,5 @@
 import fs from 'fs'
 import {TestRunner} from './test-runner.js'
-import {evaluate} from '../src/VeLispEvaluator.js'
 import {Bool, Str} from '../src/VeLispTypes.js'
 
 const touch = (file) => fs.closeSync(fs.openSync(file, 'w'))
