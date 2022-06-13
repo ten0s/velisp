@@ -778,7 +778,7 @@ class File {
             try {
                 return new File(name, mode, fs.openSync(name, mode))
             } catch (e) {
-                if (mode === FileMode.READ && e.errno === -os.constants.errno.ENOENT) {
+                if (mode === FileMode.READ && e.code === 'ENOENT') {
                     return new Bool(false)
                 }
                 throw e
