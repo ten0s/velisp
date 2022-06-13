@@ -8,7 +8,7 @@ TestRunner.run({
     setup: () => {},
 
     teardown: () => {
-        fs.unlinkSync('f1')
+        fs.rmSync('f1')
         fs.rmdirSync('d1')
     },
 
