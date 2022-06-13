@@ -1,4 +1,3 @@
-import fs from 'fs'
 import {TestRunner} from './test-runner.js'
 import {rm, touch, tryRm, tryTouch} from './FsUtil.js'
 import {Bool, Str} from '../src/VeLispTypes.js'
