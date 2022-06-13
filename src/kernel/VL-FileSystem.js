@@ -119,7 +119,7 @@ export const initContext = (context) => {
         }
         const filename = ensureType('vl-file-delete:', args[0], [Str]).value()
         try {
-            fs.unlinkSync(filename)
+            fs.rmSync(filename, {force: false})
             return new Bool(true)
         } catch (e) {
             // TODO: put to *error*?
