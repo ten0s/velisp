@@ -70,8 +70,7 @@ class TestRunner {
     }
 
     static runTest(assert, setup, teardown, t) {
-        let env = undefined
-        try { env = setup() } catch (e) {}
+        const env = setup()
 
         const actual = evaluate(t.test)
         if (typeof(t.result) === 'function') {
@@ -80,16 +79,15 @@ class TestRunner {
             assert.deepEqual(actual, t.result, t.test)
         }
 
-        try { teardown(env) } catch (e) {}
+        teardown(env)
     }
 
     static runError(assert, setup, teardown, t) {
-        let env = undefined
-        try { env = setup() } catch (e) {}
+        const env = setup()
 
         assert.throws(() => evaluate(t.test), t.result, t.test)
 
-        try { teardown(env) } catch (e) {}
+        teardown(env)
     }
 }
 
