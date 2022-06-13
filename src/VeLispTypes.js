@@ -858,11 +858,14 @@ class File {
             str += buf.toString()
 
             if (find(buf[0], stops)) {
-                if (str.length === 1) {
+                if (os.platform() == 'win32') {
+                    if (str.length > 1) {
+                        // Read more than EOL
+                        break
+                    }
                     // Read only EOL. Trim it and read again
                     str = ''
                 } else {
-                    // Read more than EOL
                     break
                 }
             }
