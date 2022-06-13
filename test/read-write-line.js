@@ -1,9 +1,6 @@
-import fs from 'fs'
 import {TestRunner} from './test-runner.js'
+import {rm, touch} from './FsUtil.js'
 import {Bool, Str} from '../src/VeLispTypes.js'
-
-const touch = (file) => fs.closeSync(fs.openSync(file, 'w'))
-const rm    = (file) => fs.rmSync(file, {force: true})
 
 TestRunner.run({
     name: 'read-write-line',

@@ -1,5 +1,5 @@
-import fs from 'fs'
 import {TestRunner} from './test-runner.js'
+import {rm, tryRmdir} from './FsUtil.js'
 import {Bool, Int, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
@@ -8,8 +8,8 @@ TestRunner.run({
     setup: () => {},
 
     teardown: () => {
-        fs.rmSync('f1')
-        fs.rmdirSync('d1')
+        rm('f1')
+        tryRmdir('d1')
     },
 
     tests: [
