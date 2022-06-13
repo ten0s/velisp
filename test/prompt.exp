@@ -2,10 +2,10 @@ exp_internal 1
 
 # Don't replace \n with \r\n and don't echo
 # Behaves like:
-# $ node src/main.js test/prompt.lsp | xxd
+# $ node src/main.js --no-dcl test/prompt.lsp | xxd
 set stty_init "raw -echo"
 
-spawn node src/main.js test/prompt.lsp
+spawn node src/main.js --no-dcl test/prompt.lsp
 
 set timeout 5
 

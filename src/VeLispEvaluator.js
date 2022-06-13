@@ -1,12 +1,20 @@
 import antlr4 from 'antlr4'
 import VeLispLexer from '../grammar/VeLispLexer.js'
 import VeLispParser from '../grammar/VeLispParser.js'
-import VeLispGlobalContext from './VeLispGlobalContext.js'
+import VeLispContext from './VeLispContext.js'
+import VeLispContextIniter from './VeLispContextIniter.js'
 import VeLispEvalVisitor from './VeLispEvalVisitor.js'
 import VeLispErrorListener from './VeLispErrorListener.js'
 
-function evaluate(input, context = new VeLispGlobalContext()) {
+function evaluate(input, context) {
     input = preprocess(input)
+    if (!context) {
+        // This case is used for tests
+        context = new VeLispContext()
+        VeLispContextIniter.initWithKernel(context)
+        // Do we really need lib/ included in tests?
+        //VeLispContextIniter.initWithLib(context)
+    }
     const {tree} = parseInput(input, context)
     const allResults = tree.accept(new VeLispEvalVisitor(context))
     //console.log('allResults:', allResults);
@@ -15,7 +23,7 @@ function evaluate(input, context = new VeLispGlobalContext()) {
     return result
 }
 
-function tree(input, context = new VeLispGlobalContext()) {
+function tree(input, context = new VeLispContext()) {
     const {parser, tree} = parseInput(input, context)
     return tree.toStringTree(parser.ruleNames)
 }

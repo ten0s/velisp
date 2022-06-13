@@ -1,7 +1,6 @@
 import * as Application from './Application.js'
 import * as Arithmetic from './Arithmetic.js'
 import * as Consts from './Consts.js'
-import * as DCL from './DCL.js'
 import * as Equality from './Equality.js'
 import * as Function from './Function.js'
 import * as IO from './IO.js'
@@ -22,7 +21,6 @@ export const initContext = (context) => {
     Application.initContext(context)
     Arithmetic.initContext(context)
     Consts.initContext(context)
-    DCL.initContext(context)
     Equality.initContext(context)
     Function.initContext(context)
     IO.initContext(context)

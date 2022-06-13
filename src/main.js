@@ -4,10 +4,10 @@ import path from 'path'
 import repl from 'repl'
 import {Command} from 'commander'
 
-import __rootdir from './VeRootDir.js'
 import VeSysInfo from './VeSysInfo.js'
 import {ensureLspExt, inspect, isRecoverableInput, fixWinPath} from './VeUtil.js'
-import VeLispGlobalContext from './VeLispGlobalContext.js'
+import VeLispContext from './VeLispContext.js'
+import VeLispContextIniter from './VeLispContextIniter.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
 import {Str} from './VeLispTypes.js'
 
@@ -18,11 +18,16 @@ function main() {
     const program = new Command()
     program.version(VeSysInfo.version)
         .option('-r, --run <command>', 'eval | tree', 'eval')
+        .option('--no-dcl', 'run without DCL')
         .arguments('[file]')
-        .action((file) => {
+        .action(async (file) => {
             const action = runAction(program.run)
-            const context = new VeLispGlobalContext()
+
+            const context = new VeLispContext()
+            VeLispContextIniter.initWithKernel(context)
             maybeInjectLib(action, context)
+            await maybeInjectDcl(action, program.dcl, context)
+
             if (file) {
                 //console.log(`Read from ${file}`);
                 file = ensureLspExt(path.resolve(fixWinPath(file)))
@@ -79,9 +84,14 @@ function runAction(what, isRepl) {
 
 function maybeInjectLib(action, context) {
     if (action === evaluate) {
-        let rootdir = fixWinPath(__rootdir)
-        process.env['VELISP_ROOT'] = rootdir
-        evaluate(`(load "${rootdir}/lib/main.lsp")`, context)
+        VeLispContextIniter.initWithLib(context)
+    }
+}
+
+async function maybeInjectDcl(action, withDcl, context) {
+    VeSysInfo.withDcl = withDcl
+    if (action === evaluate && withDcl) {
+        await VeLispContextIniter.initWithDcl(context)
     }
 }
 

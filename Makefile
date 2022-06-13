@@ -73,13 +73,13 @@ prePkg:
 
 pkgLinux:
 	# make prePkg MUST be run first
-	npx pkg -c package.json -t ${NODE}-linux-x64 -o velisp-${VERSION}-linux-x64 pkg/src/bundle.js
+	npx pkg -c package.json -t ${NODE}-linux-x64 -o velisp-${VERSION}-linux-x64 pkg/src/main.js
 
 pkgWindows:
-	npx pkg -c package.json -t ${NODE}-win-x64 -o velisp-${VERSION}-win-x64 pkg/src/bundle.js
+	npx pkg -c package.json -t ${NODE}-win-x64 -o velisp-${VERSION}-win-x64 pkg/src/main.js
 
 pkgMacOS:
-	npx pkg -c package.json -t ${NODE}-macos -o velisp-${VERSION}-macos-x64 pkg/src/bundle.js
+	npx pkg -c package.json -t ${NODE}-macos -o velisp-${VERSION}-macos-x64 pkg/src/main.js
 
 cleanPkg:
 	rm -rf pkg/

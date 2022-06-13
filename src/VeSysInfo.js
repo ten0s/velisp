@@ -6,6 +6,7 @@ const config = JSON.parse(readFileSync(join(__rootdir, 'package.json')))
 
 const VeSysInfo = {
     isRepl: false,
+    withDcl: true,
     name: config.name,
     version: config.version,
 }
