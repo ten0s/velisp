@@ -751,6 +751,9 @@ const FileState = {
     CLOSED: 'c'
 }
 
+let stdinFile = undefined
+let stdoutFile = undefined
+
 class File {
     // :: (string, string, integer)
     /*private*/ constructor(name, mode, fd) {
@@ -758,22 +761,31 @@ class File {
         this.mode = mode
         this.fd = fd
         this.state = FileState.OPEN
+        this.dropEOL = false
     }
 
     // :: (string, string) -> File
     static open(name, mode) {
         switch (name) {
         case FileStream.STDIN:
-            switch (os.platform()) {
-            case 'android':
-            case 'linux':
-                return new File(name, mode, fs.openSync('/dev/stdin', mode))
-            default:
-                return new File(name, mode, process.stdin.fd)
+            if (!stdinFile) {
+                switch (os.platform()) {
+                case 'android':
+                case 'linux':
+                    stdinFile = new File(name, mode, fs.openSync('/dev/stdin', mode))
+                    break
+                default:
+                    stdinFile = new File(name, mode, process.stdin.fd)
+                }
             }
+            return stdinFile
 
         case FileStream.STDOUT:
-            return new File(name, mode, process.stdout.fd)
+            if (!stdoutFile) {
+                stdoutFile = new File(name, mode, process.stdout.fd)
+            }
+            return stdoutFile
+
         default:
             try {
                 return new File(name, mode, fs.openSync(name, mode))
@@ -796,7 +808,7 @@ class File {
             switch (os.platform()) {
             case 'android':
             case 'linux':
-                fs.closeSync(this.fd)
+                //fs.closeSync(this.fd)
                 break
             default:
                 break
@@ -806,10 +818,10 @@ class File {
             break
         default:
             fs.closeSync(this.fd)
+            this.fd = -1
+            this.state = FileState.CLOSED
             break
         }
-        this.fd = -1
-        this.state = FileState.CLOSED
         return new Bool(false)
     }
 
@@ -818,6 +830,7 @@ class File {
         if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
             throw new Error(`read-char: bad file ${this}`)
         }
+        this.dropEOL = false
         const buf = Buffer.alloc(1)
         const len = fs.readSync(this.fd, buf, 0, 1)
         if (!len) {
@@ -855,30 +868,25 @@ class File {
                 }
                 break
             }
-            str += buf.toString()
 
             if (find(buf[0], stops)) {
-                if (os.platform() === 'win32') {
-                    if (str.length > 1) {
-                        // Read more than EOL
-                        break
-                    }
-                    // Read only EOL. Trim it and read again
-                    str = ''
+                if (this.dropEOL) {
+                    continue
                 } else {
+                    this.dropEOL = true
                     break
                 }
+            } else {
+                str += buf.toString()
+                this.dropEOL = false
             }
+
             if (echo) {
                 fs.writeSync(process.stdout.fd, buf, 0, 1)
             }
         }
         if (echo) {
             fs.writeSync(process.stdout.fd, '\n')
-        }
-        // Trim end-of-line(s) from right
-        while (str.length > 0 && find(str[str.length-1].charCodeAt(), stops)) {
-            str = str.substr(0, str.length-1)
         }
         return new Str(str)
     }
