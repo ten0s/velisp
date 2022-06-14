@@ -32,5 +32,4 @@
 
   (start_dialog)
   (unload_dialog dcl_id)
-  (vl-file-delete dcl_file)
   nil)
