@@ -6,44 +6,44 @@ TestRunner.run({
     name: 'read-write-line',
 
     setup: () => {
-        touch('f1.txt')
-        touch('f2.txt')
-        tryTouch('f3.txt')
-        touch('f4.txt')
-        tryTouch('f5.txt')
-        tryTouch('f6.txt')
-        tryTouch('f7.txt')
-        touch('f8.txt')
-        touch('f9.txt')
+        touch('rwl1.txt')
+        touch('rwl2.txt')
+        tryTouch('rwl3.txt')
+        touch('rwl4.txt')
+        tryTouch('rwl5.txt')
+        tryTouch('rwl6.txt')
+        tryTouch('rwl7.txt')
+        touch('rwl8.txt')
+        tryTouch('rwl9.txt')
     },
 
     teardown: () => {
-        rm('f1.txt')
-        rm('f2.txt')
-        tryRm('f3.txt')
-        rm('f4.txt')
-        tryRm('f5.txt')
-        tryRm('f6.txt')
-        tryRm('f7.txt')
-        rm('f8.txt')
-        rm('f9.txt')
+        rm('rwl1.txt')
+        rm('rwl2.txt')
+        tryRm('rwl3.txt')
+        rm('rwl4.txt')
+        tryRm('rwl5.txt')
+        tryRm('rwl6.txt')
+        tryRm('rwl7.txt')
+        rm('rwl8.txt')
+        tryRm('rwl9.txt')
     },
 
     tests: [
         {test:`
-(setq f (open "f1.txt" "r"))
+(setq f (open "rwl1.txt" "r"))
 (setq res (read-line f))
 (close f)
 res
 `, result: new Bool(false)},
 
         {test: `
-(setq f (open "f2.txt" "w"))
+(setq f (open "rwl2.txt" "w"))
 (write-line "Hello" f)
 (write-line " " f)
 (write-line "World" f)
 (close f)
-(setq f (open "f2.txt" "r"))
+(setq f (open "rwl2.txt" "r"))
 (setq l1 (read-line f))
 (setq l2 (read-line f))
 (setq l3 (read-line f))
@@ -58,29 +58,29 @@ res
         // new Error('read-line: too few arguments')},
 
         // Doesn't close f3.txt
-        {test: '(setq f (open "f3.txt" "r")) (read-line f f)', result:
+        {test: '(setq f (open "rwl3.txt" "r")) (read-line f f)', result:
          new Error('read-line: too many arguments')},
 
         {test: '(read-line 0)', result:
          new Error('read-line: `file-desc` expected File')},
 
         // Read from closed file
-        {test: '(setq f (open "f4.txt" "r")) (close f) (read-line f)', result:
-         new Error('read-line: bad file #<file "f4.txt" r:c>')},
+        {test: '(setq f (open "rwl4.txt" "r")) (close f) (read-line f)', result:
+         new Error('read-line: bad file #<file "rwl4.txt" r:c>')},
 
-        // Doesn't close f5.txt
-        {test: '(setq f (open "f5.txt" "w")) (read-line f)', result:
-         new Error('read-line: bad file #<file "f5.txt" w:o>')},
+        // Doesn't close file
+        {test: '(setq f (open "rwl5.txt" "w")) (read-line f)', result:
+         new Error('read-line: bad file #<file "rwl5.txt" w:o>')},
 
-        // Doesn't close f6.txt
-        {test: '(setq f (open "f6.txt" "a")) (read-line f)', result:
-         new Error('read-line: bad file #<file "f6.txt" a:o>')},
+        // Doesn't close file
+        {test: '(setq f (open "rwl6.txt" "a")) (read-line f)', result:
+         new Error('read-line: bad file #<file "rwl6.txt" a:o>')},
 
         {test: '(write-line)', result:
          new Error('write-line: too few arguments')},
 
-        // Doesn't close f7.txt
-        {test: '(setq f (open "f7.txt" "w")) (write-line "str" f f)', result:
+        // Doesn't close file
+        {test: '(setq f (open "rwl7.txt" "w")) (write-line "str" f f)', result:
          new Error('write-line: too many arguments')},
 
         {test: '(write-line 65 1)', result:
@@ -89,10 +89,12 @@ res
         {test: '(write-line "str" 1)', result:
          new Error('write-line: `file-desc` expected File')},
 
-        {test: '(setq f (open "f8.txt" "w")) (close f) (write-line "str" f)', result:
-         new Error('write-line: bad file #<file "f8.txt" w:c>')},
+         // Write to closed file
+        {test: '(setq f (open "rwl8.txt" "w")) (close f) (write-line "str" f)', result:
+         new Error('write-line: bad file #<file "rwl8.txt" w:c>')},
 
-        {test: '(setq f (open "f9.txt" "r")) (write-line "str" f)', result:
-         new Error('write-line: bad file #<file "f9.txt" r:o>')},
+        // Doesn't close file
+        {test: '(setq f (open "rwl9.txt" "r")) (write-line "str" f)', result:
+         new Error('write-line: bad file #<file "rwl9.txt" r:o>')},
     ]
 })
