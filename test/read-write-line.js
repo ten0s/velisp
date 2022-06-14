@@ -89,7 +89,7 @@ res
         {test: '(write-line "str" 1)', result:
          new Error('write-line: `file-desc` expected File')},
 
-         // Write to closed file
+        // Write to closed file
         {test: '(setq f (open "rwl8.txt" "w")) (close f) (write-line "str" f)', result:
          new Error('write-line: bad file #<file "rwl8.txt" w:c>')},
 
