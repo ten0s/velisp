@@ -9,7 +9,7 @@ import {ensureLspExt, inspect, isRecoverableInput, fixWinPath} from './VeUtil.js
 import VeLispContext from './VeLispContext.js'
 import VeLispContextIniter from './VeLispContextIniter.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
-import {Str} from './VeLispTypes.js'
+import {Bool, Str} from './VeLispTypes.js'
 
 main()
 
@@ -25,8 +25,8 @@ function main() {
 
             const context = new VeLispContext()
             VeLispContextIniter.initWithKernel(context)
-            maybeInjectLib(action, context)
             await maybeInjectDcl(action, program.dcl, context)
+            maybeInjectLib(action, context)
 
             if (file) {
                 //console.log(`Read from ${file}`);
@@ -93,6 +93,7 @@ async function maybeInjectDcl(action, withDcl, context) {
     if (action === evaluate && withDcl) {
         await VeLispContextIniter.initWithDcl(context)
     }
+    context.setSym('%VELISP_DCL%', new Bool(withDcl))
 }
 
 function readStream(stream, action, context) {
