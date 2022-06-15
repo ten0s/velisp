@@ -9,6 +9,9 @@ spawn node src/main.js --no-dcl test/getreal.lsp
 
 set timeout 5
 
+# Linux   EOL is \n
+# Windows EOL is \r\n
+
 expect "^Test #1\n"
 expect "^Press return: "
 send "\r"
@@ -22,7 +25,8 @@ expect "^Test #2\n"
 expect "^Enter real: "
 send "abcd\r"
 expect {
-    "^Requires numeric value\n" {}
+    "^Requires numeric value\n"   {}
+    "^Requires numeric value\r\n" {}
     timeout {exit 1}
     eof {exit 2}
 }

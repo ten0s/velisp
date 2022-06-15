@@ -9,30 +9,37 @@ spawn node src/main.js --no-dcl test/print.lsp
 
 set timeout 5
 
+# Linux   EOL is \n
+# Windows EOL is \r\n
+
 expect "^Test #1\n"
 expect {
-    "^\n\"\" " {}
+    "^\n\"\" "   {}
+    "^\r\n\"\" " {}
     timeout {exit 1}
     eof {exit 2}
 }
 
 expect "^Test #2\n"
 expect {
-    "^\n\"\" " {}
+    "^\n\"\" "   {}
+    "^\r\n\"\" " {}
     timeout {exit 1}
     eof {exit 2}
 }
 
 expect "^Test #3\n"
 expect {
-    "^\nnil " {}
+    "^\nnil "   {}
+    "^\r\nnil " {}
     timeout {exit 1}
     eof {exit 2}
 }
 
 expect "^Test #4\n"
 expect {
-    "^\n(1 \"2\" '3) " {}
+    "^\n(1 \"2\" '3) "   {}
+    "^\r\n(1 \"2\" '3) " {}
     timeout {exit 1}
     eof {exit 2}
 }

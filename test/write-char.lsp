@@ -4,4 +4,4 @@
 (write-char (ascii "l"))
 (write-char (ascii "l"))
 (write-char (ascii "o"))
-(write-char 10) ; TODO: (ascii "\n")
+(write-char (ascii "\n"))
