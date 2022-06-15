@@ -761,7 +761,7 @@ class File {
         this.mode = mode
         this.fd = fd
         this.state = FileState.OPEN
-        this.dropEOL = false
+        this.buf = undefined
     }
 
     // :: (string, string) -> File
@@ -830,15 +830,28 @@ class File {
         if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
             throw new Error(`read-char: bad file ${this}`)
         }
-        this.dropEOL = false
-        const buf = Buffer.alloc(1)
-        const len = fs.readSync(this.fd, buf, 0, 1)
-        if (!len) {
-            return new Bool(false)
+
+        let buf = undefined
+
+        if (this.buf) {
+            buf = this.buf
+            if (this.buf.length > 1) {
+                this.buf = this.buf.subarray(1)
+            } else {
+                this.buf = undefined
+            }
+        } else {
+            buf = Buffer.alloc(1)
+            const len = fs.readSync(this.fd, buf, 0, 1)
+            if (!len) {
+                return new Bool(false)
+            }
         }
+
         if (echo) {
             fs.writeSync(process.stdout.fd, buf, 0, 1)
         }
+
         return new Int(buf[0])
     }
 
@@ -858,31 +871,57 @@ class File {
         }
         const stops = Array.from(eol).map(c => c.charCodeAt())
         let str = ''
-        const buf = Buffer.alloc(1)
         for (;;) {
-            const len = fs.readSync(this.fd, buf, 0, 1)
-            //console.log(buf)
-            if (!len) {
-                if (!str) {
-                    return new Bool(false)
+            let buf = undefined
+
+            if (this.buf) {
+                buf = this.buf
+                this.buf = undefined
+            } else {
+                buf = Buffer.alloc(32)
+                const len = fs.readSync(this.fd, buf, 0, buf.length)
+                if (!len) {
+                    if (!str) {
+                        return new Bool(false)
+                    }
+                    break
                 }
+                buf = buf.subarray(0, len)
+            }
+
+            let found = false
+            let i = 0
+            for (; i < buf.length; i++) {
+                if (find(buf[i], stops)) {
+                    str += buf.toString('utf8', 0, i)
+
+                    // Drop all trailing stops
+                    let j = i+1
+                    for (; j < buf.length; j++) {
+                        if (!find(buf[j], stops)) {
+                            break
+                        }
+                    }
+                    if (j < buf.length) {
+                        this.buf = buf.subarray(j)
+                    }
+                    found = true
+                    break
+                }
+            }
+
+            if (found) {
+                if (echo) {
+                    fs.writeSync(process.stdout.fd, buf, 0, i)
+                }
+
                 break
             }
 
-            if (find(buf[0], stops)) {
-                if (this.dropEOL) {
-                    continue
-                } else {
-                    this.dropEOL = true
-                    break
-                }
-            } else {
-                str += buf.toString()
-                this.dropEOL = false
-            }
+            str += buf.toString('utf8')
 
             if (echo) {
-                fs.writeSync(process.stdout.fd, buf, 0, 1)
+                fs.writeSync(process.stdout.fd, buf, 0, buf.length)
             }
         }
         if (echo) {

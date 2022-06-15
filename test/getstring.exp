@@ -19,9 +19,9 @@ expect {
 
 expect "^Test #2\n"
 send " \r"
-# Reads both SP and CR
+# Breaks on SP and drops CR
 expect {
-    "^<||>\n<||>\n" {}
+    "^<||>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }

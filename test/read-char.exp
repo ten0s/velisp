@@ -12,7 +12,17 @@ set timeout 5
 expect "^Test #1\n"
 send "Hello\n\r"
 expect {
-    "^Hello\n" {}
+    "^<|Hello\n\r|>" {}
     timeout {exit 1}
     eof {exit 2}
 }
+
+expect "^Test #2\n"
+send "Hello\nWorld\r"
+expect {
+    "^<|Hello|><|World\r|>" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+exit 0

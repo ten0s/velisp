@@ -3,7 +3,6 @@
 
 (princ "Test #2\n")
 (princ (strcat "<|" (getstring) "|>\n"))
-(princ (strcat "<|" (getstring) "|>\n"))
 
 (princ "Test #3\n")
 (princ (strcat "<|" (getstring) "|>\n"))

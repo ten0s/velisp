@@ -9,6 +9,7 @@ spawn node src/main.js --no-dcl test/read-line.lsp
 
 set timeout 5
 
+expect "^Test #1\n"
 send "Line 1\r"
 expect {
     "^<|Line 1|>\n" {}
@@ -24,6 +25,31 @@ expect {
 }
 expect {
     "^<|Line 3|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #2\n"
+# Default read buffer length is 32
+# There should be 2 readings concatenated:
+# 1. abcdefghijlkmnopqrstuvwxyz012345
+# 2. 6789\n
+send "abcdefghijlkmnopqrstuvwxyz0123456789\r"
+expect {
+    "^<|abcdefghijlkmnopqrstuvwxyz0123456789|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #3\n"
+# Default read buffer length is 32
+# There should be 2 readings splited:
+# 1. abcdefghijlkmnopqrstuvwxyz\n01234
+# 2. 56789\n
+# NB: 01234 should be cached from the first reading
+send "abcdefghijlkmnopqrstuvwxyz\n0123456789\n\r"
+expect {
+    "^<|abcdefghijlkmnopqrstuvwxyz|>\n<|0123456789|>\n" {}
     timeout {exit 1}
     eof {exit 2}
 }
