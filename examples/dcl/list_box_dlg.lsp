@@ -1,4 +1,4 @@
-(set_tile "listbox1" "") ; TODO: doesn't work for single
+(set_tile "listbox1" "") ; TODO: unselect doesn't work for single select
 (set_tile "listbox1-value" (get_tile "listbox1"))
 
 (set_tile "listbox2-value" (get_tile "listbox2"))

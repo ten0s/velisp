@@ -14,7 +14,7 @@ list_box_dlg : dialog {
     key = "listbox1";
     list = "North\nSouth\nEast\nWest";
     action = "(set_tile \"listbox1-value\" $value)";
-    value = ""; // TODO: doesn't work for single
+    value = ""; // TODO: Unselect doesn't work for single select
   }
   spacer_1;
 

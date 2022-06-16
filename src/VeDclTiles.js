@@ -1711,13 +1711,14 @@ class ListBox extends Tile {
 
     gtkSetTile(gtkWidget, value) {
         const selection = gtkWidget.getSelection()
-        // TODO: support unselect for single
+        // TODO: Unselect doesn't work for single select
         selection.unselectAll()
         value.split(' ')
             .map(v => Number.parseInt(v))
             .filter(Number.isInteger)
             .forEach(index => {
-                const path = new Gtk.TreePath.newFromIndices([index])
+                const path = new Gtk.TreePath.new()
+                path.appendIndex(index)
                 selection.selectPath(path)
             })
     }
