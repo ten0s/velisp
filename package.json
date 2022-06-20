@@ -12,7 +12,7 @@
     "dependencies": {
         "antlr4": "4.10.1",
         "commander": "6.2.1",
-        "node-gtk": "0.10.0",
+        "node-gtk": "github:ten0s/node-gtk#windows-build",
         "temp": "0.9.4"
     },
     "devDependencies": {
