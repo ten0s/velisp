@@ -37,7 +37,7 @@ qunit:
 	npx qunit
 
 vl-unit:
-	node --no-dcl src/main.js lib/test.lsp
+	node src/main.js --no-dcl lib/test.lsp
 
 expect-test:
 	test/expect-test.sh
