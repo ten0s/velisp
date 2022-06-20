@@ -258,7 +258,9 @@
   (set_tile "error" (strcat "Hint: " message)))
 
 (defun start_game ( / seed)
-  (setq seed (srand (getvar "MILLISECS")))
+  (setq seed (getenv "RAND_SEED"))
+  (if seed (setq seed (atoi seed))
+    (setq seed (srand (getvar "MILLISECS"))))
   (println (list "Rand seed: " seed))
 
   (reset_states)
