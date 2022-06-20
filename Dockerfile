@@ -52,7 +52,11 @@ COPY rollup.config.js      velisp/
 RUN echo "Building VeLisp..."
 
 WORKDIR velisp
-RUN make clean-install && \
-    make prePkg        && \
-    make prod-install  && \
+RUN make clean-install       && \
+    cd node_modules/node-gtk && \
+    npm run configure        && \
+    npm run build:full       && \
+    cd ../..                 && \
+    make prePkg              && \
+    make prod-install        && \
     make pkgLinux
