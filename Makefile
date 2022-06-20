@@ -21,6 +21,10 @@ prod-install:
 apply-patches:
 	patches/apply-patches.sh
 
+rebuild-node-gtk:
+	$(MAKE) apply-patches
+	./rebuild-node-gtk.sh
+
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
 	antlr4 -Dlanguage=JavaScript -lib grammar -no-visitor -listener grammar/VeDcl.g4
