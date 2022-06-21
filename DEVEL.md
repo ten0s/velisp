@@ -1,18 +1,40 @@
 ## Development
 
-### Build in Docker
+### Build Linux package in Docker
 
-In order to build **VeLisp** you need to have
+In order to build **VeLisp** Linux package you need to have
 [Docker](https://docs.docker.com/installation/#installation) with [non-root access](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
 installed.
 
 ```
-$ ./build-in-docker.sh
+$ ./build-linux-package.sh
 ...
 Build Done
 ```
 
-### Build on host
+### Build Windows package in Vagrant
+
+In order to build **VeLisp** Windows package you need to have
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
+[Vagrant](https://www.vagrantup.com/downloads)
+installed.
+
+Download Windows 10 Vagrant box from https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
+
+```
+$ unzip MSEdge.Win10.Vagrant.zip
+$ vagrant box add win10 'MSEdge - Win10.box'
+$ vagrant up
+$ vagrant halt
+```
+
+```
+$ ./build-windows-package.sh
+...
+Build Done
+```
+
+### Build on host (Linux only)
 
 #### Build deps
 

@@ -10,7 +10,7 @@ install:
 	npm install
 	$(MAKE) apply-patches
 
-clean-install:
+dev-install:
 	npm clean-install
 	$(MAKE) apply-patches
 
@@ -23,7 +23,21 @@ apply-patches:
 
 rebuild-node-gtk:
 	$(MAKE) apply-patches
-	./rebuild-node-gtk.sh
+	(cd node_modules/node-gtk; npx node-pre-gyp configure build --debug)
+
+linuxPackage:
+	$(MAKE) dev-install
+	$(MAKE) prePkg
+	$(MAKE) prod-install
+	$(MAKE) rebuild-node-gtk
+	$(MAKE) pkgLinux
+
+windowsPackage:
+	$(MAKE) dev-install
+	$(MAKE) prePkg
+	$(MAKE) prod-install
+	$(MAKE) rebuild-node-gtk
+	$(MAKE) pkgWindows
 
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4

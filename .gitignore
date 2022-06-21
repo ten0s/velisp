@@ -1,3 +1,4 @@
+.vagrant/
 install/
 node_modules/
 pkg/

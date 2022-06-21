@@ -48,13 +48,8 @@ COPY package.json          velisp/
 COPY package-lock.json     velisp/
 COPY package.json.template velisp/
 COPY rollup.config.js      velisp/
-COPY rebuild-node-gtk.sh   velisp/
 
 RUN echo "Building VeLisp..."
 
 WORKDIR velisp
-RUN make clean-install       && \
-    make prePkg              && \
-    make prod-install        && \
-    make rebuild-node-gtk    && \
-    make pkgLinux
+RUN make linuxPackage
