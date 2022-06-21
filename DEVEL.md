@@ -19,14 +19,25 @@ In order to build **VeLisp** Windows package you need to have
 [Vagrant](https://www.vagrantup.com/downloads)
 installed.
 
+#### Build Windows build deps Vagrant box
+
 Download Windows 10 Vagrant box from https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
 
 ```
 $ unzip MSEdge.Win10.Vagrant.zip
 $ vagrant box add win10 'MSEdge - Win10.box'
-$ vagrant up
-$ vagrant halt
 ```
+
+```
+$ export VAGRANT_VAGRANTFILE=Vagrantfile.win10.deps
+$ vagrant up --provision
+$ vagrant package --output velisp-win10-build-deps.box
+$ vagrant box add -f velisp-win10-build-deps ./velisp-win10-build-deps.box
+$ vagrant destroy -f
+$ rm -rf .vagrant/ *.box
+```
+
+#### Build Windows package
 
 ```
 $ ./build-windows-package.sh

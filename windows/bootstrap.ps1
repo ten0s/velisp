@@ -23,5 +23,6 @@ C:\\msys64\\msys2_shell.cmd -defterm -no-start -mingw64 -c "pacman --noconfirm -
 [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH', 'User') + ';C:\\msys64\\mingw64\\bin', 'User')
 
 # Make Mingw64 SSH default shell https://www.msys2.org/wiki/Setting-up-SSHd/
-'@set HOME=\r\n@C:\\msys64\\msys2_shell.cmd -defterm -full-path -no-start -mingw64' | Out-File -FilePath C:\\msys64\\sshd_default_shell.cmd -Encoding ASCII
+'@set HOME=' | Out-File -FilePath C:\\msys64\\sshd_default_shell.cmd -Encoding ASCII
+'@C:\\msys64\\msys2_shell.cmd -defterm -full-path -no-start -mingw64' | Out-File -FilePath C:\\msys64\\sshd_default_shell.cmd -Encoding ASCII -Append
 New-ItemProperty -Path "HKLM:\\SOFTWARE\\OpenSSH" -Name DefaultShell -Value 'C:\\msys64\\sshd_default_shell.cmd' -PropertyType String -Force

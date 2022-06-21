@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export VAGRANT_VAGRANTFILE=Vagrantfile.win10.build
+
 vagrant up --provision
 if [[ $? -ne 0 ]]; then
     echo "Build Failed"

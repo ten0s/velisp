@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "win10"
+  config.vm.box = "velisp-win10-build-deps"
 
   config.vm.guest = :windows
   config.vm.communicator = "winrm"
@@ -26,11 +26,6 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
     vb.memory = 4096
   end
-
-  config.vm.provision "shell",
-    binary: true,
-    privileged: true,
-    path: "./windows/bootstrap.ps1"
 
   config.vm.provision "file", source: "./examples",              destination: "C:\\msys64\\home\\IEUser\\velisp\\examples"
   config.vm.provision "file", source: "./grammar",               destination: "C:\\msys64\\home\\IEUser\\velisp\\grammar"
