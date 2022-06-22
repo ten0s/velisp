@@ -8,47 +8,47 @@ all: install
 
 install:
 	npm install
-	$(MAKE) apply-patches
+	$(MAKE) applyPatches
 
-dev-install:
+installDev:
 	npm clean-install
-	$(MAKE) apply-patches
+	$(MAKE) applyPatches
 
-prod-install:
+installProd:
 	npm clean-install --omit=dev
-	$(MAKE) apply-patches
+	$(MAKE) applyPatches
 
-apply-patches:
+applyPatches:
 	patches/apply-patches.sh
 
-rebuild-node-gtk:
-	$(MAKE) apply-patches
+rebuildNodeGtk:
+	$(MAKE) applyPatches
 	(cd node_modules/node-gtk; npx node-pre-gyp configure build --debug)
 
 linuxPackage:
-	$(MAKE) dev-install
+	$(MAKE) installDev
 	$(MAKE) prePkg
-	$(MAKE) prod-install
-	$(MAKE) rebuild-node-gtk
+	$(MAKE) installProd
+	$(MAKE) rebuildNodeGtk
 	$(MAKE) pkgLinux
 	$(MAKE) tarLinux
 
 windowsPackage:
-	$(MAKE) dev-install
+	$(MAKE) installDev
 	$(MAKE) prePkg
-	$(MAKE) prod-install
-	$(MAKE) rebuild-node-gtk
+	$(MAKE) installProd
+	$(MAKE) rebuildNodeGtk
 	$(MAKE) pkgWindows
 
 macosPackage:
-	$(MAKE) dev-install
+	$(MAKE) installDev
 	$(MAKE) prePkg
-	$(MAKE) prod-install
-	$(MAKE) rebuild-node-gtk
+	$(MAKE) installProd
+	$(MAKE) rebuildNodeGtk
 	$(MAKE) pkgMacos
 	$(MAKE) tarMacos
 
-compile:
+grammar:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
 	antlr4 -Dlanguage=JavaScript -lib grammar -no-visitor -listener grammar/VeDcl.g4
 
@@ -70,7 +70,7 @@ expect-test:
 	test/expect-test.sh
 
 lint:
-	npx eslint {src,test}/{*,*/*}.js
+	npx eslint src/{*,*/*}.js test/*.js
 
 check: lint test
 

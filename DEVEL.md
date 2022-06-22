@@ -87,3 +87,9 @@ $ make
 ```
 $ make test
 ```
+
+#### Re-build grammars
+
+```
+$ make grammar
+```
