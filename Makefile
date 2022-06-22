@@ -108,17 +108,17 @@ pkgMacos:
 	npx pkg -c pkg.json -t ${NODE}-macos -o velisp pkg/src/main.js
 
 tarLinux:
-	mkdir -p velisp-${VERSION}-linux-x64/
-	cp velisp velisp-${VERSION}-linux-x64/
-	cp -r lib/ velisp-${VERSION}-linux-x64/
+	mkdir -p        velisp-${VERSION}-linux-x64/
+	cp velisp       velisp-${VERSION}-linux-x64/
+	cp -r lib/      velisp-${VERSION}-linux-x64/
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
 
 tarMacos:
-	mkdir -p velisp-${VERSION}-macos-x64/
-	cp velisp velisp-${VERSION}-macos-x64/
-	cp -r lib/ velisp-${VERSION}-macos-x64/
+	mkdir -p        velisp-${VERSION}-macos-x64/
+	cp velisp       velisp-${VERSION}-macos-x64/
+	cp -r lib/      velisp-${VERSION}-macos-x64/
 	cp -r examples/ velisp-${VERSION}-macos-x64/
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/
 
