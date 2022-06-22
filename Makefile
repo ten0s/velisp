@@ -95,6 +95,7 @@ readme:
 
 prePkg:
 	mkdir -p pkg/src/
+	rm -rf pkg/src/*
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" package.json.template > pkg/package.json
 	npx rollup -c
 
@@ -109,6 +110,7 @@ pkgMacos:
 	npx pkg -c pkg.json -t ${NODE}-macos -o velisp pkg/src/main.js
 
 tarLinux:
+	rm -rf          velisp-${VERSION}-linux-x64/
 	mkdir -p        velisp-${VERSION}-linux-x64/
 	cp velisp       velisp-${VERSION}-linux-x64/
 	cp -r lib/      velisp-${VERSION}-linux-x64/
@@ -116,6 +118,7 @@ tarLinux:
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
 zipWindows:
+	rm -rf          velisp-${VERSION}-win-x64/
 	mkdir -p        velisp-${VERSION}-win-x64/
 	cp velisp.exe   velisp-${VERSION}-win-x64/
 	cp -r lib/      velisp-${VERSION}-win-x64/
@@ -123,6 +126,7 @@ zipWindows:
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 tarMacos:
+	rm -rf          velisp-${VERSION}-macos-x64/
 	mkdir -p        velisp-${VERSION}-macos-x64/
 	cp velisp       velisp-${VERSION}-macos-x64/
 	cp -r lib/      velisp-${VERSION}-macos-x64/
