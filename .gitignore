@@ -2,4 +2,4 @@
 install/
 node_modules/
 pkg/
-velisp-*
+velisp*

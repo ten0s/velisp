@@ -39,6 +39,7 @@ WORKDIR /home/$USER
 RUN echo "Copying source code..."
 
 RUN mkdir -p velisp
+COPY examples/             velisp/examples/
 COPY grammar/              velisp/grammar/
 COPY lib/                  velisp/lib/
 COPY src/                  velisp/src/
@@ -47,6 +48,7 @@ COPY Makefile              velisp/
 COPY package.json          velisp/
 COPY package-lock.json     velisp/
 COPY package.json.template velisp/
+COPY pkg.json              velisp/
 COPY rollup.config.js      velisp/
 
 RUN echo "Building VeLisp..."

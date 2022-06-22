@@ -22,13 +22,5 @@
         "pkg": "5.7.0",
         "qunit": "2.19.1",
         "rollup": "2.74.1"
-    },
-    "pkg": {
-        "assets": [
-            "pkg/package.json",
-            "pkg/lib/**/*"
-        ],
-        "options": [],
-        "scripts": []
     }
 }

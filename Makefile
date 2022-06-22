@@ -31,6 +31,7 @@ linuxPackage:
 	$(MAKE) prod-install
 	$(MAKE) rebuild-node-gtk
 	$(MAKE) pkgLinux
+	$(MAKE) tarLinux
 
 windowsPackage:
 	$(MAKE) dev-install
@@ -85,19 +86,31 @@ readme:
 
 prePkg:
 	mkdir -p pkg/src/
-	cp -r lib/ pkg/
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" package.json.template > pkg/package.json
 	npx rollup -c
 
 pkgLinux:
 	# make prePkg MUST be run first
-	npx pkg -c package.json -t ${NODE}-linux-x64 -o velisp-${VERSION}-linux-x64 pkg/src/main.js
+	npx pkg -c pkg.json -t ${NODE}-linux-x64 -o velisp pkg/src/main.js
 
 pkgWindows:
-	npx pkg -c package.json -t ${NODE}-win-x64 -o velisp-${VERSION}-win-x64 pkg/src/main.js
+	npx pkg -c pkg.json -t ${NODE}-win-x64 -o velisp pkg/src/main.js
 
 pkgMacOS:
-	npx pkg -c package.json -t ${NODE}-macos -o velisp-${VERSION}-macos-x64 pkg/src/main.js
+	npx pkg -c pkg.json -t ${NODE}-macos -o velisp pkg/src/main.js
+
+tarLinux:
+	mkdir -p velisp-${VERSION}-linux-x64/
+	cp velisp velisp-${VERSION}-linux-x64/
+	cp -r lib/ velisp-${VERSION}-linux-x64/
+	cp -r examples/ velisp-${VERSION}-linux-x64/
+	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
+
+#zipWindows:
+#	velisp-${VERSION}-win-x64
+
+#tarMacOS:
+#	velisp-${VERSION}-macos-x64
 
 cleanPkg:
 	rm -rf pkg/

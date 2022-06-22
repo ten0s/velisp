@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-import __rootdir from '../VeRootDir.js'
 import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
 import VeStack from '../VeStack.js'
 import VeDclContext from '../VeDclContext.js'
@@ -79,7 +78,7 @@ export const initContext = (context) => {
         const context = new VeDclContext()
 
         // Inject lib/dcl/{base,acad}.dcl
-        let rootdir = fixWinPath(__rootdir)
+        let rootdir = process.env['VELISP_ROOT']
         VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context)
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context)
 

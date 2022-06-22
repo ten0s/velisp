@@ -1,0 +1,9 @@
+{
+    "pkg": {
+        "assets": [
+            "pkg/package.json"
+        ],
+        "options": [],
+        "scripts": []
+    }
+}
