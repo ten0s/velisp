@@ -22,11 +22,14 @@ installed.
 #### Build Windows build deps Vagrant box
 
 Download Windows 10 Vagrant box from https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
+and import it.
 
 ```
 $ unzip MSEdge.Win10.Vagrant.zip
 $ vagrant box add win10 'MSEdge - Win10.box'
 ```
+
+Build Windows build deps box
 
 ```
 $ export VAGRANT_VAGRANTFILE=Vagrantfile.win10.deps
