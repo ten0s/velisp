@@ -4,6 +4,7 @@ import path from 'path'
 import repl from 'repl'
 import {Command} from 'commander'
 
+import __rootdir from './VeRootDir.js'
 import VeSysInfo from './VeSysInfo.js'
 import {ensureLspExt, inspect, isRecoverableInput, fixWinPath} from './VeUtil.js'
 import VeLispContext from './VeLispContext.js'
@@ -14,6 +15,7 @@ import {Bool, Str} from './VeLispTypes.js'
 main()
 
 function main() {
+    setRootDirEnvVar()
     const [init, ] = preProcessArgv()
     const program = new Command()
     program.version(VeSysInfo.version)
@@ -47,6 +49,15 @@ function main() {
             }
         })
         .parse(init)
+}
+
+function setRootDirEnvVar() {
+    let rootdir = fixWinPath(__rootdir)
+    if (rootdir.includes('snapshot')) {
+        // https://github.com/vercel/pkg#snapshot-filesystem
+        rootdir = fixWinPath(path.dirname(process.argv[0]))
+    }
+    process.env['VELISP_ROOT'] = rootdir
 }
 
 function preProcessArgv() {
