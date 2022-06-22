@@ -1,6 +1,0 @@
-(princ (load "not-found.lsp" "error-handled-1"))
-(princ "\n")
-(princ (load "not-found.lsp" (defun onfail () 'error-handled-2)))
-(princ "\n")
-(load "not-found.lsp")
-(princ "\n")

@@ -1,1 +1,0 @@
-(load "load-load.lsp")
