@@ -6,4 +6,4 @@ export MINGW_WINDOWS_PATH=$(curl -s https://raw.githubusercontent.com/ten0s/node
 
 make windowsPackage
 
-cp velisp-*-*-*.exe /c/vagrant/
+cp velisp-*-*-*.zip /c/vagrant/

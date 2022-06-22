@@ -39,6 +39,7 @@ windowsPackage:
 	$(MAKE) installProd
 	$(MAKE) rebuildNodeGtk
 	$(MAKE) pkgWindows
+	$(MAKE) zipWindows
 
 macosPackage:
 	$(MAKE) installDev
@@ -114,6 +115,12 @@ tarLinux:
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
+zipWindows:
+	mkdir -p        velisp-${VERSION}-win-x64/
+	cp velisp.exe   velisp-${VERSION}-win-x64/
+	cp -r lib/      velisp-${VERSION}-win-x64/
+	cp -r examples/ velisp-${VERSION}-win-x64/
+	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 tarMacos:
 	mkdir -p        velisp-${VERSION}-macos-x64/

@@ -19,7 +19,7 @@ npm config set msvs_version 2017
 
 # Install MSYS2
 choco install -y msys2 --params "/InstallDir:C:\\msys64"
-C:\\msys64\\msys2_shell.cmd -defterm -no-start -mingw64 -c "pacman --noconfirm -S base-devel expect git mingw-w64-x86_64-jq mingw-w64-x86_64-gtk3 mingw-w64-x86_64-gobject-introspection mingw-w64-x86_64-cairo"
+C:\\msys64\\msys2_shell.cmd -defterm -no-start -mingw64 -c "pacman --noconfirm -S base-devel expect git mingw-w64-x86_64-jq mingw-w64-x86_64-gtk3 mingw-w64-x86_64-gobject-introspection mingw-w64-x86_64-cairo zip"
 [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH', 'User') + ';C:\\msys64\\mingw64\\bin', 'User')
 
 # Make Mingw64 SSH default shell https://www.msys2.org/wiki/Setting-up-SSHd/
