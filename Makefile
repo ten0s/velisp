@@ -40,13 +40,13 @@ windowsPackage:
 	$(MAKE) rebuild-node-gtk
 	$(MAKE) pkgWindows
 
-macOSPackage:
+macosPackage:
 	$(MAKE) dev-install
 	$(MAKE) prePkg
 	$(MAKE) prod-install
 	$(MAKE) rebuild-node-gtk
-	$(MAKE) pkgMacOS
-	$(MAKE) tarMacOS
+	$(MAKE) pkgMacos
+	$(MAKE) tarMacos
 
 compile:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
@@ -104,7 +104,7 @@ pkgLinux:
 pkgWindows:
 	npx pkg -c pkg.json -t ${NODE}-win-x64 -o velisp pkg/src/main.js
 
-pkgMacOS:
+pkgMacos:
 	npx pkg -c pkg.json -t ${NODE}-macos -o velisp pkg/src/main.js
 
 tarLinux:
@@ -114,9 +114,8 @@ tarLinux:
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
-#zipWindows:
-#	velisp-${VERSION}-win-x64
-tarMacOS:
+
+tarMacos:
 	mkdir -p velisp-${VERSION}-macos-x64/
 	cp velisp velisp-${VERSION}-macos-x64/
 	cp -r lib/ velisp-${VERSION}-macos-x64/
