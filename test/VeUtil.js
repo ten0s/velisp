@@ -7,6 +7,7 @@ import {
     ensureLspExt,
     ensureDclExt,
     fixWinPath,
+    makeWinPath,
 } from '../src/VeUtil.js'
 
 QUnit.test('VeUtil find', assert => {
@@ -99,4 +100,13 @@ QUnit.test('VeUtil fixWinPath', assert => {
     assert.equal(fixWinPath('path\\to'), 'path/to')
     assert.equal(fixWinPath('path\\to\\here'), 'path/to/here')
     assert.equal(fixWinPath('path\\to/here'), 'path/to/here')
+})
+
+QUnit.test('VeUtil makeWinPath', assert => {
+    assert.equal(makeWinPath(''), '')
+    assert.equal(makeWinPath('path/to'), 'path\\to')
+    assert.equal(makeWinPath('path/to/here'), 'path\\to\\here')
+    assert.equal(makeWinPath('path\\to'), 'path\\to')
+    assert.equal(makeWinPath('path\\to\\here'), 'path\\to\\here')
+    assert.equal(makeWinPath('path\\to/here'), 'path\\to\\here')
 })

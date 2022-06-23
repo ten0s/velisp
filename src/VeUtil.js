@@ -163,6 +163,11 @@ const fixWinPath = (path) => {
     return path.replaceAll('\\', '/')
 }
 
+// :: (string) -> string
+const makeWinPath = (path) => {
+    return path.replaceAll('/', '\\')
+}
+
 export {
     find,
     escape,
@@ -172,4 +177,5 @@ export {
     ensureLspExt,
     ensureDclExt,
     fixWinPath,
+    makeWinPath,
 }

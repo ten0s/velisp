@@ -123,6 +123,7 @@ zipWindows:
 	cp velisp.exe   velisp-${VERSION}-win-x64/
 	cp -r lib/      velisp-${VERSION}-win-x64/
 	cp -r examples/ velisp-${VERSION}-win-x64/
+	./copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 tarMacos:

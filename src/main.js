@@ -6,7 +6,13 @@ import {Command} from 'commander'
 
 import __rootdir from './VeRootDir.js'
 import VeSysInfo from './VeSysInfo.js'
-import {ensureLspExt, inspect, isRecoverableInput, fixWinPath} from './VeUtil.js'
+import {
+    ensureLspExt,
+    inspect,
+    isRecoverableInput,
+    fixWinPath,
+    makeWinPath,
+} from './VeUtil.js'
 import VeLispContext from './VeLispContext.js'
 import VeLispContextIniter from './VeLispContextIniter.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
@@ -15,8 +21,8 @@ import {Bool, Str} from './VeLispTypes.js'
 main()
 
 function main() {
-    setRootDirEnvVar()
-    const [init, ] = preProcessArgv()
+    adjustEnvVars()
+    const [init, rest] = preProcessArgv()
     const program = new Command()
     program.version(VeSysInfo.version)
         .option('-r, --run <command>', 'eval | tree', 'eval')
@@ -51,6 +57,13 @@ function main() {
         .parse(init)
 }
 
+function adjustEnvVars() {
+    setRootDirEnvVar()
+    if (process.platform === 'win32') {
+        winAddMingw64ToPATH()
+    }
+}
+
 function setRootDirEnvVar() {
     let rootdir = fixWinPath(__rootdir)
     if (rootdir.includes('snapshot')) {
@@ -58,6 +71,13 @@ function setRootDirEnvVar() {
         rootdir = fixWinPath(path.dirname(process.argv[0]))
     }
     process.env['VELISP_ROOT'] = rootdir
+}
+
+function winAddMingw64ToPATH() {
+    const pathDirs = process.env['PATH']
+    const rootDir = process.env['VELISP_ROOT']
+    const mingwDir = makeWinPath(`${rootDir}/mingw64/bin`)
+    process.env['PATH'] = `${mingwDir};${pathDirs}`
 }
 
 function preProcessArgv() {
