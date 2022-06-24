@@ -2,6 +2,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import repl from 'repl'
+import {Readable} from 'stream'
 import {Command} from 'commander'
 
 import __rootdir from './VeRootDir.js'
@@ -23,8 +24,7 @@ main()
 function main() {
     adjustEnvVars()
     const [init, ] = preProcessArgv()
-    const program = new Command()
-    addCommandOptions(program)
+    const program = addCommandOptions(new Command())
     program.version(VeSysInfo.version)
         .arguments('[file]')
         .action(async (file) => {
@@ -36,7 +36,12 @@ function main() {
             await maybeInjectDcl(action, options.dcl, context)
             maybeInjectLib(action, context)
 
-            if (file) {
+            if (options.eval) {
+                //console.log(`Eval from ${options.eval}`);
+                const file = path.join(process.cwd(), '__EVAL__')
+                context.setSym('%VELISP_LSP_FILE%', new Str(file))
+                readStream(Readable.from(options.eval), action, context)
+            } else if (file) {
                 //console.log(`Read from ${file}`);
                 file = ensureLspExt(path.resolve(fixWinPath(file)))
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
@@ -59,8 +64,9 @@ function main() {
 
 function addCommandOptions(command) {
     const opts = [
-        {short: '', full: '--no-dcl', help: 'run without dcl', default: true},
-        {short: '', full: '--tree'  , help: 'see parse tree' , default: false},
+        {short: '-e', full: '--eval <expr>', help: 'evaluate script', default: ''},
+        {short: ''  , full: '--no-dcl'     , help: 'run without dcl', default: true},
+        {short: ''  , full: '--tree'       , help: 'see parse tree' , default: false},
     ]
 
     opts.forEach(opt => {
