@@ -75,13 +75,17 @@ lint:
 
 check: lint test
 
+rollPreMinor:
+	npm --no-git-tag-version version preminor
+	@echo 'Now run: $$ make roll'
+
 rollMinor:
 	npm --no-git-tag-version version minor
-	$(MAKE) roll
+	@echo 'Now run: $$ make roll'
 
 rollPatch:
 	npm --no-git-tag-version version patch
-	$(MAKE) roll
+	@echo 'Now run: $$ make roll'
 
 roll:
 	$(MAKE) readme
