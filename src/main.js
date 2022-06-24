@@ -22,18 +22,18 @@ main()
 
 function main() {
     adjustEnvVars()
-    const [init, rest] = preProcessArgv()
+    const [init, ] = preProcessArgv()
     const program = new Command()
+    addCommandOptions(program)
     program.version(VeSysInfo.version)
-        .option('-r, --run <command>', 'eval | tree', 'eval')
-        .option('--no-dcl', 'run without DCL')
         .arguments('[file]')
         .action(async (file) => {
-            const action = runAction(program.run)
+            const options = program.opts()
+            const action = runAction(options)
 
             const context = new VeLispContext()
             VeLispContextIniter.initWithKernel(context)
-            await maybeInjectDcl(action, program.dcl, context)
+            await maybeInjectDcl(action, options.dcl, context)
             maybeInjectLib(action, context)
 
             if (file) {
@@ -55,6 +55,20 @@ function main() {
             }
         })
         .parse(init)
+}
+
+function addCommandOptions(command) {
+    const opts = [
+        {short: '', full: '--no-dcl', help: 'run without dcl', default: true},
+        {short: '', full: '--tree'  , help: 'see parse tree' , default: false},
+    ]
+
+    opts.forEach(opt => {
+        const option = opt.short ? `${opt.short}, ${opt.full}` : opt.full
+        command.option(option, opt.help, opt.default)
+    })
+
+    return command
 }
 
 function adjustEnvVars() {
@@ -94,23 +108,14 @@ function preProcessArgv() {
     return [init, rest]
 }
 
-function runAction(what, isRepl) {
-    switch (what.toLowerCase()) {
-    case 'eval':
-        return evaluate
-    case 'tree':
-        // Repl prints itself
-        if (isRepl) {
-            return tree
-        }
-        // Let's print for others
+function runAction(options) {
+    if (options.tree) {
         return (input, context) => {
             console.log(tree(input, context))
         }
-    default:
-        console.error(`Unknown action: ${what}`)
-        process.exit(1)
     }
+
+    return evaluate
 }
 
 function maybeInjectLib(action, context) {

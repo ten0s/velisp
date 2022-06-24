@@ -1,4 +1,3 @@
-* Update commander
 * Handle at least Backspace in read-line, getstring, getint, getreal
 * How to run VeLisp in the browser?
 * How to run VeLisp behind CGI?
