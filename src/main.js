@@ -6,6 +6,7 @@ import {Readable} from 'stream'
 import {Command} from 'commander'
 
 import __rootdir from './VeRootDir.js'
+import VeArgv from './VeArgv.js'
 import VeSysInfo from './VeSysInfo.js'
 import {
     ensureLspExt,
@@ -23,7 +24,7 @@ main()
 
 function main() {
     adjustEnvVars()
-    const [init, ] = preProcessArgv()
+    const initArgv = VeArgv.initArgv(process.argv)
     const program = addCommandOptions(new Command())
     program.version(VeSysInfo.version)
         .arguments('[file]')
@@ -59,7 +60,7 @@ function main() {
                 readStream(process.stdin, action, context)
             }
         })
-        .parse(init)
+        .parse(initArgv)
 }
 
 function adjustEnvVars() {
@@ -85,30 +86,9 @@ function winAddMingw64ToPATH() {
     process.env['PATH'] = `${mingwDir};${pathDirs}`
 }
 
-function preProcessArgv() {
-    const argv = process.argv
-    let init = [...argv]
-    let rest = []
-    const i = argv.indexOf('-')
-    const j = argv.indexOf('--')
-    const k = i !== -1 ? i : j
-    if (k !== -1) {
-        init = argv.slice(0, k)
-        rest = argv.slice(k)
-    }
-    return [init, rest]
-}
-
 function addCommandOptions(command) {
-    const opts = [
-        {short: '-e', full: '--eval <expr>', help: 'evaluate script', default: ''},
-        {short: ''  , full: '--no-dcl'     , help: 'run without dcl', default: true},
-        {short: ''  , full: '--tree'       , help: 'see parse tree' , default: false},
-    ]
-
-    opts.forEach(opt => {
-        const option = opt.short ? `${opt.short}, ${opt.full}` : opt.full
-        command.option(option, opt.help, opt.default)
+    VeArgv.options().forEach(o => {
+        command.option(o.option, o.help, o.default)
     })
 
     return command
