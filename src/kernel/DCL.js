@@ -6,7 +6,7 @@ import VeStack from '../VeStack.js'
 import VeDclContext from '../VeDclContext.js'
 import * as VeDclLoader from '../VeDclLoader.js'
 import {ListOperation} from '../VeDclTiles.js'
-import {ensureDclExt, fixWinPath} from '../VeUtil.js'
+import {ensureDclExt, makeUnixPath} from '../VeUtil.js'
 
 // global dclId index
 let _dclId = 0
@@ -64,7 +64,7 @@ export const initContext = (context) => {
         if (args.length > 1) {
             throw new Error('load_dialog: too many arguments')
         }
-        let dclFile = ensureDclExt(fixWinPath(
+        let dclFile = ensureDclExt(makeUnixPath(
             ensureType('load_dialog:', args[0], [Str]).value()))
         if (!path.isAbsolute(dclFile)) {
             if (!fs.existsSync(dclFile)) {

@@ -11,7 +11,7 @@ import {
     ensureLspExt,
     inspect,
     isRecoverableInput,
-    fixWinPath,
+    makeUnixPath,
     makeWinPath,
 } from './VeUtil.js'
 import VeLispContext from './VeLispContext.js'
@@ -43,7 +43,7 @@ function main() {
                 readStream(Readable.from(options.eval), action, context)
             } else if (file) {
                 //console.log(`Read from ${file}`);
-                file = ensureLspExt(path.resolve(fixWinPath(file)))
+                file = ensureLspExt(path.resolve(makeUnixPath(file)))
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
                 readStream(fs.createReadStream(file), action, context)
             } else if (process.stdin.isTTY) {
@@ -85,10 +85,10 @@ function adjustEnvVars() {
 }
 
 function setRootDirEnvVar() {
-    let rootdir = fixWinPath(__rootdir)
+    let rootdir = makeUnixPath(__rootdir)
     if (rootdir.includes('snapshot')) {
         // https://github.com/vercel/pkg#snapshot-filesystem
-        rootdir = fixWinPath(path.dirname(process.argv[0]))
+        rootdir = makeUnixPath(path.dirname(process.argv[0]))
     }
     process.env['VELISP_ROOT'] = rootdir
 }

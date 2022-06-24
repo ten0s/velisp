@@ -5,7 +5,7 @@ import {Str, Sym, Fun} from '../VeLispTypes.js'
 import * as VeLispEvaluator from '../VeLispEvaluator.js'
 import {fmtError} from '../VeLispError.js'
 import VeSysInfo from '../VeSysInfo.js'
-import {ensureLspExt, fixWinPath} from '../VeUtil.js'
+import {ensureLspExt, makeUnixPath} from '../VeUtil.js'
 
 export const initContext = (context) => {
     context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
@@ -19,7 +19,7 @@ export const initContext = (context) => {
         if (!(args[0] instanceof Str)) {
             throw new Error('load: `filename` expected Str')
         }
-        let filename = ensureLspExt(fixWinPath(args[0].value()))
+        let filename = ensureLspExt(makeUnixPath(args[0].value()))
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
                 const parent = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')

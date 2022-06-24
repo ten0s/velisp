@@ -6,7 +6,7 @@ import {
     isRecoverableInput,
     ensureLspExt,
     ensureDclExt,
-    fixWinPath,
+    makeUnixPath,
     makeWinPath,
 } from '../src/VeUtil.js'
 
@@ -93,13 +93,13 @@ QUnit.test('VeUtil ensureDclExt', assert => {
     assert.equal(ensureDclExt('file.DCL'), 'file.DCL')
 })
 
-QUnit.test('VeUtil fixWinPath', assert => {
-    assert.equal(fixWinPath(''), '')
-    assert.equal(fixWinPath('path/to'), 'path/to')
-    assert.equal(fixWinPath('path/to/here'), 'path/to/here')
-    assert.equal(fixWinPath('path\\to'), 'path/to')
-    assert.equal(fixWinPath('path\\to\\here'), 'path/to/here')
-    assert.equal(fixWinPath('path\\to/here'), 'path/to/here')
+QUnit.test('VeUtil makeUnixPath', assert => {
+    assert.equal(makeUnixPath(''), '')
+    assert.equal(makeUnixPath('path/to'), 'path/to')
+    assert.equal(makeUnixPath('path/to/here'), 'path/to/here')
+    assert.equal(makeUnixPath('path\\to'), 'path/to')
+    assert.equal(makeUnixPath('path\\to\\here'), 'path/to/here')
+    assert.equal(makeUnixPath('path\\to/here'), 'path/to/here')
 })
 
 QUnit.test('VeUtil makeWinPath', assert => {

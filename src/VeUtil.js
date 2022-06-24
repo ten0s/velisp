@@ -158,7 +158,7 @@ const ensureDclExt = (name) => {
 }
 
 // :: (string) -> string
-const fixWinPath = (path) => {
+const makeUnixPath = (path) => {
     // Win32 workaround
     return path.replaceAll('\\', '/')
 }
@@ -176,6 +176,6 @@ export {
     isRecoverableInput,
     ensureLspExt,
     ensureDclExt,
-    fixWinPath,
+    makeUnixPath,
     makeWinPath,
 }
