@@ -62,21 +62,6 @@ function main() {
         .parse(init)
 }
 
-function addCommandOptions(command) {
-    const opts = [
-        {short: '-e', full: '--eval <expr>', help: 'evaluate script', default: ''},
-        {short: ''  , full: '--no-dcl'     , help: 'run without dcl', default: true},
-        {short: ''  , full: '--tree'       , help: 'see parse tree' , default: false},
-    ]
-
-    opts.forEach(opt => {
-        const option = opt.short ? `${opt.short}, ${opt.full}` : opt.full
-        command.option(option, opt.help, opt.default)
-    })
-
-    return command
-}
-
 function adjustEnvVars() {
     setRootDirEnvVar()
     if (process.platform === 'win32') {
@@ -112,6 +97,21 @@ function preProcessArgv() {
         rest = argv.slice(k)
     }
     return [init, rest]
+}
+
+function addCommandOptions(command) {
+    const opts = [
+        {short: '-e', full: '--eval <expr>', help: 'evaluate script', default: ''},
+        {short: ''  , full: '--no-dcl'     , help: 'run without dcl', default: true},
+        {short: ''  , full: '--tree'       , help: 'see parse tree' , default: false},
+    ]
+
+    opts.forEach(opt => {
+        const option = opt.short ? `${opt.short}, ${opt.full}` : opt.full
+        command.option(option, opt.help, opt.default)
+    })
+
+    return command
 }
 
 function runAction(options) {
