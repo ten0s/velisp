@@ -98,6 +98,7 @@ readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
 
 prePkg:
+	$(MAKE) cleanPkg
 	mkdir -p pkg/src/
 	rm -rf pkg/src/*
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" package.json.template > pkg/package.json
@@ -143,7 +144,7 @@ tarMacos:
 
 cleanPkg:
 	rm -rf pkg/
-	rm -f velisp*
+	rm -rf velisp*
 
 compileJava:
 	antlr4 -lib grammar -no-visitor -no-listener grammar/VeLisp.g4
