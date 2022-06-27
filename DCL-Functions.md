@@ -46,4 +46,4 @@
 | (mode_tile key mode) | Sets the mode of a dialog box tile | |
 | (set_tile key value) | Sets the value of a dialog box tile | |
 
-DCL Functions from https://help.autodesk.com/ used under https://creativecommons.org/licenses/by-nc-sa/3.0/
+DCL Functions from https://help.autodesk.com/ are used in accordance with https://creativecommons.org/licenses/by-nc-sa/3.0/

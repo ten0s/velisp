@@ -50,6 +50,7 @@ COPY package-lock.json     velisp/
 COPY package.json.template velisp/
 COPY pkg.json              velisp/
 COPY rollup.config.js      velisp/
+COPY LICENSE               velisp/
 
 RUN echo "Building VeLisp..."
 

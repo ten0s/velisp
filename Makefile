@@ -1,4 +1,4 @@
-.PHONY: install test
+.PHONY: grammar install test
 
 BRANCH := ${shell git branch --no-color | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'}
 VERSION := ${shell jq -r .version package.json}
@@ -119,6 +119,7 @@ tarLinux:
 	cp velisp       velisp-${VERSION}-linux-x64/
 	cp -r lib/      velisp-${VERSION}-linux-x64/
 	cp -r examples/ velisp-${VERSION}-linux-x64/
+	cp LICENSE      velisp-${VERSION}-linux-x64/
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
 zipWindows:
@@ -127,6 +128,7 @@ zipWindows:
 	cp velisp.exe   velisp-${VERSION}-win-x64/
 	cp -r lib/      velisp-${VERSION}-win-x64/
 	cp -r examples/ velisp-${VERSION}-win-x64/
+	cp LICENSE      velisp-${VERSION}-win-x64/
 	./copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
@@ -136,6 +138,7 @@ tarMacos:
 	cp velisp       velisp-${VERSION}-macos-x64/
 	cp -r lib/      velisp-${VERSION}-macos-x64/
 	cp -r examples/ velisp-${VERSION}-macos-x64/
+	cp LICENSE      velisp-${VERSION}-macos-x64/
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/
 
 cleanPkg:

@@ -2,7 +2,7 @@
     "name": "VeLisp",
     "version": "{{version}}",
     "description": "AutoLISP / DCL compatible interpreter to run AutoCAD agnostic code",
-    "main": "src/bundle.js",
+    "main": "src/main.js",
     "author": "Dmitry Klionsky",
-    "license": ""
+    "license": "GPL-3.0-only"
 }

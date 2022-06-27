@@ -267,4 +267,4 @@
 | (getstring [cr] [msg]) | Pauses for user input of a string, and returns that string | |
 | (initget [bits] [string]) | Establishes keywords for use by the next user input function call | Expected in vTBD |
 
-AutoLISP Core Functions from https://help.autodesk.com/ used under https://creativecommons.org/licenses/by-nc-sa/3.0/
+AutoLISP Core Functions from https://help.autodesk.com/ are used in accordance with https://creativecommons.org/licenses/by-nc-sa/3.0/

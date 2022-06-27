@@ -46,5 +46,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./rollup.config.js",             destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./windows/build.sh",             destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./windows/copy-mingw64-deps.sh", destination: "C:\\msys64\\home\\IEUser\\velisp\\"
+  config.vm.provision "file", source: "./LICENSE",                      destination: "C:\\msys64\\home\\IEUser\\velisp\\"
 
 end

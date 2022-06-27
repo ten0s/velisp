@@ -107,11 +107,6 @@ $ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp-{{version}}-linu
 * [AutoLISP Functions](/AutoLISP-Functions.md)
 * [DCL Functions](DCL-Functions.md)
 
-## Versioning
-
-The version reflects subjective percentage of completeness.
-For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready.
-
 ## Known issues and limitations
 
 * Integers are signed numbers with values ranging from -9,007,199,254,740,991 (-2<sup>53</sup>+1) to +9,007,199,254,740,991 (+2<sup>53</sup>-1)
@@ -120,3 +115,27 @@ For example, the version 0.6.1 should be read as **VeLisp** is 0.61 (61%) ready.
 
 * [Development](/DEVEL.md)
 * [How To](/HOWTO.md)
+
+## Versioning
+
+The version reflects subjective percentage of completeness.
+For example, the version 0.7.x should be read as **VeLisp** is 0.7x (7x%) ready.
+
+## Contributing
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, shall be licensed as below, without any
+additional terms or conditions.
+
+## License
+
+The project is licensed under the GPL-3.0 license with the exception below.
+See [LICENSE](LICENSE) or
+https://opensource.org/licenses/GPL-3.0
+for full license information.
+
+The files in the [examples/](examples/) and [lib/](lib/) directories
+are licensed under the 0BSD license.
+See [LICENSE](examples/LICENSE) or [LICENSE](lib/LICENSE) or
+https://opensource.org/licenses/0BSD for full license
+information.
