@@ -75,8 +75,8 @@ lint:
 
 check: lint test
 
-rollPreMinor:
-	npm --no-git-tag-version version preminor
+rollPreRelease:
+	npm --no-git-tag-version version prerelease
 	@echo 'Now run: $$ make roll'
 
 rollMinor:
