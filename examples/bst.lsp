@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 ;;;;
 ;;;; Binary Search Tree Data Structure
 ;;;; BST = nil | (key val BST BST)
@@ -41,7 +43,7 @@
 (defun bst_is_empty (bst)
   (null bst))
 
-;;; Build BST from sorted by key list: 
+;;; Build BST from sorted by key list:
 ;;; (((k . v) | (k v ...))) -> BST
 (defun bst_from_list (lst / len mid c l r)
   (if (null lst)

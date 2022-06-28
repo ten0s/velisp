@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun split (delim str / delim-len do-split)
   ;; Split a string using a delimiter
   (setq delim-len (strlen delim))

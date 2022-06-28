@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun fib (n / iter)
   (defun iter (a b counter)
     (if (= counter 0)

@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (load "color.lsp")
 
 (defun with_image (key draw_fun)

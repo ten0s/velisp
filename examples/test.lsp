@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (setq dcl_file "test.dcl")
 (setq dlg_id "ok_dlg")
 

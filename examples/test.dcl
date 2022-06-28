@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 ok_dlg : dialog {
   label = "OK Dialog";
   : text {

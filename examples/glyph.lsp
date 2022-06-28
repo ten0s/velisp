@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun glyph_max (glyph fun1 fun2)
   (apply 'max
          (mapcar '(lambda (lst / x1 x2)

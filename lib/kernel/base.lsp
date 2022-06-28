@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun atom (item)
   (or (null item) (not (equal (type item) 'list))))
 

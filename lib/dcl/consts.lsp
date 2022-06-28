@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (setq TILE_MODE_ENABLE 0)
 (setq TILE_MODE_DISABLE 1)
 (setq TILE_MODE_FOCUS 2)

@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun alert (message / dlg_id dcl_id dcl_file file)
   (setq dlg_id "alert_dlg")
   (setq dcl_file (vl-filename-mktemp (strcat dlg_id "-") "" ".dcl"))

@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun vl-filename-base (filename)
   (cdr (assoc 'name (filename-parse filename))))
 

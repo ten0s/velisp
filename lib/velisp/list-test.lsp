@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (vlu-add-test
  (defun join-test ()
    (vlu-assert-equal "" (join "" '()))
@@ -83,7 +85,7 @@
    (vlu-assert-equal '() (take -1 '()))
    (vlu-assert-equal '() (take 0 '()))
    (vlu-assert-equal '() (take 1 '()))
-   
+
    (vlu-assert-equal '() (take -1 '(1 2 3)))
    (vlu-assert-equal '() (take 0 '(1 2 3)))
    (vlu-assert-equal '(1) (take 1 '(1 2 3)))

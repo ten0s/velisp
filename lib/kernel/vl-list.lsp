@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun vl-member-if (predicate lst)
   (if (null lst) nil
     (if (predicate (car lst)) lst

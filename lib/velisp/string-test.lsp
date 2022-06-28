@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (vlu-add-test
  (defun split-test ()
    (vlu-assert-equal '() (split "" ""))

@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (vlu-add-test
  (defun add-tests ()
    (vlu-assert-equal 3 (+ 1 2))

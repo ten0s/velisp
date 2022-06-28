@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 ;;;;
 ;;;; Pseudo-random number generator
 ;;;; https://en.wikipedia.org/wiki/Linear_congruential_generator

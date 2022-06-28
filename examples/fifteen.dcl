@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 cell_button : image_button {
   width = 6;
     height = 3;

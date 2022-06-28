@@ -4,5 +4,5 @@
     "description": "AutoLISP / DCL compatible interpreter to run AutoCAD agnostic code",
     "main": "src/main.js",
     "author": "Dmitry Klionsky",
-    "license": "GPL-3.0-only"
+    "license": "GPL-3.0-or-later"
 }

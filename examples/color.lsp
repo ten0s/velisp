@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (setq BLACK_COLOR       0)
 (setq RED_COLOR         1)
 (setq BLUE_COLOR        5)

@@ -17,6 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 import VeGlob from '../VeGlob.js'
 import VeRegex from '../VeRegex.js'
 import VeWildcard from '../VeWildcard.js'

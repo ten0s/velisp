@@ -17,6 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 import os from 'os'
 import {spawn} from 'child_process'
 import {Bool, Int, Real, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'

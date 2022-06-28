@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun vl-string->list (str)
   ; TODO: assert str is STR
   (if (zerop (strlen str)) nil

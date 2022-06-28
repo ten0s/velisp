@@ -17,6 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 const opts = [
     {short: '-e', full: '--eval'  , arg: '<expr>' , default: undefined, help: 'evaluate script'},
     {short: ''  , full: '--no-dcl', arg: undefined, default: true     , help: 'run without dcl'},

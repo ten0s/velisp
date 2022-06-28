@@ -129,13 +129,13 @@ additional terms or conditions.
 
 ## License
 
-The project is licensed under the GPL-3.0 license with the exception below.
+The project is licensed under the GNU General Public License v3.0 or later with the exception below.
 See [LICENSE](LICENSE) or
-https://opensource.org/licenses/GPL-3.0
+https://spdx.org/licenses/GPL-3.0-or-later.html
 for full license information.
 
 The files in the [examples/](examples/) and [lib/](lib/) directories
-are licensed under the 0BSD license.
+are licensed under the BSD Zero Clause License.
 See [LICENSE](examples/LICENSE) or [LICENSE](lib/LICENSE) or
-https://opensource.org/licenses/0BSD for full license
+https://spdx.org/licenses/0BSD.html for full license
 information.

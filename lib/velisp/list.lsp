@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (defun join (delim lst / acc)
   (if (= (length lst) 1) (setq acc lst)
     (progn

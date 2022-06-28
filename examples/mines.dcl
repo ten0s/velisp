@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 mine_button : image_button {
   width = 4;
   height = 2;

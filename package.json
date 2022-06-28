@@ -8,7 +8,7 @@
         "start": "node src/main.js"
     },
     "author": "Dmitry Klionsky",
-    "license": "GPL-3.0-only",
+    "license": "GPL-3.0-or-later",
     "dependencies": {
         "antlr4": "4.10.1",
         "commander": "9.3.0",

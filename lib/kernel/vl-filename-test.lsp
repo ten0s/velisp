@@ -1,3 +1,5 @@
+;;;; SPDX-License-Identifier: 0BSD
+
 (vlu-add-test
  (defun vl-filename-base-test ()
    (vlu-assert-equal "acad" (vl-filename-base "c:\\acadwin\\acad.exe"))

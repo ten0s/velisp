@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 calc_button : button {
   width = 9;
   height = 3;
