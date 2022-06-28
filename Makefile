@@ -71,7 +71,7 @@ expect-test:
 	test/expect-test.sh
 
 lint:
-	npx eslint src/{*,*/*}.js test/*.js
+	npx eslint src/{*,*/*}.js test/*.js util/*.js
 
 check: lint test
 
@@ -121,6 +121,7 @@ tarLinux:
 	cp -r lib/      velisp-${VERSION}-linux-x64/
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	cp LICENSE      velisp-${VERSION}-linux-x64/
+	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-linux-x64/NOTICE
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
 zipWindows:
@@ -131,6 +132,7 @@ zipWindows:
 	cp -r examples/ velisp-${VERSION}-win-x64/
 	cp LICENSE      velisp-${VERSION}-win-x64/
 	./copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
+	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-win-x64/NOTICE
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 tarMacos:
@@ -140,6 +142,7 @@ tarMacos:
 	cp -r lib/      velisp-${VERSION}-macos-x64/
 	cp -r examples/ velisp-${VERSION}-macos-x64/
 	cp LICENSE      velisp-${VERSION}-macos-x64/
+	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-macos-x64/NOTICE
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/
 
 cleanPkg:

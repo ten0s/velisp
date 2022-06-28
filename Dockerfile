@@ -44,6 +44,7 @@ COPY grammar/              velisp/grammar/
 COPY lib/                  velisp/lib/
 COPY src/                  velisp/src/
 COPY patches/              velisp/patches/
+COPY util/                 velisp/util/
 COPY Makefile              velisp/
 COPY package.json          velisp/
 COPY package-lock.json     velisp/
