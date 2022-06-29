@@ -133,6 +133,7 @@ zipWindows:
 	cp LICENSE      velisp-${VERSION}-win-x64/
 	./copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-win-x64/NOTICE
+	node util/notice-mingw64.js velisp-${VERSION}-win-x64/mingw64/bin/ > velisp-${VERSION}-win-x64/mingw64/NOTICE
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 tarMacos:

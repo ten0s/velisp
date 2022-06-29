@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import https from 'https'
 import path from 'path'
 import util from 'util'
+
 import {
     filter,
     map,
@@ -9,7 +10,6 @@ import {
     tap,
 } from './fp-lib.js'
 
-//console.error(process.argv)
 
 if (process.argv.length < 3) {
     console.error(`Usage: ${path.basename(process.argv[1])} NODE_MODULES_DIR`)
