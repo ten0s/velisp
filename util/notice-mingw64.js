@@ -117,7 +117,7 @@ const getPkgInfos = (dlls) => {
     return promiseSequence(dlls, getPkgInfoFromDll)
 }
 
-// :: (string) -> string
+// :: ({dll, path, package, version, url, licenses}) -> string
 const formatDep = (dep) => {
     return `
  - Binary module ${dep.dll} from ${dep.package} ${dep.version}
@@ -125,7 +125,7 @@ const formatDep = (dep) => {
    See ${dep.url} for more detail`
 }
 
-// :: ([string]) -> ()
+// :: ([{dll, path, package, version, url, licenses}]) -> ()
 const writeNotice = (deps) => {
     console.log('The following MinGW-w64 dependencies are included in this product:')
 
