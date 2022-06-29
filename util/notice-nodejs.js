@@ -2,6 +2,12 @@ import fs from 'node:fs/promises'
 import https from 'https'
 import path from 'path'
 import util from 'util'
+import {
+    filter,
+    map,
+    prop,
+    tap,
+} from './fp-lib.js'
 
 //console.error(process.argv)
 
@@ -12,13 +18,6 @@ if (process.argv.length < 3) {
 
 const inputDir = process.argv[2]
 
-// Poor man's FP lib
-const filter = (fn) => (arr) => arr.filter(fn)
-const map = (fn) => (arr) => arr.map(fn)
-const prop = (name) => (obj) => obj[name]
-//const forEach = (fn) => (arr) => arr.forEach(fn)
-const tap = (fn) => (x) => { fn(x); return x }
-//const pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x)
 
 const isDir = (dirent) => dirent.isDirectory()
 
