@@ -12,6 +12,7 @@ if (process.argv.length < 3) {
 
 const inputDir = process.argv[2]
 
+// Poor man's FP lib
 const filter = (fn) => (arr) => arr.filter(fn)
 const map = (fn) => (arr) => arr.map(fn)
 const prop = (name) => (obj) => obj[name]
