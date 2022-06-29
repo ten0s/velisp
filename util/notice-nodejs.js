@@ -106,6 +106,13 @@ const resolveLicenseUrl = (name, version) => (license) => {
     }
 }
 
+const addLicenseUrls = (dep) => {
+    return {
+        ...dep,
+        urls: dep.licenses.map(resolveLicenseUrl(dep.name, dep.version)),
+    }
+}
+
 const ensureUrlReached = (dep, url) => {
     return new Promise((resolve, reject) => {
         https.get(url, (res) => {
@@ -116,13 +123,6 @@ const ensureUrlReached = (dep, url) => {
             }
         })
     })
-}
-
-const addLicenseUrls = (dep) => {
-    return {
-        ...dep,
-        urls: dep.licenses.map(resolveLicenseUrl(dep.name, dep.version)),
-    }
 }
 
 const checkLicenseUrls = (deps) => {
