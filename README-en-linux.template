@@ -78,7 +78,7 @@ Run the Fifteen Puzzle example
 $ velisp examples/fifteen.lsp
 ```
 
-### Run code from standard input
+#### Run code from standard input
 
 ```
 $ cat examples/fib.lsp | velisp
