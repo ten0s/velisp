@@ -96,6 +96,8 @@ roll:
 
 readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > README-en-linux.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > README-en-windows.md
 
 prePkg:
 	$(MAKE) cleanPkg
@@ -122,6 +124,7 @@ tarLinux:
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	cp LICENSE      velisp-${VERSION}-linux-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-linux-x64/NOTICE
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > velisp-${VERSION}-linux-x64/README-en.md
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
 zipWindows:
@@ -134,6 +137,7 @@ zipWindows:
 	./copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-win-x64/NOTICE
 	node util/notice-mingw64.js velisp-${VERSION}-win-x64/mingw64/bin/ > velisp-${VERSION}-win-x64/mingw64/NOTICE
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > velisp-${VERSION}-win-x64/README-en.md
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 tarMacos:

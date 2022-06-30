@@ -1,0 +1,126 @@
+**VeLisp** is AutoLISP / DCL compatible interpreter to run AutoCAD agnostic code.
+The goal is to treat AutoLISP as a general purpose language and be able to run
+AutoLISP programs outside of AutoCAD.
+
+### Table of contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [License](#license)
+
+### Install
+
+#### Download and unarchive
+
+1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64.zip
+2. Open Downloads folder
+3. Select velisp-{{version}}-win-x64.zip
+4. Press the right mouse button
+5. Click 'Extract All...'
+6. Enter C:\
+7. Click 'Extract'
+
+The steps below assume the archive was extracted to C:\velisp-{{version}}-win-x64
+according to the steps above.
+
+#### Add the folder to PATH
+
+1. Press 'Windows + Break' to open the System Info
+2. Click 'Advanced system settings'
+3. Click 'Environment Variables...'
+4. Select 'Path' inside the User variables block
+5. Click 'Edit...'
+6. Click 'New...'
+7. Enter C:\velisp-{{version}}-win-x64
+8. Click 'OK'
+9. Click 'OK'
+
+### Usage
+
+Run Command Prompt (cmd.exe)
+
+```
+> cd C:\velisp-{{version}}-win-x64
+```
+
+#### Run REPL (Read–Eval–Print Loop)
+
+```
+> velisp
+VeLisp {{version}} on win32
+Type ".license" or ".help" for more information
+> (+ 1 2)
+3
+> (defun add (a b) (+ a b))
+ADD
+> (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
+("10" "10" "10")
+> (quit)
+```
+
+#### Run code from file
+
+Calculate 10th (by default) Fibonacci number
+
+```
+> velisp examples\fib.lsp
+55
+```
+
+Calculate 11th Fibonacci number
+
+```
+> velisp examples\fib.lsp 11
+89
+```
+
+Run the Calculator example
+
+```
+> velisp examples\calc.lsp
+```
+
+Run the Minesweeper example
+
+```
+> velisp examples\mines.lsp
+```
+
+Run the Fifteen Puzzle example
+
+```
+> velisp examples\fifteen.lsp
+```
+
+### Run code from standard input
+
+```
+> cat examples\fib.lsp | velisp
+55
+```
+
+```
+> cat examples\fib.lsp | velisp -- 11
+89
+```
+
+#### Run without DCL support (faster loading, good for scripting)
+
+```
+> velisp --no-dcl examples\fib.lsp
+55
+```
+
+### License
+
+The project is licensed under the GNU General Public License v3.0 or later
+with the exception below.
+See [LICENSE](LICENSE) or
+https://spdx.org/licenses/GPL-3.0-or-later.html
+for full license information.
+
+The files in the [examples/](examples/) and [lib/](lib/) directories
+are licensed under the BSD Zero Clause License.
+See [LICENSE](examples/LICENSE) or [LICENSE](lib/LICENSE) or
+https://spdx.org/licenses/0BSD.html for full license
+information.
