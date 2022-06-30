@@ -26,7 +26,7 @@ TODO
 ```
 $ ./velisp-0.7.0-3-linux-x64
 VeLisp 0.7.0-3 on linux
-Type ".help" for more information
+Type ".license" or ".help" for more information
 > (+ 1 2)
 3
 > (load "examples/fib.lsp")

@@ -47,7 +47,7 @@ function main() {
     adjustEnvVars()
     const initArgv = VeArgv.initArgv(process.argv)
     const program = addCommandOptions(new Command())
-    program.version(VeSysInfo.version)
+    program.version(versionInfo() + '\n' + licenseInfo())
         .arguments('[file]')
         .action(async (file) => {
             const options = program.opts()
@@ -159,8 +159,8 @@ function readStream(stream, action, context) {
 }
 
 function startRepl(action, context) {
-    console.log(`${VeSysInfo.name} ${VeSysInfo.version} on ${process.platform}`)
-    console.log('Type ".help" for more information')
+    console.log(versionInfo() + ` on ${process.platform}`)
+    console.log('Type ".license" or ".help" for more information')
 
     let historyFile = process.env['VELISP_REPL_HISTORY']
     if (historyFile !== '') { // Is enabled?
@@ -216,6 +216,13 @@ function startRepl(action, context) {
                         // fall through
                     }
                 }
+                this.displayPrompt()
+            }
+        })
+        replServer.defineCommand('license', {
+            help: 'Show license info',
+            action() {
+                console.log(licenseInfo())
                 this.displayPrompt()
             }
         })
@@ -275,4 +282,15 @@ function replWriter(_repl, output) {
 
 function isRecoverable(input, _error) {
     return isRecoverableInput(input)
+}
+
+function versionInfo() {
+    return `${VeSysInfo.name} ${VeSysInfo.version}`
+}
+
+function licenseInfo() {
+    return 'Copyright (C) 2022 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>         \n' +
+           'License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n' +
+           'This is free software: you are free to change and redistribute it.           \n' +
+           'There is NO WARRANTY, to the extent permitted by law.'
 }
