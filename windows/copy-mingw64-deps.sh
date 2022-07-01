@@ -52,6 +52,7 @@ mkdir -p $DEST_DIR/mingw64/lib/girepository-1.0
 
 cp /mingw64/lib/girepository-1.0/Atk-1.0.typelib          $DEST_DIR/mingw64/lib/girepository-1.0/
 cp /mingw64/lib/girepository-1.0/cairo-1.0.typelib        $DEST_DIR/mingw64/lib/girepository-1.0/
+cp /mingw64/lib/girepository-1.0/freetype2-2.0.typelib    $DEST_DIR/mingw64/lib/girepository-1.0/
 cp /mingw64/lib/girepository-1.0/Gdk-3.0.typelib          $DEST_DIR/mingw64/lib/girepository-1.0/
 cp /mingw64/lib/girepository-1.0/GdkPixbuf-2.0.typelib    $DEST_DIR/mingw64/lib/girepository-1.0/
 cp /mingw64/lib/girepository-1.0/Gio-2.0.typelib          $DEST_DIR/mingw64/lib/girepository-1.0/
