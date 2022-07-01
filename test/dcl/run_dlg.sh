@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[[ ${DEBUG} != "" ]] && opts[k++]=--inspect-brk
-
 if [[ $# -ne 1 ]]; then
     echo "Usage: $(basename $0) <DCL_NAME>"
     exit 1
@@ -16,7 +14,18 @@ if [[ -f "${dir}/${name}.lsp" ]]; then
     init=$(< ${dir}/${name}.lsp)
 fi
 
-node ${opts[@]} ${dir}/../../src/main.js <<EOF
+[[ ${NODE_DEBUG} != "" ]] && node_opts[k++]=--inspect-brk
+
+cmd=""
+if [[ ${VELISP} != "" ]]; then
+    cmd=${VELISP}
+else
+    cmd="node ${node_opts[@]} ${dir}/../../src/main.js"
+fi
+
+echo "${cmd}"
+
+${cmd} <<EOF
   (setq dcl_file "${dir}/${name}.dcl")
   (if (< (setq dcl_id (load_dialog dcl_file)) 0)
     (progn
