@@ -159,7 +159,7 @@ $ tar xfz velisp-0.7.0-4-linux-x64.tar.gz
 #### Add to .bashrc
 
 ```
-export PATH=<PATH_TO>/velisp-0.7.0-3-linux-x64:$PATH
+export PATH=<PATH_TO>/velisp-0.7.0-4-linux-x64:$PATH
 ```
 
 ### Usage
