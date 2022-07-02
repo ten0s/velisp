@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+#
+# See how to determine what DLLs are needed
+# https://ten0s.github.io/blog/2022/07/01/debugging-dll-loading
+#
+
 if [[ $# -ne 1 ]]; then
     echo "Usage: $(basename $0) <DEST_DIR>"
     exit 1
