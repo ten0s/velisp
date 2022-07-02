@@ -181,19 +181,19 @@ export const initContext = (context) => {
         Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, msecs)
         return new Bool(false)
     }))
-    context.setSym('STARTAPP', new Fun('startapp', ['cmd', '[file]'], [], (self, args) => {
+    context.setSym('STARTAPP', new Fun('startapp', ['cmd', '[arg ...]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
         }
-        if (args.length > 2) {
-            throw new Error('startapp: too many arguments')
-        }
         const cmd = ensureType('startapp: `cmd`', args[0], [Str]).value()
-        let file = undefined
-        if (args.length === 2) {
-            file = ensureType('startapp: `file`', args[1], [Str]).value()
+        const cmdArgs = []
+        if (args.length > 1) {
+            for (let i = 1; i < args.length; i++) {
+                const arg = ensureType('startapp: `arg`', args[i], [Str]).value()
+                cmdArgs.push(arg)
+            }
         }
-        const child = spawn(cmd, file ? [file] : [], {
+        const child = spawn(cmd, cmdArgs, {
             detached: true,
             stdio: 'ignore',
             windowsHide: true,

@@ -6,6 +6,7 @@ TestRunner.run({
 
     tests: [
         {test: '(startapp "unknown")', result: new Bool(false)},
+        {test: '(startapp "unknown" "--arg" "")', result: new Bool(false)},
     ],
 
     testsLinux: [
@@ -20,8 +21,7 @@ TestRunner.run({
 
     errors: [
         {test: '(startapp)', result: new Error('startapp: too few arguments')},
-        {test: '(startapp "anything" "--arg" "")', result: new Error('startapp: too many arguments')},
         {test: '(startapp \'anything)', result: new Error('startapp: `cmd` expected Str')},
-        {test: '(startapp "anything" \'opt)', result: new Error('startapp: `file` expected Str')},
+        {test: '(startapp "anything" \'opt)', result: new Error('startapp: `arg` expected Str')},
     ]
 })

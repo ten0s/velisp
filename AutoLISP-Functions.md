@@ -3,7 +3,7 @@
 | Function | Description | Info |
 |----------|-------------|------|
 | (load filename [onfailure]) | Evaluates the AutoLISP expressions in a file | |
-| (startapp appcmd file) | Starts an external application | |
+| (startapp cmd arg ...) | Starts an external application | More than one argument is allowed |
 
 ### Arithmetic Functions Reference
 
