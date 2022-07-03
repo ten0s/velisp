@@ -1,3 +1,11 @@
+### Table of contents
+
+- [Application-Specific Data-Handling Functions](#application-specific-data-handling-functions)
+- [Dialog Box Opening and Closing Functions](#dialog-box-opening-and-closing-functions)
+- [Image Tile-Handling Functions](#image-tile-handling-functions)
+- [List Box and Pop-Up List-Handling Functions](#list-box-and-pop-up-list-handling-functions)
+- [Tile- and Attribute-Handling Functions](#tile-and-attribute-handling-functions)
+
 ### Application-Specific Data-Handling Functions
 
 | Function | Description | Info |

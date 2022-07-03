@@ -1,3 +1,20 @@
+### Table of contents
+
+- [Application-Handling Functions](#application-handling-functions)
+- [Arithmetic Functions](#arithmetic-functions)
+- [Conversion Functions](#conversion-functions)
+- [Display Control Functions](#display-control-functions)
+- [Equality and Conditional Functions](#equality-and-conditions-functions)
+- [Error-Handling Functions](#error-handling-functions)
+- [File-Handling Functions](#file-handling-functions)
+- [Function-Handling Functions](#function-handling-functions)
+- [Geometric Functions](#geometric-functions)
+- [List Manipulation Functions](#list-manipulation-functions)
+- [Query and Command Functions](#query-and-command-functions)
+- [String-Handling Functions](#string-handling-functions)
+- [Symbol-Handling Functions](#symbol-handling-functions)
+- [User Input Functions](#user-input-functions)
+
 ### Application-Handling Functions
 
 | Function | Description | Info |
@@ -5,7 +22,7 @@
 | (load filename [onfailure]) | Evaluates the AutoLISP expressions in a file | |
 | (startapp cmd arg ...) | Starts an external application | More than one argument is allowed |
 
-### Arithmetic Functions Reference
+### Arithmetic Functions
 
 | Function | Description | Info |
 |----------|-------------|------|
@@ -239,7 +256,7 @@
 | (vl-string-trim char-set str) | Removes the specified characters from the beginning and end of a string | |
 | (wcmatch string pattern [flag]) | Performs a wild-card pattern match on a string | VeLisp Extension: added optional flag |
 
-### Symbol-Handling Functions Reference
+### Symbol-Handling Functions
 
 | Function | Description | Info |
 |----------|-------------|------|
