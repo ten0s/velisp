@@ -78,7 +78,7 @@
 | (boole func int1 [int2 ...]) | Serves as a general bitwise Boolean function | Expected in vTBD |
 | (cond [(test result ...) ...]) | Serves as the primary conditional function for AutoLISP | |
 | (eq expr1 expr2) | Determines whether two expressions are identical | |
-| (equal expr1 expr2 [fuzz]) | Determines whether two expressions are equal | |
+| (equal expr1 expr2 [fuzz]) | Determines whether two expressions are equal | fuzz not implemented yet |
 | (if testexpr thenexpr [elseexpr]) | Conditionally evaluates expressions | |
 | (or [expr ...]) | Returns the logical OR of a list of expressions | |
 | (repeat int [expr ...]) | Evaluates each expression a specified number of times, and returns the value of the last expression | |
