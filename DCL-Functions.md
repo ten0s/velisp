@@ -4,7 +4,7 @@
 - [Dialog Box Opening and Closing Functions](#dialog-box-opening-and-closing-functions)
 - [Image Tile-Handling Functions](#image-tile-handling-functions)
 - [List Box and Pop-Up List-Handling Functions](#list-box-and-pop-up-list-handling-functions)
-- [Tile- and Attribute-Handling Functions](#tile-and-attribute-handling-functions)
+- [Tile and Attribute-Handling Functions](#tile-and-attribute-handling-functions)
 
 ### Application-Specific Data-Handling Functions
 
@@ -44,7 +44,7 @@
 | (end_list) | Ends processing of the currently active dialog box list | |
 | (start_list key [operation [index]]) | Starts the processing of a list in the list box or in the pop-up list dialog box tile | |
 
-### Tile- and Attribute-Handling Functions
+### Tile and Attribute-Handling Functions
 
 | Function | Description | Info |
 |----------|-------------|------|
