@@ -4,7 +4,7 @@
 - [Arithmetic Functions](#arithmetic-functions)
 - [Conversion Functions](#conversion-functions)
 - [Display Control Functions](#display-control-functions)
-- [Equality and Conditional Functions](#equality-and-conditions-functions)
+- [Equality and Conditional Functions](#equality-and-conditional-functions)
 - [Error-Handling Functions](#error-handling-functions)
 - [File-Handling Functions](#file-handling-functions)
 - [Function-Handling Functions](#function-handling-functions)
