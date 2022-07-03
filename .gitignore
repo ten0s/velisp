@@ -3,4 +3,5 @@ install/
 node_modules/
 pkg/
 velisp*
+!windows/velisp-no-shell.vbs
 NOTICE
