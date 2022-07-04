@@ -10,6 +10,8 @@ import {
     tap,
 } from './fp-lib.js'
 
+import {promiseSequence} from './promise-lib.js'
+
 
 if (process.argv.length < 3) {
     console.error(`Usage: ${path.basename(process.argv[1])} NODE_MODULES_DIR`)
@@ -43,6 +45,59 @@ const readJsonFiles = (paths) => {
         .all(paths.map(readJsonFile))
         //.then(tap(pipe(prop(10), console.log)))
         .then(filter(x => !!x)) // filter out undefined
+}
+
+const fixUrlPrefix = (url) => {
+    url = url.trim()
+    switch (true) {
+    case url.startsWith('https://'):
+        return url
+    case url.startsWith('http://'):
+        return url.replace('http://', 'https://')
+    case url.startsWith('git://'):
+        return url.replace('git://', 'https://')
+    case url.startsWith('git+http'):
+        return url.replace('git+', '')
+    case url.startsWith('git@github.com:'):
+        return url.replace('git@github.com:', 'https://github.com/')
+    case url.startsWith('github:'):
+        return `https://github.com/${url.replace('github:', '')}`
+    default:
+        // Assume GitHub's name/repo
+        return `https://github.com/${url}`
+    }
+}
+
+const fixUrlSuffix = (url) => {
+    switch (true) {
+    case url.endsWith('.git'):
+        return url.replace('.git', '')
+    default:
+        return url
+    }
+}
+
+const fixUrl = (url) => {
+    return fixUrlSuffix(fixUrlPrefix(url.trim()))
+}
+
+const parseNpmHomepage = (pkg) => {
+    if (pkg.homepage) {
+        return pkg.homepage
+    }
+
+    const repo = pkg.repository
+    if (repo && typeof repo === 'string') {
+        return repo
+    }
+
+    if (typeof repo === 'object') {
+        if (typeof repo.url === 'string') {
+            return repo.url
+        }
+    }
+
+    throw new Error(`No homepage or repository: ${util.inspect(pkg)}`)
 }
 
 const parseLicense = (lic) => lic.replace('(', '').replace(')', '').split(' OR ')
@@ -82,56 +137,39 @@ const parseNpmPkg = (pkg) => {
         name: pkg.name,
         version: pkg.version,
         format: 'npm',
+        homepage: fixUrl(parseNpmHomepage(pkg)),
         licenses: parseNpmLicenses(pkg)
     }
 }
 
 const nodeInfo = () => {
+    const version = process.version.replace('v', '')
     return {
         name: 'nodejs',
-        version: process.version.replace('v', ''),
+        version,
         format: 'binary',
+        homepage: `https://github.com/nodejs/node/tree/v${version}`,
         licenses: ['Node.js'],
     }
 }
 
 const addNodeInfo = (deps) => [nodeInfo(), ...deps]
 
-const resolveLicenseUrl = (name, version) => (license) => {
-    switch (license) {
-    case 'Node.js':
-        return `https://github.com/nodejs/node/blob/v${version}/LICENSE`
-    default:
-        return `https://spdx.org/licenses/${license}.html`
-    }
-}
-
-const addLicenseUrls = (dep) => {
-    return {
-        ...dep,
-        urls: dep.licenses.map(resolveLicenseUrl(dep.name, dep.version)),
-    }
-}
-
-const ensureUrlReached = (dep, url) => {
+const ensureUrlReached = (url) => {
     return new Promise((resolve, reject) => {
+        console.error(`Checking ${url}`)
         https.get(url, (res) => {
-            if (res.statusCode === 200) {
+            if (res.statusCode === 200 || res.statusCode === 301) {
                 resolve(true)
             } else {
-                reject(`Error: ${url} status ${res.statusCode} for ${util.inspect(dep)}`)
+                reject(`Error: ${url} status ${res.statusCode}`)
             }
         })
     })
 }
 
-const checkLicenseUrls = (deps) => {
-    deps.forEach(dep => {
-        dep.urls.forEach(url => {
-            console.error(`Checking ${url} for ${dep.name} ${dep.version}`)
-            ensureUrlReached(dep, url)
-        })
-    })
+const checkHomepages = (deps) => {
+    return promiseSequence(deps.map(prop('homepage')), ensureUrlReached)
 }
 
 const formatDep = (dep) => {
@@ -148,7 +186,7 @@ const formatDep = (dep) => {
 
     return `
  - ${what(dep)} licensed under the ${dep.licenses.join(' or ')} license
-   See license text at ${dep.urls.join(' or ')}`
+   See ${dep.homepage} for more detail`
 }
 
 const writeNotice = (deps) => {
@@ -166,6 +204,5 @@ fs.readdir(inputDir, {withFileTypes: true})
     .then(readJsonFiles)
     .then(map(parseNpmPkg))
     .then(addNodeInfo)
-    .then(map(addLicenseUrls))
-    .then(tap(checkLicenseUrls))
+    .then(tap(checkHomepages))
     .then(writeNotice)
