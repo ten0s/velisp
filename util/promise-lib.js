@@ -2,7 +2,7 @@
 // From 'JavaScript: The Definitive Guide 7th edition'
 //
 
-// :: ([any], (any) => Promise) => Promise
+// :: ([any], (any) -> Promise) -> Promise
 const promiseSequence = (inputs, promiseMaker) => {
     inputs = [...inputs]
 

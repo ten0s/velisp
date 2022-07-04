@@ -16,6 +16,8 @@ import {
 
 import {promiseSequence} from './promise-lib.js'
 
+import {ensureUrlReached} from './url-lib.js'
+
 
 if (process.argv.length < 3) {
     console.error(`Usage: ${path.basename(process.argv[1])} MINGW64_BIN_DIR`)
@@ -117,6 +119,13 @@ const getPkgInfos = (dlls) => {
     return promiseSequence(dlls, getPkgInfoFromDll)
 }
 
+/* eslint-disable */
+// :: ([{homepage}]) -> Promise(true, string)
+const checkHomepages = (deps) => {
+    return promiseSequence(deps.map(prop('homepage')), ensureUrlReached)
+}
+/* eslint-enable */
+
 // :: ({dll, path, package, version, homepage, licenses}) -> string
 const formatDep = (dep) => {
     return `
@@ -147,4 +156,5 @@ fs.readdir(inputDir, {withFileTypes: true})
     .then(tap(console.error))
     .then(getPkgInfos)
     .then(tap(console.error))
+    //.then(tap(checkHomepages))
     .then(writeNotice)

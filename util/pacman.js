@@ -5,7 +5,7 @@ import util from 'util'
 // Brings Pacman (https://wiki.archlinux.org/title/pacman) to Node.js
 //
 
-// :: ([string]) => Promise(stdout :: string, stderr :: string)
+// :: ([string]) -> Promise(stdout :: string, stderr :: string)
 const pacman = (args) => {
     let out = ''
     let all = ''
@@ -34,12 +34,12 @@ const pacman = (args) => {
     })
 }
 
-// :: ([string]) => Promise(stdout :: string, stderr :: string)
+// :: ([string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQuery = (args) => {
     return pacman(['--query', ...args])
 }
 
-// :: (string | [string]) => [string]
+// :: (string | [string]) -> [string]
 const toArray = (x) => {
     if (typeof x === 'string') {
         return [x]
@@ -50,12 +50,12 @@ const toArray = (x) => {
     throw new Error(`Expected string or array but got: ${util.inspect(x)}`)
 }
 
-// :: (string | [string]) => Promise(stdout :: string, stderr :: string)
+// :: (string | [string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQueryOwns = (args) => {
     return pacmanQuery(['--owns', ...toArray(args)])
 }
 
-// :: (string | [string]) => Promise(stdout :: string, stderr :: string)
+// :: (string | [string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQueryInfo = (args) => {
     return pacmanQuery(['--info', ...toArray(args)])
 }

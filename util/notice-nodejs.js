@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises'
-import https from 'https'
 import path from 'path'
 import util from 'util'
 
@@ -11,6 +10,8 @@ import {
 } from './fp-lib.js'
 
 import {promiseSequence} from './promise-lib.js'
+
+import {ensureUrlReached} from './url-lib.js'
 
 
 if (process.argv.length < 3) {
@@ -155,22 +156,11 @@ const nodeInfo = () => {
 
 const addNodeInfo = (deps) => [nodeInfo(), ...deps]
 
-const ensureUrlReached = (url) => {
-    return new Promise((resolve, reject) => {
-        console.error(`Checking ${url}`)
-        https.get(url, (res) => {
-            if (res.statusCode === 200 || res.statusCode === 301) {
-                resolve(true)
-            } else {
-                reject(`Error: ${url} status ${res.statusCode}`)
-            }
-        })
-    })
-}
-
+/* eslint-disable */
 const checkHomepages = (deps) => {
     return promiseSequence(deps.map(prop('homepage')), ensureUrlReached)
 }
+/* eslint-enable */
 
 const formatDep = (dep) => {
     const what = (dep) => {
@@ -204,5 +194,6 @@ fs.readdir(inputDir, {withFileTypes: true})
     .then(readJsonFiles)
     .then(map(parseNpmPkg))
     .then(addNodeInfo)
-    .then(tap(checkHomepages))
+    .then(tap(console.error))
+    //.then(tap(checkHomepages))
     .then(writeNotice)
