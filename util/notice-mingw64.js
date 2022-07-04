@@ -27,12 +27,12 @@ const inputDir = process.argv[2]
 
 const isFile = (dirent) => dirent.isFile()
 
-// :: (string) => Promise(string, string)
+// :: (string) -> Promise(string, string)
 const queryOwnsInfo = (dll) => {
     return pacmanQueryOwns(`/mingw64/bin/${dll}`)
 }
 
-// :: (string) => {path, package, version}
+// :: (string) -> {path, package, version}
 const parseOwnsInfo = (raw) => {
     // PATH is owned by PACKAGE VERSION
     const chunks = raw.replace('\n', '').split(' ')
@@ -43,7 +43,7 @@ const parseOwnsInfo = (raw) => {
     }
 }
 
-// :: (string) => Promise({dll, path, package, version})
+// :: (string) -> Promise({dll, path, package, version})
 const getOwnsInfo = (dll) => {
     return queryOwnsInfo(dll)
         .then(parseOwnsInfo)
@@ -52,15 +52,15 @@ const getOwnsInfo = (dll) => {
         })
 }
 
-// :: (string) => Promise(string, string)
+// :: (string) -> Promise(string, string)
 const queryPkgInfo = pacmanQueryInfo
 
-// :: (string) => [string]
+// :: (string) -> [string]
 const parseLicenses = (raw) => {
     return raw.split(' ').filter(x => !!x)
 }
 
-// :: (string) => {version, homepage, licenses}
+// :: (string) -> {version, homepage, licenses}
 const parsePkgInfo = (raw) => {
     // ...
     // Version  : VERSION
@@ -94,13 +94,13 @@ const parsePkgInfo = (raw) => {
         }, {})
 }
 
-// :: (string) => Promise({version, homepage, licenses})
+// :: (string) -> Promise({version, homepage, licenses})
 const getPkgInfo = (pkg) => {
     return queryPkgInfo(pkg)
         .then(parsePkgInfo)
 }
 
-// :: (string) => Promise({dll, path, package, version, homepage, licenses})
+// :: (string) -> Promise({dll, path, package, version, homepage, licenses})
 const getPkgInfoFromDll = (dll) => {
     return getOwnsInfo(dll)
         .then(ownsInfo => {
@@ -112,7 +112,7 @@ const getPkgInfoFromDll = (dll) => {
         .then(tap(console.error))
 }
 
-// :: ([string]) => Promose([{dll, path, package, version, homepage, licenses}])
+// :: ([string]) -> Promose([{dll, path, package, version, homepage, licenses}])
 const getPkgInfos = (dlls) => {
     return promiseSequence(dlls, getPkgInfoFromDll)
 }
