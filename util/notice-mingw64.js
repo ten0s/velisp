@@ -60,7 +60,7 @@ const parseLicenses = (raw) => {
     return raw.split(' ').filter(x => !!x)
 }
 
-// :: (string) => {version, url, licenses}
+// :: (string) => {version, homepage, licenses}
 const parsePkgInfo = (raw) => {
     // ...
     // Version  : VERSION
@@ -71,7 +71,7 @@ const parsePkgInfo = (raw) => {
     // ...
     const parsers = {
         'Version' : {key: 'version' , parse: x => x},
-        'URL'     : {key: 'url'     , parse: x => x},
+        'URL'     : {key: 'homepage', parse: x => x},
         'Licenses': {key: 'licenses', parse: parseLicenses},
     }
     return raw
@@ -94,13 +94,13 @@ const parsePkgInfo = (raw) => {
         }, {})
 }
 
-// :: (string) => Promise({version, url, licenses})
+// :: (string) => Promise({version, homepage, licenses})
 const getPkgInfo = (pkg) => {
     return queryPkgInfo(pkg)
         .then(parsePkgInfo)
 }
 
-// :: (string) => Promise({dll, path, package, version, url, licenses})
+// :: (string) => Promise({dll, path, package, version, homepage, licenses})
 const getPkgInfoFromDll = (dll) => {
     return getOwnsInfo(dll)
         .then(ownsInfo => {
@@ -112,20 +112,20 @@ const getPkgInfoFromDll = (dll) => {
         .then(tap(console.error))
 }
 
-// :: ([string]) => Promose([{dll, path, package, version, url, licenses}])
+// :: ([string]) => Promose([{dll, path, package, version, homepage, licenses}])
 const getPkgInfos = (dlls) => {
     return promiseSequence(dlls, getPkgInfoFromDll)
 }
 
-// :: ({dll, path, package, version, url, licenses}) -> string
+// :: ({dll, path, package, version, homepage, licenses}) -> string
 const formatDep = (dep) => {
     return `
  - Binary module ${dep.dll} from ${dep.package} ${dep.version}
    licensed under the ${dep.licenses.join(' or ')} license
-   See ${dep.url} for more detail`
+   See ${dep.homepage} for more detail`
 }
 
-// :: ([{dll, path, package, version, url, licenses}]) -> ()
+// :: ([{dll, path, package, version, homepage, licenses}]) -> ()
 const writeNotice = (deps) => {
     console.log('The following MinGW-w64 dependencies are included in this product:')
 
