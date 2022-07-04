@@ -213,7 +213,7 @@ export const initContext = (context) => {
         }
         const child = spawn(cmd, cmdArgs, {
             detached: true,
-            stdio: 'ignore',
+            stdio: 'inherit',
             windowsHide: true,
         }).on('error', () => {})
         child.unref()
