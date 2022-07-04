@@ -121,6 +121,21 @@ const removeOpts = (argv) => {
     return out
 }
 
+// devel mode  : $ node src/main.js [--no-dcl] test.js 1 two
+// ["node", "src/main.js"]
+// release mode: $ velisp [--no-dcl] test.js 1 two
+// ["velisp", "/snapshot/velisp/pkg/src/main.js"]
+
+// :: ([string]) => [string]
+const lspArgv0 = (argv) => {
+    // It's oversimplification here, since
+    // [.../]node [../]src/main.js may not be enough
+    // shortly. For example we may need to pass --stack-size, etc
+    // options, but it works for a while.
+    // See lspArgv also.
+    return [...argv].slice(0, 2)
+}
+
 // -/-- is expected to be used when no file name is given, i.e.
 // in stdin, tty and eval modes
 // devel mode  : $ node src/main.js [--no-dcl] test.js 1 two
@@ -139,7 +154,8 @@ const lspArgv = (argv) => {
         return rest
     }
     // Skip node, src/main.js and
-    // remove main.js specific options
+    // remove main.js specific options.
+    // See lspArgv0 for detail.
     return removeOpts([...argv].slice(2))
 }
 
@@ -147,5 +163,6 @@ export default {
     options,
     parseArgv,
     initArgv,
+    lspArgv0,
     lspArgv,
 }

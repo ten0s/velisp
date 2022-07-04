@@ -998,6 +998,46 @@ class File {
     }
 }
 
+class Argv0 {
+    // :: ([string])
+    constructor(argv0) {
+        this.argv0 = [...argv0]
+    }
+
+    // :: () -> Sym
+    type() {
+        return new Sym('argv0')
+    }
+
+    // :: () -> false
+    isNil() {
+        return false
+    }
+
+    // :: () -> [string]
+    value() {
+        return this.argv0
+    }
+
+    // :: (Any) -> Bool
+    eq(that) {
+        return new Bool(this === that)
+    }
+
+    // :: (Any) -> Bool
+    equal(that) {
+        if (that instanceof File) {
+            return new Bool(this === that)
+        }
+        return new Bool(false)
+    }
+
+    // :: () -> string
+    toString() {
+        return '#<argv0>'
+    }
+}
+
 function ensureType(prefix, argValue, argTypes) {
     for (const argType of argTypes) {
         if (argValue instanceof argType) {
@@ -1026,6 +1066,7 @@ export {
     FileStream,
     FileMode,
     File,
+    Argv0,
     ensureType,
     throwTypeError,
 }

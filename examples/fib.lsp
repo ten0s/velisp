@@ -8,7 +8,7 @@
   (iter 0 1 n))
 
 (setq n 10)
-(if (> (length (argv)) 1)
-    (setq n (atoi (argv 1))))
+(if (> (length (argv)) 2)
+    (setq n (atoi (argv 2))))
 
 (princ (fib n))

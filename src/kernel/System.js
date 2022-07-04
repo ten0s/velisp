@@ -21,7 +21,7 @@
 
 import os from 'os'
 import {spawn} from 'child_process'
-import {Bool, Int, Real, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Real, Str, Sym, List, Fun, Argv0, ensureType} from '../VeLispTypes.js'
 import VeArgv from '../VeArgv.js'
 import {homeDir, tmpDir} from '../VeSystem.js'
 
@@ -30,28 +30,36 @@ export const initContext = (context) => {
     context.setSym('ARGV', new Fun('argv', ['[n]'], [], (self, args) => {
         // devel mode  : $ node src/main.js [--no-dcl] test.js 1 two
         // release mode: $ velisp [--no-dcl] test.js 1 two
-        // ("test.js" "1" "two")
+        // (#<argv0> "test.js" "1" "two")
         // stdin mode  : $ velisp [--no-dcl] -- 1 two
         // tty mode    : $ cat test.js | velisp [--no-dcl] -- 1 two
         // eval mode   : $ velisp [--no-dcl] --eval '(argv)' -- 1 two
-        // ("--" "1" "two")
+        // (#<argv0> "--" "1" "two")
         if (args.length > 1) {
             throw new Error('argv: too many arguments')
         }
+        const argv0 = VeArgv.lspArgv0(process.argv)
         const argv = VeArgv.lspArgv(process.argv)
         if (args.length === 1) {
             const n = ensureType('argv:', args[0], [Int]).value()
             if (n < 0) {
                 throw new Error('argv: expected positive Int')
             }
-            const arg = argv[n]
+            if (n === 0) {
+                return new Argv0(argv0)
+            }
+            const arg = argv[n-1]
             if (arg) {
                 return new Str(arg)
             } else {
                 return new Bool(false)
             }
         }
-        return new List(argv.map(s => new Str(s)))
+        return new List(
+            [new Argv0(argv0)].concat(
+                argv.map(s => new Str(s))
+            )
+        )
     }))
     // VeLisp Extension
     context.setSym('CWD', new Fun('cwd', [], [], (self, args) => {
@@ -185,8 +193,18 @@ export const initContext = (context) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
         }
-        const cmd = ensureType('startapp: `cmd`', args[0], [Str]).value()
-        const cmdArgs = []
+        let cmd
+        let cmdArgs
+        if (args[0] instanceof Argv0) {
+            const [init, ...rest] = args[0].value()
+            cmd = init
+            cmdArgs = [...rest]
+        } else if (args[0] instanceof Str) {
+            cmd = args[0].value()
+            cmdArgs = []
+        } else {
+            throw new Error('startapp: `cmd` expected Str, Argv0')
+        }
         if (args.length > 1) {
             for (let i = 1; i < args.length; i++) {
                 const arg = ensureType('startapp: `arg`', args[i], [Str]).value()
