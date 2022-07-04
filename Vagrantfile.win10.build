@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./src",                          destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./test",                         destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./util",                         destination: "C:\\msys64\\home\\IEUser\\velisp\\"
+  config.vm.provision "file", source: "./windows",                      destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./.eslintrc.json",               destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./Makefile",                     destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./package.json",                 destination: "C:\\msys64\\home\\IEUser\\velisp\\"
@@ -45,8 +46,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./package.json.template",        destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./pkg.json",                     destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./rollup.config.js",             destination: "C:\\msys64\\home\\IEUser\\velisp\\"
-  config.vm.provision "file", source: "./windows/build.sh",             destination: "C:\\msys64\\home\\IEUser\\velisp\\"
-  config.vm.provision "file", source: "./windows/copy-mingw64-deps.sh", destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./LICENSE",                      destination: "C:\\msys64\\home\\IEUser\\velisp\\"
   config.vm.provision "file", source: "./README-en-windows.template",   destination: "C:\\msys64\\home\\IEUser\\velisp\\"
 
