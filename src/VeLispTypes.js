@@ -1026,7 +1026,7 @@ class Argv0 {
 
     // :: (Any) -> Bool
     equal(that) {
-        if (that instanceof File) {
+        if (that instanceof Argv0) {
             return new Bool(this === that)
         }
         return new Bool(false)
