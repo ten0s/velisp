@@ -5,8 +5,10 @@ import util from 'util'
 import {
     filter,
     map,
+    pipe,
     prop,
     tap,
+    trim,
 } from './fp-lib.js'
 
 import {promiseSequence} from './promise-lib.js'
@@ -78,9 +80,11 @@ const fixUrlSuffix = (url) => {
     }
 }
 
-const fixUrl = (url) => {
-    return fixUrlSuffix(fixUrlPrefix(url.trim()))
-}
+const fixUrl = pipe(
+    trim,
+    fixUrlPrefix,
+    fixUrlSuffix,
+)
 
 const parseNpmHomepage = (pkg) => {
     if (pkg.homepage) {
