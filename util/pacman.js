@@ -2,7 +2,7 @@ import {spawn} from 'child_process'
 import util from 'util'
 
 //
-// Brings Pacman (https://wiki.archlinux.org/title/pacman) to Node.js
+// Brings Pacman (https://wiki.archlinux.org/title/pacman) closer to Node.js
 //
 
 // :: ([string]) -> Promise(stdout :: string, stderr :: string)
