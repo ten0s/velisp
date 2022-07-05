@@ -10,6 +10,10 @@ End If
 
 ScriptPath = Left(WScript.ScriptFullName, Len(WScript.ScriptFullName) - Len(WScript.ScriptName) - 1)
 
+REM Windows 10 doesn't allow starting unknown programs in
+REM the hidden state. We trick it here by first running
+REM something it knows really well: cmd.exe /C.
+
 ReDim Init(2)
 Init(0) = "cmd.exe /C"
 Init(1) = ScriptPath & "\" & "velisp.exe"

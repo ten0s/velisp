@@ -195,10 +195,22 @@ export const initContext = (context) => {
         }
         let cmd
         let cmdArgs
+        let windowsHide = false
         if (args[0] instanceof Argv0) {
-            const [init, ...rest] = args[0].value()
-            cmd = init
-            cmdArgs = [...rest]
+            const argv0 = args[0].value()
+            if (process.platform === 'win32') {
+                // Windows 10 doesn't allow starting unknown programs in
+                // the hidden state. We trick it here by first running
+                // something it knows really well: cmd.exe /C.
+                // The same trick is used in windows/velisp-noshell.vbs
+                cmd = 'cmd.exe'
+                cmdArgs = ['/C', ...argv0]
+                windowsHide = true
+            } else {
+                const [init, ...rest] = argv0
+                cmd = init
+                cmdArgs = [...rest]
+            }
         } else if (args[0] instanceof Str) {
             cmd = args[0].value()
             cmdArgs = []
@@ -212,9 +224,9 @@ export const initContext = (context) => {
             }
         }
         const child = spawn(cmd, cmdArgs, {
-            detached: true,
+            detached: false,
             stdio: 'inherit',
-            windowsHide: true,
+            windowsHide,
         }).on('error', () => {})
         child.unref()
         if (child.pid) {
