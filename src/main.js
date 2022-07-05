@@ -159,7 +159,7 @@ function readStream(stream, action, context) {
 }
 
 function startRepl(action, context) {
-    console.log(versionInfo() + ` on ${process.platform}`)
+    console.log(versionInfo())
     console.log('Type ".license" or ".help" for more information')
 
     let historyFile = process.env['VELISP_REPL_HISTORY']
@@ -285,7 +285,7 @@ function isRecoverable(input, _error) {
 }
 
 function versionInfo() {
-    return `${VeSysInfo.name} ${VeSysInfo.version}`
+    return `${VeSysInfo.name} ${VeSysInfo.version} on ${VeSysInfo.platform}`
 }
 
 function licenseInfo() {

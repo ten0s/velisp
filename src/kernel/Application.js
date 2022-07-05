@@ -79,7 +79,7 @@ export const initContext = (context) => {
         }
     }))
     context.setSym('VER', new Fun('ver', [], [], (_self, _args) => {
-        return new Str(`${VeSysInfo.name} ${VeSysInfo.version}`)
+        return new Str(`${VeSysInfo.name} ${VeSysInfo.version} on ${VeSysInfo.platform}`)
     }))
     context.setSym('%VELISP_VERSION%', new Str(VeSysInfo.version))
 }

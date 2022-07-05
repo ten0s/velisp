@@ -25,11 +25,25 @@ import __rootdir from './VeRootDir.js'
 
 const config = JSON.parse(readFileSync(join(__rootdir, 'package.json')))
 
+const platform = () => {
+    switch (process.platform) {
+    case 'android':
+        return 'Android'
+    case 'linux':
+        return 'Linux'
+    case 'win32':
+        return 'Windows'
+    default:
+        return process.platform
+    }
+}
+
 const VeSysInfo = {
     isRepl: false,
     withDcl: true,
     name: config.name,
     version: config.version,
+    platform: platform(),
 }
 
 export default VeSysInfo
