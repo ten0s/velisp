@@ -22,6 +22,7 @@
   ;; Works with either:
   ;; $ velisp examples/demo.lsp
   ;; > (load "examples/demo.lsp")
+  ;; > (startapp (argv 0) "examples/demo.lsp")
   (vl-filename-directory %VELISP_LSP_FILE%))
 
 (defun file_path (dir name ext)
@@ -90,10 +91,26 @@
   (println (strcat "Run " (vl-princ-to-string argv0) " " lsp))
   (startapp argv0 lsp))
 
+(defun editor ( / os)
+  (setq os (nth 3 (split " " (ver))))
+  (cond ((= os "Linux")   "emacs")
+        ((= os "Windows") "notepad")
+        (T (alert (strcat "No Editor known for " os)) "echo")))
+
+(defun open_dcl ( / name)
+  (setq name (get_current_name))
+  (startapp (editor) (dcl_path DIR name)))
+
+(defun open_lsp ( / name)
+  (setq name (get_current_name))
+  (startapp (editor) (lsp_path DIR name)))
+
 (init_listbox_names)
 
-(action_tile "run" "(run_name)")
-(action_tile "exit" "(done_dialog 0)")
+(action_tile "button_run" "(run_name)")
+(action_tile "button_dcl" "(open_dcl)")
+(action_tile "button_lsp" "(open_lsp)")
+(action_tile "button_exit" "(done_dialog 0)")
 
 (start_dialog)
 (unload_dialog dcl_id)

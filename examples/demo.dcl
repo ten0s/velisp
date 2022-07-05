@@ -15,26 +15,43 @@ demo_dlg : dialog {
       }
     }
     : column {
-      : text {
-        key = "text_dcl";
-        label = "";
-        alignment = centered;
+      : row {
+        : text {
+          key = "text_dcl";
+          label = "";
+          alignment = centered;
+        }
+        : button {
+          key = "button_dcl";
+          label = "Open";
+          alignment = right;
+        }
       }
-      : list_box {
-        key = "listbox_dcl";
-        width = 100;
-        height = 20;
+      : row {
+        : list_box {
+          key = "listbox_dcl";
+          width = 100;
+          height = 18;
+        }
       }
 
-      : text {
-        key = "text_lsp";
-        label = "";
-        alignment = centered;
+      : row {
+        : text {
+          key = "text_lsp";
+          label = "";
+          alignment = right;
+        }
+        : button {
+          key = "button_lsp";
+          label = "Open";
+        }
       }
-      : list_box {
-        key = "listbox_lsp";
-        width = 100;
-        height = 20;
+      : row {
+        : list_box {
+          key = "listbox_lsp";
+          width = 100;
+          height = 18;
+        }
       }
     }
   }
@@ -43,7 +60,7 @@ demo_dlg : dialog {
     : column {
       : button {
         alignment = left;
-        key = "run";
+        key = "button_run";
         label = "&Run";
         width = 10;
       }
@@ -52,7 +69,7 @@ demo_dlg : dialog {
     : column {
       : button {
         alignment = right;
-        key = "exit";
+        key = "button_exit";
         label = "E&xit";
         width = 10;
       }
