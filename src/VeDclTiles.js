@@ -599,10 +599,9 @@ class Dialog extends Cluster {
     }
 
     gtkListChange(listStore, index, str) {
-        const path = Gtk.TreePath.new()
+        const path = new Gtk.TreePath()
         path.appendIndex(index)
         const [valid, iter] = listStore.getIter(path)
-        path.free()
         if (!valid) {
             throw new Error(`Invalid add_list index: ${index}`)
         }
@@ -1740,10 +1739,9 @@ class ListBox extends Tile {
             .map(v => Number.parseInt(v))
             .filter(Number.isInteger)
             .forEach(index => {
-                const path = Gtk.TreePath.new()
+                const path = new Gtk.TreePath()
                 path.appendIndex(index)
                 selection.selectPath(path)
-                path.free()
             })
     }
 
