@@ -13,6 +13,18 @@
     (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
     (exit 1)))
 
+(defun get_os ()
+  (nth 3 (split " " (ver))))
+
+(defun editor ( / os)
+  (setq os (get_os))
+  (cond ((= os "Linux")   "emacs")
+        ((= os "Windows") "notepad")
+        (T (alert (strcat "No Editor known for " os)) "echo")))
+
+(defun path_sep ()
+  (if (= (get_os) "Windows") "\\" "/"))
+
 (defun println (what)
   (princ what)
   (princ "\n"))
@@ -26,7 +38,7 @@
   (vl-filename-directory %VELISP_LSP_FILE%))
 
 (defun file_path (dir name ext)
-  (strcat dir "/" name ext))
+  (strcat dir (path_sep) name ext))
 
 (defun lsp_path (dir name)
   (file_path dir name ".lsp"))
@@ -90,12 +102,6 @@
   (setq argv0 (argv 0))
   (println (strcat "Run " (vl-princ-to-string argv0) " " lsp))
   (startapp argv0 lsp))
-
-(defun editor ( / os)
-  (setq os (nth 3 (split " " (ver))))
-  (cond ((= os "Linux")   "emacs")
-        ((= os "Windows") "notepad")
-        (T (alert (strcat "No Editor known for " os)) "echo")))
 
 (defun open_dcl ( / name)
   (setq name (get_current_name))
