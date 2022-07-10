@@ -2,7 +2,7 @@
 
 #
 # See how to determine what DLLs are needed
-# https://ten0s.github.io/blog/2022/07/01/debugging-dll-loading
+# https://ten0s.github.io/blog/2022/07/01/debugging-dll-loading-errors
 #
 
 if [[ $# -ne 1 ]]; then
