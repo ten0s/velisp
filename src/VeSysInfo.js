@@ -26,7 +26,8 @@ import __rootdir from './VeRootDir.js'
 const config = JSON.parse(readFileSync(join(__rootdir, 'package.json')))
 
 const platform = () => {
-    switch (process.platform) {
+    const os = process.platform
+    switch (os) {
     case 'android':
         return 'Android'
     case 'linux':
@@ -34,7 +35,7 @@ const platform = () => {
     case 'win32':
         return 'Windows'
     default:
-        return process.platform
+        return os
     }
 }
 
