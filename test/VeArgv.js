@@ -5,7 +5,6 @@ QUnit.test('VeArgv.options', assert => {
     assert.deepEqual(VeArgv.options(), [
         {option: '-e, --eval <expr>', default: undefined, help: 'evaluate script'},
         {option: '--no-dcl'         , default: true     , help: 'run without dcl'},
-        {option: '--tree'           , default: undefined, help: 'show parse tree'},
     ])
 })
 
@@ -44,7 +43,7 @@ QUnit.test('VeArgv.lspArgv', assert => {
         ['script.lsp', '1', 'two']
     )
     assert.deepEqual(
-        VeArgv.lspArgv(['node', 'src/main.js', '--no-dcl', '--tree', 'script.lsp', '1', 'two']),
+        VeArgv.lspArgv(['node', 'src/main.js', '--no-dcl', 'script.lsp', '1', 'two']),
         ['script.lsp', '1', 'two']
     )
     assert.deepEqual(

@@ -22,7 +22,6 @@
 const opts = [
     {short: '-e', full: '--eval'  , arg: '<expr>' , default: undefined, help: 'evaluate script'},
     {short: ''  , full: '--no-dcl', arg: undefined, default: true     , help: 'run without dcl'},
-    {short: ''  , full: '--tree'  , arg: undefined, default: undefined, help: 'show parse tree'},
 ]
 
 // :: () -> [{option, default, help}]

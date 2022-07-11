@@ -42,9 +42,15 @@ const platform = () => {
 const VeSysInfo = {
     isRepl: false,
     withDcl: true,
+
     name: config.name,
     version: config.version,
     platform: platform(),
+
+    debug: {
+        help: false,
+        tree: false,
+    },
 }
 
 export default VeSysInfo

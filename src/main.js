@@ -44,6 +44,7 @@ import {Bool, Str} from './VeLispTypes.js'
 main()
 
 function main() {
+    parseDebugEnv(VeSysInfo.debug)
     adjustEnvVars()
     const initArgv = VeArgv.initArgv(process.argv)
     const program = addCommandOptions(new Command())
@@ -51,7 +52,7 @@ function main() {
         .arguments('[file]')
         .action(async (file) => {
             const options = program.opts()
-            const action = runAction(options)
+            const action = runAction(VeSysInfo.debug)
 
             const context = new VeLispContext()
             VeLispContextIniter.initWithKernel(context)
@@ -82,6 +83,17 @@ function main() {
             }
         })
         .parse(initArgv)
+}
+
+function parseDebugEnv(debug) {
+    const what = (process.env['VELISP_DEBUG'] || '').trim().toLowerCase()
+    if (what) {
+        if (debug.hasOwnProperty(what)) {
+            debug[what] = true
+        } else {
+            console.error(`Warning: debug option \`${what}\` is unknown; try VELISP_DEBUG=help`)
+        }
+    }
 }
 
 function adjustEnvVars() {
@@ -115,14 +127,19 @@ function addCommandOptions(command) {
     return command
 }
 
-function runAction(options) {
-    if (options.tree) {
+function runAction(debug) {
+    switch (true) {
+    case debug.help:
+        console.error(debugHelp())
+        process.exit(0)
+        return
+    case debug.tree:
         return (input, context) => {
             console.log(tree(input, context))
         }
+    default:
+        return evaluate
     }
-
-    return evaluate
 }
 
 function maybeInjectLib(action, context) {
@@ -294,3 +311,10 @@ function licenseInfo() {
            'This is free software: you are free to change and redistribute it.           \n' +
            'There is NO WARRANTY, to the extent permitted by law.'
 }
+
+function debugHelp() {
+    return 'Valid options for the VELISP_DEBUG environment variable are:\n' +
+           '  tree        show parse tree                               \n' +
+           '  help        show this help message and exit               \n'
+}
+
