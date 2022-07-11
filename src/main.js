@@ -156,6 +156,14 @@ async function maybeInjectDcl(action, withDcl, context) {
     context.setSym('%VELISP_DCL%', new Bool(withDcl))
 }
 
+function printError(e) {
+    if (VeSysInfo.debug.stacktrace) {
+        console.error(e)
+    } else {
+        console.error(`Error: ${e.message}`)
+    }
+}
+
 function readStream(stream, action, context) {
     let input = ''
     stream.on('data', (chunk) => {
@@ -167,7 +175,7 @@ function readStream(stream, action, context) {
                 action(input, context)
             }
         } catch (e) {
-            console.error(e)
+            printError(e)
         }
     })
     stream.on('error', (e) => {
@@ -229,7 +237,7 @@ function startRepl(action, context) {
                             console.log(inspect(result))
                         }
                     } catch (e) {
-                        console.error(e)
+                        printError(e)
                         // fall through
                     }
                 }
@@ -246,7 +254,7 @@ function startRepl(action, context) {
         if (historyFile !== '') { // Is enabled?
             replServer.setupHistory(historyFile, (err, _repl) => {
                 if (err) {
-                    console.log(err)
+                    console.error(err)
                 }
             })
         }
@@ -264,7 +272,7 @@ function replEval(repl, input, action, context, callback) {
             if (isRecoverable(input, e)) {
                 return callback(new repl.Recoverable(e))
             } else {
-                console.error(e)
+                printError(e)
                 // fall through
             }
         }
@@ -315,7 +323,7 @@ function licenseInfo() {
 function debugHelp() {
     return 'Valid options for the VELISP_DEBUG environment variable are:\n' +
            '  glade       show Glade XML                                \n' +
+           '  stacktrace  show full stacktrace                          \n' +
            '  tree        show parse tree                               \n' +
            '  help        show this help message and exit               \n'
 }
-
