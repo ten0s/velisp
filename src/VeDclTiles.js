@@ -1290,7 +1290,7 @@ class EditBox extends Tile {
         this.mnemonic = ''
         this.value = ''
         this.width = -1
-        //this.password_char = '*'
+        //this.password_char = '*' // TODO
         // Locals
         this._action = null
         this._callback = null
