@@ -48,8 +48,9 @@ const VeSysInfo = {
     platform: platform(),
 
     debug: {
-        help: false,
+        glade: false,
         tree: false,
+        help: false,
     },
 }
 

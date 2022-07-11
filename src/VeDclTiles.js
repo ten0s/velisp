@@ -23,6 +23,7 @@ import {Int, Str} from './VeLispTypes.js'
 import RGB from './VeDclRGB.js'
 import {unescape} from './VeUtil.js'
 import * as VeLispEvaluator from './VeLispEvaluator.js'
+import VeSysInfo from './VeSysInfo.js'
 
 import gi from 'node-gtk'
 
@@ -670,7 +671,9 @@ class Dialog extends Cluster {
         this._listStores = this.getListStores()
         // Init
         const gtkXml = this.gtkXml()
-        //console.log(gtkXml)
+        if (VeSysInfo.debug.glade) {
+            console.error(gtkXml.trim())
+        }
         this._gtkBuilder = new Gtk.Builder()
         this._gtkBuilder.addFromString(gtkXml, gtkXml.length)
         this._gtkWindow = this.gtkFindWidget(this.id)
@@ -730,7 +733,6 @@ class Dialog extends Cluster {
         return `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="3.20"/>
   <object class="GtkWindow" ${id}>
     <property name="can_focus">False</property>
     <property name="title">${title}</property>

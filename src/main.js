@@ -314,6 +314,7 @@ function licenseInfo() {
 
 function debugHelp() {
     return 'Valid options for the VELISP_DEBUG environment variable are:\n' +
+           '  glade       show Glade XML                                \n' +
            '  tree        show parse tree                               \n' +
            '  help        show this help message and exit               \n'
 }
