@@ -128,6 +128,7 @@ class Tile {
         return value ? 'bold' : 'normal'
     }
 
+    // https://help.autodesk.com/view/ACD/2016/ENU/?guid=GUID-1F9D45C8-A45B-4F85-B741-8B9DCCEBA040
     _dcl_to_gtk_align(alignment) {
         switch (alignment) {
         case Alignment.LEFT:
