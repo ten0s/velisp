@@ -1,11 +1,10 @@
-.PHONY: grammar install test
-
 BRANCH := ${shell git branch --no-color | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'}
 VERSION := ${shell jq -r .version package.json}
 NODE := ${shell node --version | sed -E 's/v([0-9]+)\..*/node\1/'}
 
 all: install
 
+.PHONY: install
 install:
 	npm install
 	$(MAKE) applyPatches
@@ -49,6 +48,7 @@ macosPackage:
 	$(MAKE) pkgMacos
 	$(MAKE) tarMacos
 
+.PHONY: grammar
 grammar:
 	antlr4 -Dlanguage=JavaScript -lib grammar -visitor -no-listener grammar/VeLisp.g4
 	antlr4 -Dlanguage=JavaScript -lib grammar -no-visitor -listener grammar/VeDcl.g4
@@ -59,6 +59,7 @@ run:
 tree:
 	node src/main.js --run tree
 
+.PHONY: test
 test: qunit expect-test vl-unit
 
 qunit:
