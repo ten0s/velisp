@@ -1,4 +1,4 @@
-default_action : dialog {
+default_action_dlg : dialog {
   label = "Default Action";
   : button {
     key = "one";

@@ -1,4 +1,4 @@
-column_alignment : dialog {
+column_alignment_dlg : dialog {
   label = "Column Alignment";
 
   : text { label = "No Column / No Row wrap"; }

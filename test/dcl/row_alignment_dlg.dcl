@@ -1,4 +1,4 @@
-row_alignment : dialog {
+row_alignment_dlg : dialog {
   label = "Row Alignment";
 
   : text { label = "No Column"; }
