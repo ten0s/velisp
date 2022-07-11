@@ -29,7 +29,7 @@ $ node --inspect-brk src/main.js
 $ grep 'VeLisp Extension' AutoLISP-Functions.md DCL-Functions.md
 ```
 
-## How to see Glade XML for DCL?
+## How to see [Glade](https://glade.gnome.org/) XML for DCL?
 
 ```
 $ VELISP_DEBUG=glade node src/main.js examples/calc 2>calc.glade
