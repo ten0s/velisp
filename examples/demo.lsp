@@ -76,13 +76,13 @@
   (setq name (get_current_name))
 
   (setq dcl (dcl_path DIR name))
-  (set_tile "text_dcl" (strcat "DCL File: " dcl))
+  (set_tile "text_dcl" dcl)
   (start_list "listbox_dcl" START_LIST_CLEAR)
     (mapcar 'add_list (read_lines dcl))
   (end_list)
 
   (setq lsp (lsp_path DIR name))
-  (set_tile "text_lsp" (strcat "LSP File: " lsp))
+  (set_tile "text_lsp" lsp)
   (start_list "listbox_lsp" START_LIST_CLEAR)
     (mapcar 'add_list (read_lines lsp))
   (end_list))

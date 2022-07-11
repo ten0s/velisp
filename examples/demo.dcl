@@ -5,8 +5,9 @@ demo_dlg : dialog {
   : row {
     : column {
       : text {
-        label = "Names";
         alignment = centered;
+        label = "Names";
+        is_bold = true;
       }
       : list_box {
         key = "listbox_names";
@@ -17,14 +18,16 @@ demo_dlg : dialog {
     : column {
       : row {
         : text {
+          label = "DCL File";
+          is_bold = true;
+        }
+        : text {
           key = "text_dcl";
           label = "";
-          alignment = centered;
         }
         : button {
           key = "button_dcl";
           label = "Open";
-          alignment = right;
         }
       }
       : row {
@@ -37,9 +40,12 @@ demo_dlg : dialog {
 
       : row {
         : text {
+          label = "LSP File";
+          is_bold = true;
+        }
+        : text {
           key = "text_lsp";
           label = "";
-          alignment = right;
         }
         : button {
           key = "button_lsp";
