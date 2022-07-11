@@ -32,11 +32,9 @@ let GObject = null
 
 const InitGtk = () => {
     if (!Gtk || !Gdk || !GObject) {
+        GObject = gi.require('GObject', '2.0')
         Gtk = gi.require('Gtk', '3.0')
         Gdk = gi.require('Gdk', '3.0')
-        // Required under X11?
-        //Gdk = gi.require('GdkX11', '3.0')
-        GObject = gi.require('GObject')
 
         gi.startLoop()
         Gtk.init()
