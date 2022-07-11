@@ -47,7 +47,7 @@ Run Command Prompt (cmd.exe)
 
 ```
 > velisp
-VeLisp {{version}} on win32
+VeLisp {{version}} on Windows
 Type ".license" or ".help" for more information
 > (+ 1 2)
 3

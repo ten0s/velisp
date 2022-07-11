@@ -63,7 +63,7 @@ Run Command Prompt (cmd.exe)
 
 ```
 > velisp
-VeLisp 0.7.0 on win32
+VeLisp 0.7.0 on Windows
 Type ".license" or ".help" for more information
 > (+ 1 2)
 3
@@ -172,7 +172,7 @@ $ cd velisp-0.7.0-linux-x64
 
 ```
 $ velisp
-VeLisp 0.7.0 on linux
+VeLisp 0.7.0 on Linux
 Type ".license" or ".help" for more information
 > (+ 1 2)
 3

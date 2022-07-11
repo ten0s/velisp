@@ -33,7 +33,7 @@ $ cd velisp-{{version}}-linux-x64
 
 ```
 $ velisp
-VeLisp {{version}} on linux
+VeLisp {{version}} on Linux
 Type ".license" or ".help" for more information
 > (+ 1 2)
 3
