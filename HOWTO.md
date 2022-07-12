@@ -32,8 +32,8 @@ $ grep 'VeLisp Extension' AutoLISP-Functions.md DCL-Functions.md
 ## How to see [Glade](https://glade.gnome.org/) XML for DCL?
 
 ```
-$ VELISP_DEBUG=glade node src/main.js examples/calc 2>calc.glade
-$ glade calc.glade
+$ VELISP_DEBUG=glade node src/main.js examples/calc 2>calc.xml
+$ glade calc.xml
 ```
 
 ## How to see full stacktrace?
