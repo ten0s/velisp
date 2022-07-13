@@ -27,7 +27,9 @@ demo_dlg : dialog {
         }
         : button {
           key = "button_dcl";
-          label = "Open";
+          label = "&Open";
+          width = 10;
+          fixed_width = true;
         }
       }
       : row {
@@ -49,7 +51,9 @@ demo_dlg : dialog {
         }
         : button {
           key = "button_lsp";
-          label = "Open";
+          label = "O&pen";
+          width = 10;
+          fixed_width = true;
         }
       }
       : row {
@@ -69,15 +73,17 @@ demo_dlg : dialog {
         key = "button_run";
         label = "&Run";
         width = 10;
+        fixed_width = true;
       }
     }
 
     : column {
-      : button {
+      : cancel_button {
         alignment = right;
         key = "button_exit";
         label = "E&xit";
         width = 10;
+        fixed_width = true;
       }
     }
   }

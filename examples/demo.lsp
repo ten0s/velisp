@@ -1,20 +1,25 @@
 ;;;; SPDX-License-Identifier: 0BSD
 
-(setq dcl_file "demo.dcl")
-(setq dlg_id "demo_dlg")
+;;;;
+;;;; VeLisp functions missing in AutoCAD
+;;;;
 
-(if (< (setq dcl_id (load_dialog dcl_file)) 0)
-  (progn
-    (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
-    (exit 1)))
+(defun is_autocad ()
+  (null %VELISP_VERSION%))
 
-(if (not (new_dialog dlg_id dcl_id))
-  (progn
-    (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
-    (exit 1)))
+(if (is_autocad)
+    (progn
+      (setq START_LIST_CLEAR 3)
+      (load "../lib/velisp/list.lsp")
+      (load "../lib/velisp/string.lsp")))
+
+;;;;
+;;;; Main Logic
+;;;;
 
 (defun get_os ()
-  (nth 3 (split " " (ver))))
+  (if (is_autocad) "Windows"
+    (nth 3 (split " " (ver)))))
 
 (defun editor ( / os)
   (setq os (get_os))
@@ -29,13 +34,17 @@
   (princ what)
   (princ "\n"))
 
+(defun get_current_file ()
+  (if %VELISP_LSP_FILE% %VELISP_LSP_FILE%
+    (findfile "demo.lsp")))
+
 (defun get_file_dir ()
   ;; Determine current LSP file directory
   ;; Works with either:
   ;; $ velisp examples/demo.lsp
   ;; > (load "examples/demo.lsp")
   ;; > (startapp (argv 0) "examples/demo.lsp")
-  (vl-filename-directory %VELISP_LSP_FILE%))
+  (vl-filename-directory (get_current_file)))
 
 (defun file_path (dir name ext)
   (strcat dir (path_sep) name ext))
@@ -53,7 +62,7 @@
            (setq name (vl-filename-base lsp))
            (if (vl-file-size (dcl_path dir name))
                (setq names (cons name names))))
-  (sort '< names))
+  (sort < names))
 
 (setq DIR (get_file_dir))
 (setq NAMES (get_names DIR))
@@ -99,24 +108,47 @@
   ;; Run currently selected name
   (setq name (get_current_name))
   (setq lsp (lsp_path DIR name))
-  (setq argv0 (argv 0))
-  (println (strcat "Run " (vl-princ-to-string argv0) " " lsp))
-  (startapp argv0 lsp))
+  (if (is_autocad)
+      (alert (strcat "Can't run '" name "' inside AutoCAD"))
+    (progn
+      (setq argv0 (argv 0))
+      (println (strcat "Run " (vl-princ-to-string argv0) " " lsp))
+      (startapp argv0 lsp))))
 
-(defun open_dcl ( / name)
+(defun open_file (path_func / name)
   (setq name (get_current_name))
-  (startapp (editor) (dcl_path DIR name)))
+  (startapp (editor) (path_func DIR name)))
 
-(defun open_lsp ( / name)
-  (setq name (get_current_name))
-  (startapp (editor) (lsp_path DIR name)))
+(defun open_dcl ()
+  (open_file dcl_path))
 
-(init_listbox_names)
+(defun open_lsp ()
+  (open_file lsp_path))
+
+;;;;
+;;;; DCL Dialog
+;;;;
+
+(setq dcl_file "demo.dcl")
+(setq dlg_id "demo_dlg")
+
+(if (< (setq dcl_id (load_dialog dcl_file)) 0)
+  (progn
+    (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
+    (exit 1)))
+
+(if (not (new_dialog dlg_id dcl_id))
+  (progn
+    (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
+    (exit 1)))
 
 (action_tile "button_run" "(run_name)")
 (action_tile "button_dcl" "(open_dcl)")
 (action_tile "button_lsp" "(open_lsp)")
 (action_tile "button_exit" "(done_dialog 0)")
+
+(init_listbox_names)
+(show_current_name)
 
 (start_dialog)
 (unload_dialog dcl_id)
