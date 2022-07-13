@@ -2,7 +2,7 @@
 
 cell_button : image_button {
   width = 6;
-    height = 3;
+  height = 3;
 }
 
 fifteen : dialog {
