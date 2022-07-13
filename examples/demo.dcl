@@ -24,6 +24,7 @@ demo_dlg : dialog {
         : text {
           key = "text_dcl";
           label = "";
+          width = 50;
         }
         : button {
           key = "button_dcl";
@@ -48,6 +49,7 @@ demo_dlg : dialog {
         : text {
           key = "text_lsp";
           label = "";
+          width = 50;
         }
         : button {
           key = "button_lsp";
