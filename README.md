@@ -145,6 +145,31 @@ $ echo (alert (strcat "Hello from " (argv 1) "!")) | velisp -- Arg
 55
 ```
 
+### Run the examples in AutoCAD
+
+#### Add the examples folder to AutoCAD's search path
+
+1. Tools -> Options...
+2. Files -> Support File Search Path
+3. Click Add...
+4. Click Browse...
+5. Browse for Folder C:\velisp-0.7.0-win-x64\examples
+6. Click OK
+7. Click Apply
+7. Click OK
+
+#### Run the examples
+
+1. Tools -> AutoLISP -> Visual LISP Editor
+2. Run in Visual LISP Console
+
+```
+_$ (load "calc")
+_$ (load "mines")
+_$ (load "fifteen")
+_$ (load "demo")
+```
+
 ## Linux
 
 ### Install
