@@ -39,6 +39,7 @@ import {
 import VeLispContext from './VeLispContext.js'
 import VeLispContextIniter from './VeLispContextIniter.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
+import {fmtError} from './VeLispError.js'
 import {Bool, Str} from './VeLispTypes.js'
 
 main()
@@ -179,7 +180,7 @@ function readStream(stream, action, context) {
         }
     })
     stream.on('error', (e) => {
-        console.error(e)
+        printError(new Error(fmtError('open', e)))
     })
 }
 
