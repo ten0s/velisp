@@ -36,12 +36,6 @@ expect {
     timeout {exit 1}
     eof {exit 2}
 }
-send "\n\r"
-expect {
-    "^<||>\n" {}
-    timeout {exit 1}
-    eof {exit 2}
-}
 send "Line 2\r"
 expect {
     "^<|Line 2|>\n" {}
