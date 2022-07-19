@@ -19,19 +19,26 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
+// :: ((any) -> bool) -> ((any) -> bool)
 const not = func => (x) => !(func(x))
 
-const contains = arr => item =>
-    arr.indexOf(item) !== -1
+// :: ([x], x) -> bool
+const contains = xs => x => xs.includes(x)
 
 if (!Array.prototype.with) {
-    Array.prototype.with = function vvith(items) {
-        return this.filter(contains(items))
+    Array.prototype.with = function vvith(xs = []) {
+        if (!Array.isArray(xs)) {
+            xs = [xs]
+        }
+        return this.filter(contains(xs))
     }
 }
 
 if (!Array.prototype.without) {
-    Array.prototype.without = function without(items) {
-        return this.filter(not(contains(items)))
+    Array.prototype.without = function without(xs = []) {
+        if (!Array.isArray(xs)) {
+            xs = [xs]
+        }
+        return this.filter(not(contains(xs)))
     }
 }

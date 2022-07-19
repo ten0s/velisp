@@ -1,5 +1,5 @@
 import QUnit from 'qunit'
-import '../src/VeJsExt.js' // array.without
+import '../src/VeJsExt.js' // Array.without
 import VeRegex from '../src/VeRegex.js'
 
 const DIGITS = Array.from('0123456789')
