@@ -22,6 +22,7 @@
 import fs from 'fs'
 import os from 'os'
 import {find, escape} from './VeUtil.js'
+import './VeJsExt.js' // Array.without
 
 const TRU = 'T'
 const NIL = 'nil'
@@ -890,7 +891,7 @@ class File {
         if (this.state === FileState.CLOSED || this.mode !== FileMode.READ) {
             throw new Error(`read-line: bad file ${this}`)
         }
-        const stops = Array.from(eol).map(c => c.charCodeAt())
+        let stops = Array.from(eol).map(c => c.charCodeAt())
         let str = ''
         for (;;) {
             let buf = undefined
@@ -916,10 +917,16 @@ class File {
                 if (find(buf[i], stops)) {
                     str += buf.toString('utf8', 0, i)
 
-                    // Drop all trailing stops
+                    // Drop once! stops
+                    stops = stops.without(buf[i])
+                    if (!stops.length) break
+
                     let j = i+1
-                    for (; j < buf.length; j++) {
-                        if (!find(buf[j], stops)) {
+                    for (; j < buf.length && stops.length > 0; j++) {
+                        if (find(buf[j], stops)) {
+                            stops = stops.without(buf[j])
+                            continue
+                        } else {
                             break
                         }
                     }

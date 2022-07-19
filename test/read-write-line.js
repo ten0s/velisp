@@ -1,6 +1,6 @@
 import {TestRunner} from './test-runner.js'
 import {rm, touch, tryRm, tryTouch} from './FsUtil.js'
-import {Bool, Str} from '../src/VeLispTypes.js'
+import {Bool, List, Str} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'read-write-line',
@@ -15,6 +15,9 @@ TestRunner.run({
         tryTouch('rwl7.txt')
         touch('rwl8.txt')
         tryTouch('rwl9.txt')
+        touch('rwl10.txt')
+        touch('rwl11.txt')
+        touch('rwl12.txt')
     },
 
     teardown: () => {
@@ -27,16 +30,21 @@ TestRunner.run({
         tryRm('rwl7.txt')
         rm('rwl8.txt')
         tryRm('rwl9.txt')
+        rm('rwl10.txt')
+        rm('rwl11.txt')
+        rm('rwl12.txt')
     },
 
     tests: [
+        // <EOF>
         {test:`
 (setq f (open "rwl1.txt" "r"))
 (setq res (read-line f))
 (close f)
-res
-`, result: new Bool(false)},
+(list res)
+`, result: new List([new Bool(false)])},
 
+        // Hello<CR><SPACE><CR>World<CR><EOF>
         {test: `
 (setq f (open "rwl2.txt" "w"))
 (write-line "Hello" f)
@@ -47,9 +55,59 @@ res
 (setq l1 (read-line f))
 (setq l2 (read-line f))
 (setq l3 (read-line f))
+(setq l4 (read-line f))
 (close f)
-(strcat l1 l2 l3)
-`, result: new Str('Hello World')},
+(list l1 l2 l3 l4)
+`, result: new List([new Str('Hello'), new Str(' '), new Str('World'), new Bool(false)])},
+
+        // Hello<EOF>
+        {test: `
+(setq f (open "rwl10.txt" "w"))
+(write-char (ascii "H") f)
+(write-char (ascii "e") f)
+(write-char (ascii "l") f)
+(write-char (ascii "l") f)
+(write-char (ascii "o") f)
+(close f)
+(setq f (open "rwl10.txt" "r"))
+(setq l1 (read-line f))
+(setq l2 (read-line f))
+(close f)
+(list l1 l2)
+`, result: new List([new Str('Hello'), new Bool(false)])},
+
+        // Hello<CR><EOF>
+        {test: `
+(setq f (open "rwl11.txt" "w"))
+(write-char (ascii "H") f)
+(write-char (ascii "e") f)
+(write-char (ascii "l") f)
+(write-char (ascii "l") f)
+(write-char (ascii "o") f)
+(write-line ""f)
+(close f)
+(setq f (open "rwl11.txt" "r"))
+(setq l1 (read-line f))
+(setq l2 (read-line f))
+(close f)
+(list l1 l2)
+`, result: new List([new Str('Hello'), new Bool(false)])},
+
+        // Hello<CR><CR>World<CR><EOF>
+        {test: `
+(setq f (open "rwl12.txt" "w"))
+(write-line "Hello" f)
+(write-line "" f)
+(write-line "World" f)
+(close f)
+(setq f (open "rwl12.txt" "r"))
+(setq l1 (read-line f))
+(setq l2 (read-line f))
+(setq l3 (read-line f))
+(setq l4 (read-line f))
+(close f)
+(list l1 l2 l3 l4)
+`, result: new List([new Str('Hello'), new Str(''), new Str('World'), new Bool(false)])},
     ],
 
     errors: [

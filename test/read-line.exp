@@ -30,6 +30,26 @@ expect {
 }
 
 expect "^Test #2\n"
+send "Line 1\r"
+expect {
+    "^<|Line 1|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+send "\n\r"
+expect {
+    "^<||>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+send "Line 2\r"
+expect {
+    "^<|Line 2|>\n" {}
+    timeout {exit 1}
+    eof {exit 2}
+}
+
+expect "^Test #3\n"
 # Default read buffer length is 32
 # There should be 2 readings concatenated:
 # 1. abcdefghijlkmnopqrstuvwxyz012345
@@ -41,7 +61,7 @@ expect {
     eof {exit 2}
 }
 
-expect "^Test #3\n"
+expect "^Test #4\n"
 # Default read buffer length is 32
 # There should be 2 readings splited:
 # 1. abcdefghijlkmnopqrstuvwxyz\n01234
