@@ -257,7 +257,7 @@ export const initContext = (context) => {
         const file = ensureType('close: `file-desc`', args[0], [File])
         return file.close()
     }))
-    context.setSym('READ-CHAR', new Fun('read-char', ['file-desc'], [], (self, args) => {
+    context.setSym('READ-CHAR', new Fun('read-char', ['[file-desc]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('read-char: too many arguments')
         }
@@ -277,7 +277,7 @@ export const initContext = (context) => {
         }
         return char
     }))
-    context.setSym('READ-LINE', new Fun('read-line', ['file-desc'], [], (self, args) => {
+    context.setSym('READ-LINE', new Fun('read-line', ['[file-desc]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('read-line: too many arguments')
         }
@@ -297,7 +297,7 @@ export const initContext = (context) => {
         }
         return line
     }))
-    context.setSym('WRITE-CHAR', new Fun('write-char', ['num', ['file-desc']], [], (self, args) => {
+    context.setSym('WRITE-CHAR', new Fun('write-char', ['num', '[file-desc]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('write-char: too few arguments')
         }
@@ -322,7 +322,7 @@ export const initContext = (context) => {
         }
         return num
     }))
-    context.setSym('WRITE-LINE', new Fun('write-line', ['string', ['file-desc']], [], (self, args) => {
+    context.setSym('WRITE-LINE', new Fun('write-line', ['string', '[file-desc]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('write-line: too few arguments')
         }
