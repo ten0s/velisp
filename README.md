@@ -31,15 +31,15 @@ just like regular applications on Windows, Linux and MacOS.
 
 #### Download and unarchive
 
-1. Download https://github.com/ten0s/velisp/releases/download/0.7.0/velisp-0.7.0-win-x64.zip
+1. Download https://github.com/ten0s/velisp/releases/download/0.7.1/velisp-0.7.1-win-x64.zip
 2. Open Downloads folder
-3. Select velisp-0.7.0-win-x64.zip
+3. Select velisp-0.7.1-win-x64.zip
 4. Press the right mouse button
 5. Click 'Extract All...'
 6. Enter C:\
 7. Click 'Extract'
 
-The steps below assume the archive was extracted to C:\velisp-0.7.0-win-x64
+The steps below assume the archive was extracted to C:\velisp-0.7.1-win-x64
 according to the steps above.
 
 #### Add the folder to PATH
@@ -50,7 +50,7 @@ according to the steps above.
 4. Select 'Path' inside the User variables block
 5. Click 'Edit...'
 6. Click 'New...'
-7. Enter C:\velisp-0.7.0-win-x64
+7. Enter C:\velisp-0.7.1-win-x64
 8. Click 'OK'
 9. Click 'OK'
 
@@ -59,14 +59,14 @@ according to the steps above.
 Run Command Prompt (cmd.exe)
 
 ```
-> cd C:\velisp-0.7.0-win-x64
+> cd C:\velisp-0.7.1-win-x64
 ```
 
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
 > velisp
-VeLisp 0.7.0 on Windows
+VeLisp 0.7.1 on Windows
 Type ".license" or ".help" for more information
 > (+ 1 2)
 3
@@ -164,7 +164,7 @@ $ echo (alert (strcat "Hello from " (argv 1) "!")) | velisp -- Arg
 2. Files -> Support File Search Path
 3. Click Add...
 4. Click Browse...
-5. Browse for Folder C:\velisp-0.7.0-win-x64\examples
+5. Browse for Folder C:\velisp-0.7.1-win-x64\examples
 6. Click OK
 7. Click Apply
 7. Click OK
@@ -188,27 +188,27 @@ _$ (load "demo")
 #### Download and unarchive
 
 ```
-$ wget https://github.com/ten0s/velisp/releases/download/0.7.0/velisp-0.7.0-linux-x64.tar.gz
-$ tar xfz velisp-0.7.0-linux-x64.tar.gz
+$ wget https://github.com/ten0s/velisp/releases/download/0.7.1/velisp-0.7.1-linux-x64.tar.gz
+$ tar xfz velisp-0.7.1-linux-x64.tar.gz
 ```
 
 #### Add to .bashrc
 
 ```
-export PATH=<PATH_TO>/velisp-0.7.0-linux-x64:$PATH
+export PATH=<PATH_TO>/velisp-0.7.1-linux-x64:$PATH
 ```
 
 ### Usage
 
 ```
-$ cd velisp-0.7.0-linux-x64
+$ cd velisp-0.7.1-linux-x64
 ```
 
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
 $ velisp
-VeLisp 0.7.0 on Linux
+VeLisp 0.7.1 on Linux
 Type ".license" or ".help" for more information
 > (+ 1 2)
 3
