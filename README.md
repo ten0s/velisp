@@ -117,6 +117,14 @@ Run the Fifteen Puzzle example
 
 ![App Fifteen Windows Image](/images/app-fifteen-windows.png)
 
+Run the Demo example
+
+```
+> velisp examples\demo.lsp
+```
+
+![App Demo Windows Image](/images/app-demo-windows.png)
+
 ### Run code from standard input
 
 ```
