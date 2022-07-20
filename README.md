@@ -251,6 +251,15 @@ $ velisp examples/fifteen.lsp
 
 ![App Fifteen Linux Image](/images/app-fifteen-linux.png)
 
+Run the Demo example
+
+```
+$ velisp examples/demo.lsp
+```
+
+![App Demo Linux Image](/images/app-demo-linux.png)
+
+
 #### Run code from standard input
 
 ```
