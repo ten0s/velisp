@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#
+# See how to determine what DLLs and Typelibs are needed
+# https://ten0s.github.io/blog/2022/07/01/debugging-dll-loading-errors
+# https://ten0s.github.io/blog/2022/07/25/find-dlls-and-typelibs-dependencies-for-nodejs-gtk-application-on-windows
+#
+
 function is-sls-enabled() {
     IMAGE=$1
     reg query "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\$IMAGE" | grep -Eq "GlobalFlag\s+REG_SZ\s+0x00000002"
