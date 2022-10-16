@@ -75,4 +75,7 @@ while true; do
 done
 rm $TEMP
 
+ls mingw64/bin/                  | xargs -0 > windows/mingw64-dlls.txt
+ls mingw64/lib/girepository-1.0/ | xargs -0 > windows/mingw64-typelibs.txt
+
 exit 0

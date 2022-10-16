@@ -16,10 +16,10 @@ DEST_DIR=$1
 
 mkdir -p $DEST_DIR/mingw64/bin
 cat $BASE_DIR/mingw64-dlls.txt | \
-    xargs -L1 -I'{}' cp /mingw64/bin/{} $DEST_DIR/mingw64/bin/
+    xargs -I'{}' cp /mingw64/bin/{} $DEST_DIR/mingw64/bin/
 
 mkdir -p $DEST_DIR/mingw64/lib/girepository-1.0
 cat $BASE_DIR/mingw64-typelibs.txt | \
-    xargs -L1 -I'{}' cp /mingw64/lib/girepository-1.0/{} $DEST_DIR/mingw64/lib/girepository-1.0/
+    xargs -I'{}' cp /mingw64/lib/girepository-1.0/{} $DEST_DIR/mingw64/lib/girepository-1.0/
 
 exit 0
