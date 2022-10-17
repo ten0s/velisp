@@ -11,7 +11,6 @@ GLib-2.0.typelib
 GModule-2.0.typelib
 GObject-2.0.typelib
 Gtk-3.0.typelib
-GtkSource-4.typelib
 HarfBuzz-0.0.typelib
 Pango-1.0.typelib
 PangoCairo-1.0.typelib
