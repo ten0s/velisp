@@ -48,6 +48,16 @@ $ ./build-windows-package.sh
 Build Done
 ```
 
+#### Upgrade Mingw64 deps
+
+Inside the MSYS shell
+
+```
+$ windows/find-mingw64-deps.sh node.exe src/main.js examples/calc.lsp
+```
+
+See https://ten0s.github.io/blog/2022/07/25/find-dlls-and-typelibs-dependencies-for-nodejs-gtk-application-on-windows for detail.
+
 ### Build on host (Linux only)
 
 #### Build deps
