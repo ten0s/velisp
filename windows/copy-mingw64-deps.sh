@@ -14,6 +14,8 @@ fi
 BASE_DIR=$(dirname $0)
 DEST_DIR=$1
 
+# See also find-mingw64-deps.sh
+
 mkdir -p $DEST_DIR/mingw64/bin
 cat $BASE_DIR/mingw64-dlls.txt | \
     xargs -I'{}' cp /mingw64/bin/{} $DEST_DIR/mingw64/bin/
