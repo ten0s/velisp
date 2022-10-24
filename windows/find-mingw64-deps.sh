@@ -77,14 +77,22 @@ rm $TEMP
 
 # See also copy-mingw64-deps.sh
 
-if ! diff <(ls mingw64/bin/ | xargs -n1) <(cat windows/mingw64-dlls.txt); then
-    ls mingw64/bin/ | xargs -n1 > windows/mingw64-dlls.txt
+TEMP=$(mktemp)
+ls mingw64/bin/ | xargs -n1 >$TEMP
+if ! diff $TEMP windows/mingw64-dlls.txt; then
+    mv -f $TEMP windows/mingw64-dlls.txt
     echo "windows/mingw64-dlls.txt updated"
+else
+    rm $TEMP
 fi
 
-if ! diff <(ls mingw64/lib/girepository-1.0/ | xargs -n1) <(cat windows/mingw64-typelibs.txt); then
-    ls mingw64/lib/girepository-1.0/ | xargs -n1 > windows/mingw64-typelibs.txt
+TEMP=$(mktemp)
+ls mingw64/lib/girepository-1.0/ | xargs -n1 >$TEMP
+if ! diff $TEMP windows/mingw64-typelibs.txt; then
+    mv -f $TERP windows/mingw64-typelibs.txt
     echo "windows/mingw64-typelibs.txt updated"
+else
+    rm $TEMP
 fi
 
 exit 0
