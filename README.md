@@ -138,13 +138,13 @@ Run the Demo example
 ```
 
 ```
-$ echo (alert "Hello from VeLisp!") | velisp
+> echo (alert "Hello from VeLisp!") | velisp
 ```
 
 ![Alert Hello From VeLisp Windows Image](/images/alert-hello-velisp-windows.png)
 
 ```
-$ echo (alert (strcat "Hello from " (argv 1) "!")) | velisp -- Arg
+> echo (alert (strcat "Hello from " (argv 1) "!")) | velisp -- Arg
 ```
 
 ![Alert Hello From Arg Windows Image](/images/alert-hello-arg-windows.png)
