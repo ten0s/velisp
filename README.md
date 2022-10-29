@@ -68,13 +68,13 @@ Run Command Prompt (cmd.exe)
 > velisp
 VeLisp 0.7.1 on Windows
 Type ".license" or ".help" for more information
-> (+ 1 2)
+_$ (+ 1 2)
 3
-> (defun add (a b) (+ a b))
+_$ (defun add (a b) (+ a b))
 ADD
-> (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
+_$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 ("10" "10" "10")
-> (quit)
+_$ (quit)
 ```
 
 #### Run code from file
@@ -210,13 +210,13 @@ $ cd velisp-0.7.1-linux-x64
 $ velisp
 VeLisp 0.7.1 on Linux
 Type ".license" or ".help" for more information
-> (+ 1 2)
+_$ (+ 1 2)
 3
-> (defun add (a b) (+ a b))
+_$ (defun add (a b) (+ a b))
 ADD
-> (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
+_$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 ("10" "10" "10")
-> (quit)
+_$ (quit)
 ```
 
 #### Run code from file
