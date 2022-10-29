@@ -207,7 +207,7 @@ function startRepl(info, action, context) {
     }
 
     const replServer = repl.start({
-        prompt: '> ',
+        prompt: info.prompt,
         useGlobal: true,
         historySize: historySize,
         eval: (input, replCtx, filename, callback) => {

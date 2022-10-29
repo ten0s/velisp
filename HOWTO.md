@@ -1,20 +1,20 @@
 ## How to inspect types?
 
 ```
-> (defun add (a b) (+ a b))
+_$ (defun add (a b) (+ a b))
 ADD
-> .inspect 'add
+_$ .inspect 'add
 Sym { sym: 'ADD' }
-> .inspect add
+_$ .inspect add
 Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
-> .inspect (add 1 2)
+_$ .inspect (add 1 2)
 Int { int: 3 }
 ```
 
 ## How to inspect global context?
 
 ```
-> .context
+_$ .context
 ```
 
 ## How to run debugger?
@@ -58,7 +58,7 @@ $ VELISP_DEBUG=tree node src/main.js --eval '(+ 1 2)'
 
 ```
 $ VELISP_DEBUG=tree node src/main.js
-> (+ 1 2)
+_$ (+ 1 2)
 (file (expr ( (listExpr (expr +)) (listExpr (expr 1)) (listExpr (expr 2)) )))
 ```
 

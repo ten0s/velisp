@@ -40,6 +40,7 @@ const platform = () => {
 }
 
 const VeSysInfo = {
+    prompt: '_$ ',
     isRepl: false,
     withDcl: true,
 
