@@ -49,7 +49,7 @@ function main() {
     adjustEnvVars()
     const initArgv = VeArgv.initArgv(process.argv)
     const program = addCommandOptions(new Command())
-    program.version(versionInfo() + '\n' + licenseInfo())
+    program.version(versionInfo(VeSysInfo) + '\n' + licenseInfo())
         .arguments('[file]')
         .action(async (file) => {
             const options = program.opts()
@@ -75,7 +75,7 @@ function main() {
                 VeSysInfo.isRepl = true
                 const file = path.join(process.cwd(), '__REPL__')
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
-                startRepl(action, context)
+                startRepl(VeSysInfo, action, context)
             } else {
                 //console.log('Read from stdin');
                 const file = path.join(process.cwd(), '__STDIN__')
@@ -184,8 +184,8 @@ function readStream(stream, action, context) {
     })
 }
 
-function startRepl(action, context) {
-    console.log(versionInfo())
+function startRepl(info, action, context) {
+    console.log(versionInfo(info))
     console.log('Type ".license" or ".help" for more information')
 
     let historyFile = process.env['VELISP_REPL_HISTORY']
@@ -310,8 +310,8 @@ function isRecoverable(input, _error) {
     return isRecoverableInput(input)
 }
 
-function versionInfo() {
-    return `${VeSysInfo.name} ${VeSysInfo.version} on ${VeSysInfo.platform}`
+function versionInfo(info) {
+    return `${info.name} ${info.version} on ${info.platform}`
 }
 
 function licenseInfo() {
