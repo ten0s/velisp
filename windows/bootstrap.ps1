@@ -13,7 +13,7 @@ Set-Service -Name sshd -StartupType Automatic
 choco install -y visualstudio2017-workload-vctools
 
 # Install Node.js
-choco install -y nodejs.install --version=16.15.1
+choco install -y nodejs.install --version=16.18.0
 $Env:PATH = [Environment]::GetEnvironmentVariable('PATH', 'Machine')
 npm config set msvs_version 2017
 
