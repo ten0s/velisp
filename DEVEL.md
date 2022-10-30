@@ -69,7 +69,7 @@ $ sudo apt install jq make
 #### [Node.js 16.x](https://nodejs.org/dist/latest-v16.x/)
 
 ```
-$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 $ nvm install 16
 ```
 
