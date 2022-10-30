@@ -1,15 +1,16 @@
+# Enable diagnostic output
 exp_internal 1
 
 # Don't replace \n with \r\n and don't echo
 # Behaves like:
 # $ node src/main.js --no-dcl test/prin1.lsp | xxd
 set stty_init "raw -echo"
+set timeout 5
 
 spawn node src/main.js --no-dcl test/prin1.lsp
 
-set timeout 5
-
-expect "^Test #1\n"
+# Allow some garbage before "Test"
+expect "Test #1\n"
 expect {
     "^" {}
     timeout {exit 1}
