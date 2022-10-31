@@ -220,7 +220,7 @@ export const initContext = (context) => {
                 // Windows 10 doesn't allow starting unknown programs in
                 // the hidden state. We trick it here by first running
                 // something it knows really well: cmd.exe /C.
-                // The same trick is used in windows/velisp-noshell.vbs
+                // > cmd.exe /C ""C:\\path to\\velisp.exe" "arg1" "arg 2""
                 cmd = process.env.comspec || 'cmd.exe'
                 cmdArgs = ['/C']
                 const quote = (s) => `"${s}"`
