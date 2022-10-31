@@ -193,40 +193,45 @@ export const initContext = (context) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
         }
-        let cmd
-        let cmdArgs
-        let windowsHide = false
+        let allArgs
         if (args[0] instanceof Argv0) {
             const argv0 = args[0].value()
-            if (process.platform === 'win32') {
-                // Windows 10 doesn't allow starting unknown programs in
-                // the hidden state. We trick it here by first running
-                // something it knows really well: cmd.exe /C.
-                // The same trick is used in windows/velisp-noshell.vbs
-                cmd = 'cmd.exe'
-                cmdArgs = ['/C', ...argv0]
-                windowsHide = true
-            } else {
-                const [init, ...rest] = argv0
-                cmd = init
-                cmdArgs = [...rest]
-            }
+            allArgs = [...argv0]
         } else if (args[0] instanceof Str) {
-            cmd = args[0].value()
-            cmdArgs = []
+            const arg = args[0].value()
+            allArgs = [arg]
         } else {
             throw new Error('startapp: `cmd` expected Str, Argv0')
         }
         if (args.length > 1) {
             for (let i = 1; i < args.length; i++) {
                 const arg = ensureType('startapp: `arg`', args[i], [Str]).value()
-                cmdArgs.push(arg)
+                allArgs.push(arg)
             }
         }
+        let cmd
+        let cmdArgs
+        let windowsHide = false
+        let windowsVerbatimArguments = false
+        if (process.platform === 'win32') {
+            // Windows 10 doesn't allow starting unknown programs in
+            // the hidden state. We trick it here by first running
+            // something it knows really well: cmd.exe /C.
+            // The same trick is used in windows/velisp-noshell.vbs
+            cmd = process.env.comspec || 'cmd.exe'
+            const quote = (s) => `"${s}"`
+            cmdArgs = ['/C', `"${allArgs.map(quote).join(' ')}"`]
+            windowsHide = true
+            windowsVerbatimArguments = true
+        } else {
+	    let [cmd, ...cmdArgs] = allArgs
+        }
+        //console.log('spawn', cmd, cmdArgs)
         const child = spawn(cmd, cmdArgs, {
             detached: false,
             stdio: 'inherit',
             windowsHide,
+            windowsVerbatimArguments,
         }).on('error', () => {})
         child.unref()
         if (child.pid) {
