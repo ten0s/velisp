@@ -193,8 +193,10 @@ export const initContext = (context) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
         }
+        let isArgv0 = false
         let allArgs
         if (args[0] instanceof Argv0) {
+            isArgv0 = true
             const argv0 = args[0].value()
             allArgs = [...argv0]
         } else if (args[0] instanceof Str) {
@@ -218,15 +220,20 @@ export const initContext = (context) => {
             // the hidden state. We trick it here by first running
             // something it knows really well: cmd.exe /C.
             // The same trick is used in windows/velisp-noshell.vbs
-            cmd = process.env.comspec || 'cmd.exe'
+            if (isArgv0) {
+                cmd = process.env.comspec || 'cmd.exe'
+                cmdArgs = ['/C']
+            } else {
+                cmd = allArgs.shift()
+                cmdArgs = []
+            }
             const quote = (s) => `"${s}"`
-            cmdArgs = ['/C', `"${allArgs.map(quote).join(' ')}"`]
+            cmdArgs.push(`"${allArgs.map(quote).join(' ')}"`)
             windowsHide = true
             windowsVerbatimArguments = true
         } else {
-            const [init, ...rest] = allArgs
-            cmd = init
-            cmdArgs = rest
+            cmd = allArgs.shift()
+            cmdArgs = allArgs
         }
         //console.log('spawn', cmd, cmdArgs)
         const child = spawn(cmd, cmdArgs, {
