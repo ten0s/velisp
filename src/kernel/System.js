@@ -193,10 +193,8 @@ export const initContext = (context) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
         }
-        let isArgv0 = false
         let allArgs
         if (args[0] instanceof Argv0) {
-            isArgv0 = true
             const argv0 = args[0].value()
             allArgs = [...argv0]
         } else if (args[0] instanceof Str) {
@@ -216,7 +214,7 @@ export const initContext = (context) => {
         let windowsHide = false
         let windowsVerbatimArguments = false
         if (process.platform === 'win32') {
-            if (isArgv0) {
+            if (args[0] instanceof Argv0) {
                 // Windows 10 doesn't allow starting unknown programs in
                 // the hidden state. We trick it here by first running
                 // something it knows really well: cmd.exe /C.
