@@ -1041,6 +1041,7 @@ class Argv0 {
 
     // :: () -> string
     toString() {
+        // Use `.inspect (argv 0)` to look inside
         return '#<argv0>'
     }
 }

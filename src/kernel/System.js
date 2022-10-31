@@ -224,7 +224,9 @@ export const initContext = (context) => {
             windowsHide = true
             windowsVerbatimArguments = true
         } else {
-	    let [cmd, ...cmdArgs] = allArgs
+            const [init, ...rest] = allArgs
+            cmd = init
+            cmdArgs = rest
         }
         //console.log('spawn', cmd, cmdArgs)
         const child = spawn(cmd, cmdArgs, {
