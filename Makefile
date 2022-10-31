@@ -1,6 +1,7 @@
 BRANCH := ${shell git branch --no-color | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'}
 VERSION := ${shell jq -r .version package.json}
 NODE := ${shell node --version | sed -E 's/v([0-9]+)\..*/node\1/'}
+ISCC := "/c/Program Files (x86)/Inno Setup 6/ISCC.exe"
 
 all: install
 
@@ -38,7 +39,9 @@ windowsPackage:
 	$(MAKE) installProd
 	$(MAKE) rebuildNodeGtk
 	$(MAKE) pkgWindows
+	$(MAKE) prepareWindows
 	$(MAKE) zipWindows
+	$(MAKE) installerWindows
 
 macosPackage:
 	$(MAKE) installDev
@@ -128,7 +131,7 @@ tarLinux:
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > velisp-${VERSION}-linux-x64/README-en.md
 	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
 
-zipWindows:
+prepareWindows:
 	rm -rf                  velisp-${VERSION}-win-x64/
 	mkdir -p                velisp-${VERSION}-win-x64/
 	cp velisp.exe           velisp-${VERSION}-win-x64/
@@ -140,7 +143,12 @@ zipWindows:
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-win-x64/NOTICE
 	node util/notice-mingw64.js velisp-${VERSION}-win-x64/mingw64/bin/ > velisp-${VERSION}-win-x64/mingw64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > velisp-${VERSION}-win-x64/README-en.md
+
+zipWindows:
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
+
+installerWindows:
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" windows/installer.iss | ${ISCC} //O"." //F"velisp-${VERSION}-win-x64" -
 
 tarMacos:
 	rm -rf          velisp-${VERSION}-macos-x64/
