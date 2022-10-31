@@ -8,4 +8,4 @@ pacman --noconfirm -Syu
 
 make windowsPackage
 
-cp velisp-*-*-*.zip /c/vagrant/
+cp velisp-*-*-*.{exe,zip} /c/vagrant/
