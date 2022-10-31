@@ -3,14 +3,15 @@
 [Setup]
 AppName=VeLisp
 AppVersion={#Version}
-WizardStyle=modern
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={autopf}\VeLisp
 DefaultGroupName=VeLisp
-UninstallDisplayIcon={app}\velisp.exe
+LicenseFile=LICENSE
 Compression=lzma2
 SolidCompression=yes
+UninstallDisplayIcon={app}\velisp.exe
+WizardStyle=modern
 
 [Files]
 Source: "velisp-{#Version}-win-x64\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
