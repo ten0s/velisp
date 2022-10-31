@@ -223,14 +223,14 @@ export const initContext = (context) => {
                 // The same trick is used in windows/velisp-noshell.vbs
                 cmd = process.env.comspec || 'cmd.exe'
                 cmdArgs = ['/C']
+                const quote = (s) => `"${s}"`
+                cmdArgs.push(`"${allArgs.map(quote).join(' ')}"`)
                 windowsHide = true
+                windowsVerbatimArguments = true
             } else {
                 cmd = allArgs.shift()
-                cmdArgs = []
+                cmdArgs = allArgs
             }
-            const quote = (s) => `"${s}"`
-            cmdArgs.push(`"${allArgs.map(quote).join(' ')}"`)
-            windowsVerbatimArguments = true
         } else {
             cmd = allArgs.shift()
             cmdArgs = allArgs
