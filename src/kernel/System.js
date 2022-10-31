@@ -224,13 +224,13 @@ export const initContext = (context) => {
                 cmd = process.env.comspec || 'cmd.exe'
                 cmdArgs = ['/C']
                 windowsHide = true
-                windowsVerbatimArguments = true
             } else {
                 cmd = allArgs.shift()
                 cmdArgs = []
             }
             const quote = (s) => `"${s}"`
             cmdArgs.push(`"${allArgs.map(quote).join(' ')}"`)
+            windowsVerbatimArguments = true
         } else {
             cmd = allArgs.shift()
             cmdArgs = allArgs
