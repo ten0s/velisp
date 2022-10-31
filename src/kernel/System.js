@@ -216,21 +216,21 @@ export const initContext = (context) => {
         let windowsHide = false
         let windowsVerbatimArguments = false
         if (process.platform === 'win32') {
-            // Windows 10 doesn't allow starting unknown programs in
-            // the hidden state. We trick it here by first running
-            // something it knows really well: cmd.exe /C.
-            // The same trick is used in windows/velisp-noshell.vbs
             if (isArgv0) {
+                // Windows 10 doesn't allow starting unknown programs in
+                // the hidden state. We trick it here by first running
+                // something it knows really well: cmd.exe /C.
+                // The same trick is used in windows/velisp-noshell.vbs
                 cmd = process.env.comspec || 'cmd.exe'
                 cmdArgs = ['/C']
+                windowsHide = true
+                windowsVerbatimArguments = true
             } else {
                 cmd = allArgs.shift()
                 cmdArgs = []
             }
             const quote = (s) => `"${s}"`
             cmdArgs.push(`"${allArgs.map(quote).join(' ')}"`)
-            windowsHide = true
-            windowsVerbatimArguments = true
         } else {
             cmd = allArgs.shift()
             cmdArgs = allArgs
