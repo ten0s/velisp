@@ -27,18 +27,19 @@ ChangesEnvironment=true
 Source: "velisp-{#Version}-win-x64\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 
 [Dirs]
-Name: "{app}\links"
+Name: "{app}\shortcuts"
 
 [Icons]
-Name: "{group}\VeLisp";              Filename: "{app}\velisp.exe"; WorkingDir: "{app}"
-Name: "{group}\Examples Sources";    Filename: "{app}\examples"
-Name: "{group}\Examples Links";      Filename: "{app}\links"
-Name: "{app}\links\Calc Example";    Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\calc.lsp""";    WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
-Name: "{app}\links\Demo Example";    Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\demo.lsp""";    WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
-Name: "{app}\links\Fifteen Example"; Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\fifteen.lsp"""; WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
-Name: "{app}\links\Mines Example";   Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\mines.lsp""";   WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
-Name: "{group}\VeLisp Website";      Filename: "https://github.com/ten0s/velisp"
-Name: "{group}\Uninstall";           Filename: "{uninstallexe}"
+Name: "{group}\VeLisp";                  Filename: "{app}\velisp.exe"; WorkingDir: "{app}"
+Name: "{group}\VeLisp Command Prompt";   Filename: "{cmd}"; Parameters: "/k"; WorkingDir: "{app}"
+Name: "{group}\VeLisp Website";          Filename: "https://github.com/ten0s/velisp"
+Name: "{group}\Examples";                Filename: "{app}\shortcuts"
+Name: "{app}\shortcuts\Source Code";     Filename: "{app}\examples"
+Name: "{app}\shortcuts\Calc Example";    Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\calc.lsp""";    WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
+Name: "{app}\shortcuts\Demo Example";    Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\demo.lsp""";    WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
+Name: "{app}\shortcuts\Fifteen Example"; Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\fifteen.lsp"""; WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
+Name: "{app}\shortcuts\Mines Example";   Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\mines.lsp""";   WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
+Name: "{group}\Uninstall";               Filename: "{uninstallexe}"
 
 [Tasks]
 Name: envPath; Description: "Add to PATH variable"
