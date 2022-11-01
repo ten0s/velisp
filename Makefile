@@ -148,7 +148,7 @@ zipWindows:
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
 
 installerWindows:
-	sed -E -e "s/\{\{version\}\}/${VERSION}/g" windows/installer.iss | ${ISCC} //O"." //F"velisp-${VERSION}-win-x64" -
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" windows/installer.iss | ${ISCC} //O"." //F"velisp-${VERSION}-win-x64-setup" -
 
 tarMacos:
 	rm -rf          velisp-${VERSION}-macos-x64/
