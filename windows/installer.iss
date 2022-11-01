@@ -43,7 +43,7 @@ Name: "{group}\Uninstall";           Filename: "{uninstallexe}"
 [Tasks]
 Name: envPath; Description: "Add to PATH variable"
 
-#include "windows/path.iss"
+#include "windows/installer-libpath.iss"
 [Code]
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
