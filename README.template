@@ -48,10 +48,7 @@ just like regular applications on Windows, Linux and MacOS.
 6. Enter C:\
 7. Click 'Extract'
 
-The steps below assume the archive was extracted to C:\velisp-{{version}}-win-x64
-according to the steps above.
-
-#### Add the folder to PATH
+##### Add the folder to PATH
 
 1. Press 'Windows + Break' to open the System Info
 2. Click 'Advanced system settings'
