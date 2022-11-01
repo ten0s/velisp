@@ -219,6 +219,7 @@ export const initContext = (context) => {
                 // the hidden state. We trick it here by first running
                 // something it knows really well: cmd.exe /C.
                 // > cmd.exe /C ""C:\\path to\\velisp.exe" "arg1" "arg 2""
+                // The same trick is used in windows/noprompt.vbs
                 cmd = process.env.comspec || 'cmd.exe'
                 cmdArgs = ['/C']
                 const quote = (s) => `"${s}"`
