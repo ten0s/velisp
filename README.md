@@ -29,7 +29,16 @@ just like regular applications on Windows, Linux and MacOS.
 
 ### Install
 
-#### Download and unarchive
+#### Install via automatic setup
+
+1. Download https://github.com/ten0s/velisp/releases/download/0.7.1/velisp-0.7.1-win-x64-setup.exe.zip
+2. Rename velisp-0.7.1-win-x64-setup.exe.zip to velisp-0.7.1-win-x64-setup.exe
+3. Run velisp-0.7.1-win-x64-setup.exe
+4. Follow the installation wizard. Default options are ok for most users
+
+#### Install via binary archive
+
+##### Download and unarchive
 
 1. Download https://github.com/ten0s/velisp/releases/download/0.7.1/velisp-0.7.1-win-x64.zip
 2. Open Downloads folder
@@ -56,7 +65,11 @@ according to the steps above.
 
 ### Usage
 
-Run Command Prompt (cmd.exe)
+If you installed VeLisp via [automatic setup](#install-via-automatic-setup) go to
+'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
+
+If you installed Velisp via [binary archive](#install-via-binary-archive) run
+the Command Prompt (cmd.exe) and move to the extraction directory:
 
 ```
 > cd C:\velisp-0.7.1-win-x64
@@ -192,7 +205,7 @@ $ wget https://github.com/ten0s/velisp/releases/download/0.7.1/velisp-0.7.1-linu
 $ tar xfz velisp-0.7.1-linux-x64.tar.gz
 ```
 
-#### Add to .bashrc
+#### Add to ~/.bashrc
 
 ```
 export PATH=<PATH_TO>/velisp-0.7.1-linux-x64:$PATH

@@ -19,7 +19,7 @@ $ wget https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{ve
 $ tar xfz velisp-{{version}}-linux-x64.tar.gz
 ```
 
-#### Add to .bashrc
+#### Add to ~/.bashrc
 
 ```
 export PATH=<PATH_TO>/velisp-{{version}}-linux-x64:$PATH
