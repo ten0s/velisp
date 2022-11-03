@@ -31,18 +31,19 @@ just like regular applications on Windows, Linux and MacOS.
 
 #### Install via automatic setup
 
-1. Download https://github.com/ten0s/velisp/releases/download/0.7.2/velisp-0.7.2-win-x64-setup.exe.zip
-2. Rename velisp-0.7.2-win-x64-setup.exe.zip to velisp-0.7.2-win-x64-setup.exe
-3. Run velisp-0.7.2-win-x64-setup.exe
-4. Follow the installation wizard. Default options are ok for most users
+1. Download https://github.com/ten0s/velisp/releases/download/0.7.3/velisp-0.7.3-win-x64-setup.zip
+2. Open Downloads folder
+3. Double-click on velisp-0.7.3-win-x64-setup.zip to open the archive
+4. Run velisp-0.7.3-win-x64-setup.exe
+5. Follow the installation wizard. Default options are ok for most users
 
 #### Install via binary archive
 
 ##### Download and unarchive
 
-1. Download https://github.com/ten0s/velisp/releases/download/0.7.2/velisp-0.7.2-win-x64.zip
+1. Download https://github.com/ten0s/velisp/releases/download/0.7.3/velisp-0.7.3-win-x64.zip
 2. Open Downloads folder
-3. Select velisp-0.7.2-win-x64.zip
+3. Select velisp-0.7.3-win-x64.zip
 4. Press the right mouse button
 5. Click 'Extract All...'
 6. Enter C:\
@@ -56,7 +57,7 @@ just like regular applications on Windows, Linux and MacOS.
 4. Select 'Path' inside the User variables block
 5. Click 'Edit...'
 6. Click 'New...'
-7. Enter C:\velisp-0.7.2-win-x64
+7. Enter C:\velisp-0.7.3-win-x64
 8. Click 'OK'
 9. Click 'OK'
 
@@ -69,14 +70,14 @@ If you installed Velisp via [binary archive](#install-via-binary-archive) run
 the Command Prompt (cmd.exe) and move to the extraction directory:
 
 ```
-> cd C:\velisp-0.7.2-win-x64
+> cd C:\velisp-0.7.3-win-x64
 ```
 
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
 > velisp
-VeLisp 0.7.2 on Windows
+VeLisp 0.7.3 on Windows
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
 3
@@ -174,7 +175,7 @@ Run the Demo example
 2. Files -> Support File Search Path
 3. Click Add...
 4. Click Browse...
-5. Browse for Folder C:\velisp-0.7.2-win-x64\examples
+5. Browse for Folder C:\velisp-0.7.3-win-x64\examples
 6. Click OK
 7. Click Apply
 7. Click OK
@@ -198,27 +199,27 @@ _$ (load "demo")
 #### Download and unarchive
 
 ```
-$ wget https://github.com/ten0s/velisp/releases/download/0.7.2/velisp-0.7.2-linux-x64.tar.gz
-$ tar xfz velisp-0.7.2-linux-x64.tar.gz
+$ wget https://github.com/ten0s/velisp/releases/download/0.7.3/velisp-0.7.3-linux-x64.tar.gz
+$ tar xfz velisp-0.7.3-linux-x64.tar.gz
 ```
 
 #### Add to ~/.bashrc
 
 ```
-export PATH=<PATH_TO>/velisp-0.7.2-linux-x64:$PATH
+export PATH=<PATH_TO>/velisp-0.7.3-linux-x64:$PATH
 ```
 
 ### Usage
 
 ```
-$ cd velisp-0.7.2-linux-x64
+$ cd velisp-0.7.3-linux-x64
 ```
 
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
 $ velisp
-VeLisp 0.7.2 on Linux
+VeLisp 0.7.3 on Linux
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
 3

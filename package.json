@@ -1,6 +1,6 @@
 {
     "name": "VeLisp",
-    "version": "0.7.2",
+    "version": "0.7.3",
     "description": "AutoLISP interpreter with DCL support",
     "main": "src/main.js",
     "type": "module",
