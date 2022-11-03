@@ -149,8 +149,8 @@ zipWindows:
 
 installerWindows:
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" windows/installer.iss | ${ISCC} //O"." //F"velisp-${VERSION}-win-x64-setup" -
-	# Add .zip suffix to upload to GH Releases
-	cp velisp-${VERSION}-win-x64-setup.exe velisp-${VERSION}-win-x64-setup.exe.zip
+	# Zip to upload to GH Releases
+	zip velisp-${VERSION}-win-x64-setup.zip velisp-${VERSION}-win-x64-setup.exe
 
 tarMacos:
 	rm -rf          velisp-${VERSION}-macos-x64/

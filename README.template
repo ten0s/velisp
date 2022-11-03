@@ -31,10 +31,11 @@ just like regular applications on Windows, Linux and MacOS.
 
 #### Install via automatic setup
 
-1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.exe.zip
-2. Rename velisp-{{version}}-win-x64-setup.exe.zip to velisp-{{version}}-win-x64-setup.exe
-3. Run velisp-{{version}}-win-x64-setup.exe
-4. Follow the installation wizard. Default options are ok for most users
+1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
+2. Open Downloads folder
+3. Double-click on velisp-{{version}}-win-x64-setup.zip to open the archive
+4. Run velisp-{{version}}-win-x64-setup.exe
+5. Follow the installation wizard. Default options are ok for most users
 
 #### Install via binary archive
 
