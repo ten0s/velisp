@@ -51,7 +51,7 @@ export const initContext = (context) => {
             }
         }
         if (args.length === 2) {
-            let pattern   = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
+            let pattern   = ensureType('vl-filename-mktemp: `pattern`'  , args[0], [Str, Bool])
             let directory = ensureType('vl-filename-mktemp: `directory`', args[1], [Str, Bool])
             if (pattern instanceof Str) {
                 ({dir, name, ext} = path.parse(pattern.value()))
@@ -67,7 +67,7 @@ export const initContext = (context) => {
             }
         }
         if (args.length === 3) {
-            let pattern   = ensureType('vl-filename-mktemp: `pattern`', args[0], [Str, Bool])
+            let pattern   = ensureType('vl-filename-mktemp: `pattern`'  , args[0], [Str, Bool])
             let directory = ensureType('vl-filename-mktemp: `directory`', args[1], [Str, Bool])
             let extension = ensureType('vl-filename-mktemp: `extension`', args[2], [Str, Bool])
             if (pattern instanceof Str) {
@@ -86,12 +86,14 @@ export const initContext = (context) => {
                 ext = extension.value()
             }
         }
-        // TODO: check out https://www.npmjs.com/package/tmp package
-        const {path: tmpFile} = temp.track().openSync({
+
+        const {path: tmpPath, fd: tmpFd} = temp.track().openSync({
             dir   : dir  ? dir  : DEFAULT_DIR,
             prefix: name ? name : DEFAULT_NAME,
             suffix: ext  ? ext  : DEFAULT_EXT,
         })
-        return new Str(tmpFile)
+        fs.closeSync(tmpFd)
+
+        return new Str(tmpPath)
     }))
 }
