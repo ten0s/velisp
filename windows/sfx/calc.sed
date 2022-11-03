@@ -1,0 +1,36 @@
+[Version]
+Class=IEXPRESS
+SEDVersion=3
+[Options]
+PackagePurpose=InstallApp
+ShowInstallProgramWindow=0
+HideExtractAnimation=1
+UseLongFileName=1
+InsideCompressed=0
+CAB_FixedSize=0
+CAB_ResvCodeSigning=0
+RebootMode=N
+InstallPrompt=
+DisplayLicense=
+FinishMessage=
+TargetName=calc.exe
+FriendlyName=calc
+AppLaunched="wscript.exe unzip.vbs velisp-%VeLispVersion%-win-x64.zip"
+PostInstallCmd="wscript.exe noprompt.vbs velisp-%VeLispVersion%-win-x64\velisp.exe calc.lsp"
+AdminQuietInstCmd=
+UserQuietInstCmd=
+SourceFiles=SourceFiles
+[Strings]
+VeLispVersion=0.7.2
+[SourceFiles]
+SourceFilesUtil=util\
+SourceFilesVelisp=.\
+SourceFilesApp=.\
+[SourceFilesUtil]
+unzip.vbs=
+noprompt.vbs=
+[SourceFilesVelisp]
+velisp-%VeLispVersion%-win-x64.zip=
+[SourceFilesApp]
+calc.lsp=
+calc.dcl=
