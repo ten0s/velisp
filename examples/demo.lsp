@@ -23,9 +23,10 @@
 
 (defun editor ( / os)
   (setq os (get_os))
-  (cond ((= os "Linux")   "emacs")
-        ((= os "Windows") "notepad")
-        (T (alert (strcat "No Editor known for " os)) "echo")))
+  (cond ((= os "Linux")   '("emacs"))
+        ((= os "Windows") '("notepad"))
+        ((= os "MacOS")   '("open" "-t"))
+        (T (alert (strcat "No Editor known for " os)) '("echo"))))
 
 (defun path_sep ()
   (if (= (get_os) "Windows") "\\" "/"))
@@ -115,9 +116,11 @@
       (println (strcat "Run " (vl-princ-to-string argv0) " " lsp))
       (startapp argv0 lsp))))
 
-(defun open_file (path_func / name)
-  (setq name (get_current_name))
-  (startapp (editor) (path_func DIR name)))
+(defun open_file (path_func / name path args)
+  (setq name (get_current_name)
+        path (path_func DIR name)
+        args (append (editor) (list path)))
+  (apply 'startapp args))
 
 (defun open_dcl ()
   (open_file dcl_path))

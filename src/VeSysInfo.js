@@ -30,6 +30,8 @@ const platform = () => {
     switch (os) {
     case 'android':
         return 'Android'
+    case 'darwin':
+        return 'MacOS'
     case 'linux':
         return 'Linux'
     case 'win32':
