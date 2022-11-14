@@ -12,6 +12,7 @@ $ ./build-linux-package.sh
 Build Done
 ```
 
+
 ### Build Windows package in Vagrant
 
 In order to build **VeLisp** Windows package you need to have
@@ -21,7 +22,8 @@ installed.
 
 #### Build Windows build deps Vagrant box
 
-Download Windows 10 Vagrant box from https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
+Download Windows 10 Vagrant box from
+https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
 and import it.
 
 ```
@@ -29,7 +31,7 @@ $ unzip MSEdge.Win10.Vagrant.zip
 $ vagrant box add win10 'MSEdge - Win10.box'
 ```
 
-Build Windows build deps box
+#### Build Windows build deps box
 
 ```
 $ export VAGRANT_VAGRANTFILE=Vagrantfile.win10.deps
@@ -57,6 +59,50 @@ $ windows/find-mingw64-deps.sh node.exe src/main.js examples/calc.lsp
 ```
 
 See https://ten0s.github.io/blog/2022/07/25/find-dlls-and-typelibs-dependencies-for-nodejs-gtk-application-on-windows for detail.
+
+
+### Build MacOS package in Vagrant
+
+In order to build **VeLisp** MacOS package you need to have
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
+[Vagrant](https://www.vagrantup.com/downloads)
+installed.
+
+#### Build MacOS build deps Vagrant box
+
+Download MacOS 10.15 Vagrant box from
+https://app.vagrantup.com/ramsey/boxes/macos-catalina
+and import it.
+
+```
+$ curl -s https://app.vagrantup.com/ramsey/boxes/macos-catalina | jq .
+$ wget https://vagrantcloud.com/ramsey/boxes/macos-catalina/versions/1.0.0/providers/virtualbox.box
+$ vagrant box add macos10.15 virtualbox.box
+```
+
+#### Download Command Line Tools for Xcode
+
+Download Command_Line_Tools_for_Xcode_11.5.dmg and copy it to macos/ directory
+
+#### Build MacOS build deps box
+
+```
+$ export VAGRANT_VAGRANTFILE=Vagrantfile.macos10.15.deps
+$ vagrant up --provision
+$ vagrant package --output velisp-macos10.15-build-deps.box
+$ vagrant box add -f velisp-macos10.15-build-deps ./velisp-macos10.15-build-deps.box
+$ vagrant destroy -f
+$ rm -rf .vagrant/ *.box
+```
+
+#### Build MacOS package
+
+```
+$ ./build-macos-package.sh
+...
+Build Done
+```
+
 
 ### Build on host (Linux only)
 

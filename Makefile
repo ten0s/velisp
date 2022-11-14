@@ -118,7 +118,7 @@ pkgWindows:
 	npx pkg -c pkg.json -t ${NODE}-win-x64 -o velisp pkg/src/main.js
 
 pkgMacos:
-	npx pkg -c pkg.json -t ${NODE}-macos -o velisp pkg/src/main.js
+	npx pkg -c pkg.json -t ${NODE}-macos-x64 -o velisp pkg/src/main.js
 
 tarLinux:
 	rm -rf          velisp-${VERSION}-linux-x64/
@@ -156,8 +156,8 @@ tarMacos:
 	rm -rf          velisp-${VERSION}-macos-x64/
 	mkdir -p        velisp-${VERSION}-macos-x64/
 	cp velisp       velisp-${VERSION}-macos-x64/
-	cp -r lib/      velisp-${VERSION}-macos-x64/
-	cp -r examples/ velisp-${VERSION}-macos-x64/
+	cp -R lib       velisp-${VERSION}-macos-x64/
+	cp -R examples  velisp-${VERSION}-macos-x64/
 	cp LICENSE      velisp-${VERSION}-macos-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-macos-x64/NOTICE
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/

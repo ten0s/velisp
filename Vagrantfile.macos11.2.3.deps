@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box  = "macos11.2.3"
+  config.vm.define "macos11.2.3"
+
+  config.vm.box_check_update = false
+
+  #config.vm.synced_folder ".", "/Users/vagrant/Shared", type: "rsync"
+  config.vm.synced_folder ".", "/vagrant", :disabled => true
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.cpus = 2
+    vb.memory = 4096
+    vb.check_guest_additions = false
+    vb.customize ["modifyvm", :id, "--vram", "256"]
+
+    # Enable USB 1.1
+    vb.customize ["modifyvm", :id, "--usbohci", "on"]
+    # Disable USB 2.0 & 3.0 Controllers
+    vb.customize ["modifyvm", :id, "--usbehci", "off"]
+    vb.customize ["modifyvm", :id, "--usbxhci", "off"]
+  end
+
+  config.vm.provision "file",
+    source: "./macos/Command_Line_Tools_for_Xcode_12.5.1.dmg",
+    destination: "/Users/vagrant/"
+
+  config.vm.provision "shell",
+    binary: true,
+    path: "./macos/bootstrap-11.2.3.sh"
+
+end
