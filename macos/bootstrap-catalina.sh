@@ -3,7 +3,7 @@
 USER=vagrant
 cd /Users/$USER/
 
-CLT_VER=12.5.1
+CLT_VER=11.5
 # Install Command Line Tools $CLT_VER
 if ! clang --version; then
     hdiutil attach Command_Line_Tools_for_Xcode_$CLT_VER.dmg
@@ -21,9 +21,11 @@ if ! brew --version; then
 fi
 
 # Install deps
-brew install \
-     jq \
-     node@16 \
-     gobject-introspection \
-     gtk+3 \
-     cairo
+su $USER -c "/bin/bash -s" <<'EOF'
+   brew install node@16
+   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
+   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.bashrc
+
+   brew install jq
+   brew install gobject-introspection gtk+3 cairo
+EOF

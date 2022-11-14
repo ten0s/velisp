@@ -39,7 +39,7 @@ $ vagrant up --provision
 $ vagrant package --output velisp-win10-build-deps.box
 $ vagrant box add -f velisp-win10-build-deps ./velisp-win10-build-deps.box
 $ vagrant destroy -f
-$ rm -rf .vagrant/ *.box
+$ rm -f velisp-win10-build-deps.box
 ```
 
 #### Build Windows package
@@ -70,14 +70,14 @@ installed.
 
 #### Build MacOS build deps Vagrant box
 
-Download MacOS 10.15 Vagrant box from
+Download MacOS Catalina Vagrant box from
 https://app.vagrantup.com/ramsey/boxes/macos-catalina
 and import it.
 
 ```
 $ curl -s https://app.vagrantup.com/ramsey/boxes/macos-catalina | jq .
 $ wget https://vagrantcloud.com/ramsey/boxes/macos-catalina/versions/1.0.0/providers/virtualbox.box
-$ vagrant box add macos10.15 virtualbox.box
+$ vagrant box add macos-catalina virtualbox.box
 ```
 
 #### Download Command Line Tools for Xcode
@@ -87,12 +87,14 @@ Download Command_Line_Tools_for_Xcode_11.5.dmg and copy it to macos/ directory
 #### Build MacOS build deps box
 
 ```
-$ export VAGRANT_VAGRANTFILE=Vagrantfile.macos10.15.deps
+$ export VAGRANT_VAGRANTFILE=Vagrantfile.macos-catalina.deps
+$ vagrant up
+... some manual setup?
 $ vagrant up --provision
-$ vagrant package --output velisp-macos10.15-build-deps.box
-$ vagrant box add -f velisp-macos10.15-build-deps ./velisp-macos10.15-build-deps.box
+$ vagrant package --output velisp-macos-catalina-build-deps.box
+$ vagrant box add -f velisp-macos-catalina-build-deps ./velisp-macos-catalina-build-deps.box
 $ vagrant destroy -f
-$ rm -rf .vagrant/ *.box
+$ rm -f velisp-macos-catalina-build-deps.box
 ```
 
 #### Build MacOS package

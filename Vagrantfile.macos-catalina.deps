@@ -3,8 +3,8 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box  = "macos11.2.3"
-  config.vm.define "macos11.2.3"
+  config.vm.box  = "macos-catalina"
+  config.vm.define "macos-catalina"
 
   config.vm.box_check_update = false
 
@@ -26,11 +26,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "file",
-    source: "./macos/Command_Line_Tools_for_Xcode_12.5.1.dmg",
+    source: "./macos/Command_Line_Tools_for_Xcode_11.5.dmg",
     destination: "/Users/vagrant/"
 
   config.vm.provision "shell",
     binary: true,
-    path: "./macos/bootstrap-11.2.3.sh"
+    path: "./macos/bootstrap-catalina.sh"
 
 end

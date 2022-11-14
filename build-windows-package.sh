@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export VAGRANT_VAGRANTFILE=Vagrantfile.win10.build
 
