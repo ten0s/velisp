@@ -329,7 +329,7 @@ MacOS is an early alpha release.
 % tar xfz velisp-{{version}}-macos-x64.tar.gz
 ```
 
-#### Add to ~/.bashrc
+#### Add to ~/.zshrc
 
 ```
 export PATH=<PATH_TO>/velisp-{{version}}-macos-x64:$PATH

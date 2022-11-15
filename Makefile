@@ -102,6 +102,7 @@ readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > README-en-linux.md
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > README-en-windows.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > README-en-macos.md
 
 prePkg:
 	$(MAKE) cleanPkg
@@ -160,6 +161,7 @@ tarMacos:
 	cp -R examples  velisp-${VERSION}-macos-x64/
 	cp LICENSE      velisp-${VERSION}-macos-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-macos-x64/NOTICE
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > velisp-${VERSION}-macos-x64/README-en.md
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/
 
 cleanPkg:
