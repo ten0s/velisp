@@ -11,7 +11,7 @@ fi
 vagrant ssh -c 'source ~/.zshrc; cd velisp; macos/build.sh'
 if [[ $? -eq 0 ]]; then
     # Since 'rsync' synced_folder supported for MacOS guests is
-    # host to guest only, rsync the file back ourselves
+    # host to guest only, rsync the file back explicitly
     vagrant ssh-config | awk '
         /HostName /     { host = $2 }
         /Port /         { port = $2 }
