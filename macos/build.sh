@@ -3,4 +3,4 @@ set -Eeuo pipefail
 
 make macosPackage
 
-cp velisp-*-*-*.tar.gz /Users/vagrant/Shared/
+# velisp-*-*-*.tar.gz is rsynced back in ../build-macos-package.sh
