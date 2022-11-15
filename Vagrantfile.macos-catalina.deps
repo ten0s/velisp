@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box_check_update = false
 
+  # "rsync" is host to guest only
   #config.vm.synced_folder ".", "/Users/vagrant/Shared", type: "rsync"
   config.vm.synced_folder ".", "/vagrant", :disabled => true
 
