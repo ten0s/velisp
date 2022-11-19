@@ -17,5 +17,5 @@
   (unload_dialog dcl_id)
 )
 
-(action_tile "new_dlg" "(new_dlg \"test/dcl/multiple_dlg.dcl\" \"multiple_dlg\")")
+(action_tile "new_dlg" "(new_dlg \"multiple_dlg.dcl\" \"multiple_dlg\")")
 (action_tile "term_all" "(term_dialog)")
