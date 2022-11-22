@@ -3,8 +3,8 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box  = "macos-big_sur"
-  config.vm.define "macos-big_sur"
+  config.vm.box  = "macos-monterey"
+  config.vm.define "macos-monterey"
 
   config.vm.box_check_update = false
 
@@ -27,11 +27,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "file",
-    source: "./macos/Command_Line_Tools_for_Xcode_12.5.1.dmg",
+    source: "./macos/Command_Line_Tools_for_Xcode_14.1.dmg",
     destination: "/Users/vagrant/"
 
   config.vm.provision "shell",
     binary: true,
-    path: "./macos/bootstrap-big_sur.sh"
+    path: "./macos/bootstrap-monterey.sh"
 
 end

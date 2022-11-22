@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "velisp-macos-monterey-build-deps"
+  config.vm.define "macos-monterey"
+
+  config.vm.box_check_update = false
+
+  # "rsync" is host to guest only
+  #config.vm.synced_folder ".", "/Users/vagrant/Shared", type: "rsync"
+  config.vm.synced_folder ".", "/vagrant", :disabled => true
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.cpus = 2
+    vb.memory = 4096
+    vb.check_guest_additions = false
+  end
+
+  config.vm.provision "shell",
+    binary: true,
+    privileged: false,
+    inline: "mkdir -p /Users/vagrant/velisp"
+
+  config.vm.provision "file", source: "./examples",                     destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./grammar",                      destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./lib",                          destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./patches",                      destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./src",                          destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./test",                         destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./util",                         destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./macos",                        destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./.eslintrc.json",               destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./Makefile",                     destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./package.json",                 destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./package-lock.json",            destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./package.json.template",        destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./pkg.json",                     destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./rollup.config.js",             destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./LICENSE",                      destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./README-en-macos.template",     destination: "/Users/vagrant/velisp/"
+
+end
