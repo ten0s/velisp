@@ -23,7 +23,7 @@
 
 (defun editor ( / os)
   (setq os (get_os))
-  (cond ((= os "Linux")   '("emacs"))
+  (cond ((= os "Linux")   '("xdg-open"))
         ((= os "Windows") '("notepad"))
         ((= os "MacOS")   '("open" "-t"))
         (T (alert (strcat "No Editor known for " os)) '("echo"))))
