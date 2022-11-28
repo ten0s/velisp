@@ -12,7 +12,7 @@ function is-sls-enabled() {
 }
 
 function is-cdb-available() {
-    cdb &>/dev/null
+    cdb &> /dev/null
     if [[ $? -eq 2 ]]; then
         return 0
     else
@@ -65,7 +65,7 @@ mkdir -p mingw64/{bin,lib/girepository-1.0}
 
 TEMP=$(mktemp)
 while true; do
-    cdb -c "g;q" $PROG $ARGS &>$TEMP
+    cdb -c "g;q" $PROG $ARGS &> $TEMP
     if [[ $? -ne 0 ]]; then
         copy-dlls $TEMP /mingw64/bin/ mingw64/bin/
         copy-typelibs $TEMP /mingw64/lib/girepository-1.0/ mingw64/lib/girepository-1.0/
@@ -78,7 +78,7 @@ rm $TEMP
 # See also copy-mingw64-deps.sh
 
 TEMP=$(mktemp)
-ls mingw64/bin/ | xargs -n1 >$TEMP
+ls mingw64/bin/ | xargs -n1 > $TEMP
 if ! diff $TEMP windows/mingw64-dlls.txt; then
     mv -f $TEMP windows/mingw64-dlls.txt
     echo "windows/mingw64-dlls.txt updated"
@@ -87,7 +87,7 @@ else
 fi
 
 TEMP=$(mktemp)
-ls mingw64/lib/girepository-1.0/ | xargs -n1 >$TEMP
+ls mingw64/lib/girepository-1.0/ | xargs -n1 > $TEMP
 if ! diff $TEMP windows/mingw64-typelibs.txt; then
     mv -f $TERP windows/mingw64-typelibs.txt
     echo "windows/mingw64-typelibs.txt updated"
