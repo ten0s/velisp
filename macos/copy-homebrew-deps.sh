@@ -15,10 +15,10 @@ TYPELIB_PATH=homebrew/lib/girepository-1.0
 
 mkdir -p $DEST_DIR/$DYLIB_PATH
 cat $BASE_DIR/homebrew-dylibs.txt | \
-    xargs -I'{}' cp -R {} $DEST_DIR/$DYLIB_PATH
+    xargs -I'{}' cp -R {} $DEST_DIR/$DYLIB_PATH/
 
-mkdir -p $DEST_DIR/TYPELIB_PATH
+mkdir -p $DEST_DIR/$TYPELIB_PATH
 cat $BASE_DIR/homebrew-typelibs.txt | \
-    xargs -I'{}' cp -R {} $DEST_DIR/$TYPELIB_PATH
+    xargs -I'{}' cp -R {} $DEST_DIR/$TYPELIB_PATH/
 
 exit 0

@@ -5,6 +5,8 @@ if [[ $# -eq 0 ]]; then
     exit 1
 fi
 
+BASE_DIR=$(dirname $0)
+
 PROG="$1"
 shift
 ARGS="$@"
@@ -26,8 +28,8 @@ rm $TMP
 
 kill $PROG_PID >& /dev/null
 
-DYLIB_PATH=homebrew/lib
-TYPELIB_PATH=homebrew/lib/girepository-1.0
+DYLIB_PATH=$PWD/homebrew/lib
+TYPELIB_PATH=$PWD/homebrew/lib/girepository-1.0
 
 mkdir -p $DYLIB_PATH $TYPELIB_PATH
 
@@ -56,20 +58,19 @@ cat typelibs.txt | xargs -I{} cp -f {} $TYPELIB_PATH/
 
 # See also copy-homebrew-deps.sh
 
-# TODO: move to macos/
-touch homebrew-dylibs.txt
-touch homebrew-typelibs.txt
+touch $BASE_DIR/homebrew-dylibs.txt
+touch $BASE_DIR/homebrew-typelibs.txt
 
-if ! diff dylibs.txt homebrew-dylibs.txt; then
-    mv -f dylibs.txt homebrew-dylibs.txt
-    echo "homebrew-dylibs.txt updated"
+if ! diff dylibs.txt $BASE_DIR/homebrew-dylibs.txt; then
+    mv -f dylibs.txt $BASE_DIR/homebrew-dylibs.txt
+    echo "$BASE_DIR/homebrew-dylibs.txt updated"
 else
     rm dylibs.txt
 fi
 
-if ! diff typelibs.txt homebrew-typelibs.txt; then
-    mv -f typelibs.txt homebrew-typelibs.txt
-    echo "homebrew-typelibs.txt updated"
+if ! diff typelibs.txt $BASE_DIR/homebrew-typelibs.txt; then
+    mv -f typelibs.txt $BASE_DIR/homebrew-typelibs.txt
+    echo "$BASE_DIR/homebrew-typelibs.txt updated"
 else
     rm typelibs.txt
 fi
