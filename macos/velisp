@@ -5,7 +5,21 @@
 
 # Force local homebrew/lib
 BASE_DIR=$(dirname $0)
-export DYLD_LIBRARY_PATH=$BASE_DIR/homebrew/lib
-export GI_TYPELIB_PATH=$BASE_DIR/homebrew/lib/girepository-1.0
+
+DYLD_LIBRARY_PATH=$BASE_DIR/homebrew/lib
+GI_TYPELIB_PATH=$BASE_DIR/homebrew/lib/girepository-1.0
+
+case $(sw_vers -productVersion) in
+10.15*)
+    # Catalina Fix
+    # Symbol not found: __cg_jpeg_resync_to_restart
+    DYLD_LIBRARY_PATH=/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources:$DYLD_LIBRARY_PATH
+    ;;
+*)
+    ;;
+esac
+
+export DYLD_LIBRARY_PATH
+export GI_TYPELIB_PATH
 
 exec $BASE_DIR/velisp.bin "$@"
