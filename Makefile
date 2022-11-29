@@ -140,7 +140,7 @@ prepareWindows:
 	cp -r lib/              velisp-${VERSION}-win-x64/
 	cp -r examples/         velisp-${VERSION}-win-x64/
 	cp LICENSE              velisp-${VERSION}-win-x64/
-	windows/copy-mingw64-deps.sh  velisp-${VERSION}-win-x64/
+	windows/copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-win-x64/NOTICE
 	node util/notice-mingw64.js velisp-${VERSION}-win-x64/mingw64/bin/ > velisp-${VERSION}-win-x64/mingw64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > velisp-${VERSION}-win-x64/README-en.md
@@ -156,11 +156,12 @@ installerWindows:
 tarMacos:
 	rm -rf          velisp-${VERSION}-macos-x64/
 	mkdir -p        velisp-${VERSION}-macos-x64/
-	cp velisp       velisp-${VERSION}-macos-x64/
+	cp velisp       velisp-${VERSION}-macos-x64/velisp.bin
+	cp macos/velisp velisp-${VERSION}-macos-x64/
 	cp -R lib       velisp-${VERSION}-macos-x64/
 	cp -R examples  velisp-${VERSION}-macos-x64/
 	cp LICENSE      velisp-${VERSION}-macos-x64/
-	macos/copy-homebrew-deps.sh  velisp-${VERSION}-macos-x64/
+	macos/copy-homebrew-deps.sh velisp-${VERSION}-macos-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-macos-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > velisp-${VERSION}-macos-x64/README-en.md
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/

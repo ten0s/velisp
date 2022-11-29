@@ -3,5 +3,5 @@ install/
 node_modules/
 pkg/
 velisp*
-!windows/velisp-noshell.vbs
+!macos/velisp
 NOTICE
