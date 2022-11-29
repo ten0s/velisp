@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Propagate if set
-export DYLD_PRINT_LIBRARIES=$DYLD_PRINT_LIBRARIES
+# Uncomment to debug dylibs loading
+#export DYLD_PRINT_LIBRARIES=1
 
 # Force local homebrew/lib
 BASE_DIR=$(dirname $0)
