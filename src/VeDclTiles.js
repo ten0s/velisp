@@ -1408,8 +1408,9 @@ class Image extends Tile {
             ])
         }
         gtkWidget.on('draw', (ctx) => {
+            // https://docs.gtk.org/gtk3/signal.Widget.draw.html
             this.gtkDraw(gtkWidget, ctx)
-            return false
+            return false // event not yet handled
         })
     }
 
@@ -1473,6 +1474,7 @@ class ImageButton extends Tile {
     gtkInitWidget(gtkWidget) {
         this._action = this.action
         gtkWidget.on('button-press-event', (event) => {
+            // https://docs.gtk.org/gtk3/signal.Widget.button-press-event.html
             this._reason = ActionReason.TILE_SELECTED
             if (event.type === Gdk.EventType.BUTTON_PRESS ||
                 event.type === Gdk.EventType.DOUBLE_BUTTON_PRESS) {
@@ -1490,10 +1492,11 @@ class ImageButton extends Tile {
                 new FillImage(0, 0, this._width(this.width), this._height(this.height), this.color)
             ])
         }
-        const gtkChild = gtkWidget.getChildren()[0]
+        const gtkChild = gtkWidget.getChildren()[0] // GtkDrawingArea
         gtkChild.on('draw', (ctx) => {
+            // https://docs.gtk.org/gtk3/signal.Widget.draw.html
             this.gtkDraw(gtkChild, ctx)
-            return false
+            return false // event not yet handled
         })
         // For mnemonic see accelerator in gtkXml()
     }
