@@ -36,13 +36,13 @@ export PATH=<PATH_TO>/velisp-{{version}}-macos-x64:$PATH
 ### Usage
 
 ```
-$ cd velisp-{{version}}-macos-x64
+% cd velisp-{{version}}-macos-x64
 ```
 
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
-$ velisp
+% velisp
 VeLisp {{version}} on MacOS
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
@@ -59,33 +59,33 @@ _$ (quit)
 Calculate 10th (by default) Fibonacci number
 
 ```
-$ velisp examples/fib.lsp
+% velisp examples/fib.lsp
 55
 ```
 
 Calculate 11th Fibonacci number
 
 ```
-$ velisp examples/fib.lsp 11
+% velisp examples/fib.lsp 11
 89
 ```
 
 #### Run code from standard input
 
 ```
-$ cat examples/fib.lsp | velisp
+% cat examples/fib.lsp | velisp
 55
 ```
 
 ```
-$ cat examples/fib.lsp | velisp -- 11
+% cat examples/fib.lsp | velisp -- 11
 89
 ```
 
 #### Run without DCL support (faster loading, good for scripting)
 
 ```
-$ velisp --no-dcl examples/fib.lsp
+% velisp --no-dcl examples/fib.lsp
 55
 ```
 
