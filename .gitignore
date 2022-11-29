@@ -1,5 +1,7 @@
 .vagrant/
+homebrew/
 install/
+mingw64/
 node_modules/
 pkg/
 velisp*
