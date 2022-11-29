@@ -326,5 +326,6 @@ function debugHelp() {
            '  glade       show Glade XML                                \n' +
            '  stacktrace  show full stacktrace                          \n' +
            '  tree        show parse tree                               \n' +
+           '  libs        show libs loading (MacOS)                     \n' +
            '  help        show this help message and exit               \n'
 }

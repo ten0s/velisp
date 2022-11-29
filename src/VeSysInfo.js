@@ -54,6 +54,7 @@ const VeSysInfo = {
         glade: false,
         stacktrace: false,
         tree: false,
+        libs: false,
         help: false,
     },
 }

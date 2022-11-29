@@ -66,7 +66,7 @@ _$ (+ 1 2)
 
 Various behaviors can be customized using the following environment variables:
 
-* VELISP_DEBUG=glade | stacktrace | tree | help
+* VELISP_DEBUG=glade | stacktrace | tree | libs | help
 * VELISP_REPL_HISTORY: When a valid path is given, persistent REPL history will be
 saved to the specified file rather than .velisp_repl_history in the user's home
 directory. Setting this value to '' (an empty string) will disable persistent

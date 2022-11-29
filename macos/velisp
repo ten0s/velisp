@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Uncomment to debug dylibs loading
-#export DYLD_PRINT_LIBRARIES=1
+# Debug libs loading
+[[ "${VELISP_DEBUG}" == "libs" ]] && export DYLD_PRINT_LIBRARIES=1
 
 # Force local homebrew/lib
 BASE_DIR=$(dirname $0)
