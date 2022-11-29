@@ -309,15 +309,79 @@ $ echo '(alert (strcat "Hello from " (argv 1) "!"))' | velisp -- Arg
 $ velisp --no-dcl examples/fib.lsp
 55
 ```
+
 ## MacOS
 
 ### Install
 
-TODO
+#### Download and unarchive
+
+```
+% wget https://github.com/ten0s/velisp/releases/download/0.7.3/velisp-0.7.3-macos-x64.tar.gz
+% tar xfz velisp-0.7.3-macos-x64.tar.gz
+```
+
+#### Add to ~/.zshrc
+
+```
+export PATH=<PATH_TO>/velisp-0.7.3-macos-x64:$PATH
+```
 
 ### Usage
 
-TODO
+```
+% cd velisp-0.7.3-macos-x64
+```
+
+#### Run REPL (Read–Eval–Print Loop)
+
+```
+% velisp
+VeLisp 0.7.3 on MacOS
+Type ".license" or ".help" for more information
+_$ (+ 1 2)
+3
+_$ (defun add (a b) (+ a b))
+ADD
+_$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
+("10" "10" "10")
+_$ (quit)
+```
+
+#### Run code from file
+
+Calculate 10th (by default) Fibonacci number
+
+```
+% velisp examples/fib.lsp
+55
+```
+
+Calculate 11th Fibonacci number
+
+```
+% velisp examples/fib.lsp 11
+89
+```
+
+#### Run code from standard input
+
+```
+% cat examples/fib.lsp | velisp
+55
+```
+
+```
+% cat examples/fib.lsp | velisp -- 11
+89
+```
+
+#### Run without DCL support (faster loading, good for scripting)
+
+```
+% velisp --no-dcl examples/fib.lsp
+55
+```
 
 ## Implemented functions
 

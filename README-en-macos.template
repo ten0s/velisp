@@ -4,8 +4,6 @@ The goal is to run AutoLISP programs that don't use AutoCAD specific functionali
 Why? To learn basic AutoLISP and DCL programming, to write shell scripts, to run DCL dialogs
 just like regular applications on Windows, Linux and MacOS.
 
-MacOS is an early alpha release.
-
 ### Table of contents
 
 - [Install](#install)
@@ -13,12 +11,6 @@ MacOS is an early alpha release.
 - [License](#license)
 
 ### Install
-
-#### Prerequisites
-
-```
-% brew install gobject-introspection gtk+3 cairo
-```
 
 #### Download and unarchive
 

@@ -312,15 +312,7 @@ $ velisp --no-dcl examples/fib.lsp
 
 ## MacOS
 
-MacOS is an early alpha release.
-
 ### Install
-
-#### Prerequisites
-
-```
-% brew install gobject-introspection gtk+3 cairo
-```
 
 #### Download and unarchive
 
