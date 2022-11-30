@@ -218,7 +218,7 @@ $ cd velisp-0.7.3-linux-x64
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
-$ velisp
+$ ./velisp
 VeLisp 0.7.3 on Linux
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
@@ -235,21 +235,21 @@ _$ (quit)
 Calculate 10th (by default) Fibonacci number
 
 ```
-$ velisp examples/fib.lsp
+$ ./velisp examples/fib.lsp
 55
 ```
 
 Calculate 11th Fibonacci number
 
 ```
-$ velisp examples/fib.lsp 11
+$ ./velisp examples/fib.lsp 11
 89
 ```
 
 Run the Calculator example
 
 ```
-$ velisp examples/calc.lsp
+$ ./velisp examples/calc.lsp
 ```
 
 ![App Calc Linux Image](/images/app-calc-linux.png)
@@ -257,7 +257,7 @@ $ velisp examples/calc.lsp
 Run the Minesweeper example
 
 ```
-$ velisp examples/mines.lsp
+$ ./velisp examples/mines.lsp
 ```
 
 ![App Mines Linux Image](/images/app-mines-linux.png)
@@ -265,7 +265,7 @@ $ velisp examples/mines.lsp
 Run the Fifteen Puzzle example
 
 ```
-$ velisp examples/fifteen.lsp
+$ ./velisp examples/fifteen.lsp
 ```
 
 ![App Fifteen Linux Image](/images/app-fifteen-linux.png)
@@ -273,7 +273,7 @@ $ velisp examples/fifteen.lsp
 Run the Demo example
 
 ```
-$ velisp examples/demo.lsp
+$ ./velisp examples/demo.lsp
 ```
 
 ![App Demo Linux Image](/images/app-demo-linux.png)
@@ -282,23 +282,23 @@ $ velisp examples/demo.lsp
 #### Run code from standard input
 
 ```
-$ cat examples/fib.lsp | velisp
+$ cat examples/fib.lsp | ./velisp
 55
 ```
 
 ```
-$ cat examples/fib.lsp | velisp -- 11
+$ cat examples/fib.lsp | ./velisp -- 11
 89
 ```
 
 ```
-$ echo '(alert "Hello from VeLisp!")' | velisp
+$ echo '(alert "Hello from VeLisp!")' | ./velisp
 ```
 
 ![Alert Hello From VeLisp Linux Image](/images/alert-hello-velisp-linux.png)
 
 ```
-$ echo '(alert (strcat "Hello from " (argv 1) "!"))' | velisp -- Arg
+$ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp -- Arg
 ```
 
 ![Alert Hello From Arg Linux Image](/images/alert-hello-arg-linux.png)
@@ -306,7 +306,7 @@ $ echo '(alert (strcat "Hello from " (argv 1) "!"))' | velisp -- Arg
 #### Run without DCL support (faster loading, good for scripting)
 
 ```
-$ velisp --no-dcl examples/fib.lsp
+$ ./velisp --no-dcl examples/fib.lsp
 55
 ```
 
@@ -336,7 +336,7 @@ export PATH=<PATH_TO>/velisp-0.7.3-macos-x64:$PATH
 #### Run REPL (Read–Eval–Print Loop)
 
 ```
-% velisp
+% ./velisp
 VeLisp 0.7.3 on MacOS
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
@@ -353,33 +353,33 @@ _$ (quit)
 Calculate 10th (by default) Fibonacci number
 
 ```
-% velisp examples/fib.lsp
+% ./velisp examples/fib.lsp
 55
 ```
 
 Calculate 11th Fibonacci number
 
 ```
-% velisp examples/fib.lsp 11
+% ./velisp examples/fib.lsp 11
 89
 ```
 
 #### Run code from standard input
 
 ```
-% cat examples/fib.lsp | velisp
+% cat examples/fib.lsp | ./velisp
 55
 ```
 
 ```
-% cat examples/fib.lsp | velisp -- 11
+% cat examples/fib.lsp | ./velisp -- 11
 89
 ```
 
 #### Run without DCL support (faster loading, good for scripting)
 
 ```
-% velisp --no-dcl examples/fib.lsp
+% ./velisp --no-dcl examples/fib.lsp
 55
 ```
 
