@@ -10,8 +10,7 @@ DYLD_LIBRARY_PATH=$BASE_DIR/homebrew/lib
 GI_TYPELIB_PATH=$BASE_DIR/homebrew/lib/girepository-1.0
 
 case $(sw_vers -productVersion) in
-10.15*)
-    # Catalina Fix
+10.15* | 11.*) # Catalina, Big Sur
     # Symbol not found: __cg_jpeg_resync_to_restart
     DYLD_LIBRARY_PATH=/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources:$DYLD_LIBRARY_PATH
     ;;
