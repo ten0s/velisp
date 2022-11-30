@@ -34,6 +34,9 @@ const pacman = (args) => {
     })
 }
 
+//
+// Query the local package database
+//
 // :: ([string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQuery = (args) => {
     return pacman(['--query', ...args])
@@ -50,11 +53,17 @@ const toArray = (x) => {
     throw new Error(`Expected string or array but got: ${util.inspect(x)}`)
 }
 
+//
+// Query the local package database for package(s) that own the specified file(s)
+//
 // :: (string | [string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQueryOwns = (args) => {
     return pacmanQuery(['--owns', ...toArray(args)])
 }
 
+//
+// Query the local package database for information on a given package
+//
 // :: (string | [string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQueryInfo = (args) => {
     return pacmanQuery(['--info', ...toArray(args)])
