@@ -71,30 +71,26 @@ installed.
 #### Build MacOS build deps Vagrant box
 
 Download MacOS Catalina Vagrant box from
-https://app.vagrantup.com/ramsey/boxes/macos-catalina
+https://app.vagrantup.com/jakubknejzlik/boxes/macos
 and import it.
 
 ```
-$ curl -s https://app.vagrantup.com/ramsey/boxes/macos-catalina | jq .
-$ wget https://vagrantcloud.com/ramsey/boxes/macos-catalina/versions/1.0.0/providers/virtualbox.box
-$ vagrant box add macos-catalina virtualbox.box
+$ curl -s https://app.vagrantup.com/jakubknejzlik/boxes/macos | jq .
+$ wget https://vagrantcloud.com/jakubknejzlik/boxes/macos/versions/10.15.7/providers/virtualbox.box
+$ vagrant box add macos-catalina-10.15.7 virtualbox.box
 ```
 
 #### Download Command Line Tools for Xcode
 
-Download Command_Line_Tools_for_Xcode_11.5.dmg and copy it to macos/ directory
+Download Command_Line_Tools_for_Xcode_12.4.dmg and copy it to macos/ directory
 
 #### Build MacOS build deps box
 
 ```
-$ export VAGRANT_VAGRANTFILE=Vagrantfile.macos-catalina.deps
-$ vagrant up
+$ export VAGRANT_VAGRANTFILE=Vagrantfile.macos.deps
+$ vagrant --name=catalina up
 ... some manual setup?
 $ vagrant up --provision
-$ vagrant package --output velisp-macos-catalina-build-deps.box
-$ vagrant box add -f velisp-macos-catalina-build-deps ./velisp-macos-catalina-build-deps.box
-$ vagrant destroy -f
-$ rm -f velisp-macos-catalina-build-deps.box
 ```
 
 #### Build MacOS package

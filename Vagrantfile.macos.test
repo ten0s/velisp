@@ -1,0 +1,74 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require "getoptlong"
+
+versions = Hash[
+  "catalina" => "10.15.7",
+  "big_sur"  => "11.2.3",
+  "monterey" => "12.5",
+]
+
+opts = GetoptLong.new(
+  ["--name", GetoptLong::REQUIRED_ARGUMENT],
+  ["--help", GetoptLong::NO_ARGUMENT],
+  ["--provision", GetoptLong::NO_ARGUMENT], # workaround
+)
+
+macos_name = ""
+opts.each do |opt, arg|
+  case opt
+  when '--name'
+    macos_name = arg
+  when "--help"
+    puts <<-EOF
+usage: vagrant [MY_OPTION] <COMMAND> [OPTION] ...
+
+--name=<MacOS Name>:
+  Use <MacOS Name>
+
+--help:
+  Show help
+EOF
+  exit
+  end
+end
+
+if macos_name == ""
+  puts "Argument 'name' is not provided"
+  exit
+end
+
+if !versions.member?(macos_name)
+  puts "Unknown 'name': #{macos_name}"
+  exit
+end
+
+macos_version = versions[macos_name]
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box  = "macos-#{macos_name}-#{macos_version}"
+  config.vm.define "macos-#{macos_name}-test"
+
+  config.vm.box_check_update = false
+
+  # "rsync" is host to guest only
+  #config.vm.synced_folder ".", "/Users/vagrant/Shared", type: "rsync"
+  config.vm.synced_folder ".", "/vagrant", :disabled => true
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.cpus = 2
+    vb.memory = 4096
+    vb.check_guest_additions = false
+    vb.customize ["modifyvm", :id, "--vram", "256"]
+
+    # Enable USB 1.1
+    vb.customize ["modifyvm", :id, "--usbohci", "on"]
+    # Disable USB 2.0 & 3.0 Controllers
+    vb.customize ["modifyvm", :id, "--usbehci", "off"]
+    vb.customize ["modifyvm", :id, "--usbxhci", "off"]
+  end
+
+end

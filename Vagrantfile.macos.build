@@ -1,10 +1,55 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require "getoptlong"
+
+versions = Hash[
+  "catalina" => "10.15.7",
+  "big_sur"  => "11.2.3",
+  "monterey" => "12.5",
+]
+
+opts = GetoptLong.new(
+  ["--name", GetoptLong::REQUIRED_ARGUMENT],
+  ["--help", GetoptLong::NO_ARGUMENT],
+  ["--provision", GetoptLong::NO_ARGUMENT], # workaround
+)
+
+macos_name = ""
+opts.each do |opt, arg|
+  case opt
+  when '--name'
+    macos_name = arg
+  when "--help"
+    puts <<-EOF
+usage: vagrant [MY_OPTION] <COMMAND> [OPTION] ...
+
+--name=<MacOS Name>:
+  Use <MacOS Name>
+
+--help:
+  Show help
+EOF
+  exit
+  end
+end
+
+if macos_name == ""
+  puts "Argument 'name' is not provided"
+  exit
+end
+
+if !versions.member?(macos_name)
+  puts "Unknown 'name': #{macos_name}"
+  exit
+end
+
+macos_version = versions[macos_name]
+
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "velisp-macos-catalina-build-deps"
-  config.vm.define "macos-catalina"
+  config.vm.box  = "macos-#{macos_name}-#{macos_version}"
+  config.vm.define "macos-#{macos_name}-build"
 
   config.vm.box_check_update = false
 
@@ -29,7 +74,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./lib",                          destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./patches",                      destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./src",                          destination: "/Users/vagrant/velisp/"
-  config.vm.provision "file", source: "./test",                         destination: "/Users/vagrant/velisp/"
+#  config.vm.provision "file", source: "./test",                         destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./util",                         destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./macos",                        destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./.eslintrc.json",               destination: "/Users/vagrant/velisp/"

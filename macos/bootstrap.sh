@@ -3,7 +3,7 @@
 USER=vagrant
 cd /Users/$USER/
 
-CLT_VER=11.5
+CLT_VER=${1?}
 # Install Command Line Tools $CLT_VER
 if ! clang --version; then
     hdiutil attach Command_Line_Tools_for_Xcode_$CLT_VER.dmg

@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
 
-export VAGRANT_VAGRANTFILE=Vagrantfile.macos-catalina.build
+export VAGRANT_VAGRANTFILE=Vagrantfile.macos.build
 
-vagrant up --provision
+MACOS_NAME=catalina
+
+vagrant --name=${MACOS_NAME} up --provision
 if [[ $? -ne 0 ]]; then
     echo "Build Failed"
     exit 1
 fi
 
-vagrant ssh -c 'source ~/.zshrc; cd velisp; macos/update.sh'
+vagrant --name=${MACOS_NAME} ssh -c 'source ~/.zshrc; cd velisp; macos/update.sh'
 if [[ $? -ne 0 ]]; then
     echo "Update Failed."
     exit 2
 fi
 
-vagrant ssh -c 'source ~/.zshrc; cd velisp; macos/build.sh'
+vagrant --name=${MACOS_NAME} ssh -c 'source ~/.zshrc; cd velisp; macos/build.sh'
 if [[ $? -eq 0 ]]; then
     # Since 'rsync' synced_folder supported for MacOS guests is
     # host to guest only, rsync the file back explicitly
