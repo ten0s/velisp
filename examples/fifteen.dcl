@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 
 cell_button : image_button {
-  width = 6;
-  height = 3;
+  width = 8;
+  height = 4;
 }
 
 fifteen : dialog {
