@@ -61,14 +61,14 @@ cat typelibs.txt | xargs -I{} cp -f {} $TYPELIB_PATH/
 touch $BASE_DIR/homebrew-dylibs.txt
 touch $BASE_DIR/homebrew-typelibs.txt
 
-if ! diff dylibs.txt $BASE_DIR/homebrew-dylibs.txt; then
+if ! diff $BASE_DIR/homebrew-dylibs.txt dylibs.txt; then
     mv -f dylibs.txt $BASE_DIR/homebrew-dylibs.txt
     echo "$BASE_DIR/homebrew-dylibs.txt updated"
 else
     rm dylibs.txt
 fi
 
-if ! diff typelibs.txt $BASE_DIR/homebrew-typelibs.txt; then
+if ! diff $BASE_DIR/homebrew-typelibs.txt typelibs.txt; then
     mv -f typelibs.txt $BASE_DIR/homebrew-typelibs.txt
     echo "$BASE_DIR/homebrew-typelibs.txt updated"
 else
