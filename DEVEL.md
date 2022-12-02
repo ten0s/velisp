@@ -88,7 +88,8 @@ Download Command_Line_Tools_for_Xcode_12.4.dmg and copy it to macos/ directory
 
 ```
 $ export VAGRANT_VAGRANTFILE=Vagrantfile.macos.deps
-$ vagrant --name=catalina up
+$ export MACOS_NAME=catalina
+$ vagrant up
 ... some manual setup?
 $ vagrant up --provision
 ```
