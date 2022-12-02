@@ -795,8 +795,8 @@ class File {
                 case 'android':
                 case 'darwin':
                 case 'linux':
-                    stdinFile = new File(name, mode, fs.openSync('/dev/stdin', mode))
-                    break
+                    //stdinFile = new File(name, mode, fs.openSync('/dev/stdin', mode))
+                    //break
                 default:
                     stdinFile = new File(name, mode, process.stdin.fd)
                 }
@@ -867,7 +867,7 @@ class File {
         } else {
             buf = Buffer.alloc(1)
             let len = 0
-            // MacOS specific: loop while EAGAIN: resource temporarily unavailable
+            // Loop while EAGAIN: resource TEMPORARILY unavailable
             for (;;) {
                 try {
                     len = fs.readSync(this.fd, buf, 0, 1)
@@ -916,7 +916,7 @@ class File {
             } else {
                 buf = Buffer.alloc(32)
                 let len = 0
-                // MacOS specific: loop while EAGAIN: resource temporarily unavailable
+                // Loop while EAGAIN: resource TEMPORARILY unavailable
                 for (;;) {
                     try {
                         len = fs.readSync(this.fd, buf, 0, buf.length)
