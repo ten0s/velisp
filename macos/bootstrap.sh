@@ -25,9 +25,9 @@ su $USER -c "/bin/bash -s" <<'EOF'
    brew install               \
         cairo                 \
         coreutils             \
-        jq                    \
         gobject-introspection \
         gtk+3                 \
+        jq                    \
         node@16
 
    echo 'setopt interactivecomments'                      > ~/.zshrc
