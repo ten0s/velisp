@@ -12,3 +12,4 @@
     (setq n (atoi (argv 2))))
 
 (princ (fib n))
+(princ "\n")
