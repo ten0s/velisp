@@ -36,10 +36,6 @@ $ vagrant box add win10 'MSEdge - Win10.box'
 ```
 $ export VAGRANT_VAGRANTFILE=Vagrantfile.win10.deps
 $ vagrant up --provision
-$ vagrant package --output velisp-win10-build-deps.box
-$ vagrant box add -f velisp-win10-build-deps ./velisp-win10-build-deps.box
-$ vagrant destroy -f
-$ rm -f velisp-win10-build-deps.box
 ```
 
 #### Build Windows package
@@ -100,6 +96,14 @@ $ vagrant up --provision
 $ ./build-macos-package.sh
 ...
 Build Done
+```
+
+#### Upgrade Homebrew deps
+
+Inside MacOS Terminal
+
+```
+% macos/find-homebrew-deps.sh node src/main.js examples/calc.lsp
 ```
 
 
