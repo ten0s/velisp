@@ -13,7 +13,7 @@ TestRunner.run({
         {test: '(setenv "EMPTY" "") (getenv "EMPTY")', result: new Str('')},
     ],
 
-    testsLinux: [
+    testsUnix: [
         // Case-sensitive
         {test: '(setenv "NONEMPTY" "value") (getenv "NONEMPTY")', result: new Str('value')},
         {test: '(setenv "NONEMPTY" "value") (getenv "nonempty")', result: new Bool(false)},

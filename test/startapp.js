@@ -10,7 +10,7 @@ TestRunner.run({
         {test: '(startapp "unknown" "--arg" "")', result: new Bool(false)},
     ],
 
-    testsLinux: [
+    testsUnix: [
         {test: '(startapp "bash")', result: (act) => Number.isInteger(act.value())},
         {test: '(startapp "bash" "--help")', result: (act) => Number.isInteger(act.value())},
     ],

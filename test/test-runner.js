@@ -10,23 +10,27 @@ class TestRunner {
 
         tests = [],
         testsLinux = [],
-        testsWindows = [],
         testsMacOS = [],
+        testsUnix = [],
+        testsWindows = [],
 
         errors = [],
         errorsLinux = [],
-        errorsWindows = [],
         errorsMacOS = [],
+        errorsWindows = [],
+        errorsUnix = [],
 
     }) {
-        if (tests.length       ||
-            testsLinux.length  ||
-            testsWindows.length    ||
+        if (tests.length         ||
+            testsLinux.length    ||
             testsMacOS.length    ||
-            errors.length      ||
-            errorsLinux.length ||
-            errorsWindows.length   ||
-            errorsMacOS.length) {
+            testsWindows.length  ||
+            testsUnix.length     ||
+            errors.length        ||
+            errorsLinux.length   ||
+            errorsMacOS.length   ||
+            errorsWindows.length ||
+            errorsUnix.length) {
             QUnit.test(name, assert => {
                 const platform = process.platform
 
@@ -35,14 +39,17 @@ class TestRunner {
 
                 // Run platform specific tests
                 switch (platform) {
+                case 'android':
                 case 'linux':
+                    testsUnix.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     testsLinux.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    break
+                case 'darwin':
+                    testsUnix.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    testsMacOS.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 case 'win32':
                     testsWindows.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
-                    break
-                case 'darwin':
-                    testsMacOS.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 default:
                     throw new Error(`Unknown platform: ${platform}`)
@@ -53,14 +60,17 @@ class TestRunner {
 
                 // Run platform specific tests
                 switch (platform) {
+                case 'android':
                 case 'linux':
+                    errorsUnix.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     errorsLinux.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    break
+                case 'darwin':
+                    errorsUnix.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
+                    errorsMacOS.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 case 'win32':
                     errorsWindows.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
-                    break
-                case 'darwin':
-                    errorsMacOS.forEach(t => TestRunner.runTest(assert, setup, teardown, t))
                     break
                 default:
                     throw new Error(`Unknown platform: ${platform}`)
