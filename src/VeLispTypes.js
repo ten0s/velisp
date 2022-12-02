@@ -793,6 +793,7 @@ class File {
             if (!stdinFile) {
                 switch (os.platform()) {
                 case 'android':
+                case 'darwin':
                 case 'linux':
                     stdinFile = new File(name, mode, fs.openSync('/dev/stdin', mode))
                     break
@@ -829,6 +830,7 @@ class File {
         case FileStream.STDIN:
             switch (os.platform()) {
             case 'android':
+            case 'darwin':
             case 'linux':
                 //fs.closeSync(this.fd)
                 break
@@ -864,7 +866,19 @@ class File {
             }
         } else {
             buf = Buffer.alloc(1)
-            const len = fs.readSync(this.fd, buf, 0, 1)
+            let len = 0
+            // MacOS specific: loop while EAGAIN: resource temporarily unavailable
+            for (;;) {
+                try {
+                    len = fs.readSync(this.fd, buf, 0, 1)
+                    break
+                } catch (e) {
+                    if (e.code === 'EAGAIN') {
+                        continue
+                    }
+                    throw e
+                }
+            }
             if (!len) {
                 return new Bool(false)
             }
@@ -901,7 +915,19 @@ class File {
                 this.buf = undefined
             } else {
                 buf = Buffer.alloc(32)
-                const len = fs.readSync(this.fd, buf, 0, buf.length)
+                let len = 0
+                // MacOS specific: loop while EAGAIN: resource temporarily unavailable
+                for (;;) {
+                    try {
+                        len = fs.readSync(this.fd, buf, 0, buf.length)
+                        break
+                    } catch (e) {
+                        if (e.code === 'EAGAIN') {
+                            continue
+                        }
+                        throw e
+                    }
+                }
                 if (!len) {
                     if (!str) {
                         return new Bool(false)
