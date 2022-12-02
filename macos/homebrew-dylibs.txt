@@ -40,9 +40,9 @@
 /usr/local/Cellar/jpeg-turbo/2.1.4/lib/libjpeg.dylib
 /usr/local/Cellar/libepoxy/1.5.10/lib/libepoxy.0.dylib
 /usr/local/Cellar/libepoxy/1.5.10/lib/libepoxy.dylib
-/usr/local/Cellar/libpng/1.6.38/lib/libpng.dylib
-/usr/local/Cellar/libpng/1.6.38/lib/libpng16.16.dylib
-/usr/local/Cellar/libpng/1.6.38/lib/libpng16.dylib
+/usr/local/Cellar/libpng/1.6.39/lib/libpng.dylib
+/usr/local/Cellar/libpng/1.6.39/lib/libpng16.16.dylib
+/usr/local/Cellar/libpng/1.6.39/lib/libpng16.dylib
 /usr/local/Cellar/libx11/1.8.2/lib/libX11.6.dylib
 /usr/local/Cellar/libx11/1.8.2/lib/libX11.dylib
 /usr/local/Cellar/libxau/1.0.10/lib/libXau.6.dylib
