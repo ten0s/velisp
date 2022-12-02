@@ -23,6 +23,7 @@ import fs from 'fs'
 import os from 'os'
 import {find, escape} from './VeUtil.js'
 import './VeJsExt.js' // Array.without
+import {sleep} from './VeSystem.js'
 
 const TRU = 'T'
 const NIL = 'nil'
@@ -874,6 +875,7 @@ class File {
                     break
                 } catch (e) {
                     if (e.code === 'EAGAIN') {
+                        sleep(100)
                         continue
                     }
                     throw e
@@ -923,6 +925,7 @@ class File {
                         break
                     } catch (e) {
                         if (e.code === 'EAGAIN') {
+                            sleep(100)
                             continue
                         }
                         throw e

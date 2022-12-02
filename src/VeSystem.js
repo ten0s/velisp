@@ -44,7 +44,13 @@ const tmpDir = () => {
     return os.tmpdir()
 }
 
+const sleep = (msecs) => {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/wait
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, msecs)
+}
+
 export {
     homeDir,
     tmpDir,
+    sleep,
 }

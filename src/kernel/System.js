@@ -23,7 +23,7 @@ import os from 'os'
 import {spawn} from 'child_process'
 import {Bool, Int, Real, Str, Sym, List, Fun, Argv0, ensureType} from '../VeLispTypes.js'
 import VeArgv from '../VeArgv.js'
-import {homeDir, tmpDir} from '../VeSystem.js'
+import {homeDir, tmpDir, sleep} from '../VeSystem.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
@@ -185,8 +185,7 @@ export const initContext = (context) => {
         if (msecs < 0) {
             throw new Error('sleep: expected positive Int')
         }
-        // Thanks to https://www.npmjs.com/package/sleep
-        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, msecs)
+        sleep(msecs)
         return new Bool(false)
     }))
     context.setSym('STARTAPP', new Fun('startapp', ['cmd', '[arg ...]'], [], (self, args) => {
