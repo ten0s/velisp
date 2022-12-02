@@ -29,6 +29,10 @@ su $USER -c "/bin/bash -s" <<'EOF'
    echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
    echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.bashrc
 
-   brew install coreutils jq
-   brew install gobject-introspection gtk+3 cairo
+   brew install               \
+        cairo                 \
+        coreutils             \
+        jq                    \
+        gobject-introspection \
+        gtk+3
 EOF

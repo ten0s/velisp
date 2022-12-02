@@ -11,12 +11,6 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-vagrant ssh -c 'source ~/.zshrc; cd velisp; macos/update.sh'
-if [[ $? -ne 0 ]]; then
-    echo "Update Failed."
-    exit 2
-fi
-
 vagrant ssh -c 'source ~/.zshrc; cd velisp; macos/build.sh'
 if [[ $? -eq 0 ]]; then
     # Since 'rsync' synced_folder supported for MacOS guests is
@@ -32,10 +26,10 @@ if [[ $? -eq 0 ]]; then
         echo "Build Done"
     else
         echo "Copy Failed"
-        exit 3
+        exit 2
     fi
 
 else
     echo "Build Failed"
-    exit 4
+    exit 3
 fi
