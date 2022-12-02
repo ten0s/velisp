@@ -35,20 +35,20 @@ mkdir -p $DYLIB_PATH $TYPELIB_PATH
 
 # Copy and store dylibs and their reverse links
 for dylib in $(cat dylibs.txt); do
-  #echo $dylib
-  cp -f -R $dylib $DYLIB_PATH/
+    #echo $dylib
+    cp -f -R $dylib $DYLIB_PATH/
 
-  # Find reverse links pointing to dylib
-  dylib_dir=$(dirname $dylib)
-  dylib_name=$(basename $dylib)
-  for link in $(find $dylib_dir -type link); do
-    #echo $link
-    target_name=$(basename $(realpath $link))
-    if [[ $target_name == $dylib_name ]]; then
-      cp -f -R $link $DYLIB_PATH/
-      echo $link >> dylibs.txt
-    fi
-  done
+    # Find reverse links pointing to dylib
+    dylib_dir=$(dirname $dylib)
+    dylib_name=$(basename $dylib)
+    for link in $(find $dylib_dir -type link); do
+        #echo $link
+        target_name=$(basename $(realpath $link))
+        if [[ $target_name == $dylib_name ]]; then
+            cp -f -R $link $DYLIB_PATH/
+            echo $link >> dylibs.txt
+        fi
+    done
 done
 # Sort dylibs and their reverse links
 TEMP=$(mktemp); sort -u dylibs.txt > $TEMP; mv $TEMP dylibs.txt
