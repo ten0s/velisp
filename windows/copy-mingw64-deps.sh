@@ -17,11 +17,13 @@ DEST_DIR=$1
 # See also find-mingw64-deps.sh
 
 mkdir -p $DEST_DIR/mingw64/bin
-cat $BASE_DIR/mingw64-dlls.txt | \
-    xargs -I'{}' cp /mingw64/bin/{} $DEST_DIR/mingw64/bin/
+cat $BASE_DIR/mingw64-dlls.txt | while read -a file; do
+    cp -v /mingw64/bin/$file $DEST_DIR/mingw64/bin/ || exit 1
+done
 
 mkdir -p $DEST_DIR/mingw64/lib/girepository-1.0
-cat $BASE_DIR/mingw64-typelibs.txt | \
-    xargs -I'{}' cp /mingw64/lib/girepository-1.0/{} $DEST_DIR/mingw64/lib/girepository-1.0/
+cat $BASE_DIR/mingw64-typelibs.txt | while read -a file; do
+    cp -v /mingw64/lib/girepository-1.0/$file $DEST_DIR/mingw64/lib/girepository-1.0/ || exit 1
+done
 
 exit 0
