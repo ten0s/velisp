@@ -14,12 +14,12 @@ TYPELIB_PATH=homebrew/lib/girepository-1.0
 # See also find-homebrew-deps.sh
 
 mkdir -p $DEST_DIR/$DYLIB_PATH
-cat $BASE_DIR/homebrew-dylibs.txt | while read -a file; do
+for file in $(cat $BASE_DIR/homebrew-dylibs.txt); do
     cp -Rv $file $DEST_DIR/$DYLIB_PATH/ || exit 1
 done
 
 mkdir -p $DEST_DIR/$TYPELIB_PATH
-cat $BASE_DIR/homebrew-typelibs.txt | while read -a file; do
+for file in $(cat $BASE_DIR/homebrew-typelibs.txt); do
     cp -Rv $file $DEST_DIR/$TYPELIB_PATH/ || exit 1
 done
 
