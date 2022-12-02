@@ -22,17 +22,19 @@ fi
 
 # Install deps
 su $USER -c "/bin/bash -s" <<'EOF'
-   echo 'setopt interactivecomments'                     >> ~/.zshrc
-   echo 'alias ll="ls -l"'                               >> ~/.zshrc
-
-   brew install node@16
-   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
-   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.bashrc
-
    brew install               \
         cairo                 \
         coreutils             \
         jq                    \
         gobject-introspection \
-        gtk+3
+        gtk+3                 \
+        node@16
+
+   echo 'setopt interactivecomments'                      > ~/.zshrc
+   echo 'alias ll="ls -l"'                               >> ~/.zshrc
+   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
+
+   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"'  > ~/.bashrc
+
+   echo "Done"
 EOF
