@@ -54,7 +54,9 @@ done
 TEMP=$(mktemp); sort -u dylibs.txt > $TEMP; mv $TEMP dylibs.txt
 
 # Copy typelibs
-cat typelibs.txt | xargs -I{} cp -f {} $TYPELIB_PATH/
+for typelib in $(cat typelibs.txt); do
+    cp -f -R $typelib $TYPELIB_PATH/
+done
 
 # See also copy-homebrew-deps.sh
 
