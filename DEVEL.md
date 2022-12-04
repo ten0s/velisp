@@ -51,9 +51,9 @@ Build Done
 Inside the MSYS shell (Run as administrator)
 
 ```
-# gflags -i node.exe.exe +sls
+# gflags -i node.exe +sls
 # windows/find-mingw64-deps.sh node.exe src/main.js examples/calc.lsp
-# gflags -i node.exe.exe -sls
+# gflags -i node.exe -sls
 ```
 
 See https://ten0s.github.io/blog/2022/07/25/find-dlls-and-typelibs-dependencies-for-nodejs-gtk-application-on-windows for detail.
