@@ -160,6 +160,19 @@ const nodeInfo = () => {
 
 const addNodeInfo = (deps) => [nodeInfo(), ...deps]
 
+const vercelPkgInfo = () => {
+    const version = '5.8.0' // TODO: read from package.json
+    return {
+        name: 'pkg',
+        version,
+        format: 'binary',
+        homepage: 'https://github.com/vercel/pkg',
+        licenses: ['MIT'],
+    }
+}
+
+const addVercelPkgInfo = (deps) => [vercelPkgInfo(), ...deps]
+
 /* eslint-disable */
 const checkHomepages = (deps) => {
     return promiseSequence(deps.map(prop('homepage')), ensureUrlReached)
@@ -179,7 +192,7 @@ const formatDep = (dep) => {
     }
 
     return `
- - ${what(dep)} licensed under the ${dep.licenses.join(' or ')} license
+ - ${what(dep)} licensed under the ${dep.licenses.join(' or ')} license(s)
    See ${dep.homepage} for more detail`
 }
 
@@ -197,6 +210,7 @@ fs.readdir(inputDir, {withFileTypes: true})
     .then(map(npmPkgFile(inputDir)))
     .then(readJsonFiles)
     .then(map(parseNpmPkg))
+    .then(addVercelPkgInfo)
     .then(addNodeInfo)
     .then(tap(console.error))
     //.then(tap(checkHomepages))
