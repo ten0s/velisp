@@ -163,6 +163,7 @@ tarMacos:
 	cp LICENSE      velisp-${VERSION}-macos-x64/
 	macos/copy-homebrew-deps.sh velisp-${VERSION}-macos-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-macos-x64/NOTICE
+	node util/notice-homebrew.js velisp-${VERSION}-macos-x64/homebrew/lib/ > velisp-${VERSION}-macos-x64/homebrew/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > velisp-${VERSION}-macos-x64/README-en.md
 	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/
 

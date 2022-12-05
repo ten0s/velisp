@@ -7,7 +7,7 @@ versions = Hash[
   "monterey" => "12.5",
 ]
 
-macos_name = ENV["MACOS_NAME"] || ""
+macos_name = ENV["MACOS_NAME"] || "catalina"
 
 if macos_name == ""
   puts "ENV['MACOS_NAME'] is not set"
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./lib",                          destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./patches",                      destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./src",                          destination: "/Users/vagrant/velisp/"
-#  config.vm.provision "file", source: "./test",                         destination: "/Users/vagrant/velisp/"
+  config.vm.provision "file", source: "./test",                         destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./util",                         destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./macos",                        destination: "/Users/vagrant/velisp/"
   config.vm.provision "file", source: "./.eslintrc.json",               destination: "/Users/vagrant/velisp/"

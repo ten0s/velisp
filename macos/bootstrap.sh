@@ -29,6 +29,9 @@ su $USER -c "/bin/bash -s" <<'EOF'
         gtk+3                 \
         jq                    \
         node@16
+   brew tap ten0s/brew-cache
+   brew update
+   brew cache -u
 
    echo 'setopt interactivecomments'                      > ~/.zshrc
    echo 'alias ll="ls -l"'                               >> ~/.zshrc

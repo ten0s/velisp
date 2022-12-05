@@ -130,13 +130,13 @@ const checkHomepages = (deps) => {
 const formatDep = (dep) => {
     return `
  - Binary module ${dep.dll} from ${dep.package} ${dep.version}
-   licensed under the ${dep.licenses.join(' or ')} license
+   licensed under the ${dep.licenses.join(' or ')} license(s)
    See ${dep.homepage} for more detail`
 }
 
 // :: ([{dll, path, package, version, homepage, licenses}]) -> ()
 const writeNotice = (deps) => {
-    console.log('The following MinGW-w64 dependencies are included in this product:')
+    console.log('The following MinGW64 dependencies are included in this product:')
 
     deps.forEach(dep => {
         console.log(formatDep(dep))

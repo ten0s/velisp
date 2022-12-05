@@ -13,7 +13,7 @@ tools = Hash[
   "monterey" => "14.1",
 ]
 
-macos_name = ENV["MACOS_NAME"] || ""
+macos_name = ENV["MACOS_NAME"] || "catalina"
 
 if macos_name == ""
   puts "ENV['MACOS_NAME'] is not set"
