@@ -130,7 +130,7 @@ tarLinux:
 	cp LICENSE      velisp-${VERSION}-linux-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-linux-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > velisp-${VERSION}-linux-x64/README-en.md
-	tar cfz velisp-${VERSION}-linux-x64.tar.gz velisp-${VERSION}-linux-x64/
+	tar cfJ velisp-${VERSION}-linux-x64.tar.xz velisp-${VERSION}-linux-x64/
 
 prepareWindows:
 	rm -rf                  velisp-${VERSION}-win-x64/
@@ -167,7 +167,7 @@ tarMacos:
 	echo "\n--------------------------------\n"                            >> velisp-${VERSION}-macos-x64/NOTICE
 	node util/notice-homebrew.js velisp-${VERSION}-macos-x64/homebrew/lib/ >> velisp-${VERSION}-macos-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > velisp-${VERSION}-macos-x64/README-en.md
-	tar cfz velisp-${VERSION}-macos-x64.tar.gz velisp-${VERSION}-macos-x64/
+	tar cfJ velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-macos-x64/
 
 cleanPkg:
 	rm -rf pkg/

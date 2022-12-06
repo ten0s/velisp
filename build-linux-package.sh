@@ -8,7 +8,7 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-docker run -ti --rm -v$PWD:/home/user/velisp/install velisp bash -c 'cp velisp-*-*-*.tar.gz install/'
+docker run -ti --rm -v$PWD:/home/user/velisp/install velisp bash -c 'cp velisp-*-*-*.tar.xz install/'
 if [[ $? -eq 0 ]]; then
     echo "Build Done"
 else

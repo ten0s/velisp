@@ -20,7 +20,7 @@ if [[ $? -eq 0 ]]; then
         /Port /         { port = $2 }
         /User /         { user = $2 }
         /IdentityFile / { id   = $2 }
-        END             { printf("rsync -vv -e \"ssh -p%s -i%s\" %s@%s:velisp/velisp-*-*-*.tar.gz .\n", port, id, user, host) }
+        END             { printf("rsync -vv -e \"ssh -p%s -i%s\" %s@%s:velisp/velisp-*-*-*.tar.xz .\n", port, id, user, host) }
     ' | bash
     if [[ $? -eq 0 ]]; then
         echo "Build Done"
