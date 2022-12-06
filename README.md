@@ -155,7 +155,7 @@ Run the Demo example
 ![Alert Hello From VeLisp Windows Image](/images/alert-hello-velisp-windows.png)
 
 ```
-> echo (alert (strcat "Hello from " (argv 1) "!")) | velisp -- Arg
+> echo (alert (strcat "Hello from " (argv 2) "!")) | velisp -- Arg
 ```
 
 ![Alert Hello From Arg Windows Image](/images/alert-hello-arg-windows.png)
@@ -297,7 +297,7 @@ Run the Demo example
 ![Alert Hello From VeLisp MacOS Image](/images/alert-hello-velisp-macos.png)
 
 ```
-% echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp -- Arg
+% echo '(alert (strcat "Hello from " (argv 2) "!"))' | ./velisp -- Arg
 ```
 
 ![Alert Hello From Arg MacOS Image](/images/alert-hello-arg-macos.png)
@@ -415,7 +415,7 @@ $ echo '(alert "Hello from VeLisp!")' | ./velisp
 ![Alert Hello From VeLisp Linux Image](/images/alert-hello-velisp-linux.png)
 
 ```
-$ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp -- Arg
+$ echo '(alert (strcat "Hello from " (argv 2) "!"))' | ./velisp -- Arg
 ```
 
 ![Alert Hello From Arg Linux Image](/images/alert-hello-arg-linux.png)
