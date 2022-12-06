@@ -199,7 +199,7 @@ _$ (load "demo")
 #### Download and unarchive
 
 ```
-% wget https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-macos-x64.tar.xz
+% curl -LJO https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-macos-x64.tar.xz
 % tar xfJ velisp-{{version}}-macos-x64.tar.xz
 ```
 
@@ -316,7 +316,7 @@ Run the Demo example
 #### Download and unarchive
 
 ```
-$ wget https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-linux-x64.tar.xz
+$ curl -LJO https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-linux-x64.tar.xz
 $ tar xfJ velisp-{{version}}-linux-x64.tar.xz
 ```
 
