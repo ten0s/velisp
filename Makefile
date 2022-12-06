@@ -169,6 +169,9 @@ tarMacos:
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > velisp-${VERSION}-macos-x64/README-en.md
 	tar cfJ velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-macos-x64/
 
+sha256sum:
+	sha256sum velisp-${VERSION}-linux-x64.tar.xz velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64-setup.zip | tee sha256sum.txt
+
 cleanPkg:
 	rm -rf pkg/
 	rm -rf velisp*
