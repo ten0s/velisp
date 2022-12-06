@@ -62,6 +62,30 @@ Calculate 11th Fibonacci number
 89
 ```
 
+Run the Calculator example
+
+```
+$ ./velisp examples/calc.lsp
+```
+
+Run the Minesweeper example
+
+```
+$ ./velisp examples/mines.lsp
+```
+
+Run the Fifteen Puzzle example
+
+```
+$ ./velisp examples/fifteen.lsp
+```
+
+Run the Demo example
+
+```
+% ./velisp examples/demo.lsp
+```
+
 #### Run code from standard input
 
 ```

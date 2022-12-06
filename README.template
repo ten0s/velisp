@@ -12,10 +12,10 @@ just like regular applications on Windows, Linux and MacOS.
 - [Windows](#windows)
   - [Install](#install)
   - [Usage](#usage)
-- [Linux](#linux)
+- [MacOS](#macos)
   - [Install](#install-1)
   - [Usage](#usage-1)
-- [MacOS](#macos)
+- [Linux](#linux)
   - [Install](#install-2)
   - [Usage](#usage-2)
 - [Implemented functions](#implemented-functions)
@@ -192,6 +192,123 @@ _$ (load "fifteen")
 _$ (load "demo")
 ```
 
+## MacOS
+
+### Install
+
+#### Download and unarchive
+
+```
+% wget https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-macos-x64.tar.gz
+% tar xfz velisp-{{version}}-macos-x64.tar.gz
+```
+
+#### Add to ~/.zshrc
+
+```
+export PATH=<PATH_TO>/velisp-{{version}}-macos-x64:$PATH
+```
+
+### Usage
+
+```
+% cd velisp-{{version}}-macos-x64
+```
+
+#### Run REPL (Read–Eval–Print Loop)
+
+```
+% ./velisp
+VeLisp {{version}} on MacOS
+Type ".license" or ".help" for more information
+_$ (+ 1 2)
+3
+_$ (defun add (a b) (+ a b))
+ADD
+_$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
+("10" "10" "10")
+_$ (quit)
+```
+
+#### Run code from file
+
+Calculate 10th (by default) Fibonacci number
+
+```
+% ./velisp examples/fib.lsp
+55
+```
+
+Calculate 11th Fibonacci number
+
+```
+% ./velisp examples/fib.lsp 11
+89
+```
+
+Run the Calculator example
+
+```
+% ./velisp examples/calc.lsp
+```
+
+![App Calc MacOS Image](/images/app-calc-macos.png)
+
+Run the Minesweeper example
+
+```
+% ./velisp examples/mines.lsp
+```
+
+![App Mines MacOS Image](/images/app-mines-macos.png)
+
+Run the Fifteen Puzzle example
+
+```
+% ./velisp examples/fifteen.lsp
+```
+
+![App Fifteen MacOS Image](/images/app-fifteen-macos.png)
+
+Run the Demo example
+
+```
+% ./velisp examples/demo.lsp
+```
+
+![App Demo MacOS Image](/images/app-demo-macos.png)
+
+#### Run code from standard input
+
+```
+% cat examples/fib.lsp | ./velisp
+55
+```
+
+```
+% cat examples/fib.lsp | ./velisp -- 11
+89
+```
+
+```
+% echo '(alert "Hello from VeLisp!")' | ./velisp
+```
+
+![Alert Hello From VeLisp MacOS Image](/images/alert-hello-velisp-macos.png)
+
+```
+% echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp -- Arg
+```
+
+![Alert Hello From Arg MacOS Image](/images/alert-hello-arg-macos.png)
+
+#### Run without DCL support (faster loading, good for scripting)
+
+```
+% ./velisp --no-dcl examples/fib.lsp
+55
+```
+
 ## Linux
 
 ### Install
@@ -307,79 +424,6 @@ $ echo '(alert (strcat "Hello from " (argv 1) "!"))' | ./velisp -- Arg
 
 ```
 $ ./velisp --no-dcl examples/fib.lsp
-55
-```
-
-## MacOS
-
-### Install
-
-#### Download and unarchive
-
-```
-% wget https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-macos-x64.tar.gz
-% tar xfz velisp-{{version}}-macos-x64.tar.gz
-```
-
-#### Add to ~/.zshrc
-
-```
-export PATH=<PATH_TO>/velisp-{{version}}-macos-x64:$PATH
-```
-
-### Usage
-
-```
-% cd velisp-{{version}}-macos-x64
-```
-
-#### Run REPL (Read–Eval–Print Loop)
-
-```
-% ./velisp
-VeLisp {{version}} on MacOS
-Type ".license" or ".help" for more information
-_$ (+ 1 2)
-3
-_$ (defun add (a b) (+ a b))
-ADD
-_$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
-("10" "10" "10")
-_$ (quit)
-```
-
-#### Run code from file
-
-Calculate 10th (by default) Fibonacci number
-
-```
-% ./velisp examples/fib.lsp
-55
-```
-
-Calculate 11th Fibonacci number
-
-```
-% ./velisp examples/fib.lsp 11
-89
-```
-
-#### Run code from standard input
-
-```
-% cat examples/fib.lsp | ./velisp
-55
-```
-
-```
-% cat examples/fib.lsp | ./velisp -- 11
-89
-```
-
-#### Run without DCL support (faster loading, good for scripting)
-
-```
-% ./velisp --no-dcl examples/fib.lsp
 55
 ```
 
