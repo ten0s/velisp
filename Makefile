@@ -157,7 +157,7 @@ installerWindows:
 tarMacos:
 	rm -rf          velisp-${VERSION}-macos-x64/
 	mkdir -p        velisp-${VERSION}-macos-x64/
-	cp velisp       velisp-${VERSION}-macos-x64/velisp.bin
+	cp velisp       velisp-${VERSION}-macos-x64/Velisp
 	cp macos/velisp velisp-${VERSION}-macos-x64/
 	cp -R lib       velisp-${VERSION}-macos-x64/
 	cp -R examples  velisp-${VERSION}-macos-x64/

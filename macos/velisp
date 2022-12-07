@@ -21,4 +21,4 @@ esac
 export DYLD_LIBRARY_PATH
 export GI_TYPELIB_PATH
 
-exec $BASE_DIR/velisp.bin "$@"
+exec $BASE_DIR/Velisp "$@"
