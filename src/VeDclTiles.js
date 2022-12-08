@@ -531,6 +531,8 @@ class Dialog extends Cluster {
                 parentPos[0] + PARENT_DX,
                 parentPos[1] + PARENT_DY
             )
+        } else {
+            this._gtkWindow.setPosition(Gtk.WindowPosition.CENTER_ALWAYS)
         }
         this._gtkWindow.on('show', Gtk.main)
         this._gtkWindow.on('destroy', Gtk.mainQuit)

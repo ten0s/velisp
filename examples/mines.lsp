@@ -491,7 +491,7 @@
     (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
     (exit 1)))
 
-(if (not (new_dialog dlg_id dcl_id "(button_handler $KEY $REASON)" '(0 0)))
+(if (not (new_dialog dlg_id dcl_id "(button_handler $KEY $REASON)"))
   (progn
     (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
     (exit 1)))
