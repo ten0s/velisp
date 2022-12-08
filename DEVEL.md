@@ -52,7 +52,7 @@ Inside the MSYS shell (Run as administrator)
 
 ```
 # gflags -i node.exe +sls
-# windows/find-mingw64-deps.sh node.exe src/main.js examples/calc.lsp
+# windows/find-mingw64-deps.sh velisp examples/calc.lsp
 # gflags -i node.exe -sls
 ```
 
@@ -105,7 +105,7 @@ Build Done
 Inside MacOS Terminal
 
 ```
-% macos/find-homebrew-deps.sh node src/main.js examples/calc.lsp
+% macos/find-homebrew-deps.sh ./velisp examples/calc.lsp
 ```
 
 
