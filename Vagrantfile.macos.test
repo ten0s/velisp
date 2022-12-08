@@ -4,7 +4,7 @@
 versions = Hash[
   "catalina" => "10.15.7",
   "big_sur"  => "11.2.3",
-  "monterey" => "12.5",
+  "monterey" => "12.6.1",
 ]
 
 macos_name = ENV["MACOS_NAME"] || ""
