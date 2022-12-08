@@ -14,7 +14,15 @@ just like regular applications on Windows, MacOS and Linux.
 
 #### Download and unarchive
 
+**Warning**: Do not use Safari to download the archive, do not use Finder to
+extract the archive and, most importantly, do not use Finder to start the
+application for the first time. Since the application is not signed you will not
+be able to start it this way due to
+[Apple's Gatekeeper](https://support.apple.com/en-us/HT202491).
+Instead, start the Terminal application (Finder -> Go -> Utilities -> Terminal) and run:
+
 ```
+% cd $HOME
 % curl -LJO https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-macos-x64.tar.xz
 % tar xfJ velisp-{{version}}-macos-x64.tar.xz
 ```
