@@ -170,7 +170,7 @@ tarMacos:
 	tar cfJ velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-macos-x64/
 
 sha256sum:
-	sha256sum velisp-${VERSION}-linux-x64.tar.xz velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64-setup.zip | tee sha256sum.txt
+	sha256sum velisp-${VERSION}-linux-x64.tar.xz velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64-setup.zip | tee velisp-${VERSION}.sha256sum.txt
 
 cleanPkg:
 	rm -rf pkg/
