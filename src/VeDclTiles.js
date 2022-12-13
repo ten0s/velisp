@@ -27,15 +27,20 @@ import VeSysInfo from './VeSysInfo.js'
 
 import gi from 'node-gtk'
 
+let GObject = null
 let Gtk = null
 let Gdk = null
-let GObject = null
+let MacOS = null
 
 const InitGtk = () => {
     if (!Gtk || !Gdk || !GObject) {
         GObject = gi.require('GObject', '2.0')
         Gtk = gi.require('Gtk', '3.0')
         Gdk = gi.require('Gdk', '3.0')
+
+        if (process.platform == 'darwin') {
+            MacOS = gi.require('MacOSLib', '1.0')
+        }
 
         gi.startLoop()
         Gtk.init()
@@ -512,11 +517,12 @@ class Dialog extends Cluster {
 
     // DCL
     startDialog(parent) {
+        const title = this._gtkWindow.getTitle()
         this._gtkWindow.setModal(true)
         this._gtkWindow.setResizable(this.is_resizable)
         // TODO: calculate using both length and font
-        //console.log(this._gtkWindow.getTitle().length)
-        const fixMeWidth = this._gtkWindow.getTitle().length * 8.4 + 160
+        //console.log(title.length)
+        const fixMeWidth = title.length * 8.4 + 160
         const width = Math.max(this._width(this.width), fixMeWidth)
         const height = this._height(this.height)
         this._gtkWindow.setSizeRequest(width, height)
@@ -532,10 +538,20 @@ class Dialog extends Cluster {
                 parentPos[1] + PARENT_DY
             )
         } else {
-            this._gtkWindow.setPosition(Gtk.WindowPosition.CENTER_ALWAYS)
+            this._gtkWindow.setPosition(Gtk.WindowPosition.CENTER)
         }
-        this._gtkWindow.on('show', Gtk.main)
-        this._gtkWindow.on('destroy', Gtk.mainQuit)
+        this._gtkWindow.on('show', () => {
+            if (process.platform == 'darwin' && MacOS) {
+                setTimeout(() => {
+                    MacOS.forceForegroundLevel()
+                    MacOS.setProcessName(title)
+                }, 0)
+            }
+            Gtk.main()
+        })
+        this._gtkWindow.on('destroy', () => {
+            Gtk.mainQuit()
+        })
         // Blocking call, this._gtkWindow is null after it! See doneDialog.
         this._gtkWindow.showAll()
         // See doneDialog for status.

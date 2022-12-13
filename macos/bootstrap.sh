@@ -30,6 +30,8 @@ su $USER -c "/bin/bash -s" <<'EOF'
         jq                    \
         node@16
    brew tap ten0s/brew-cache
+   brew tap ten0s/gi-macos-lib
+   brew install gi-macos-lib
    brew update
    brew cache -u
 

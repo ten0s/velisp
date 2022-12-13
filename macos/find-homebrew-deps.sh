@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 if [[ $# -eq 0 ]]; then
     echo "usage: $(basename $0) PROG [ARGS...]"

@@ -14,6 +14,7 @@
 /usr/local/Cellar/gdk-pixbuf/2.42.10/lib/libgdk_pixbuf-2.0.dylib
 /usr/local/Cellar/gettext/0.21.1/lib/libintl.8.dylib
 /usr/local/Cellar/gettext/0.21.1/lib/libintl.dylib
+/usr/local/Cellar/gi-macos-lib/1.0.0/lib/libgimacos.dylib
 /usr/local/Cellar/glib/2.74.3/lib/libgio-2.0.0.dylib
 /usr/local/Cellar/glib/2.74.3/lib/libgio-2.0.dylib
 /usr/local/Cellar/glib/2.74.3/lib/libglib-2.0.0.dylib
@@ -45,8 +46,9 @@
 /usr/local/Cellar/libpng/1.6.39/lib/libpng16.dylib
 /usr/local/Cellar/libx11/1.8.2/lib/libX11.6.dylib
 /usr/local/Cellar/libx11/1.8.2/lib/libX11.dylib
-/usr/local/Cellar/libxau/1.0.10/lib/libXau.6.dylib
-/usr/local/Cellar/libxau/1.0.10/lib/libXau.dylib
+/usr/local/Cellar/libxau/1.0.11/lib/libXau.6.0.0.dylib
+/usr/local/Cellar/libxau/1.0.11/lib/libXau.6.dylib
+/usr/local/Cellar/libxau/1.0.11/lib/libXau.dylib
 /usr/local/Cellar/libxcb/1.15/lib/libxcb-render.0.0.0.dylib
 /usr/local/Cellar/libxcb/1.15/lib/libxcb-render.0.dylib
 /usr/local/Cellar/libxcb/1.15/lib/libxcb-render.dylib
@@ -70,6 +72,6 @@
 /usr/local/Cellar/pango/1.50.12/lib/libpangoft2-1.0.dylib
 /usr/local/Cellar/pcre2/10.40/lib/libpcre2-8.0.dylib
 /usr/local/Cellar/pcre2/10.40/lib/libpcre2-8.dylib
-/usr/local/Cellar/pixman/0.40.0/lib/libpixman-1.0.40.0.dylib
-/usr/local/Cellar/pixman/0.40.0/lib/libpixman-1.0.dylib
-/usr/local/Cellar/pixman/0.40.0/lib/libpixman-1.dylib
+/usr/local/Cellar/pixman/0.42.2/lib/libpixman-1.0.42.2.dylib
+/usr/local/Cellar/pixman/0.42.2/lib/libpixman-1.0.dylib
+/usr/local/Cellar/pixman/0.42.2/lib/libpixman-1.dylib
