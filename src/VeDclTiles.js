@@ -542,10 +542,10 @@ class Dialog extends Cluster {
         }
         this._gtkWindow.on('show', () => {
             if (process.platform == 'darwin' && MacOS) {
-                setTimeout(() => {
-                    MacOS.forceForegroundLevel()
+                setImmediate(() => {
                     MacOS.setProcessName(title)
-                }, 0)
+                    MacOS.forceForegroundLevel()
+                })
             }
             Gtk.main()
         })
