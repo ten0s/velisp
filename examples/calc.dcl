@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 
 calc_button : button {
-  width = 9;
-  height = 3;
+  width = 8;
+  height = 4;
 }
 
 calc_dlg : dialog {
@@ -14,7 +14,6 @@ calc_dlg : dialog {
     height = 3;
     is_enabled = false;
   }
-  : spacer {}
   : column {
     : row {
       : calc_button {
@@ -107,12 +106,11 @@ calc_dlg : dialog {
       }
     }
   }
-  : spacer {}
   : column {
     : cancel_button {
-      label = "Exit";
-      alignment = centered;
-      is_default = true;
-    }
+        label = "Exit";
+        alignment = centered;
+        is_default = true;
+      }
   }
 }
