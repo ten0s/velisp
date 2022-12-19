@@ -99,7 +99,7 @@ roll:
 commit-push:
 	git commit -m "Roll ${VERSION}"
 	git tag "${VERSION}"
-	git push origin $(git branch --show-current 2>/dev/null) --tags
+	git push origin `git branch --show-current 2>/dev/null` --tags
 
 readme:
 	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
