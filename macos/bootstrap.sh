@@ -37,9 +37,11 @@ su $USER -c "/bin/bash -s" <<'EOF'
 
    echo 'setopt interactivecomments'                      > ~/.zshrc
    echo 'alias ll="ls -l"'                               >> ~/.zshrc
+   echo 'export HOMEBREW_NO_AUTO_UPDATE=1'               >> ~/.zshrc
    echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
 
-   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"'  > ~/.bashrc
+   echo 'export HOMEBREW_NO_AUTO_UPDATE=1'                > ~/.bashrc
+   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.bashrc
 
    echo "Done"
 EOF
