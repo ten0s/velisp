@@ -543,6 +543,9 @@ class Dialog extends Cluster {
         this._gtkWindow.on('show', () => {
             if (process.platform == 'darwin' && MacOS) {
                 setImmediate(() => {
+                    if (!this.is_resizable) {
+                        MacOS.disableZoomButton()
+                    }
                     MacOS.setProcessName(title)
                     MacOS.forceForegroundLevel()
                 })
