@@ -73,19 +73,19 @@ Calculate 11th Fibonacci number
 Run the Calculator example
 
 ```
-$ ./velisp examples/calc.lsp
+% ./velisp examples/calc.lsp
 ```
 
 Run the Minesweeper example
 
 ```
-$ ./velisp examples/mines.lsp
+% ./velisp examples/mines.lsp
 ```
 
 Run the Fifteen Puzzle example
 
 ```
-$ ./velisp examples/fifteen.lsp
+% ./velisp examples/fifteen.lsp
 ```
 
 Run the Demo example
