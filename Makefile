@@ -81,19 +81,22 @@ check: lint test
 
 rollPreRelease:
 	npm --no-git-tag-version version prerelease
-	@echo 'Now run: $$ make roll'
+	$(MAKE) roll
 
 rollMinor:
 	npm --no-git-tag-version version minor
-	@echo 'Now run: $$ make roll'
+	$(MAKE) roll
 
 rollPatch:
 	npm --no-git-tag-version version patch
-	@echo 'Now run: $$ make roll'
+	$(MAKE) roll
 
 roll:
 	$(MAKE) readme
 	git add package.json package-lock.json README.md
+	@echo 'Now run: $$ make commit-push'
+
+commit-push:
 	git commit -m "Roll ${VERSION}"
 	git tag "${VERSION}"
 	git push origin $(git branch --show-current 2>/dev/null) --tags
