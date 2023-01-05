@@ -55,12 +55,12 @@ TestRunner.run({
         {test: '(quote (a . b))', result: new Pair(new Sym('a'), new Sym('b'))},
         {test: '\'(a . b))', result: new Pair(new Sym('a'), new Sym('b'))},
 
-        {test: '(quote (1 2 . z))', result: new List([
+        {test: '(quote (1 2 . z))', result: new Pair(
             new Int(1), new Pair(new Int(2), new Sym('z'))
-        ])},
-        {test: '\'(1 2 . z)', result: new List([
+        )},
+        {test: '\'(1 2 . z)', result: new Pair(
             new Int(1), new Pair(new Int(2), new Sym('z'))
-        ])},
+        )},
 
         {test: '(apply (quote (lambda (x) x)) (quote (z)))', result: new Sym('z')},
         {test: '(apply \'(lambda (x) x) \'(z))', result: new Sym('z')},

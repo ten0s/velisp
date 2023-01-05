@@ -25,10 +25,14 @@ TestRunner.run({
         {test: '(equal nil (list))', result: new Bool(true)},
         {test: '(equal (list 1 2 3) (list 1 2 3))', result: new Bool(true)},
         {test: '(equal \'(1 . 2) \'(1 . 2)))', result: new Bool(true)},
+
         {test: '(equal (lambda () 1) (lambda () 1))', result: new Bool(true)},
 
         {test: '(equal (cons 1 \'a) (cons 1 \'a))', result: new Bool(true)},
         {test: '(equal (cons 1 \'a) (cons 2 \'a))', result: new Bool(false)},
+
+        {test: '(equal (cons 1 (cons 2 3)) \'(1 . (2 . 3)))', result: new Bool(true)},
+        {test: '(equal \'(1 (2 . 3)) \'(1 2 . 3))', result: new Bool(false)},
 
         {test: `(setq f1 (list a b c) f2 (list a b c) f3 f2)
             (equal f1 f1)`, result: new Bool(true)},

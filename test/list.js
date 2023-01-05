@@ -25,15 +25,28 @@ TestRunner.run({
             new List([new Int(1)]), new Int(2), new Int(3)
         ])},
 
-        {test: '(cons 1 (cons 2 3))', result: new List([
+        {test: '(cons 1 2)', result: new Pair(
+            new Int(1), new Int(2)
+        )},
+        {test: '(cons 1 (cons 2 3))', result: new Pair(
             new Int(1), new Pair(new Int(2), new Int(3))
-        ])},
+        )},
+        {test: '\'(1 . 2)', result: new Pair(
+            new Int(1), new Int(2)
+        )},
+        {test: '\'(1 2 . 3)', result: new Pair(
+            new Int(1), new Pair(new Int(2), new Int(3))
+        )},
 
         {test: '(car (list 1 2 3))', result: new Int(1)},
         {test: '(car (cons 1 2))', result: new Int(1)},
         {test: '(car (list))', result: new Bool(false)},
         {test: '(car nil)', result: new Bool(false)},
         {test: '(car ())', result: new Bool(false)},
+        {test: '(car (cons 1 2))', result: new Int(1)},
+        {test: '(car (cons 1 (cons 2 3)))', result: new Int(1)},
+        {test: '(car \'(1 . 2))', result: new Int(1)},
+        {test: '(car \'(1 2 . 3))', result: new Int(1)},
 
         {test: '(cdr (list 1 2 3))', result: new List([
             new Int(2), new Int(3)
@@ -42,6 +55,14 @@ TestRunner.run({
         {test: '(cdr (list))', result: new Bool(false)},
         {test: '(cdr nil)', result: new Bool(false)},
         {test: '(cdr ())', result: new Bool(false)},
+        {test: '(cdr (cons 1 2))', result: new Int(2)},
+        {test: '(cdr (cons 1 (cons 2 3)))', result: new Pair(
+            new Int(2), new Int(3)
+        )},
+        {test: '(cdr \'(1 . 2))', result: new Int(2)},
+        {test: '(cdr \'(1 2 . 3))', result: new Pair(
+            new Int(2), new Int(3)
+        )},
     ],
 
     errors: [

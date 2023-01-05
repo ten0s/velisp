@@ -32,21 +32,21 @@ const tests = [
     {test: '(cons 1 \'a)', result: new Pair(new Int(1), new Sym('a'))},
     {test: '\'(1 . a)', result: new Pair(new Int(1), new Sym('a'))},
 
-    {test: '\'(1 2 . 3)', result: new List([
+    {test: '\'(1 2 . 3)', result: new Pair(
         new Int(1), new Pair(new Int(2), new Int(3))
-    ])},
+    )},
 
     {test: '\'((1 . 2))', result: new List([
         new Pair(new Int(1), new Int(2))
     ])},
 
-    {test: '\'(1 (2 . 3) . 4)', result: new List([
+    {test: '\'(1 (2 . 3) . 4)', result: new Pair(
         new Int(1),
         new Pair(
             new Pair(new Int(2), new Int(3)),
             new Int(4)
         )
-    ])},
+    )},
 
     {test: '\'((1 . 2) (3 . 4))', result: new List([
         new Pair(new Int(1), new Int(2)),
@@ -54,8 +54,8 @@ const tests = [
     ])},
 
     {test: '\'((1 2 . 3) (4 5 . 6))', result: new List([
-        new List([new Int(1), new Pair(new Int(2), new Int(3))]),
-        new List([new Int(4), new Pair(new Int(5), new Int(6))])
+        new Pair(new Int(1), new Pair(new Int(2), new Int(3))),
+        new Pair(new Int(4), new Pair(new Int(5), new Int(6)))
     ])},
 ]
 
@@ -82,9 +82,15 @@ QUnit.test('types', assert => {
     )
 
     assert.equal((new Pair(new Int(1), new Sym('z'))).toString(), '(1 . Z)')
+
+    assert.equal(
+        (new Pair(new Int(1), new Pair(new Int(2), new Int(3)))).toString(),
+        '(1 2 . 3)'
+    )
+
     assert.equal(
         (new List([new Int(1), new Pair(new Int(2), new Sym('z'))])).toString(),
-        '(1 2 . Z)'
+        '(1 (2 . Z))'
     )
 
     assert.equal((new List([
@@ -102,15 +108,25 @@ QUnit.test('types', assert => {
             new Pair(new Int(2), new Int(3)),
             new Int(4)
         )
-    ])).toString(), '(1 (2 . 3) . 4)')
+    ])).toString(), '(1 ((2 . 3) . 4))')
+
+    assert.equal((new Pair(
+        new Int(1),
+        new Pair(
+            new Pair(new Int(2), new Int(3)),
+            new Int(4)
+        )
+    )).toString(), '(1 (2 . 3) . 4)')
 
     assert.equal((new List([
-        new List([new Int(1), new Pair(new Int(2), new Int(3))]),
-    ])).toString(), '((1 2 . 3))')
+        new List([
+            new Int(1), new Pair(new Int(2), new Int(3))
+        ]),
+    ])).toString(), '((1 (2 . 3)))')
 
     assert.equal((new List([
-        new List([new Int(1), new Pair(new Int(2), new Int(3))]),
-        new List([new Int(4), new Pair(new Int(5), new Int(6))])
+        new Pair(new Int(1), new Pair(new Int(2), new Int(3))),
+        new Pair(new Int(4), new Pair(new Int(5), new Int(6)))
     ])).toString(), '((1 2 . 3) (4 5 . 6))')
 
     assert.equal((new Fun('name', [], [], () => {})).toString(), '(defun name ())')

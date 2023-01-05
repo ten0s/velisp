@@ -48,6 +48,11 @@ class Bool {
     }
 
     // :: () -> bool
+    isAtom() {
+        return true
+    }
+
+    // :: () -> bool
     value() {
         return this.bool
     }
@@ -129,6 +134,11 @@ class Int {
     // :: () -> false
     isNil() {
         return false
+    }
+
+    // :: () -> bool
+    isAtom() {
+        return true
     }
 
     // :: () -> int
@@ -262,6 +272,11 @@ class Real {
         return false
     }
 
+    // :: () -> bool
+    isAtom() {
+        return true
+    }
+
     // :: () -> float
     value() {
         return this.real
@@ -387,6 +402,11 @@ class Str {
         return false
     }
 
+    // :: () -> bool
+    isAtom() {
+        return true
+    }
+
     // :: () -> string
     value() {
         return this.str
@@ -473,6 +493,11 @@ class Sym {
         return false
     }
 
+    // :: () -> bool
+    isAtom() {
+        return true
+    }
+
     // :: () -> string
     value() {
         return this.sym
@@ -502,6 +527,7 @@ class Sym {
     }
 }
 
+// TODO: consider re-implement List using Pair (Cons)
 class List {
     // :: (Array)
     constructor(arr) {
@@ -517,6 +543,11 @@ class List {
     // :: () -> true | false
     isNil() {
         return this.arr.length === 0
+    }
+
+    // :: () -> bool
+    isAtom() {
+        return this.isNil()
     }
 
     // :: () -> Array
@@ -612,16 +643,12 @@ class List {
         if (this.isNil()) {
             return NIL
         }
-        const arr = this.arr.map((item, idx) => item.toString({
-            insideList: true,
-            listLength: this.arr.length,
-            listIndex: idx,
-            listPrevItem: idx > 0 ? this.arr[idx-1] : null,
-        }))
+        const arr = this.arr.map(item => item.toString())
         return `(${arr.join(' ')})`
     }
 }
 
+// TODO: consider re-implement List using Pair (Cons)
 class Pair {
     // :: (Any, Any)
     constructor(fst, snd) {
@@ -639,9 +666,14 @@ class Pair {
         return false
     }
 
+    // :: () -> bool
+    isAtom() {
+        return false
+    }
+
     // :: (Any) -> List
     cons(first) {
-        return new List([first, this])
+        return new Pair(first, this)
     }
 
     // :: (Pair) -> Any
@@ -683,21 +715,25 @@ class Pair {
         return new Bool(false)
     }
 
-    // :: () -> string
-    toString({insideList, listLength, listIndex, listPrevItem} = {
-        insideList: false,
-        listLength: 0,
-        listIndex: -1,
-        listPrevItem: null,
-    }) {
-        if (insideList                 &&
-            listLength > 1             &&
-            listIndex === listLength-1 &&
-            !(listPrevItem instanceof Pair)) {
-            return `${this.fst} . ${this.snd}`
-        } else {
-            return `(${this.fst} . ${this.snd})`
+    toString() {
+        let str = '('
+
+        let cur = this
+        for (;;) {
+            str += cur.fst.toString()
+            if (cur.snd.isNil()) {
+                break
+            }
+            if (cur.snd.isAtom()) {
+                str += ' . ' + cur.snd.toString()
+                break
+            }
+            str += ' '
+            cur = this.snd
         }
+
+        str += ')'
+        return str
     }
 }
 
@@ -719,6 +755,11 @@ class Fun {
     // :: () -> false
     isNil() {
         return false
+    }
+
+    // :: () -> bool
+    isAtom() {
+        return true
     }
 
     apply(evaluator, args) {
@@ -998,6 +1039,11 @@ class File {
         return false
     }
 
+    // :: () -> bool
+    isAtom() {
+        return true
+    }
+
     // :: (Any) -> Bool
     eq(that) {
         return new Bool(this === that)
@@ -1031,6 +1077,11 @@ class Argv0 {
     // :: () -> false
     isNil() {
         return false
+    }
+
+    // :: () -> bool
+    isAtom() {
+        return true
     }
 
     // :: () -> [string]

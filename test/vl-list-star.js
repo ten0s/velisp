@@ -12,9 +12,9 @@ TestRunner.run({
         {test: '(vl-list* "abc")', result: new Str('abc')},
 
         {test: '(vl-list* 0 "text")', result: new Pair(new Int(0), new Str('text'))},
-        {test: '(vl-list* 1 2 3)', result: new List([
+        {test: '(vl-list* 1 2 3)', result: new Pair(
             new Int(1), new Pair(new Int(2), new Int(3))
-        ])},
+        )},
 
         {test: '(vl-list* 1 2 \'(3 4))', result: new List([
             new Int(1), new Int(2), new Int(3), new Int(4)

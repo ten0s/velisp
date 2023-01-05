@@ -12,7 +12,8 @@
    (vlu-assert     (atom 'b))
    (vlu-assert     (atom b))
    (vlu-assert-not (atom '(a b c)))
-   (vlu-assert-not (atom '(a . b)))))
+   (vlu-assert-not (atom '(a . b)))
+   (vlu-assert-not (atom '(a b . c)))))
 
 (vlu-add-test
  (defun not-test ()
@@ -25,7 +26,8 @@
    (vlu-assert-not (not 'foo))
    (vlu-assert     (not '()))
    (vlu-assert-not (not '(1 2 3)))
-   (vlu-assert-not (not '(1 . 2)))))
+   (vlu-assert-not (not '(1 . 2)))
+   (vlu-assert-not (not '(1 2 . 3)))))
 
 (vlu-add-test
  (defun null-test ()
@@ -38,7 +40,8 @@
    (vlu-assert-not (null 'foo))
    (vlu-assert     (null '()))
    (vlu-assert-not (null '(1 2 3)))
-   (vlu-assert-not (null '(1 . 2)))))
+   (vlu-assert-not (null '(1 . 2)))
+   (vlu-assert-not (null '(1 2 . 3)))))
 
 (vlu-add-test
  (defun listp-test ()
@@ -46,6 +49,7 @@
    (vlu-assert     (listp ()))
    (vlu-assert     (listp '(a b c)))
    (vlu-assert     (listp '(a . b)))
+   (vlu-assert     (listp '(a b . c)))
    (vlu-assert-not (listp 'a))
    (vlu-assert-not (listp 4.343))))
 

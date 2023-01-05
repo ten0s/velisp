@@ -20,6 +20,7 @@ TestRunner.run({
         {test: '(vl-consp \'(1 . 2))', result: new Bool(true)},
         {test: '(vl-consp \'(1 . nil))', result: new Bool(true)},
         {test: '(vl-consp \'(nil . nil))', result: new Bool(true)},
+        {test: '(vl-consp \'(1 2 . 3))', result: new Bool(true)},
     ],
 
     errors: [
