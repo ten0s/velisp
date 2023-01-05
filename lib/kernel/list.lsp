@@ -97,32 +97,33 @@
 (defun cddddr (lst)
   (cdr (cdddr lst)))
 
-(defun length (lst)
-  ;; TODO: check type is List
-  (if (null lst) 0
-    (+ 1 (length (cdr lst)))))
+(defun length (lst / len)
+  (setq len 0)
+  (while lst
+    (setq len (1+ len)
+          lst (cdr lst)))
+  len)
 
-(defun reverse (lst / aux)
-  (defun aux (lst acc)
-    (cond ((null lst) acc)
-          (t (aux (cdr lst) (cons (car lst) acc)))))
-  (aux lst '()))
+(defun reverse (lst / rev)
+  (foreach x lst
+           (setq rev (cons x rev))))
 
-(defun last (lst / aux)
-  (defun aux (lst last)
-    (cond ((null lst) last)
-          (t (aux (cdr lst) (car lst)))))
-  (aux (cdr lst) (car lst)))
+(defun last (lst)
+  (foreach x lst x))
 
-(defun nth (n lst)
-  (cond ((null lst) nil)
-        ((= n 0) (car lst))
-        (t (nth (1- n) (cdr lst)))))
+(defun nth (n lst / x)
+  (setq x (car lst))
+  (while (and (/= n 0) lst)
+    (setq lst (cdr lst)
+          x (car lst)
+          n (1- n)))
+  x)
 
-(defun member (val lst)
-  (if (null lst) nil
-    (if (equal val (car lst)) lst
-      (member val (cdr lst)))))
+(defun member (val lst / break)
+  (while (and (not break) lst)
+    (if (not (setq break (equal val (car lst))))
+        (setq lst (cdr lst))))
+  lst)
 
 (defun assoc (elm alst)
   (cond ((null alst) nil)

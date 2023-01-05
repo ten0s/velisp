@@ -158,30 +158,36 @@
    (vlu-assert-equal 1 (length '(1)))
    (vlu-assert-equal 3 (length '(1 2 3)))
    (vlu-assert-equal 3 (length '((1) (2) (3))))
+   (vlu-assert-equal 1000 (length (seq 1 1000 1)))
 ))
 
 (vlu-add-test
  (defun reverse-test ()
    (vlu-assert-equal '(c b (a)) (reverse '((a) b c)))
+   (vlu-assert-equal 1000 (car (reverse (seq 1 1000 1))))
 ))
 
 (vlu-add-test
  (defun last-test ()
    (vlu-assert-equal 'e (last '(a b c d e)))
    (vlu-assert-equal '(d e) (last '(a b c (d e))))
+   (vlu-assert-equal 1000 (last (seq 1 1000 1)))
 ))
 
 (vlu-add-test
  (defun nth-test ()
    (vlu-assert-equal 'd (nth 3 '(a b c d e)))
    (vlu-assert-equal 'a (nth 0 '(a b c d e)))
+   (vlu-assert-equal 'e (nth 4 '(a b c d e)))
    (vlu-assert-equal nil (nth 5 '(a b c d e)))
+   (vlu-assert-equal 1000 (nth 1000 (seq 0 1000 1)))
 ))
 
 (vlu-add-test
  (defun member-test ()
    (vlu-assert-equal '(c d e) (member 'c '(a b c d e)))
    (vlu-assert-equal nil (member 'q '(a b c d e)))
+   (vlu-assert-equal '(1000) (member 1000 (seq 1 1000 1)))
 ))
 
 (vlu-add-test
