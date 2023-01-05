@@ -22,5 +22,7 @@ TestRunner.run({
     errors: [
         {test: '(append 1)', result: new Error('append: expected List')},
         {test: '(append \'(1) 2)', result: new Error('append: expected List')},
+        {test: '(append \'(1) \'(2 . 3))', result: new Error('append: expected List')},
+        {test: '(append \'(1 . 2) \'(3))', result: new Error('append: expected List')},
     ]
 })
