@@ -194,6 +194,7 @@
 | (member expr lst) | Searches a list for an occurrence of an expression and returns the remainder of the list, starting with the first occurrence of the expression | |
 | (nth n lst) | Returns the nth element of a list | |
 | (reverse lst) | Returns a list with its elements reversed | |
+| (seq from to step) | Returns a list of integers that starts with 'from' and contains the successive results of adding 'step' to the previous element, until 'to' is reached or passed | VeLisp Extension |
 | (shuffle lst) | Returns a list with its elements shuffled randomly | VeLisp Extension |
 | (sort cmp lst) | Returns a list with its elements sorted according to a given compare function | VeLisp Extension |
 | (sublist start len lst) | Returns a sublist of a list | VeLisp Extension |

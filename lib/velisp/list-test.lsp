@@ -124,3 +124,24 @@
 
    (vlu-assert-equal '(5) (sublist 4 1 '(1 2 3 4 5)))
    (vlu-assert-equal '() (sublist 5 10 '(1 2 3 4 5)))))
+
+(vlu-add-test
+ (defun seq-test ()
+   (vlu-assert-equal '(1) (seq 1 1 1))
+   (vlu-assert-equal '(1) (seq 1 1 0))
+   (vlu-assert-equal '(1 2 3 4 5) (seq 1 5 1))
+   (vlu-assert-equal '(1 3 5 7 9) (seq 1 10 2))
+   (vlu-assert-equal '(2 5 8 11 14) (seq 2 15 3))
+   (vlu-assert-equal '1000 (length (seq 1 1000 1)))
+
+   (vlu-assert-equal '(-1) (seq -1 -1 1))
+   (vlu-assert-equal '(-1) (seq -1 -1 0))
+   (vlu-assert-equal '(5 4 3 2 1) (seq 5 1 -1))
+   (vlu-assert-equal '(10 8 6 4 2) (seq 10 1 -2))
+   (vlu-assert-equal '(15 12 9 6 3) (seq 15 2 -3))
+   (vlu-assert-equal '1000 (length (seq 1000 1 -1)))
+
+   ;; Errors
+   (vlu-assert-equal '() (seq 1 10 -1))
+   (vlu-assert-equal '() (seq 10 1 1))
+))

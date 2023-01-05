@@ -163,12 +163,6 @@
 ;;;; Utilities
 ;;;;
 
-(defun seq (a b / aux)
-  (defun aux (a b acc)
-    (if (= a b) (cons b acc)
-      (aux a (1- b) (cons b acc))))
-  (aux a b '()))
-
 (defun make_key (i j)
   (strcat (itoa i) "x" (itoa j)))
 
@@ -179,8 +173,8 @@
   (cons (atoi i) (atoi j)))
 
 (defun make_keys (rows cols / keys)
-  (foreach i (seq 1 rows)
-    (foreach j (seq 1 cols)
+  (foreach i (seq 1 rows 1)
+    (foreach j (seq 1 cols 1)
       (setq keys (cons (make_key i j) keys))))
   (reverse keys))
 
@@ -214,7 +208,9 @@
 (setq game_state nil)
 
 (defun win_positions ()
-  (append (seq 1 (1- (* ROWS COLS))) (list BLANK)))
+  (append
+   (seq 1 (1- (* ROWS COLS)) 1)
+   (list BLANK)))
 
 (defun win_state ()
   (mapcar 'cons

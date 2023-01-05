@@ -81,3 +81,18 @@
 (defun sublist (start len lst)
   ;; Returns a sublist of a list
   (take len (drop start lst)))
+
+(defun seq (from to step / lst cmp)
+  "Returns a list of integers that starts with 'from' and "
+  "contains the successive results of adding 'step' to the"
+  "previous element, until 'to' is reached or passed      "
+  (setq lst '())
+  (cond ((and (< from to) (> step 0)) (setq cmp <=))
+        ((and (> from to) (< step 0)) (setq cmp >=))
+        ((and (= from to)) (setq cmp <= step 1))
+        ;; TODO: better throw error
+        (t (setq cmp (lambda (x y) nil))))
+  (while (cmp from to)
+    (setq lst (cons from lst)
+          from (+ from step)))
+  (reverse lst))
