@@ -175,6 +175,13 @@ tarMacos:
 sha256sum:
 	sha256sum velisp-${VERSION}-linux-x64.tar.xz velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64-setup.zip | tee velisp-${VERSION}.sha256sum.txt
 
+update-copyright:
+	find . -name 'LICENSE' \
+       -or -name '*.js'    \
+       -or -name '*.lsp'   \
+       -or -name '*.g4'    \
+       | xargs -I{} sed -i 's/2022 Dmitry Klionsky/2022-2023 Dmitry Klionsky/' {}
+
 cleanPkg:
 	rm -rf pkg/
 	rm -rf velisp*
