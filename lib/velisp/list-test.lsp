@@ -78,7 +78,8 @@
    (vlu-assert-equal '(1) (shuffle '(1)))
    (srand 0)
    (vlu-assert-equal '(1 4 2 5 3) (shuffle '(1 2 3 4 5)))
-   (vlu-assert-equal '(2 4 1 5 3) (shuffle '(1 2 3 4 5)))))
+   (vlu-assert-equal '(2 4 1 5 3) (shuffle '(1 2 3 4 5)))
+))
 
 (vlu-add-test
  (defun take-test ()
@@ -91,7 +92,8 @@
    (vlu-assert-equal '(1) (take 1 '(1 2 3)))
 
    (vlu-assert-equal '(1 2 3) (take 3 '(1 2 3)))
-   (vlu-assert-equal '(1 2 3) (take 5 '(1 2 3)))))
+   (vlu-assert-equal '(1 2 3) (take 5 '(1 2 3)))
+))
 
 (vlu-add-test
  (defun drop-test ()
@@ -104,7 +106,8 @@
    (vlu-assert-equal '(2 3) (drop 1 '(1 2 3)))
 
    (vlu-assert-equal '(3) (drop 2 '(1 2 3)))
-   (vlu-assert-equal '() (drop 5 '(1 2 3)))))
+   (vlu-assert-equal '() (drop 5 '(1 2 3)))
+))
 
 (vlu-add-test
  (defun sublist-test ()
@@ -123,7 +126,8 @@
    (vlu-assert-equal '(2 3 4 5) (sublist 1 4 '(1 2 3 4 5)))
 
    (vlu-assert-equal '(5) (sublist 4 1 '(1 2 3 4 5)))
-   (vlu-assert-equal '() (sublist 5 10 '(1 2 3 4 5)))))
+   (vlu-assert-equal '() (sublist 5 10 '(1 2 3 4 5)))
+))
 
 (vlu-add-test
  (defun seq-test ()

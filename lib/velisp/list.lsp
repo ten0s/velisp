@@ -13,8 +13,8 @@
          (mapcar 'vl-princ-to-string acc)))
 
 (defun sort (cmp lst / insert len)
-  ;; Sorts the elements in a list by the insertion sort
-  ;; according to a given compare function
+  "Sorts the elements in a list by the insertion sort"
+  "according to a given compare function             "
   (defun insert (item sorted-lst)
     (cond ((null sorted-lst) (list item))
           ((cmp item (car sorted-lst)) (cons item sorted-lst))
@@ -26,8 +26,8 @@
         (T (insert (car lst) (sort cmp (cdr lst))))))
 
 (defun usort (cmp lst / uinsert len)
-  ;; Uniquely sorts the elements in a list by the insertion sort
-  ;; according to a given compare function
+  "Uniquely sorts the elements in a list by the insertion sort"
+  "according to a given compare function                      "
   (defun uinsert (item sorted-lst)
     (cond ((null sorted-lst) (list item))
           ((equal item (car sorted-lst)) sorted-lst)
@@ -40,7 +40,7 @@
         (T (uinsert (car lst) (usort cmp (cdr lst))))))
 
 (defun uniq (lst / set)
-  ;; Removes duplicates from a list
+  "Removes duplicates from a list"
   (setq set '())
   (foreach item lst
            (if (not (member item set))
@@ -48,7 +48,7 @@
   (reverse set))
 
 (defun enumerate (lst / i acc)
-  ;; Adds a zero-based counter to each item in a list
+  "Adds a zero-based counter to each item in a list"
   (setq i 0)
   (foreach item lst
            (setq acc (cons (cons i item) acc)
@@ -56,13 +56,13 @@
   (reverse acc))
 
 (defun shuffle (lst)
-  ;; Shuffles randomly the elements in a list
+  "Shuffles randomly the elements in a list"
   (mapcar 'cdr
           (sort (lambda (l r) (< (car l) (car r)))
                 (mapcar '(lambda (x) (cons (rand) x)) lst))))
 
 (defun take (n lst / acc)
-  ;; Returns the first n elements in a list
+  "Returns the first n elements in a list"
   ;; TODO: assert n is int
   (while (and (not (null lst)) (> n 0))
     (setq acc (cons (car lst) acc)
@@ -71,7 +71,7 @@
   (reverse acc))
 
 (defun drop (n lst)
-  ;; Returns a sublist with the first n elements dropped
+  "Returns a sublist with the first n elements dropped"
   ;; TODO: assert n is int
   (while (and (not (null lst)) (> n 0))
     (setq lst (cdr lst)
@@ -79,7 +79,7 @@
   lst)
 
 (defun sublist (start len lst)
-  ;; Returns a sublist of a list
+  "Returns a sublist of a list"
   (take len (drop start lst)))
 
 (defun seq (from to step / lst cmp)

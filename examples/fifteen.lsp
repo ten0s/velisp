@@ -10,7 +10,10 @@
 ;;;; VeLisp functions missing in AutoCAD
 ;;;;
 
-(if (null %VELISP_VERSION%)
+(defun is_autocad ()
+  (null %VELISP_VERSION%))
+
+(if (is_autocad)
     (progn
       (load "../lib/velisp/list.lsp")
       (load "../lib/velisp/random.lsp")
