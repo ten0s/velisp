@@ -175,7 +175,7 @@ Run the Demo example
 2. Files -> Support File Search Path
 3. Click Add...
 4. Click Browse...
-5. Browse for Folder C:\velisp-0.7.5-win-x64\examples
+5. Select appropriately C:\Program Files\VeLisp\examples or C:\velisp-0.7.5-win-x64\examples
 6. Click OK
 7. Click Apply
 7. Click OK
