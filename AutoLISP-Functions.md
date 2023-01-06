@@ -124,8 +124,8 @@
 | (chdir dirname) | Changes current working directory | VeLisp Extension |
 | (close file-desc) | Closes an open file | |
 | (cwd) | Returns current working directory | VeLisp Extension |
-| (findfile filename) | Searches the AutoCAD library path for the specified file | Expected in vTBD |
-| (findtrustedfile filename) | Searches the AutoCAD trusted file paths for the specified file | Expected in vTBD |
+| (findfile filename) | Searches the VeLisp library path for the specified file | Expected in vTBD |
+| (findtrustedfile filename) | Searches the VeLisp trusted file paths for the specified file | Expected in vTBD |
 | (homedir) | Returns user's home directory | VeLisp Extension |
 | (open filename mode) | Opens a file for access by the AutoLISP I/O functions | |
 | (read-char [file-desc]) | Returns the decimal ASCII code representing the character read from the keyboard input buffer or from an open file | |
@@ -224,12 +224,12 @@
 |----------|-------------|------|
 | (getcfg cfgname) | Retrieves application data from the AppData section of the acadXXXX.cfg file | Expected in vTBD |
 | (getenv varname) | Returns the string value assigned to an environment variable | |
-| (getvar varname) | Retrieves the value of an AutoCAD system variable | CDATE, MILLISECS |
+| (getvar varname) | Retrieves the value of an VeLisp system variable | CDATE, MILLISECS |
 | (setcfg cfgname cfgval) | Writes application data to the AppData section of the acadXXXX.cfg file | Expected in vTBD |
 | (setenv varname value) | Sets an environment variable to a specified value | |
-| (setvar varname value) | Sets an AutoCAD system variable to a specified value | Expected in vTBD |
+| (setvar varname value) | Sets an VeLisp system variable to a specified value | Expected in vTBD |
 | (sleep millisecs) | Sleeps for some milliseconds, like (command "_.DELAY" 1000) | VeLisp Extension |
-| (ver) | Returns a string that contains the current AutoLISP version number | |
+| (ver) | Returns a string that contains the current VeLisp version number | |
 
 ### String-Handling Functions
 
