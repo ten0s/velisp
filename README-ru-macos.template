@@ -117,11 +117,11 @@ _$ (quit)
 ### Лицензия
 
 Проект выпущен под лицензией GNU General Public License v3.0 или более поздней
-версии с исключением представленным ниже.
-Полную информации о лицензии можно найти в [LICENSE](LICENSE) или
+версии с исключением, представленным ниже.
+Полную информацию о лицензии можно найти в [LICENSE](LICENSE) или
 https://spdx.org/licenses/GPL-3.0-or-later.html.
 
 Файлы в папках [examples/](examples/) и [lib/](lib/)
 выпущены под лицензией BSD Zero Clause License.
-Полную информацию о лицензии можно найти в [LICENSE](examples/LICENSE) или
+Полную информацию о лицензии можно найти в [LICENSE](examples/LICENSE),
 [LICENSE](lib/LICENSE) или https://spdx.org/licenses/0BSD.html.
