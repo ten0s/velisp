@@ -53,6 +53,7 @@ COPY pkg.json                 velisp/
 COPY rollup.config.js         velisp/
 COPY LICENSE                  velisp/
 COPY README-en-linux.template velisp/
+COPY README-ru-linux.template velisp/
 
 RUN echo "Building VeLisp..."
 
