@@ -1,6 +1,6 @@
-# VeLisp
-
 [Русская версия](README-ru.md)
+
+# VeLisp
 
 **VeLisp** is AutoLISP interpreter with DCL support.
 The idea is to treat AutoLISP as a general purpose language.
