@@ -114,12 +114,12 @@ Run the Demo example
 #### Run code from standard input
 
 ```
-> cat examples\fib.lsp | velisp
+> type examples\fib.lsp | velisp
 55
 ```
 
 ```
-> cat examples\fib.lsp | velisp -- 11
+> type examples\fib.lsp | velisp -- 11
 89
 ```
 
