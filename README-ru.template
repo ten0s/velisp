@@ -11,26 +11,26 @@
 ## Содержание
 
 - [Windows](#windows)
-  - [Установка](#install)
-  - [Использование](#usage)
+  - [Установка](#установка)
+  - [Использование](#использование)
 - [MacOS](#macos)
-  - [Установка](#install-1)
-  - [Использование](#usage-1)
+  - [Установка](#установка-1)
+  - [Использование](#использование-1)
 - [Linux](#linux)
-  - [Установка](#install-2)
-  - [Использование](#usage-2)
-- [Реализованные функции](#implemented-functions)
-- [Известные проблемы и ограничения](#known-issues-and-limitations)
-- [Версия](#versioning)
-- [Помощь](#contributing)
-- [Лицензия](#license)
-- [Дополнительно](#see-also)
+  - [Установка](#установка-2)
+  - [Использование](#использование-2)
+- [Реализованные функции](#реализованные-функции)
+- [Известные проблемы и ограничения](#известные-проблемы-и-ограничения)
+- [Версия](#версия)
+- [Предлагаемые изменения](#предлагаемые-изменения)
+- [Лицензия](#лицензия)
+- [Дополнительно](#дополнительно)
 
 ## Windows
 
 ### Установка
 
-#### Автоматический установка
+#### Автоматическая установка
 
 1. Скачайте https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
 2. Откройте папку Загрузки
@@ -47,7 +47,7 @@
 3. Выделите velisp-{{version}}-win-x64.zip
 4. Нажмите правую кнопку мышки
 5. Выберите 'Распаковать все содержимое...'
-6. Введите C:\
+6. Введите 'C:\'
 7. Выберите 'Распаковать'
 
 ##### Добавьте папку в переменную окружения PATH
@@ -58,23 +58,23 @@
 4. Выберите 'Path' inside the User variables block
 5. Выберите 'Edit...'
 6. Выберите 'New...'
-7. Введите C:\velisp-{{version}}-win-x64
+7. Введите 'C:\velisp-{{version}}-win-x64'
 8. Выберите 'OK'
 9. Выберите 'OK'
 
 ### Использование
 
-If you installed VeLisp via [automatic setup](#install-via-automatic-setup) go to
-'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
+Если вы установили VeLisp с помощью [автоматической установки](#автоматическая-установка)
+запускайте 'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
 
-If you installed Velisp via [binary archive](#install-via-binary-archive) run
-the Command Prompt (cmd.exe) and move to the extraction directory:
+Если вы установили Velisp из [архива](#установка-из-архива)
+запускайте командную оболочку (cmd.exe) и перейдите в папку распаковки:
 
 ```
 > cd C:\velisp-{{version}}-win-x64
 ```
 
-#### Run REPL (Read–Eval–Print Loop)
+#### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 > velisp
@@ -89,23 +89,23 @@ _$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 _$ (quit)
 ```
 
-#### Run code from file
+#### Запускаем код из файла
 
-Calculate 10th (by default) Fibonacci number
+Вычисляем 10-е (по умолчанию) число Фибоначчи
 
 ```
 > velisp examples\fib.lsp
 55
 ```
 
-Calculate 11th Fibonacci number
+Вычисляем 11-е число Фибоначчи
 
 ```
 > velisp examples\fib.lsp 11
 89
 ```
 
-Run the Calculator example
+Запускаем пример Калькулятор
 
 ```
 > velisp examples\calc.lsp
@@ -113,7 +113,7 @@ Run the Calculator example
 
 ![App Calc Windows Image](/images/app-calc-windows.png)
 
-Run the Minesweeper example
+Запускаем пример Сапер
 
 ```
 > velisp examples\mines.lsp
@@ -121,7 +121,7 @@ Run the Minesweeper example
 
 ![App Mines Windows Image](/images/app-mines-windows.png)
 
-Run the Fifteen Puzzle example
+Запускаем пример Пятнашки
 
 ```
 > velisp examples\fifteen.lsp
@@ -129,7 +129,7 @@ Run the Fifteen Puzzle example
 
 ![App Fifteen Windows Image](/images/app-fifteen-windows.png)
 
-Run the Demo example
+Запускаем пример Демо
 
 ```
 > velisp examples\demo.lsp
@@ -137,7 +137,7 @@ Run the Demo example
 
 ![App Demo Windows Image](/images/app-demo-windows.png)
 
-### Run code from standard input
+### Запускаем код из стандартного ввода
 
 ```
 > type examples\fib.lsp | velisp
@@ -161,30 +161,30 @@ Run the Demo example
 
 ![Alert Hello From Arg Windows Image](/images/alert-hello-arg-windows.png)
 
-#### Run without DCL support (faster loading, good for scripting)
+#### Запускаем без поддержки DCL (более быстрая загрузка, хорошо для скриптов)
 
 ```
 > velisp --no-dcl examples\fib.lsp
 55
 ```
 
-### Run the examples in AutoCAD
+### Запускаем примеры в AutoCAD
 
-#### Add the examples folder to AutoCAD's search path
+#### Добавьте папку примеров в пути AutoCAD
 
-1. Tools -> Options...
-2. Files -> Support File Search Path
-3. Click Add...
-4. Click Browse...
-5. Select appropriately C:\Program Files\VeLisp\examples or C:\velisp-{{version}}-win-x64\examples
-6. Click OK
-7. Click Apply
-7. Click OK
+1. Выберите 'Tools' -> 'Options...'
+2. Выберите 'Files' -> 'Support File Search Path'
+3. Выберите 'Add...'
+4. Выберите 'Browse...'
+5. Выберите C:\Program Files\VeLisp\examples или C:\velisp-{{version}}-win-x64\examples
+6. Выберите 'OK'
+7. Выберите 'Apply'
+7. Выберите 'OK'
 
-#### Run the examples
+#### Запускает примеры
 
-1. Tools -> AutoLISP -> Visual LISP Editor
-2. Run in Visual LISP Console
+1. Выберите 'Tools' -> 'AutoLISP' -> 'Visual LISP Editor'
+2. Запускаем в Visual LISP Console
 
 ```
 _$ (load "calc")
@@ -195,16 +195,15 @@ _$ (load "demo")
 
 ## MacOS
 
-### Install
+### Установка
 
-#### Download and unarchive
+#### Скачайте и распакуйте
 
-**Warning**: Do not use Safari to download the archive, do not use Finder to
-extract the archive and, most importantly, do not use Finder to start the
-application for the first time. Since the application is not signed you will not
-be able to start it this way due to
-[Apple's Gatekeeper](https://support.apple.com/en-us/HT202491).
-Instead, start the Terminal application (Finder -> Go -> Utilities -> Terminal) and run:
+**Внимание**: Не используйте Safari чтобы скачать архив, не используйте Finder
+чтобы распаковать архив и, самое главное, не используйте Finder чтобы запустить
+VeLisp в первый раз. Так как VeLisp не подписан, вы не сможете запустить
+его из-за [Apple's Gatekeeper](https://support.apple.com/en-us/HT202491).
+Вместо этого, запустите Terminal (Finder -> Go -> Utilities -> Terminal) и выполните:
 
 ```
 % cd $HOME
@@ -212,19 +211,19 @@ Instead, start the Terminal application (Finder -> Go -> Utilities -> Terminal) 
 % tar xfJ velisp-{{version}}-macos-x64.tar.xz
 ```
 
-#### Add to ~/.zshrc
+#### Добавьте в ~/.zshrc
 
 ```
 export PATH=<PATH_TO>/velisp-{{version}}-macos-x64:$PATH
 ```
 
-### Usage
+### Использование
 
 ```
 % cd velisp-{{version}}-macos-x64
 ```
 
-#### Run REPL (Read–Eval–Print Loop)
+#### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 % ./velisp
@@ -239,23 +238,23 @@ _$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 _$ (quit)
 ```
 
-#### Run code from file
+#### Запускаем код из файла
 
-Calculate 10th (by default) Fibonacci number
+Вычисляем 10-е (по умолчанию) число Фибоначчи
 
 ```
 % ./velisp examples/fib.lsp
 55
 ```
 
-Calculate 11th Fibonacci number
+Вычисляем 11-е число Фибоначчи
 
 ```
 % ./velisp examples/fib.lsp 11
 89
 ```
 
-Run the Calculator example
+Запускаем пример Калькулятор
 
 ```
 % ./velisp examples/calc.lsp
@@ -263,7 +262,7 @@ Run the Calculator example
 
 ![App Calc MacOS Image](/images/app-calc-macos.png)
 
-Run the Minesweeper example
+Запускаем пример Сапер
 
 ```
 % ./velisp examples/mines.lsp
@@ -271,7 +270,7 @@ Run the Minesweeper example
 
 ![App Mines MacOS Image](/images/app-mines-macos.png)
 
-Run the Fifteen Puzzle example
+Запускаем пример Пятнашки
 
 ```
 % ./velisp examples/fifteen.lsp
@@ -279,7 +278,7 @@ Run the Fifteen Puzzle example
 
 ![App Fifteen MacOS Image](/images/app-fifteen-macos.png)
 
-Run the Demo example
+Запускаем пример Демо
 
 ```
 % ./velisp examples/demo.lsp
@@ -287,7 +286,7 @@ Run the Demo example
 
 ![App Demo MacOS Image](/images/app-demo-macos.png)
 
-#### Run code from standard input
+#### Запускаем код из стандартного ввода
 
 ```
 % cat examples/fib.lsp | ./velisp
@@ -311,7 +310,7 @@ Run the Demo example
 
 ![Alert Hello From Arg MacOS Image](/images/alert-hello-arg-macos.png)
 
-#### Run without DCL support (faster loading, good for scripting)
+#### Запускаем без поддержки DCL (более быстрая загрузка, хорошо для скриптов)
 
 ```
 % ./velisp --no-dcl examples/fib.lsp
@@ -320,28 +319,28 @@ Run the Demo example
 
 ## Linux
 
-### Install
+### Установка
 
-#### Download and unarchive
+#### Скачайте и распакуйте
 
 ```
 $ curl -LJO https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-linux-x64.tar.xz
 $ tar xfJ velisp-{{version}}-linux-x64.tar.xz
 ```
 
-#### Add to ~/.bashrc
+#### Добавьте в ~/.bashrc
 
 ```
 export PATH=<PATH_TO>/velisp-{{version}}-linux-x64:$PATH
 ```
 
-### Usage
+### Использование
 
 ```
 $ cd velisp-{{version}}-linux-x64
 ```
 
-#### Run REPL (Read–Eval–Print Loop)
+#### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 $ ./velisp
@@ -356,23 +355,23 @@ _$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 _$ (quit)
 ```
 
-#### Run code from file
+#### Запускаем код из файла
 
-Calculate 10th (by default) Fibonacci number
+Вычисляем 10-е (по умолчанию) число Фибоначчи
 
 ```
 $ ./velisp examples/fib.lsp
 55
 ```
 
-Calculate 11th Fibonacci number
+Вычисляем 11-е число Фибоначчи
 
 ```
 $ ./velisp examples/fib.lsp 11
 89
 ```
 
-Run the Calculator example
+Запускаем пример Калькулятор
 
 ```
 $ ./velisp examples/calc.lsp
@@ -380,7 +379,7 @@ $ ./velisp examples/calc.lsp
 
 ![App Calc Linux Image](/images/app-calc-linux.png)
 
-Run the Minesweeper example
+Запускаем пример Сапер
 
 ```
 $ ./velisp examples/mines.lsp
@@ -388,7 +387,7 @@ $ ./velisp examples/mines.lsp
 
 ![App Mines Linux Image](/images/app-mines-linux.png)
 
-Run the Fifteen Puzzle example
+Запускаем пример Пятнашки
 
 ```
 $ ./velisp examples/fifteen.lsp
@@ -396,7 +395,7 @@ $ ./velisp examples/fifteen.lsp
 
 ![App Fifteen Linux Image](/images/app-fifteen-linux.png)
 
-Run the Demo example
+Запускаем пример Демо
 
 ```
 $ ./velisp examples/demo.lsp
@@ -404,8 +403,7 @@ $ ./velisp examples/demo.lsp
 
 ![App Demo Linux Image](/images/app-demo-linux.png)
 
-
-#### Run code from standard input
+#### Запускаем код из стандартного ввода
 
 ```
 $ cat examples/fib.lsp | ./velisp
@@ -429,48 +427,45 @@ $ echo '(alert (strcat "Hello from " (argv 2) "!"))' | ./velisp -- Arg
 
 ![Alert Hello From Arg Linux Image](/images/alert-hello-arg-linux.png)
 
-#### Run without DCL support (faster loading, good for scripting)
+#### Запускаем без поддержки DCL (более быстрая загрузка, хорошо для скриптов)
 
 ```
 $ ./velisp --no-dcl examples/fib.lsp
 55
 ```
 
-## Implemented functions
+## Реализованные функции
 
-* [AutoLISP Functions](/AutoLISP-Functions.md)
-* [DCL Functions](DCL-Functions.md)
+* [AutoLISP Функции](/AutoLISP-Functions.md)
+* [DCL Функции](DCL-Functions.md)
 
-## Known issues and limitations
+## Известные проблемы и ограничения
 
-* Integers are signed numbers with values ranging from -9,007,199,254,740,991 (-2<sup>53</sup>+1) to +9,007,199,254,740,991 (+2<sup>53</sup>-1)
+* Целые числа со знаком в диапазоне от -9,007,199,254,740,991 (-2<sup>53</sup>+1) до +9,007,199,254,740,991 (+2<sup>53</sup>-1)
 
-## Versioning
+## Версия
 
-The version reflects subjective percentage of completeness.
-For example, the version 0.7.x should be read as **VeLisp** is 0.7x (7x%) ready.
+Версия отражает субъективный процент готовности.
+Например, версия 0.7.3 означает, что **VeLisp** готов на 73% (0.73).
 
-## Contributing
+## Предлагаемые изменения
 
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in the work by you, shall be licensed as below, without any
-additional terms or conditions.
+Все предлагаемые изменения будут иметь лицензии представленные ниже, без каких-либо
+дополнительных условий.
 
-## License
+## Лицензия
 
-The project is licensed under the GNU General Public License v3.0 or later
-with the exception below.
-See [LICENSE](LICENSE) or
-https://spdx.org/licenses/GPL-3.0-or-later.html
-for full license information.
+Проект выпущен под лицензией GNU General Public License v3.0 или более поздней
+версии с исключением представленным ниже.
+Полную информации о лицензии можно найти в [LICENSE](LICENSE) или
+https://spdx.org/licenses/GPL-3.0-or-later.html.
 
-The files in the [examples/](examples/) and [lib/](lib/) directories
-are licensed under the BSD Zero Clause License.
-See [LICENSE](examples/LICENSE) or [LICENSE](lib/LICENSE) or
-https://spdx.org/licenses/0BSD.html for full license
-information.
+Файлы в папках [examples/](examples/) и [lib/](lib/)
+выпущены под лицензией BSD Zero Clause License.
+Полную информацию о лицензии можно найти в [LICENSE](examples/LICENSE) или
+[LICENSE](lib/LICENSE) или https://spdx.org/licenses/0BSD.html.
 
-## See also
+## Дополнительно
 
-* [Development](/DEVEL.md)
-* [How To](/HOWTO.md)
+* [Разработка](/DEVEL.md)
+* [Как сделать?](/HOWTO.md)

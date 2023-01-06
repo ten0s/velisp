@@ -1,25 +1,26 @@
+[English version](README-en.md)
+
 **VeLisp** - интерпретатор AutoLISP с поддержкой DCL.
 Основная идея проекта - AutoLISP как язык программирования общего назначения.
 Цель - иметь возможность запускать AutoLISP программы за пределами AutoCAD.
 Зачем? Чтобы изучать основы AutoLISP и DCL программирования, писать скрипты,
 запускать DCL диалоги как обычные приложения на Windows, MacOS и Linux.
 
-### Table of contents
+### Содержание
 
-- [Install](#install)
-- [Usage](#usage)
-- [License](#license)
+- [Установка](#установка)
+- [Использование](#использование)
+- [Лицензия](#лицензия)
 
-### Install
+### Установка
 
-#### Download and unarchive
+#### Скачайте и распакуйте
 
-**Warning**: Do not use Safari to download the archive, do not use Finder to
-extract the archive and, most importantly, do not use Finder to start the
-application for the first time. Since the application is not signed you will not
-be able to start it this way due to
-[Apple's Gatekeeper](https://support.apple.com/en-us/HT202491).
-Instead, start the Terminal application (Finder -> Go -> Utilities -> Terminal) and run:
+**Внимание**: Не используйте Safari чтобы скачать архив, не используйте Finder
+чтобы распаковать архив и, самое главное, не используйте Finder чтобы запустить
+VeLisp в первый раз. Так как VeLisp не подписан, вы не сможете запустить
+его из-за [Apple's Gatekeeper](https://support.apple.com/en-us/HT202491).
+Вместо этого, запустите Terminal (Finder -> Go -> Utilities -> Terminal) и выполните:
 
 ```
 % cd $HOME
@@ -27,19 +28,19 @@ Instead, start the Terminal application (Finder -> Go -> Utilities -> Terminal) 
 % tar xfJ velisp-{{version}}-macos-x64.tar.xz
 ```
 
-#### Add to ~/.zshrc
+#### Добавьте в ~/.zshrc
 
 ```
 export PATH=<PATH_TO>/velisp-{{version}}-macos-x64:$PATH
 ```
 
-### Usage
+### Использование
 
 ```
 % cd velisp-{{version}}-macos-x64
 ```
 
-#### Run REPL (Read–Eval–Print Loop)
+#### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 % ./velisp
@@ -54,47 +55,47 @@ _$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 _$ (quit)
 ```
 
-#### Run code from file
+#### Запускаем код из файла
 
-Calculate 10th (by default) Fibonacci number
+Вычисляем 10-е (по умолчанию) число Фибоначчи
 
 ```
 % ./velisp examples/fib.lsp
 55
 ```
 
-Calculate 11th Fibonacci number
+Вычисляем 11-е число Фибоначчи
 
 ```
 % ./velisp examples/fib.lsp 11
 89
 ```
 
-Run the Calculator example
+Запускаем пример Калькулятор
 
 ```
 % ./velisp examples/calc.lsp
 ```
 
-Run the Minesweeper example
+Запускаем пример Сапер
 
 ```
 % ./velisp examples/mines.lsp
 ```
 
-Run the Fifteen Puzzle example
+Запускаем пример Пятнашки
 
 ```
 % ./velisp examples/fifteen.lsp
 ```
 
-Run the Demo example
+Запускаем пример Демо
 
 ```
 % ./velisp examples/demo.lsp
 ```
 
-#### Run code from standard input
+#### Запускаем код из стандартного ввода
 
 ```
 % cat examples/fib.lsp | ./velisp
@@ -106,23 +107,21 @@ Run the Demo example
 89
 ```
 
-#### Run without DCL support (faster loading, good for scripting)
+#### Запускаем без поддержки DCL (более быстрая загрузка, хорошо для скриптов)
 
 ```
 % ./velisp --no-dcl examples/fib.lsp
 55
 ```
 
-### License
+### Лицензия
 
-The project is licensed under the GNU General Public License v3.0 or later
-with the exception below.
-See [LICENSE](LICENSE) or
-https://spdx.org/licenses/GPL-3.0-or-later.html
-for full license information.
+Проект выпущен под лицензией GNU General Public License v3.0 или более поздней
+версии с исключением представленным ниже.
+Полную информации о лицензии можно найти в [LICENSE](LICENSE) или
+https://spdx.org/licenses/GPL-3.0-or-later.html.
 
-The files in the [examples/](examples/) and [lib/](lib/) directories
-are licensed under the BSD Zero Clause License.
-See [LICENSE](examples/LICENSE) or [LICENSE](lib/LICENSE) or
-https://spdx.org/licenses/0BSD.html for full license
-information.
+Файлы в папках [examples/](examples/) и [lib/](lib/)
+выпущены под лицензией BSD Zero Clause License.
+Полную информацию о лицензии можно найти в [LICENSE](examples/LICENSE) или
+[LICENSE](lib/LICENSE) или https://spdx.org/licenses/0BSD.html.

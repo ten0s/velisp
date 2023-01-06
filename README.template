@@ -47,7 +47,7 @@ run DCL dialogs just like regular applications on Windows, MacOS and Linux.
 3. Select velisp-{{version}}-win-x64.zip
 4. Press the right mouse button
 5. Click 'Extract All...'
-6. Enter C:\
+6. Enter 'C:\'
 7. Click 'Extract'
 
 ##### Add the folder to PATH
@@ -58,17 +58,17 @@ run DCL dialogs just like regular applications on Windows, MacOS and Linux.
 4. Select 'Path' inside the User variables block
 5. Click 'Edit...'
 6. Click 'New...'
-7. Enter C:\velisp-{{version}}-win-x64
+7. Enter 'C:\velisp-{{version}}-win-x64'
 8. Click 'OK'
 9. Click 'OK'
 
 ### Usage
 
-If you installed VeLisp via [automatic setup](#install-via-automatic-setup) go to
-'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
+If you installed VeLisp via [automatic setup](#install-via-automatic-setup)
+go to 'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
 
-If you installed Velisp via [binary archive](#install-via-binary-archive) run
-the Command Prompt (cmd.exe) and move to the extraction directory:
+If you installed Velisp via [binary archive](#install-via-binary-archive)
+run the Command Prompt (cmd.exe) and move to the extraction directory:
 
 ```
 > cd C:\velisp-{{version}}-win-x64
@@ -172,18 +172,18 @@ Run the Demo example
 
 #### Add the examples folder to AutoCAD's search path
 
-1. Tools -> Options...
-2. Files -> Support File Search Path
-3. Click Add...
-4. Click Browse...
+1. Click 'Tools' -> 'Options...'
+2. Click 'Files' -> 'Support File Search Path'
+3. Click 'Add...'
+4. Click 'Browse...'
 5. Select appropriately C:\Program Files\VeLisp\examples or C:\velisp-{{version}}-win-x64\examples
-6. Click OK
-7. Click Apply
-7. Click OK
+6. Click 'OK'
+7. Click 'Apply'
+7. Click 'OK'
 
 #### Run the examples
 
-1. Tools -> AutoLISP -> Visual LISP Editor
+1. Click 'Tools' -> 'AutoLISP' -> 'Visual LISP Editor'
 2. Run in Visual LISP Console
 
 ```
@@ -200,9 +200,9 @@ _$ (load "demo")
 #### Download and unarchive
 
 **Warning**: Do not use Safari to download the archive, do not use Finder to
-extract the archive and, most importantly, do not use Finder to start the
-application for the first time. Since the application is not signed you will not
-be able to start it this way due to
+extract the archive and, most importantly, do not use Finder to start VeLisp
+for the first time. Since VeLisp is not signed you will not be able to start
+it this way due to
 [Apple's Gatekeeper](https://support.apple.com/en-us/HT202491).
 Instead, start the Terminal application (Finder -> Go -> Utilities -> Terminal) and run:
 
@@ -448,7 +448,7 @@ $ ./velisp --no-dcl examples/fib.lsp
 ## Versioning
 
 The version reflects subjective percentage of completeness.
-For example, the version 0.7.x should be read as **VeLisp** is 0.7x (7x%) ready.
+For example, the version 0.7.3 should be read as **VeLisp** is 73% (0.73) ready.
 
 ## Contributing
 

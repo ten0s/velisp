@@ -1,3 +1,5 @@
+[Русская версия](README-ru.md)
+
 **VeLisp** is AutoLISP interpreter with DCL support.
 The idea is to treat AutoLISP as a general purpose language.
 The goal is to run AutoLISP programs outside of AutoCAD.

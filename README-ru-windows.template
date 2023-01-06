@@ -1,62 +1,64 @@
+[English version](README-en.md)
+
 **VeLisp** - интерпретатор AutoLISP с поддержкой DCL.
 Основная идея проекта - AutoLISP как язык программирования общего назначения.
 Цель - иметь возможность запускать AutoLISP программы за пределами AutoCAD.
 Зачем? Чтобы изучать основы AutoLISP и DCL программирования, писать скрипты,
 запускать DCL диалоги как обычные приложения на Windows, MacOS и Linux.
 
-### Table of contents
+### Содержание
 
-- [Install](#install)
-- [Usage](#usage)
-- [License](#license)
+- [Установка](#установка)
+- [Использование](#использование)
+- [Лицензия](#лицензия)
 
-### Install
+### Установка
 
-#### Install via automatic setup
+#### Автоматическая установка
 
-1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
-2. Open Downloads folder
-3. Double-click on velisp-{{version}}-win-x64-setup.zip to open the archive
-4. Run velisp-{{version}}-win-x64-setup.exe
-5. Follow the installation wizard. Default options are ok for most users
+1. Скачайте https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
+2. Откройте папку Загрузки
+3. Распакуйте velisp-{{version}}-win-x64-setup.zip
+4. Запустите velisp-{{version}}-win-x64-setup.exe
+5. Следуйте указаниям установщика. Настройки по умолчанию подойдут большинству пользователей
 
-#### Install via binary archive
+#### Установка из архива
 
-##### Download and unarchive
+##### Скачайте и распакуйте
 
-1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64.zip
-2. Open Downloads folder
-3. Select velisp-{{version}}-win-x64.zip
-4. Press the right mouse button
-5. Click 'Extract All...'
-6. Enter C:\
-7. Click 'Extract'
+1. Скачайте https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64.zip
+2. Откройте папку Загрузки
+3. Выделите velisp-{{version}}-win-x64.zip
+4. Нажмите правую кнопку мышки
+5. Выберите 'Распаковать все содержимое...'
+6. Введите 'C:\'
+7. Выберите 'Распаковать'
 
-##### Add the folder to PATH
+##### Добавьте папку в переменную окружения PATH
 
-1. Press 'Windows + Break' to open the System Info
-2. Click 'Advanced system settings'
-3. Click 'Environment Variables...'
-4. Select 'Path' inside the User variables block
-5. Click 'Edit...'
-6. Click 'New...'
-7. Enter C:\velisp-{{version}}-win-x64
-8. Click 'OK'
-9. Click 'OK'
+1. Нажмите 'Windows + Break' чтобы открыть Информацию о системе
+2. Выберите 'Advanced system settings'
+3. Выберите 'Environment Variables...'
+4. Выберите 'Path' inside the User variables block
+5. Выберите 'Edit...'
+6. Выберите 'New...'
+7. Введите 'C:\velisp-{{version}}-win-x64'
+8. Выберите 'OK'
+9. Выберите 'OK'
 
-### Usage
+### Использование
 
-If you installed VeLisp via [automatic setup](#install-via-automatic-setup) go to
-'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
+Если вы установили VeLisp с помощью [автоматической установки](#автоматическая-установка)
+запускайте 'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
 
-If you installed Velisp via [binary archive](#install-via-binary-archive) run
-the Command Prompt (cmd.exe) and move to the extraction directory:
+Если вы установили Velisp из [архива](#установка-из-архива)
+запускайте командную оболочку (cmd.exe) и перейдите в папку распаковки:
 
 ```
 > cd C:\velisp-{{version}}-win-x64
 ```
 
-#### Run REPL (Read–Eval–Print Loop)
+#### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 > velisp
@@ -71,47 +73,47 @@ _$ (mapcar '(lambda (x y) (itoa (add x y))) '(1 2 3) '(9 8 7))
 _$ (quit)
 ```
 
-#### Run code from file
+#### Запускаем код из файла
 
-Calculate 10th (by default) Fibonacci number
+Вычисляем 10-е (по умолчанию) число Фибоначчи
 
 ```
 > velisp examples\fib.lsp
 55
 ```
 
-Calculate 11th Fibonacci number
+Вычисляем 11-е число Фибоначчи
 
 ```
 > velisp examples\fib.lsp 11
 89
 ```
 
-Run the Calculator example
+Запускаем пример Калькулятор
 
 ```
 > velisp examples\calc.lsp
 ```
 
-Run the Minesweeper example
+Запускаем пример Сапер
 
 ```
 > velisp examples\mines.lsp
 ```
 
-Run the Fifteen Puzzle example
+Запускаем пример Пятнашки
 
 ```
 > velisp examples\fifteen.lsp
 ```
 
-Run the Demo example
+Запускаем пример Демо
 
 ```
 > velisp examples\demo.lsp
 ```
 
-#### Run code from standard input
+#### Запускаем код из стандартного ввода
 
 ```
 > type examples\fib.lsp | velisp
@@ -123,30 +125,30 @@ Run the Demo example
 89
 ```
 
-#### Run without DCL support (faster loading, good for scripting)
+#### Запускаем без поддержки DCL (более быстрая загрузка, хорошо для скриптов)
 
 ```
 > velisp --no-dcl examples\fib.lsp
 55
 ```
 
-### Run the examples in AutoCAD
+### Запускаем примеры в AutoCAD
 
-#### Add the examples folder to AutoCAD's search path
+#### Добавьте папку примеров в пути AutoCAD
 
-1. Tools -> Options...
-2. Files -> Support File Search Path
-3. Click Add...
-4. Click Browse...
-5. Browse for Folder C:\velisp-{{version}}-win-x64\examples
-6. Click OK
-7. Click Apply
-7. Click OK
+1. Выберите 'Tools' -> 'Options...'
+2. Выберите 'Files' -> 'Support File Search Path'
+3. Выберите 'Add...'
+4. Выберите 'Browse...'
+5. Выберите C:\Program Files\VeLisp\examples или C:\velisp-{{version}}-win-x64\examples
+6. Выберите 'OK'
+7. Выберите 'Apply'
+7. Выберите 'OK'
 
-#### Run the examples
+#### Запускает примеры
 
-1. Tools -> AutoLISP -> Visual LISP Editor
-2. Run in Visual LISP Console
+1. Выберите 'Tools' -> 'AutoLISP' -> 'Visual LISP Editor'
+2. Запускаем в Visual LISP Console
 
 ```
 _$ (load "calc")
@@ -155,16 +157,14 @@ _$ (load "fifteen")
 _$ (load "demo")
 ```
 
-### License
+### Лицензия
 
-The project is licensed under the GNU General Public License v3.0 or later
-with the exception below.
-See [LICENSE](LICENSE) or
-https://spdx.org/licenses/GPL-3.0-or-later.html
-for full license information.
+Проект выпущен под лицензией GNU General Public License v3.0 или более поздней
+версии с исключением представленным ниже.
+Полную информации о лицензии можно найти в [LICENSE](LICENSE) или
+https://spdx.org/licenses/GPL-3.0-or-later.html.
 
-The files in the [examples/](examples/) and [lib/](lib/) directories
-are licensed under the BSD Zero Clause License.
-See [LICENSE](examples/LICENSE) or [LICENSE](lib/LICENSE) or
-https://spdx.org/licenses/0BSD.html for full license
-information.
+Файлы в папках [examples/](examples/) и [lib/](lib/)
+выпущены под лицензией BSD Zero Clause License.
+Полную информацию о лицензии можно найти в [LICENSE](examples/LICENSE) или
+[LICENSE](lib/LICENSE) или https://spdx.org/licenses/0BSD.html.
