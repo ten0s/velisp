@@ -280,6 +280,7 @@
 | Function | Description | Info |
 |----------|-------------|------|
 | (getint [msg]) | Pauses for user input of an integer, and returns that integer | |
+| (getfiled title default ext flags) | Prompts the user for a file name with the standard file dialog box, and returns that file name | Expected in vTBD |
 | (getkword [msg]) | Pauses for user input of a keyword, and returns that keyword | Expected in vTBD |
 | (getreal [msg]) | Pauses for user input of a real number, and returns that real number | |
 | (getstring [cr] [msg]) | Pauses for user input of a string, and returns that string | |
