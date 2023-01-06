@@ -93,7 +93,7 @@ rollPatch:
 
 roll:
 	$(MAKE) readme
-	git add package.json package-lock.json README.md
+	git add package.json package-lock.json README.md README-ru.md
 	@echo 'Now run: $$ make commit-push'
 
 commit-push:
@@ -102,10 +102,14 @@ commit-push:
 	git push origin `git branch --show-current 2>/dev/null` --tags
 
 readme:
-	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template > README.md
-	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > README-en-linux.md
+	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README.template    > README.md
+	sed -E -e "s/\{\{branch\}\}/${BRANCH}/g" -e "s/\{\{version\}\}/${VERSION}/g" README-ru.template > README-ru.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template   > README-en-linux.md
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > README-en-windows.md
-	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > README-en-macos.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template   > README-en-macos.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-linux.template   > README-ru-linux.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-windows.template > README-ru-windows.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-macos.template   > README-ru-macos.md
 
 prePkg:
 	$(MAKE) cleanPkg
@@ -133,6 +137,7 @@ tarLinux:
 	cp LICENSE      velisp-${VERSION}-linux-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-linux-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > velisp-${VERSION}-linux-x64/README-en.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-linux.template > velisp-${VERSION}-linux-x64/README-ru.md
 	tar cfJ velisp-${VERSION}-linux-x64.tar.xz velisp-${VERSION}-linux-x64/
 
 prepareWindows:
@@ -148,6 +153,7 @@ prepareWindows:
 	echo -e "\n--------------------------------\n"                     >> velisp-${VERSION}-win-x64/NOTICE
 	node util/notice-mingw64.js velisp-${VERSION}-win-x64/mingw64/bin/ >> velisp-${VERSION}-win-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-windows.template > velisp-${VERSION}-win-x64/README-en.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-windows.template > velisp-${VERSION}-win-x64/README-ru.md
 
 zipWindows:
 	zip -r velisp-${VERSION}-win-x64.zip velisp-${VERSION}-win-x64/
@@ -170,6 +176,7 @@ tarMacos:
 	echo "\n--------------------------------\n"                            >> velisp-${VERSION}-macos-x64/NOTICE
 	node util/notice-homebrew.js velisp-${VERSION}-macos-x64/homebrew/lib/ >> velisp-${VERSION}-macos-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-macos.template > velisp-${VERSION}-macos-x64/README-en.md
+	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-macos.template > velisp-${VERSION}-macos-x64/README-ru.md
 	tar cfJ velisp-${VERSION}-macos-x64.tar.xz velisp-${VERSION}-macos-x64/
 
 sha256sum:

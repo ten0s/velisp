@@ -1,68 +1,68 @@
 # VeLisp
 
-[Русская версия](README-ru.md)
+[English version](README.md)
 
-**VeLisp** is AutoLISP interpreter with DCL support.
-The idea is to treat AutoLISP as a general purpose language.
-The goal is to run AutoLISP programs outside of AutoCAD.
-Why? To learn basic AutoLISP and DCL programming, to write shell scripts, to
-run DCL dialogs just like regular applications on Windows, MacOS and Linux.
+**VeLisp** - интерпретатор AutoLISP с поддержкой DCL.
+Основная идея проекта - AutoLISP как язык программирования общего назначения.
+Цель - иметь возможность запускать AutoLISP программы за пределами AutoCAD.
+Зачем? Чтобы изучать основы AutoLISP и DCL программирования, писать скрипты,
+запускать DCL диалоги как обычные приложения на Windows, MacOS и Linux.
 
-## Table of contents
+## Содержание
 
 - [Windows](#windows)
-  - [Install](#install)
-  - [Usage](#usage)
+  - [Установка](#install)
+  - [Использование](#usage)
 - [MacOS](#macos)
-  - [Install](#install-1)
-  - [Usage](#usage-1)
+  - [Установка](#install-1)
+  - [Использование](#usage-1)
 - [Linux](#linux)
-  - [Install](#install-2)
-  - [Usage](#usage-2)
-- [Implemented functions](#implemented-functions)
-- [Known issues and limitations](#known-issues-and-limitations)
-- [Versioning](#versioning)
-- [Contributing](#contributing)
-- [License](#license)
-- [See also](#see-also)
+  - [Установка](#install-2)
+  - [Использование](#usage-2)
+- [Реализованные функции](#implemented-functions)
+- [Известные проблемы и ограничения](#known-issues-and-limitations)
+- [Версия](#versioning)
+- [Помощь](#contributing)
+- [Лицензия](#license)
+- [Дополнительно](#see-also)
 
 ## Windows
 
-### Install
+### Установка
 
-#### Install via automatic setup
+#### Автоматический установка
 
-1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
-2. Open Downloads folder
-3. Double-click on velisp-{{version}}-win-x64-setup.zip to open the archive
-4. Run velisp-{{version}}-win-x64-setup.exe
-5. Follow the installation wizard. Default options are ok for most users
+1. Скачайте https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
+2. Откройте папку Загрузки
+3. Распакуйте velisp-{{version}}-win-x64-setup.zip
+4. Запустите velisp-{{version}}-win-x64-setup.exe
+5. Следуйте указаниям установщика. Настройки по умолчанию подойдут большинству пользователей
 
-#### Install via binary archive
+#### Установка из архива
 
-##### Download and unarchive
+##### Скачайте и распакуйте
 
-1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64.zip
-2. Open Downloads folder
-3. Select velisp-{{version}}-win-x64.zip
-4. Press the right mouse button
-5. Click 'Extract All...'
-6. Enter C:\
-7. Click 'Extract'
+1. Скачайте https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64.zip
+2. Откройте папку Загрузки
+3. Выделите velisp-{{version}}-win-x64.zip
+4. Нажмите правую кнопку мышки
+5. Выберите 'Распаковать все содержимое...'
+6. Введите C:\
+7. Выберите 'Распаковать'
 
-##### Add the folder to PATH
+##### Добавьте папку в переменную окружения PATH
 
-1. Press 'Windows + Break' to open the System Info
-2. Click 'Advanced system settings'
-3. Click 'Environment Variables...'
-4. Select 'Path' inside the User variables block
-5. Click 'Edit...'
-6. Click 'New...'
-7. Enter C:\velisp-{{version}}-win-x64
-8. Click 'OK'
-9. Click 'OK'
+1. Нажмите 'Windows + Break' чтобы открыть Информацию о системе
+2. Выберите 'Advanced system settings'
+3. Выберите 'Environment Variables...'
+4. Выберите 'Path' inside the User variables block
+5. Выберите 'Edit...'
+6. Выберите 'New...'
+7. Введите C:\velisp-{{version}}-win-x64
+8. Выберите 'OK'
+9. Выберите 'OK'
 
-### Usage
+### Использование
 
 If you installed VeLisp via [automatic setup](#install-via-automatic-setup) go to
 'Start' -> 'VeLisp' -> 'VeLisp Command Prompt'.
