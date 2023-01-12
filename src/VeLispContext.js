@@ -55,7 +55,7 @@ class VeLispContext {
     // Otherwise, return nil.
     // :: (string) -> Type | Nil
     getVar(name) {
-        let value = this.symbols[name]
+        const value = this.symbols[name]
         if (value) {
             return value
         }

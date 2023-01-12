@@ -28,7 +28,7 @@ class VeLispContextIniter {
     }
 
     static initWithLib(context) {
-        let rootdir = process.env['VELISP_ROOT']
+        const rootdir = process.env['VELISP_ROOT']
         evaluate(`(load "${rootdir}/lib/main.lsp")`, context)
     }
 
