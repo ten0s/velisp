@@ -6,7 +6,12 @@ ADD
 _$ .inspect 'add
 Sym { sym: 'ADD' }
 _$ .inspect add
-Fun { name: 'ADD', params: [ 'A', 'B' ], locals: [], fun: [Function] }
+UFun {
+  name: 'ADD',
+  params: [ 'A', 'B' ],
+  locals: [],
+  fun: [Function (anonymous)]
+}
 _$ .inspect (add 1 2)
 Int { int: 3 }
 ```
