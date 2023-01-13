@@ -23,7 +23,7 @@ import fs from 'fs'
 import path from 'path'
 
 import {Str, Sym, Fun, KFun} from '../VeLispTypes.js'
-import * as VeLispEvaluator from '../VeLispEvaluator.js'
+import {evaluate} from '../VeLispEvaluator.js'
 import {fmtError} from '../VeLispError.js'
 import VeSysInfo from '../VeSysInfo.js'
 import {ensureLspExt, makeUnixPath} from '../VeUtil.js'
@@ -43,7 +43,7 @@ export const initContext = (context) => {
         let filename = ensureLspExt(makeUnixPath(args[0].value()))
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
-                const parent = self.contexts[self.contexts.length-1].getSym('%VELISP_LSP_FILE%')
+                const parent = self.contexts.top().getSym('%VELISP_LSP_FILE%')
                 if (parent instanceof Str) {
                     filename = path.join(path.dirname(parent.value()), filename)
                 }
@@ -55,10 +55,10 @@ export const initContext = (context) => {
             // and pops it after the call.
             // Since (load filename) can defun other functions
             // we need to store them in the parent context.
-            const context = self.contexts[self.contexts.length-2]
+            const context = self.contexts.top(1)
             const parent = context.getSym('%VELISP_LSP_FILE%')
             context.setSym('%VELISP_LSP_FILE%', new Str(path.resolve(filename)))
-            const result = VeLispEvaluator.evaluate(data, context)
+            const result = evaluate(data, context)
             // Restore back source file.
             context.setSym('%VELISP_LSP_FILE%', parent)
             return result
@@ -67,7 +67,7 @@ export const initContext = (context) => {
                 let onfailure = args[1]
                 if (onfailure instanceof Sym) {
                     // Try resolving symbol to function
-                    onfailure = self.contexts[self.contexts.length-1].getSym(onfailure.value())
+                    onfailure = self.contexts.top().getSym(onfailure.value())
                 }
                 if (onfailure instanceof Fun) {
                     return onfailure.apply(self, [])

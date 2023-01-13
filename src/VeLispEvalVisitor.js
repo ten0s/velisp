@@ -23,13 +23,15 @@ import VeLispParser from '../grammar/VeLispParser.js'
 import VeLispVisitor from '../grammar/VeLispVisitor.js'
 import VeLispContext from './VeLispContext.js'
 import {makeError} from './VeLispError.js'
+import VeStack from './VeStack.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
 
 class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
         super()
-        this.contexts = [context]
+        this.contexts = new VeStack()
+        this.contexts.push(context)
     }
 
     visitAnd(ctx) {
@@ -61,7 +63,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     visitDefun(ctx) {
         const name = this.visit(ctx.funName().ID()).toUpperCase()
         const fun = this.makeUFun(name, ctx)
-        this.contexts[this.contexts.length-1].setSym(name, fun)
+        this.contexts.top().setSym(name, fun)
         return new Sym(name)
     }
 
@@ -75,12 +77,12 @@ class VeLispEvalVisitor extends VeLispVisitor {
         if (list instanceof List) {
             let result = new Bool(false)
             // Push new context with 'name' = nil
-            const context = new VeLispContext(this.contexts[this.contexts.length-1])
+            const context = new VeLispContext(this.contexts.top())
             context.initVar(name, new Bool(false))
             this.contexts.push(context)
             for (let i = 0; i < list.value().length; i++) {
-                // Set each list value directly into our context, not the latest context,
-                // to make it possible to shadow 'name' in some down context
+                // Set each list value directly into our context, not the top context,
+                // to make it possible to shadow 'name' in some upper context
                 const value = list.value()[i]
                 //console.error(`foreach: ${value}`);
                 context.setVar(name, value)
@@ -263,7 +265,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             const name = this.visit(ctx.setqNameExpr(i).ID()).toUpperCase()
             value = this.getValue(this.visit(ctx.setqNameExpr(i).expr()))
             //console.error(`setq: ${name} = ${value}`);
-            this.contexts[this.contexts.length-1].setVar(name, value)
+            this.contexts.top().setVar(name, value)
         }
         return value
     }
@@ -304,7 +306,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         //console.error(fun);
         // Try to get function out of symbol
         if (!fun.isNil() && fun instanceof Sym) {
-            fun = this.contexts[this.contexts.length-1].getSym(fun.value())
+            fun = this.contexts.top().getSym(fun.value())
         }
         if (fun instanceof Fun) {
             // Evaluate args eagerly
@@ -314,7 +316,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             }
             //console.error(`(${name} ${args.join(' ')})`);
             // Push new context
-            this.contexts.push(new VeLispContext(this.contexts[this.contexts.length-1]))
+            this.contexts.push(new VeLispContext(this.contexts.top()))
             const result = fun.apply(this, args)
             // Pop new context
             this.contexts.pop()
@@ -346,7 +348,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             return new Str(unescape(str.substring(1, str.length-1)))
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
-            return this.contexts[this.contexts.length-1].getVar(str.toUpperCase())
+            return this.contexts.top().getVar(str.toUpperCase())
         } else {
             // Also handles ID outside of expr
             //console.error('TERMINAL:', str);
@@ -382,11 +384,12 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 ))
             }
             // Since locals with the same names as params will reset the values, init locals first.
+            const context = self.contexts.top()
             for (let i = 0; i < locals.length; i++) {
-                self.contexts[self.contexts.length-1].initVar(locals[i], new Bool(false))
+                context.initVar(locals[i], new Bool(false))
             }
             for (let i = 0; i < params.length; i++) {
-                self.contexts[self.contexts.length-1].initVar(params[i], args[i])
+                context.initVar(params[i], args[i])
             }
             let result = new Bool(false)
             for (let i = 0; i < ctx.expr().length; i++) {

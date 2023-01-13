@@ -48,7 +48,7 @@ export const initContext = (context) => {
         }
         const arg = args[0]
         if (arg instanceof Sym) {
-            return self.contexts[self.contexts.length-1].getSym(arg.value())
+            return self.contexts.top().getSym(arg.value())
         }
         // Handle T
         if (arg instanceof Bool && arg.value()) {
