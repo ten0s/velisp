@@ -22,7 +22,6 @@
 import VeLispParser from '../grammar/VeLispParser.js'
 import VeLispVisitor from '../grammar/VeLispVisitor.js'
 import VeLispContext from './VeLispContext.js'
-import {makeError} from './VeLispError.js'
 import VeStack from './VeStack.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
@@ -70,6 +69,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
     visitForeach(ctx) {
         const name = this.visit(ctx.foreachName().ID()).toUpperCase()
         const list = this.getValue(this.visit(ctx.foreachList()))
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         //console.error(`foreach: ${name} ${list}`);
         if (list.isNil()) {
             return new Bool(false)
@@ -94,15 +97,16 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop()
             return result
         }
-        throw new Error(makeError(
-            'foreach: `list` expected List',
-            this.contexts[this.contexts.length-1]
-        ))
+        throw new Error('foreach: `list` expected List')
     }
 
     visitFunction(ctx) {
         const expr = ctx.expr()
         const str = expr.getText()
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
             return new Sym(str)
@@ -112,10 +116,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
         //console.error(str);
         //console.error(ctx.expr());
-        throw new Error(makeError(
-            'function: expected Fun',
-            this.contexts[this.contexts.length-1]
-        ))
+
+        throw new Error('function: expected Fun')
     }
 
     visitIf(ctx) {
@@ -157,6 +159,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
     visitQuote(ctx) {
         const expr = ctx.expr()
         const str = expr.getText()
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         if (expr instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
             return new Bool(false)
@@ -228,10 +234,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
                    expr instanceof VeLispParser.SetQContext ||
                    expr instanceof VeLispParser.WhileContext) {
             const name = expr.children[1].getText()
-            throw new Error(makeError(
-                `quote: \`${name}\` not supported`,
-                this.contexts[this.contexts.length-1]
-            ))
+            throw new Error(`quote: \`${name}\` not supported`)
         } else {
             //console.error(str);
             //console.error(ctx.expr());
@@ -243,6 +246,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
         let result = new Bool(false)
         const count = this.getValue(this.visit(ctx.repeatNum()))
         //console.error('repeat count:', count);
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         if (count instanceof Int && count.value() > 0) {
             for (let i = 0; i < count.value(); i++) {
                 for (let j = 0; j < ctx.expr().length; j++) {
@@ -250,16 +257,17 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 }
             }
         } else {
-            throw new Error(makeError(
-                `repeat: num expected to be positive integer, but saw ${count}`,
-                this.contexts[this.contexts.length-1]
-            ))
+            throw new Error('repeat: `num` expected positive Int')
         }
         return result
     }
 
     visitSetQ(ctx) {
         let value = new Bool(false)
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         for (let i = 0; i < ctx.setqNameExpr().length; i++) {
             // This argument is not evaluated
             const name = this.visit(ctx.setqNameExpr(i).ID()).toUpperCase()
@@ -272,6 +280,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
 
     visitWhile(ctx) {
         let result = new Bool(false)
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         for (;;) {
             const test = this.getValue(this.visit(ctx.whileTest()))
             //console.error('while test:', test);
@@ -301,6 +313,10 @@ class VeLispEvalVisitor extends VeLispVisitor {
             return new Bool(false)
         }
         const name = ctx.listExpr(0).expr().getText()
+
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         //console.error(name);
         let fun = this.getValue(this.visit(ctx.listExpr(0).expr()))
         //console.error(fun);
@@ -322,10 +338,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.contexts.pop()
             return result
         }
-        throw new Error(makeError(
-            `${name}: function not defined`,
-            this.contexts[this.contexts.length-1]
-        ))
+        throw new Error(`${name}: function not defined`)
     }
 
     visitTerminal(ctx) {
@@ -358,6 +371,9 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     makeUFun(name, ctx) {
+        const line = ctx.start.line
+        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+
         const params = []
         const locals = []
         for (let i = 0; i < ctx.funParam().length; i++) {
@@ -373,15 +389,9 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
         return new UFun(name, params, locals, (self, args) => {
             if (args.length < params.length) {
-                throw new Error(makeError(
-                    `${name}: too few arguments`,
-                    this.contexts[this.contexts.length-1]
-                ))
+                throw new Error(`${name}: too few arguments`)
             } else if (args.length > params.length) {
-                throw new Error(makeError(
-                    `${name}: too many arguments`,
-                    this.contexts[this.contexts.length-1]
-                ))
+                throw new Error(`${name}: too many arguments`)
             }
             // Since locals with the same names as params will reset the values, init locals first.
             const context = self.contexts.top()

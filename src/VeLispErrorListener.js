@@ -20,18 +20,16 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import antlr4 from 'antlr4'
-import {makeError} from './VeLispError.js'
+import {Int} from './VeLispTypes.js'
 
 class VeLispErrorListener extends antlr4.error.ErrorListener {
     constructor(context) {
         super()
         this.context = context
     }
-    syntaxError(recognizer, symbol, line, column, message, _payload) {
-        throw new Error(makeError(
-            `line: ${line} column: ${column} message: ${message}`,
-            this.context
-        ))
+    syntaxError(_recognizer, _symbol, line, _column, message, _payload) {
+        this.context.setSym('%VELISP_LSP_LINE%', new Int(line))
+        throw new Error(message, this.context)
     }
 }
 

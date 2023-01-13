@@ -20,19 +20,29 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import path from 'path'
-import {Str} from './VeLispTypes.js'
+import {Int, Str} from './VeLispTypes.js'
+import VeSysInfo from './VeSysInfo.js'
 
 function makeError(message, context) {
     let file = context.getVar('%VELISP_LSP_FILE%')
+    let line = context.getVar('%VELISP_LSP_LINE%')
+    let desc = ''
     if (file instanceof Str) {
         file = path.basename(file.value())
-        return `file: ${file} ${message}`
+        desc = file
+        if (line instanceof Int) {
+            line = line.value()
+            desc = `${file}:${line}`
+        }
     }
-    return message
+    if (desc.length != 0) {
+        return `location: ${desc} message: ${message}`
+    } else {
+        return `message: ${message}`
+    }
 }
 
 function fmtError(name, error) {
-    //console.error(error);
     let message = `${name}: `
     if (error.path)  {
         message += `${error.path}: `
@@ -66,7 +76,25 @@ function perror(errCode) {
     }
 }
 
+function catchError(func, onError, context) {
+    try {
+        return func()
+    } catch (e) {
+        onError(e, context)
+    }
+}
+
+function printError(error, context) {
+    if (VeSysInfo.debug.stacktrace) {
+        error.message = makeError(error.message, context)
+        console.error(error)
+    } else {
+        console.error('Error: ' + makeError(error.message, context))
+    }
+}
+
 export {
-    makeError,
     fmtError,
+    catchError,
+    printError,
 }

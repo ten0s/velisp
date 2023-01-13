@@ -39,7 +39,7 @@ import {
 import VeLispContext from './VeLispContext.js'
 import VeLispContextIniter from './VeLispContextIniter.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
-import {fmtError} from './VeLispError.js'
+import {fmtError, catchError, printError} from './VeLispError.js'
 import {Bool, Str} from './VeLispTypes.js'
 
 main()
@@ -157,30 +157,24 @@ async function maybeInjectDcl(action, withDcl, context) {
     context.setSym('%VELISP_DCL%', new Bool(withDcl))
 }
 
-function printError(e) {
-    if (VeSysInfo.debug.stacktrace) {
-        console.error(e)
-    } else {
-        console.error(`Error: ${e.message}`)
-    }
-}
-
 function readStream(stream, action, context) {
     let input = ''
     stream.on('data', (chunk) => {
         input += chunk.toString()
     })
     stream.on('end', () => {
-        try {
-            if (input.trim()) {
-                action(input, context)
-            }
-        } catch (e) {
-            printError(e)
-        }
+        catchError(
+            () => {
+                if (input.trim()) {
+                    action(input, context)
+                }
+            },
+            printError,
+            context
+        )
     })
     stream.on('error', (e) => {
-        printError(new Error(fmtError('open', e)))
+        printError(new Error(fmtError('open', e)), context)
     })
 }
 
@@ -232,15 +226,17 @@ function startRepl(info, action, context) {
             help: 'Inspect internal representation of <expression>',
             action(input) {
                 if (input.trim()) {
-                    try {
-                        const result = action(input, context)
-                        if (result !== null) {
-                            console.log(inspect(result))
-                        }
-                    } catch (e) {
-                        printError(e)
-                        // fall through
-                    }
+                    catchError(
+                        () => {
+                            const result = action(input, context)
+                            if (result !== null) {
+                                console.log(inspect(result))
+                            }
+                        },
+                        printError,
+                        context
+                    )
+                    // fall through
                 }
                 this.displayPrompt()
             }
@@ -273,7 +269,7 @@ function replEval(repl, input, action, context, callback) {
             if (isRecoverable(input, e)) {
                 return callback(new repl.Recoverable(e))
             } else {
-                printError(e)
+                printError(e, context)
                 // fall through
             }
         }
