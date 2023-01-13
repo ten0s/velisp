@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Sym, List, Fun} from '../VeLispTypes.js'
+import {Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('APPLY', new Fun('apply', ['function', 'list'], [], (self, args) => {
+    context.setSym('APPLY', new KFun('apply', ['function', 'list'], [], (self, args) => {
         //console.log('apply args', args);
         if (args.length < 2) {
             throw new Error('apply: too few arguments')

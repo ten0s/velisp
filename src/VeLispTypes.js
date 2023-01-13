@@ -737,6 +737,8 @@ class Pair {
     }
 }
 
+// Abstract Fun - do NOT use directly
+// KFun or UFun are used instead
 class Fun {
     // :: (string, [string], [string], function)
     constructor(name, params, locals, fun) {
@@ -746,10 +748,9 @@ class Fun {
         this.fun = fun
     }
 
-    // :: () -> Sym
+    // :: () -> throw
     type() {
-        // TODO?: subclass KFun (kernel) & UFun (user) and add 'usubr'
-        return new Sym('subr')
+        throw new Error(`Not implemented for ${this.constructor.name}`)
     }
 
     // :: () -> false
@@ -795,6 +796,22 @@ class Fun {
         const params = this.params.join(' ')
         const locals = this.locals.join(' ')
         return `(${prefix} (${params}${locals.length > 0 ? ' / ' : ''}${locals}))`
+    }
+}
+
+// Kernel Function
+class KFun extends Fun {
+    // :: () -> Sym
+    type() {
+        return new Sym('subr')
+    }
+}
+
+// User Function
+class UFun extends Fun {
+    // :: () -> Sym
+    type() {
+        return new Sym('usubr')
     }
 }
 
@@ -1134,6 +1151,8 @@ export {
     List,
     Pair,
     Fun,
+    KFun,
+    UFun,
     FileStream,
     FileMode,
     File,

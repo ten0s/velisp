@@ -20,11 +20,11 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import fs from 'fs'
-import {Bool, Str, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Str, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
-    context.setSym('RMDIR', new Fun('rmdir', ['dirname'], [], (self, args) => {
+    context.setSym('RMDIR', new KFun('rmdir', ['dirname'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('rmdir: too few arguments')
         }

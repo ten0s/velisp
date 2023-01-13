@@ -21,13 +21,13 @@
 
 import os from 'os'
 import {spawn} from 'child_process'
-import {Bool, Int, Real, Str, Sym, List, Fun, Argv0, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Real, Str, Sym, List, KFun, Argv0, ensureType} from '../VeLispTypes.js'
 import VeArgv from '../VeArgv.js'
 import {homeDir, tmpDir, sleep} from '../VeSystem.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
-    context.setSym('ARGV', new Fun('argv', ['[n]'], [], (self, args) => {
+    context.setSym('ARGV', new KFun('argv', ['[n]'], [], (self, args) => {
         // devel mode  : $ node src/main.js [--no-dcl] test.js 1 two
         // release mode: $ velisp [--no-dcl] test.js 1 two
         // (#<argv0> "test.js" "1" "two")
@@ -62,14 +62,14 @@ export const initContext = (context) => {
         )
     }))
     // VeLisp Extension
-    context.setSym('CWD', new Fun('cwd', [], [], (self, args) => {
+    context.setSym('CWD', new KFun('cwd', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('cwd: too many arguments')
         }
         return new Str(process.cwd())
     }))
     // VeLisp Extension
-    context.setSym('CHDIR', new Fun('chdir', ['dirname'], [], (self, args) => {
+    context.setSym('CHDIR', new KFun('chdir', ['dirname'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('chdir: too few arguments')
         }
@@ -87,20 +87,20 @@ export const initContext = (context) => {
         }
     }))
     // VeLisp Extension
-    context.setSym('HOMEDIR', new Fun('homedir', [], [], (self, args) => {
+    context.setSym('HOMEDIR', new KFun('homedir', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('homedir: too many arguments')
         }
         return new Str(homeDir())
     }))
     // VeLisp Extension
-    context.setSym('TMPDIR', new Fun('tmpdir', [], [], (self, args) => {
+    context.setSym('TMPDIR', new KFun('tmpdir', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('tmpdir: too many arguments')
         }
         return new Str(tmpDir())
     }))
-    context.setSym('EXIT', new Fun('exit', ['[code]'], [], (self, args) => {
+    context.setSym('EXIT', new KFun('exit', ['[code]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('exit: too many arguments')
         }
@@ -110,7 +110,7 @@ export const initContext = (context) => {
         }
         process.exit(code)
     }))
-    context.setSym('GETENV', new Fun('getenv', ['name'], [], (self, args) => {
+    context.setSym('GETENV', new KFun('getenv', ['name'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('getenv: too few arguments')
         }
@@ -131,7 +131,7 @@ export const initContext = (context) => {
         }
         return new Str(value)
     }))
-    context.setSym('GETVAR', new Fun('getvar', ['name'], [], (self, args) => {
+    context.setSym('GETVAR', new KFun('getvar', ['name'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('getvar: too few arguments')
         }
@@ -152,7 +152,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('QUIT', new Fun('quit', ['[code]'], [], (self, args) => {
+    context.setSym('QUIT', new KFun('quit', ['[code]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('quit: too many arguments')
         }
@@ -162,7 +162,7 @@ export const initContext = (context) => {
         }
         process.exit(code)
     }))
-    context.setSym('SETENV', new Fun('setenv', ['name', 'value'], [], (self, args) => {
+    context.setSym('SETENV', new KFun('setenv', ['name', 'value'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('setenv: too few arguments')
         }
@@ -174,7 +174,7 @@ export const initContext = (context) => {
         process.env[name.value()] = value.value()
         return value
     }))
-    context.setSym('SLEEP', new Fun('sleep', ['millisecs'], [], (self, args) => {
+    context.setSym('SLEEP', new KFun('sleep', ['millisecs'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('sleep: too few arguments')
         }
@@ -188,7 +188,7 @@ export const initContext = (context) => {
         sleep(msecs)
         return new Bool(false)
     }))
-    context.setSym('STARTAPP', new Fun('startapp', ['cmd', '[arg ...]'], [], (self, args) => {
+    context.setSym('STARTAPP', new KFun('startapp', ['cmd', '[arg ...]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('startapp: too few arguments')
         }

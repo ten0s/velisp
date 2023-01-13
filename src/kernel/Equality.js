@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, Fun} from '../VeLispTypes.js'
+import {Bool, KFun} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('=', new Fun('=', ['numstr [numstr] ...'], [], (self, args) => {
+    context.setSym('=', new KFun('=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('=: too few arguments')
         }
@@ -36,7 +36,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('/=', new Fun('/=', ['numstr [numstr] ...'], [], (self, args) => {
+    context.setSym('/=', new KFun('/=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('/=: too few arguments')
         }
@@ -50,7 +50,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('<', new Fun('<', ['numstr [numstr] ...'], [], (self, args) => {
+    context.setSym('<', new KFun('<', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('<: too few arguments')
         }
@@ -64,7 +64,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('<=', new Fun('<=', ['numstr [numstr] ...'], [], (self, args) => {
+    context.setSym('<=', new KFun('<=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('<=: too few arguments')
         }
@@ -78,7 +78,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('>', new Fun('>', ['numstr [numstr] ...'], [], (self, args) => {
+    context.setSym('>', new KFun('>', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('>: too few arguments')
         }
@@ -92,7 +92,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('>=', new Fun('>=', ['numstr [numstr] ...'], [], (self, args) => {
+    context.setSym('>=', new KFun('>=', ['numstr [numstr] ...'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('>=: too few arguments')
         }
@@ -106,7 +106,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('EQ', new Fun('eq', ['expr1 expr2'], [], (self, args) => {
+    context.setSym('EQ', new KFun('eq', ['expr1 expr2'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('eq: too few arguments')
         }
@@ -118,7 +118,7 @@ export const initContext = (context) => {
         const val2 = args[1]
         return val1.eq(val2)
     }))
-    context.setSym('EQUAL', new Fun('equal', ['expr1 expr2'], [], (self, args) => {
+    context.setSym('EQUAL', new KFun('equal', ['expr1 expr2'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('equal: too few arguments')
         }

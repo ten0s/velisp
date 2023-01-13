@@ -21,10 +21,10 @@
 
 import fs from 'fs'
 import VeGlob from '../VeGlob.js'
-import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Str, List, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('VL-DIRECTORY-FILES', new Fun('vl-directory-files', ['[directory]', '[pattern]', '[what]'], [], (self, args) => {
+    context.setSym('VL-DIRECTORY-FILES', new KFun('vl-directory-files', ['[directory]', '[pattern]', '[what]'], [], (self, args) => {
         if (args.length > 3) {
             throw new Error('vl-directory-files: too many arguments')
         }
@@ -93,7 +93,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-FILE-COPY', new Fun('vl-file-copy', ['src-filename', 'dst-filename', '[append]'], [], (self, args) => {
+    context.setSym('VL-FILE-COPY', new KFun('vl-file-copy', ['src-filename', 'dst-filename', '[append]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-file-copy: too few arguments')
         }
@@ -131,7 +131,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-FILE-DELETE', new Fun('vl-file-delete', ['filename'], [], (self, args) => {
+    context.setSym('VL-FILE-DELETE', new KFun('vl-file-delete', ['filename'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-file-delete: too few arguments')
         }
@@ -148,7 +148,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-FILE-DIRECTORY-P', new Fun('vl-file-directory-p', ['filename'], [], (self, args) => {
+    context.setSym('VL-FILE-DIRECTORY-P', new KFun('vl-file-directory-p', ['filename'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('vl-file-directory-p: too few arguments')
         }
@@ -166,7 +166,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-FILE-RENAME', new Fun('vl-file-rename', ['src-filename', 'dst-filename'], [], (self, args) => {
+    context.setSym('VL-FILE-RENAME', new KFun('vl-file-rename', ['src-filename', 'dst-filename'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-file-rename: too few arguments')
         }
@@ -193,7 +193,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-FILE-SIZE', new Fun('vl-file-size', ['filename'], [], (self, args) => {
+    context.setSym('VL-FILE-SIZE', new KFun('vl-file-size', ['filename'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-file-size: too few arguments')
         }
@@ -216,7 +216,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-FILE-SYSTIME', new Fun('vl-file-systime', ['filename'], [], (self, args) => {
+    context.setSym('VL-FILE-SYSTIME', new KFun('vl-file-systime', ['filename'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-file-systime: too few arguments')
         }
@@ -247,7 +247,7 @@ export const initContext = (context) => {
             return new Bool(false)
         }
     }))
-    context.setSym('VL-MKDIR', new Fun('vl-mkdir', ['dirname'], [], (self, args) => {
+    context.setSym('VL-MKDIR', new KFun('vl-mkdir', ['dirname'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-mkdir: too few arguments')
         }

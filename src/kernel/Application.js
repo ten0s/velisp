@@ -22,14 +22,14 @@
 import fs from 'fs'
 import path from 'path'
 
-import {Str, Sym, Fun} from '../VeLispTypes.js'
+import {Str, Sym, Fun, KFun} from '../VeLispTypes.js'
 import * as VeLispEvaluator from '../VeLispEvaluator.js'
 import {fmtError} from '../VeLispError.js'
 import VeSysInfo from '../VeSysInfo.js'
 import {ensureLspExt, makeUnixPath} from '../VeUtil.js'
 
 export const initContext = (context) => {
-    context.setSym('LOAD', new Fun('load', ['filename', '[onfailure]'], [], (self, args) => {
+    context.setSym('LOAD', new KFun('load', ['filename', '[onfailure]'], [], (self, args) => {
         //console.log('load args:', args)
         if (args.length === 0) {
             throw new Error('load: too few arguments')
@@ -78,7 +78,7 @@ export const initContext = (context) => {
             throw new Error(fmtError('load', e))
         }
     }))
-    context.setSym('VER', new Fun('ver', [], [], (_self, _args) => {
+    context.setSym('VER', new KFun('ver', [], [], (_self, _args) => {
         return new Str(`${VeSysInfo.name} ${VeSysInfo.version} on ${VeSysInfo.platform}`)
     }))
     context.setSym('%VELISP_VERSION%', new Str(VeSysInfo.version))

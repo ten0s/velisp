@@ -41,7 +41,7 @@ const tests = [
     // Local fun is in the global context (not yet defined)
     {test: '(defun a () (defun b () \'b)) (type b)', result: new Bool(false)},
     // Local fun is in the global context (defined)
-    {test: '(defun a () (defun b () \'b)) (a) (type b)', result: new Sym('subr')},
+    {test: '(defun a () (defun b () \'b)) (a) (type b)', result: new Sym('usubr')},
     // Local fun is in the local context (not yet defined)
     {test: '(defun a ( / b) (defun b () \'b)) (type b)', result: new Bool(false)},
     // Local fun is in the local context (defined)

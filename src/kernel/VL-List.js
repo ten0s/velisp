@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, Int, Sym, List, Pair, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Sym, List, Pair, Fun, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('VL-CONSP', new Fun('vl-consp', ['list'], [], (self, args) => {
+    context.setSym('VL-CONSP', new KFun('vl-consp', ['list'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-consp: too few arguments')
         }
@@ -38,7 +38,7 @@ export const initContext = (context) => {
         }
         return new Bool(false)
     }))
-    context.setSym('VL-EVERY', new Fun('vl-every', ['predicate', 'list', '[list ...]'], [], (self, args) => {
+    context.setSym('VL-EVERY', new KFun('vl-every', ['predicate', 'list', '[list ...]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-every: too few arguments')
         }
@@ -79,7 +79,7 @@ export const initContext = (context) => {
         }
         throw new Error(`vl-every: \`predicate\` no such function ${args[0]}`)
     }))
-    context.setSym('VL-SOME', new Fun('vl-some', ['predicate', 'list', '[list ...]'], [], (self, args) => {
+    context.setSym('VL-SOME', new KFun('vl-some', ['predicate', 'list', '[list ...]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-some: too few arguments')
         }
@@ -120,7 +120,7 @@ export const initContext = (context) => {
         }
         throw new Error(`vl-some: \`predicate\` no such function ${args[0]}`)
     }))
-    context.setSym('VL-LIST*', new Fun('vl-list*', ['object', '[object ...]'], [], (self, args) => {
+    context.setSym('VL-LIST*', new KFun('vl-list*', ['object', '[object ...]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('vl-list*: too few arguments')
         }
@@ -143,7 +143,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('VL-LIST-LENGTH', new Fun('vl-list-length', ['list-or-cons-object'], [], (self, args) => {
+    context.setSym('VL-LIST-LENGTH', new KFun('vl-list-length', ['list-or-cons-object'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('vl-list-length: too few arguments')
         }

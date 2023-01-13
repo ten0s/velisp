@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Int, Real, Fun, ensureType} from '../VeLispTypes.js'
+import {Int, Real, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('ATAN', new Fun('atan', ['num1', '[num2]'], [], (self, args) => {
+    context.setSym('ATAN', new KFun('atan', ['num1', '[num2]'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('atan: too few arguments')
         }
@@ -39,7 +39,7 @@ export const initContext = (context) => {
         }
         return new Real(Math.atan(num1.value()))
     }))
-    context.setSym('COS', new Fun('cos', ['ang'], [], (self, args) => {
+    context.setSym('COS', new KFun('cos', ['ang'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('cos: too few arguments')
         }
@@ -49,7 +49,7 @@ export const initContext = (context) => {
         const ang = ensureType('cos:', args[0], [Int, Real]).value()
         return new Real(Math.cos(ang))
     }))
-    context.setSym('EXP', new Fun('exp', ['num'], [], (self, args) => {
+    context.setSym('EXP', new KFun('exp', ['num'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('exp: too few arguments')
         }
@@ -59,7 +59,7 @@ export const initContext = (context) => {
         const num = ensureType('exp:', args[0], [Int, Real]).value()
         return new Real(Math.exp(num))
     }))
-    context.setSym('EXPT', new Fun('expt', ['num', 'power'], [], (self, args) => {
+    context.setSym('EXPT', new KFun('expt', ['num', 'power'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('expt: too few arguments')
         }
@@ -75,7 +75,7 @@ export const initContext = (context) => {
         }
         return new Int(result)
     }))
-    context.setSym('FIX', new Fun('fix', ['num'], [], (self, args) => {
+    context.setSym('FIX', new KFun('fix', ['num'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('fix: too few arguments')
         }
@@ -85,7 +85,7 @@ export const initContext = (context) => {
         const num = ensureType('fix:', args[0], [Int, Real]).value()
         return new Int(Math.floor(num))
     }))
-    context.setSym('LOG', new Fun('log', ['num'], [], (self, args) => {
+    context.setSym('LOG', new KFun('log', ['num'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('log: too few arguments')
         }
@@ -98,7 +98,7 @@ export const initContext = (context) => {
         }
         return new Real(Math.log(num))
     }))
-    context.setSym('MAX', new Fun('max', ['[num] ...'], [], (self, args) => {
+    context.setSym('MAX', new KFun('max', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)
         }
@@ -116,7 +116,7 @@ export const initContext = (context) => {
         }
         return max
     }))
-    context.setSym('MIN', new Fun('min', ['[num] ...'], [], (self, args) => {
+    context.setSym('MIN', new KFun('min', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)
         }
@@ -134,7 +134,7 @@ export const initContext = (context) => {
         }
         return min
     }))
-    context.setSym('REM', new Fun('rem', ['[num] ...'], [], (self, args) => {
+    context.setSym('REM', new KFun('rem', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)
         }
@@ -145,7 +145,7 @@ export const initContext = (context) => {
         }
         return rem
     }))
-    context.setSym('SIN', new Fun('sin', ['ang'], [], (self, args) => {
+    context.setSym('SIN', new KFun('sin', ['ang'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('sin: too few arguments')
         }
@@ -155,7 +155,7 @@ export const initContext = (context) => {
         const ang = ensureType('sin:', args[0], [Int, Real]).value()
         return new Real(Math.sin(ang))
     }))
-    context.setSym('SQRT', new Fun('sqrt', ['num'], [], (self, args) => {
+    context.setSym('SQRT', new KFun('sqrt', ['num'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('sqrt: too few arguments')
         }

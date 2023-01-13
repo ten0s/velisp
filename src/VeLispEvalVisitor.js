@@ -24,7 +24,7 @@ import VeLispVisitor from '../grammar/VeLispVisitor.js'
 import VeLispContext from './VeLispContext.js'
 import {makeError} from './VeLispError.js'
 import {unescape} from './VeUtil.js'
-import {Bool, Int, Real, Str, Sym, List, Pair, Fun} from './VeLispTypes.js'
+import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
 
 class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
@@ -60,7 +60,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
 
     visitDefun(ctx) {
         const name = this.visit(ctx.funName().ID()).toUpperCase()
-        const fun = this.makeFun(name, ctx)
+        const fun = this.makeUFun(name, ctx)
         this.contexts[this.contexts.length-1].setSym(name, fun)
         return new Sym(name)
     }
@@ -131,7 +131,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitLambda(ctx) {
-        return this.makeFun('', ctx)
+        return this.makeUFun('', ctx)
     }
 
     visitOr(ctx) {
@@ -355,7 +355,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
     }
 
-    makeFun(name, ctx) {
+    makeUFun(name, ctx) {
         const params = []
         const locals = []
         for (let i = 0; i < ctx.funParam().length; i++) {
@@ -369,7 +369,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             const local = this.visit(ctx.funLocal(i).ID()).toUpperCase()
             locals.push(local)
         }
-        return new Fun(name, params, locals, (self, args) => {
+        return new UFun(name, params, locals, (self, args) => {
             if (args.length < params.length) {
                 throw new Error(makeError(
                     `${name}: too few arguments`,

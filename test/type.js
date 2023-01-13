@@ -14,7 +14,7 @@ const tests = [
     {test: '(type \'(1 2 3))', result: new Sym('list')},
     {test: '(type \'(1 . 2))', result: new Sym('list')},
     {test: '(type +)', result: new Sym('subr')},
-    {test: '(type (lambda (x) x))', result: new Sym('subr')},
+    {test: '(type (lambda (x) x))', result: new Sym('usubr')},
 ]
 
 const errors = [

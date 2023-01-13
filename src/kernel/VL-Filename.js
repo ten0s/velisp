@@ -22,11 +22,11 @@
 import fs from 'fs'
 import path from 'path'
 import temp from 'temp'
-import {Bool, Str, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Str, KFun, ensureType} from '../VeLispTypes.js'
 import {tmpDir} from '../VeSystem.js'
 
 export const initContext = (context) => {
-    context.setSym('VL-FILENAME-MKTEMP', new Fun('vl-filename-mktemp', ['pattern', 'directory', 'extention'], [], (self, args) => {
+    context.setSym('VL-FILENAME-MKTEMP', new KFun('vl-filename-mktemp', ['pattern', 'directory', 'extention'], [], (self, args) => {
         if (args.length > 3) {
             throw new Error('vl-filename-mktemp: too many arguments')
         }

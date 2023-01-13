@@ -22,7 +22,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import {Bool, Int, Str, List, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Str, List, KFun, ensureType} from '../VeLispTypes.js'
 import VeStack from '../VeStack.js'
 import VeDclContext from '../VeDclContext.js'
 import * as VeDclLoader from '../VeDclLoader.js'
@@ -78,7 +78,7 @@ const withImage = (ifFunc, elseFunc = null) => {
 }
 
 export const initContext = (context) => {
-    context.setSym('LOAD_DIALOG', new Fun('load_dialog', ['dclfile'], [], (self, args) => {
+    context.setSym('LOAD_DIALOG', new KFun('load_dialog', ['dclfile'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('load_dialog: too few arguments')
         }
@@ -112,7 +112,7 @@ export const initContext = (context) => {
         _dclFiles[dclId.value()] = dclMap
         return dclId
     }))
-    context.setSym('NEW_DIALOG', new Fun('new_dialog', ['dlg_id', 'dcl_id', '[action]', '[point]'], [], (self, args) => {
+    context.setSym('NEW_DIALOG', new KFun('new_dialog', ['dlg_id', 'dcl_id', '[action]', '[point]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('new_dialog: too few arguments')
         }
@@ -152,7 +152,7 @@ export const initContext = (context) => {
         }
         return new Bool(false)
     }))
-    context.setSym('START_DIALOG', new Fun('start_dialog', [], [], (self, args) => {
+    context.setSym('START_DIALOG', new KFun('start_dialog', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('start_dialog: too many arguments')
         }
@@ -161,7 +161,7 @@ export const initContext = (context) => {
             return new Int(status)
         })
     }))
-    context.setSym('DONE_DIALOG', new Fun('done_dialog', ['[status]'], [], (self, args) => {
+    context.setSym('DONE_DIALOG', new KFun('done_dialog', ['[status]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('done_dialog: too many arguments')
         }
@@ -174,7 +174,7 @@ export const initContext = (context) => {
             return new List([new Int(x), new Int(y)])
         })
     }))
-    context.setSym('TERM_DIALOG', new Fun('term_dialog', [], [], (self, args) => {
+    context.setSym('TERM_DIALOG', new KFun('term_dialog', [], [], (self, args) => {
         if (args.length > 0) {
             throw new Error('term_dialog: too many arguments')
         }
@@ -185,7 +185,7 @@ export const initContext = (context) => {
         }
         return new Bool(false)
     }))
-    context.setSym('UNLOAD_DIALOG', new Fun('unload_dialog', ['dcl_id'], [], (self, args) => {
+    context.setSym('UNLOAD_DIALOG', new KFun('unload_dialog', ['dcl_id'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('unload_dialog: too few arguments')
         }
@@ -196,7 +196,7 @@ export const initContext = (context) => {
         delete _dclFiles[dclId.value()]
         return new Bool(false)
     }))
-    context.setSym('ACTION_TILE', new Fun('action_tile', ['key', 'action'], [], (self, args) => {
+    context.setSym('ACTION_TILE', new KFun('action_tile', ['key', 'action'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('action_tile: too few arguments')
         }
@@ -216,7 +216,7 @@ export const initContext = (context) => {
             }
         })
     }))
-    context.setSym('CLIENT_DATA_TILE', new Fun('client_data_tile', ['key', 'data'], [], (self, args) => {
+    context.setSym('CLIENT_DATA_TILE', new KFun('client_data_tile', ['key', 'data'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('client_data_tile: too few arguments')
         }
@@ -230,7 +230,7 @@ export const initContext = (context) => {
             return new Bool(false)
         })
     }))
-    context.setSym('GET_ATTR', new Fun('get_attr', ['key', 'attr'], [], (self, args) => {
+    context.setSym('GET_ATTR', new KFun('get_attr', ['key', 'attr'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('get_attr: too few arguments')
         }
@@ -244,7 +244,7 @@ export const initContext = (context) => {
             return new Str(str)
         })
     }))
-    context.setSym('GET_TILE', new Fun('get_tile', ['key'], [], (self, args) => {
+    context.setSym('GET_TILE', new KFun('get_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('get_tile: too few arguments')
         }
@@ -257,7 +257,7 @@ export const initContext = (context) => {
             return new Str(str)
         })
     }))
-    context.setSym('SET_TILE', new Fun('get_tile', ['key', 'value'], [], (self, args) => {
+    context.setSym('SET_TILE', new KFun('get_tile', ['key', 'value'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('set_tile: too few arguments')
         }
@@ -271,7 +271,7 @@ export const initContext = (context) => {
             return value
         })
     }))
-    context.setSym('MODE_TILE', new Fun('mode_tile', ['key', 'mode'], [], (self, args) => {
+    context.setSym('MODE_TILE', new KFun('mode_tile', ['key', 'mode'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('mode_tile: too few arguments')
         }
@@ -285,7 +285,7 @@ export const initContext = (context) => {
             return new Bool(false)
         })
     }))
-    context.setSym('START_LIST', new Fun('start_list', ['key', '[operation]', '[index]'], [], (self, args) => {
+    context.setSym('START_LIST', new KFun('start_list', ['key', '[operation]', '[index]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('start_list: too few arguments')
         }
@@ -311,7 +311,7 @@ export const initContext = (context) => {
             return key
         })
     }))
-    context.setSym('ADD_LIST', new Fun('add_list', ['str'], [], (self, args) => {
+    context.setSym('ADD_LIST', new KFun('add_list', ['str'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('add_list: too few arguments')
         }
@@ -326,7 +326,7 @@ export const initContext = (context) => {
             })
         })
     }))
-    context.setSym('END_LIST', new Fun('end_list', [], [], (self, args) => {
+    context.setSym('END_LIST', new KFun('end_list', [], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('end_list: too many arguments')
         }
@@ -337,7 +337,7 @@ export const initContext = (context) => {
             })
         })
     }))
-    context.setSym('DIMX_TILE', new Fun('dimx_tile', ['key'], [], (self, args) => {
+    context.setSym('DIMX_TILE', new KFun('dimx_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('dimx_tile: too few arguments')
         }
@@ -350,7 +350,7 @@ export const initContext = (context) => {
             return new Int(dimX)
         })
     }))
-    context.setSym('DIMY_TILE', new Fun('dimy_tile', ['key'], [], (self, args) => {
+    context.setSym('DIMY_TILE', new KFun('dimy_tile', ['key'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('dimy_tile: too few arguments')
         }
@@ -363,7 +363,7 @@ export const initContext = (context) => {
             return new Int(dimY)
         })
     }))
-    context.setSym('START_IMAGE', new Fun('start_list', ['key'], [], (self, args) => {
+    context.setSym('START_IMAGE', new KFun('start_list', ['key'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('start_image: too few arguments')
         }
@@ -376,7 +376,7 @@ export const initContext = (context) => {
             return key
         })
     }))
-    context.setSym('FILL_IMAGE', new Fun('fill_image', ['x1', 'y1', 'width', 'height', 'color'], [], (self, args) => {
+    context.setSym('FILL_IMAGE', new KFun('fill_image', ['x1', 'y1', 'width', 'height', 'color'], [], (self, args) => {
         if (args.length < 5) {
             throw new Error('fill_image: too few arguments')
         }
@@ -397,7 +397,7 @@ export const initContext = (context) => {
             })
         })
     }))
-    context.setSym('VECTOR_IMAGE', new Fun('vector_image', ['x1', 'y1', 'x2', 'y2', 'color'], [], (self, args) => {
+    context.setSym('VECTOR_IMAGE', new KFun('vector_image', ['x1', 'y1', 'x2', 'y2', 'color'], [], (self, args) => {
         if (args.length < 5) {
             throw new Error('vector_image: too few arguments')
         }
@@ -418,7 +418,7 @@ export const initContext = (context) => {
             })
         })
     }))
-    context.setSym('END_IMAGE', new Fun('end_image', [], [], (self, args) => {
+    context.setSym('END_IMAGE', new KFun('end_image', [], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('end_image: too many arguments')
         }

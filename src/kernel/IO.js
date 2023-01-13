@@ -21,10 +21,10 @@
 
 import {EOL} from 'os'
 import VeSysInfo from '../VeSysInfo.js'
-import {Bool, Int, Real, Str, Fun, FileStream, FileMode, File, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Real, Str, KFun, FileStream, FileMode, File, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('GETINT', new Fun('getint', ['[msg]'], [], (self, args) => {
+    context.setSym('GETINT', new KFun('getint', ['[msg]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('getint: too many arguments')
         }
@@ -64,7 +64,7 @@ export const initContext = (context) => {
         }
         return new Int(value)
     }))
-    context.setSym('GETREAL', new Fun('getreal', ['[msg]'], [], (self, args) => {
+    context.setSym('GETREAL', new KFun('getreal', ['[msg]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('getreal: too many arguments')
         }
@@ -98,7 +98,7 @@ export const initContext = (context) => {
         }
         return new Real(value)
     }))
-    context.setSym('GETSTRING', new Fun('getstring', ['[cr]', '[msg]'], [], (self, args) => {
+    context.setSym('GETSTRING', new KFun('getstring', ['[cr]', '[msg]'], [], (self, args) => {
         if (args.length > 2) {
             throw new Error('getstring: too many arguments')
         }
@@ -129,7 +129,7 @@ export const initContext = (context) => {
 
         return str
     }))
-    context.setSym('PROMPT', new Fun('prompt', ['msg'], [], (self, args) => {
+    context.setSym('PROMPT', new KFun('prompt', ['msg'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('prompt: too few arguments')
         }
@@ -144,7 +144,7 @@ export const initContext = (context) => {
         }
         return new Bool(false)
     }))
-    context.setSym('PRIN1', new Fun('prin1', ['[expr [file-desc]]'], [], (self, args) => {
+    context.setSym('PRIN1', new KFun('prin1', ['[expr [file-desc]]'], [], (self, args) => {
         if (args.length > 2) {
             throw new Error('prin1: too many arguments')
         }
@@ -168,7 +168,7 @@ export const initContext = (context) => {
         }
         return arg
     }))
-    context.setSym('PRINC', new Fun('princ', ['[expr [file-desc]]'], [], (self, args) => {
+    context.setSym('PRINC', new KFun('princ', ['[expr [file-desc]]'], [], (self, args) => {
         if (args.length > 2) {
             throw new Error('princ: too many arguments')
         }
@@ -197,7 +197,7 @@ export const initContext = (context) => {
         }
         return arg
     }))
-    context.setSym('PRINT', new Fun('print', ['[expr [file-desc]]'], [], (self, args) => {
+    context.setSym('PRINT', new KFun('print', ['[expr [file-desc]]'], [], (self, args) => {
         if (args.length > 2) {
             throw new Error('print: too many arguments')
         }
@@ -228,7 +228,7 @@ export const initContext = (context) => {
         }
         return arg0
     }))
-    context.setSym('OPEN', new Fun('open', ['filename', 'mode'], [], (self, args) => {
+    context.setSym('OPEN', new KFun('open', ['filename', 'mode'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('open: too few arguments')
         }
@@ -247,7 +247,7 @@ export const initContext = (context) => {
         }
         return File.open(name, mode)
     }))
-    context.setSym('CLOSE', new Fun('close', ['file-desc'], [], (self, args) => {
+    context.setSym('CLOSE', new KFun('close', ['file-desc'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('close: too few arguments')
         }
@@ -257,7 +257,7 @@ export const initContext = (context) => {
         const file = ensureType('close: `file-desc`', args[0], [File])
         return file.close()
     }))
-    context.setSym('READ-CHAR', new Fun('read-char', ['[file-desc]'], [], (self, args) => {
+    context.setSym('READ-CHAR', new KFun('read-char', ['[file-desc]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('read-char: too many arguments')
         }
@@ -277,7 +277,7 @@ export const initContext = (context) => {
         }
         return char
     }))
-    context.setSym('READ-LINE', new Fun('read-line', ['[file-desc]'], [], (self, args) => {
+    context.setSym('READ-LINE', new KFun('read-line', ['[file-desc]'], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('read-line: too many arguments')
         }
@@ -297,7 +297,7 @@ export const initContext = (context) => {
         }
         return line
     }))
-    context.setSym('WRITE-CHAR', new Fun('write-char', ['num', '[file-desc]'], [], (self, args) => {
+    context.setSym('WRITE-CHAR', new KFun('write-char', ['num', '[file-desc]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('write-char: too few arguments')
         }
@@ -322,7 +322,7 @@ export const initContext = (context) => {
         }
         return num
     }))
-    context.setSym('WRITE-LINE', new Fun('write-line', ['string', '[file-desc]'], [], (self, args) => {
+    context.setSym('WRITE-LINE', new KFun('write-line', ['string', '[file-desc]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('write-line: too few arguments')
         }

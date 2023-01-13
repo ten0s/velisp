@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Int, Real, Fun, ensureType} from '../VeLispTypes.js'
+import {Int, Real, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('*', new Fun('*', ['[num] ...'], [], (self, args) => {
+    context.setSym('*', new KFun('*', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)
         }
@@ -32,7 +32,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('/', new Fun('/', ['[num] ...'], [], (self, args) => {
+    context.setSym('/', new KFun('/', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)
         }
@@ -42,14 +42,14 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('+', new Fun('+', ['[num] ...'], [], (self, args) => {
+    context.setSym('+', new KFun('+', ['[num] ...'], [], (self, args) => {
         let result = new Int(0)
         for (let i = 0; i < args.length; i++) {
             result = result.add(ensureType('+:', args[i], [Int, Real]))
         }
         return result
     }))
-    context.setSym('-', new Fun('-', ['[num] ...'], [], (self, args) => {
+    context.setSym('-', new KFun('-', ['[num] ...'], [], (self, args) => {
         if (args.length === 0) {
             return new Int(0)
         }
@@ -62,7 +62,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('~', new Fun('~', ['int'], [], (self, args) => {
+    context.setSym('~', new KFun('~', ['int'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('~: too few arguments')
         }

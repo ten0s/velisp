@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, Int, Str, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Str, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('VL-PRIN1-TO-STRING', new Fun('vl-print1-to-string', ['data'], [], (self, args) => {
+    context.setSym('VL-PRIN1-TO-STRING', new KFun('vl-print1-to-string', ['data'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-prin1-to-string: too few arguments')
         }
@@ -36,7 +36,7 @@ export const initContext = (context) => {
         }
         return new Str(arg.toString())
     }))
-    context.setSym('VL-PRINC-TO-STRING', new Fun('vl-princ-to-string', ['data'], [], (self, args) => {
+    context.setSym('VL-PRINC-TO-STRING', new KFun('vl-princ-to-string', ['data'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-princ-to-string: too few arguments')
         }
@@ -50,7 +50,7 @@ export const initContext = (context) => {
         }
         return new Str(arg.toString())
     }))
-    context.setSym('VL-STRING-MISMATCH', new Fun('vl-string-mismatch', ['str1', 'str1', '[pos1]', '[pos2]', '[ignore-case-p]'], [], (self, args) => {
+    context.setSym('VL-STRING-MISMATCH', new KFun('vl-string-mismatch', ['str1', 'str1', '[pos1]', '[pos2]', '[ignore-case-p]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-string-mismatch: too few arguments')
         }
@@ -95,7 +95,7 @@ export const initContext = (context) => {
         }
         return new Int(len)
     }))
-    context.setSym('VL-STRING-POSITION', new Fun('vl-string-position', ['char-code', 'string', '[start-pos [from-end-p]]'], [], (self, args) => {
+    context.setSym('VL-STRING-POSITION', new KFun('vl-string-position', ['char-code', 'string', '[start-pos [from-end-p]]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-string-position: too few arguments')
         }
@@ -144,7 +144,7 @@ export const initContext = (context) => {
         }
         return new Bool(false)
     }))
-    context.setSym('VL-STRING-SEARCH', new Fun('vl-string-search', ['pattern', 'string', '[start-pos]'], [], (self, args) => {
+    context.setSym('VL-STRING-SEARCH', new KFun('vl-string-search', ['pattern', 'string', '[start-pos]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('vl-string-search: too few arguments')
         }
@@ -170,7 +170,7 @@ export const initContext = (context) => {
         }
         return new Bool(false)
     }))
-    context.setSym('VL-STRING-SUBST', new Fun('vl-string-subst', ['new-str', 'pattern', 'str', '[start-pos]'], [], (self, args) => {
+    context.setSym('VL-STRING-SUBST', new KFun('vl-string-subst', ['new-str', 'pattern', 'str', '[start-pos]'], [], (self, args) => {
         if (args.length < 3) {
             throw new Error('vl-string-subst: too few arguments')
         }

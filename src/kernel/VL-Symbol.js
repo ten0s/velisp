@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, Str, Sym, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Str, Sym, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('VL-SYMBOL-NAME', new Fun('vl-symbol-name', ['sym'], [], (self, args) => {
+    context.setSym('VL-SYMBOL-NAME', new KFun('vl-symbol-name', ['sym'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-symbol-name: too few arguments')
         }
@@ -39,7 +39,7 @@ export const initContext = (context) => {
         }
         ensureType('vl-symbol-name:', arg, [Sym])
     }))
-    context.setSym('VL-SYMBOL-VALUE', new Fun('vl-symbol-value', ['sym'], [], (self, args) => {
+    context.setSym('VL-SYMBOL-VALUE', new KFun('vl-symbol-value', ['sym'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-symbol-value: too few arguments')
         }
@@ -56,7 +56,7 @@ export const initContext = (context) => {
         }
         ensureType('vl-symbol-value:', arg, [Sym])
     }))
-    context.setSym('VL-SYMBOLP', new Fun('vl-symbolp', ['obj'], [], (self, args) => {
+    context.setSym('VL-SYMBOLP', new KFun('vl-symbolp', ['obj'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('vl-symbolp: too few arguments')
         }

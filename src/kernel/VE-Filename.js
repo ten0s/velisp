@@ -20,11 +20,11 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import path from 'path'
-import {Sym, Str, List, Pair, Fun, ensureType} from '../VeLispTypes.js'
+import {Sym, Str, List, Pair, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
-    context.setSym('FILENAME-PARSE', new Fun('filename-parse', ['filename'], [], (self, args) => {
+    context.setSym('FILENAME-PARSE', new KFun('filename-parse', ['filename'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('filename-parse: too few arguments')
         }

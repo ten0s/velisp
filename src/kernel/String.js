@@ -23,10 +23,10 @@ import VeGlob from '../VeGlob.js'
 import VeRegex from '../VeRegex.js'
 import VeWildcard from '../VeWildcard.js'
 import {inspect} from '../VeUtil.js'
-import {Bool, Int, Real, Str, Sym, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Real, Str, Sym, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('ASCII', new Fun('ascii', ['string'], [], (self, args) => {
+    context.setSym('ASCII', new KFun('ascii', ['string'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('ascii: too few arguments')
         }
@@ -39,7 +39,7 @@ export const initContext = (context) => {
         }
         return new Int(str.charCodeAt())
     }))
-    context.setSym('CHR', new Fun('chr', ['int'], [], (self, args) => {
+    context.setSym('CHR', new KFun('chr', ['int'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('chr: too few arguments')
         }
@@ -52,7 +52,7 @@ export const initContext = (context) => {
         }
         return new Str(String.fromCharCode(int))
     }))
-    context.setSym('ITOA', new Fun('itoa', ['int'], [], (self, args) => {
+    context.setSym('ITOA', new KFun('itoa', ['int'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('itoa: too few arguments')
         }
@@ -61,7 +61,7 @@ export const initContext = (context) => {
         }
         return new Str(ensureType('itoa:', args[0], [Int]).toString())
     }))
-    context.setSym('ATOI', new Fun('atoi', ['str'], [], (self, args) => {
+    context.setSym('ATOI', new KFun('atoi', ['str'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('atoi: too few arguments')
         }
@@ -78,7 +78,7 @@ export const initContext = (context) => {
         return new Int(0)
     }))
     // VeLisp Extension
-    context.setSym('FTOA', new Fun('ftoa', ['real'], [], (self, args) => {
+    context.setSym('FTOA', new KFun('ftoa', ['real'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('ftoa: too few arguments')
         }
@@ -87,7 +87,7 @@ export const initContext = (context) => {
         }
         return new Str(ensureType('ftoa:', args[0], [Int, Real]).toString())
     }))
-    context.setSym('ATOF', new Fun('atof', ['str'], [], (self, args) => {
+    context.setSym('ATOF', new KFun('atof', ['str'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('atof: too few arguments')
         }
@@ -103,7 +103,7 @@ export const initContext = (context) => {
         } catch (e) {}
         return new Real(0.0)
     }))
-    context.setSym('STRCASE', new Fun('strcase', ['str [which]'], [], (self, args) => {
+    context.setSym('STRCASE', new KFun('strcase', ['str [which]'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('strcase: too few arguments')
         }
@@ -118,21 +118,21 @@ export const initContext = (context) => {
         }
         return str.toUpperCase()
     }))
-    context.setSym('STRCAT', new Fun('strcat', ['[str] ...'], [], (self, args) => {
+    context.setSym('STRCAT', new KFun('strcat', ['[str] ...'], [], (self, args) => {
         let result = new Str('')
         for (const arg of args) {
             result = result.concat(ensureType('strcat:', arg, [Str]))
         }
         return result
     }))
-    context.setSym('STRLEN', new Fun('strlen', ['[str] ...'], [], (self, args) => {
+    context.setSym('STRLEN', new KFun('strlen', ['[str] ...'], [], (self, args) => {
         let result = 0
         for (const arg of args) {
             result += ensureType('strlen:', arg, [Str]).length()
         }
         return new Int(result)
     }))
-    context.setSym('SUBSTR', new Fun('substr', ['string start [length]'], [], (self, args) => {
+    context.setSym('SUBSTR', new KFun('substr', ['string start [length]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('substr: too few arguments')
         }
@@ -154,7 +154,7 @@ export const initContext = (context) => {
         throw new Error('substr: `start` expected positive Int')
     }))
     // VeLisp Extension 'flag'
-    context.setSym('WCMATCH', new Fun('wcmatch', ['str', 'pattern', '[flag]'], [], (self, args) => {
+    context.setSym('WCMATCH', new KFun('wcmatch', ['str', 'pattern', '[flag]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('wcmatch: too few arguments')
         }
@@ -187,7 +187,7 @@ export const initContext = (context) => {
         return new Bool(wc.test(str))
     }))
     // VeLisp Extension
-    context.setSym('GLOBMATCH', new Fun('globmatch', ['str', 'pattern', '[flag]'], [], (self, args) => {
+    context.setSym('GLOBMATCH', new KFun('globmatch', ['str', 'pattern', '[flag]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('globmatch: too few arguments')
         }
@@ -220,7 +220,7 @@ export const initContext = (context) => {
         return new Bool(glob.test(str))
     }))
     // VeLisp Extension
-    context.setSym('REMATCH', new Fun('rematch', ['str', 'pattern', '[flag]'], [], (self, args) => {
+    context.setSym('REMATCH', new KFun('rematch', ['str', 'pattern', '[flag]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('rematch: too few arguments')
         }

@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, Int, Str, Sym, List, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, Int, Str, Sym, List, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('ATOMS-FAMILY', new Fun('atoms-family', ['format', '[symlist]'], [], (self, args) => {
+    context.setSym('ATOMS-FAMILY', new KFun('atoms-family', ['format', '[symlist]'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('atoms-family: too few arguments')
         }
@@ -64,7 +64,7 @@ export const initContext = (context) => {
         }
         return new List(syms.map(s => s ? new Str(s) : new Bool(false)))
     }))
-    context.setSym('BOUNDP', new Fun('boundp', ['sym'], [], (self, args) => {
+    context.setSym('BOUNDP', new KFun('boundp', ['sym'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('boundp: too few arguments')
         }
@@ -79,7 +79,7 @@ export const initContext = (context) => {
         }
         return new Bool(true)
     }))
-    context.setSym('SET', new Fun('set', ['sym', 'expr'], [], (self, args) => {
+    context.setSym('SET', new KFun('set', ['sym', 'expr'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('set: too few arguments')
         }
@@ -92,7 +92,7 @@ export const initContext = (context) => {
         self.contexts[self.contexts.length-1].setVar(name, value)
         return value
     }))
-    context.setSym('TYPE', new Fun('type', ['item'], [], (self, args) => {
+    context.setSym('TYPE', new KFun('type', ['item'], [], (self, args) => {
         if (args.length < 1) {
             throw new Error('type: too few arguments')
         }

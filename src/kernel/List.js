@@ -19,10 +19,10 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, List, Pair, Sym, Fun, ensureType} from '../VeLispTypes.js'
+import {Bool, List, Pair, Sym, Fun, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
-    context.setSym('APPEND', new Fun('append', ['[list ...]'], [], (self, args) => {
+    context.setSym('APPEND', new KFun('append', ['[list ...]'], [], (self, args) => {
         if (args.length === 0) {
             return new Bool(false)
         }
@@ -36,7 +36,7 @@ export const initContext = (context) => {
         }
         return result
     }))
-    context.setSym('CAR', new Fun('car', ['listorpair'], [], (self, args) => {
+    context.setSym('CAR', new KFun('car', ['listorpair'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('car: too few arguments')
         }
@@ -52,7 +52,7 @@ export const initContext = (context) => {
         }
         throw new Error('car: expected List, Pair')
     }))
-    context.setSym('CDR', new Fun('cdr', ['listorpair'], [], (self, args) => {
+    context.setSym('CDR', new KFun('cdr', ['listorpair'], [], (self, args) => {
         if (args.length === 0) {
             throw new Error('cdr: too few arguments')
         }
@@ -68,7 +68,7 @@ export const initContext = (context) => {
         }
         throw new Error('cdr: expected List, Pair')
     }))
-    context.setSym('CONS', new Fun('cons', ['first', 'listoratom'], [], (self, args) => {
+    context.setSym('CONS', new KFun('cons', ['first', 'listoratom'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('cons: too few arguments')
         }
@@ -85,14 +85,14 @@ export const initContext = (context) => {
             return new Pair(fst, snd)
         }
     }))
-    context.setSym('LIST', new Fun('list', ['[expr ...]'], [], (self, args) => {
+    context.setSym('LIST', new KFun('list', ['[expr ...]'], [], (self, args) => {
         const result = []
         for (let i = 0; i < args.length; i++) {
             result.push(args[i])
         }
         return new List(result)
     }))
-    context.setSym('MAPCAR', new Fun('mapcar', ['function list [list ...]'], [], (self, args) => {
+    context.setSym('MAPCAR', new KFun('mapcar', ['function list [list ...]'], [], (self, args) => {
         if (args.length < 2) {
             throw new Error('mapcar: too few arguments')
         }
