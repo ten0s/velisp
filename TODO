@@ -1,4 +1,3 @@
-* trace/untrace see example https://www2.cs.sfu.ca/CourseCentral/310/pwfong/Lisp/1/tutorial1.html
 * Support optional file-desc getstring, getint, getreal
 * Handle at least Backspace in read-line, getstring, getint, getreal
 * How to run VeLisp in the browser?

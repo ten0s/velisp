@@ -25,12 +25,14 @@ import VeLispContext from './VeLispContext.js'
 import VeStack from './VeStack.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
+import {isTrace} from './kernel/Trace.js'
 
 class VeLispEvalVisitor extends VeLispVisitor {
     constructor(context) {
         super()
         this.contexts = new VeStack()
         this.contexts.push(context)
+        this.traceDepth = 0
     }
 
     visitAnd(ctx) {
@@ -317,9 +319,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const line = ctx.start.line
         this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
-        //console.error(name);
         let fun = this.getValue(this.visit(ctx.listExpr(0).expr()))
-        //console.error(fun);
         // Try to get function out of symbol
         if (!fun.isNil() && fun instanceof Sym) {
             fun = this.contexts.top().getSym(fun.value())
@@ -330,10 +330,29 @@ class VeLispEvalVisitor extends VeLispVisitor {
             for (let i = 1; i < ctx.listExpr().length; i++) {
                 args.push(this.getValue(this.visit(ctx.listExpr(i).expr())))
             }
-            //console.error(`(${name} ${args.join(' ')})`);
             // Push new context
             this.contexts.push(new VeLispContext(this.contexts.top()))
+
+            const trace = isTrace(fun)
+            let indent
+
+            // Maybe enter trace
+            if (trace) {
+                indent = ' '.repeat(this.traceDepth * 2)
+                const funcall = `(${fun.name} ${args.join(' ')})`
+                console.error(`${indent}${this.traceDepth}: Entering ${funcall}`)
+                this.traceDepth++
+            }
+
+            // Call function
             const result = fun.apply(this, args)
+
+            // Maybe leave trace
+            if (trace) {
+                this.traceDepth--
+                console.error(`${indent}${this.traceDepth}: Result: ${result}`)
+            }
+
             // Pop new context
             this.contexts.pop()
             return result

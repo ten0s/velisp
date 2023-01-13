@@ -159,8 +159,8 @@
 | (eval expr) | Returns the result of evaluating an AutoLISP expression | Expected in vTBD |
 | (lambda arguments expr ...) | Defines an anonymous function | |
 | (progn [expr ...]) | Evaluates each expression sequentially, and returns the value of the last expression | |
-| (trace function ...) | Aids in AutoLISP debugging | Expected in vTBD |
-| (untrace function ...) | Clears the trace flag for the specified functions | Expected in vTBD |
+| (trace [function] ...) | Sets the trace flag for the specified functions | |
+| (untrace [function] ...) | Clears the trace flag for the specified functions | |
 
 ### Geometric Functions
 

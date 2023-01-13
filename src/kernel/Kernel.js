@@ -30,6 +30,7 @@ import * as Math from './Math.js'
 import * as String from './String.js'
 import * as Symbol from './Symbol.js'
 import * as System from './System.js'
+import * as Trace from './Trace.js'
 import * as VEFileName from './VE-Filename.js'
 import * as VEFileSystem from './VE-FileSystem.js'
 import * as VLFileName from './VL-Filename.js'
@@ -50,6 +51,7 @@ export const initContext = (context) => {
     String.initContext(context)
     Symbol.initContext(context)
     System.initContext(context)
+    Trace.initContext(context)
     VEFileName.initContext(context)
     VEFileSystem.initContext(context)
     VLFileName.initContext(context)
