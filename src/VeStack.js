@@ -47,14 +47,13 @@ class VeStack {
         throw new Error('Stack is empty')
     }
 
-    // :: () -> value | throw Error
-    top() {
-        if (this.stack.length > 0) {
-            return this.stack[this.stack.length-1]
+    // :: (int) -> value | throw Error
+    top(n = 0) {
+        if (this.stack.length > n) {
+            return this.stack[this.stack.length-1-n]
         }
         throw new Error('Stack is empty')
     }
-
 }
 
 export default VeStack
