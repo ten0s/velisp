@@ -43,7 +43,9 @@ export const initContext = (context) => {
                 _traces.add(fun)
                 continue
             }
-            throw new Error('trace: `function` expected Sym, Fun')
+            if (!fun.isNil()) {
+                throw new Error('trace: `function` expected Sym, Fun')
+            }
         }
         if (fun.isNil()) {
             return fun
@@ -65,7 +67,9 @@ export const initContext = (context) => {
                 _traces.delete(fun)
                 continue
             }
-            throw new Error('untrace: `function` expected Sym, Fun')
+            if (!fun.isNil()) {
+                throw new Error('untrace: `function` expected Sym, Fun')
+            }
         }
         if (fun.isNil()) {
             return fun
