@@ -333,7 +333,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             // Push new context
             this.contexts.push(new VeLispContext(this.contexts.top()))
 
-            const trace = isTrace(fun)
+            const trace = isTrace(fun.name)
             let indent
 
             // Maybe enter trace

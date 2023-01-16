@@ -1,18 +1,40 @@
 import {TestRunner} from './test-runner.js'
-import {Bool, Sym} from '../src/VeLispTypes.js'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {List, Sym} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'untrace',
 
+    setup:    () => { evaluate('(untrace)') },
+    tearDown: () => { evaluate('(untrace)') },
+
     tests: [
-        {test: '(untrace)', result: new Bool(false)},
-        {test: '(untrace) (untrace)', result: new Bool(false)},
-        {test: '(untrace cos)', result: new Sym('cos')},        // existing
-        {test: '(untrace \'cos)', result: new Sym('cos')},      // existing
-        {test: '(untrace unknown)', result: new Bool(false)},   // unknown
-        {test: '(untrace \'unknown)', result: new Bool(false)}, // unknown
-        {test: '(untrace cos cos)', result: new Sym('cos')},
-        {test: '(untrace cos sin exp)', result: new Sym('exp')},
+        {test: '(untrace)', result: new List([])},
+        {test: '(untrace) (untrace)', result: new List([])},
+        // Existing
+        {test: '(untrace cos)', result: new List([])},
+        {test: '(trace cos) (untrace cos)', result: new List([
+            new Sym('cos')
+        ])},
+        {test: '(trace cos) (untrace \'cos)', result: new List([
+            new Sym('cos')
+        ])},
+        {test: '(trace cos) (untrace cos cos)', result: new List([
+            new Sym('cos')
+        ])},
+        {test: '(trace cos sin exp) (untrace)', result: new List([
+            new Sym('cos'), new Sym('exp'), new Sym('sin')
+        ])},
+        {test: '(trace cos sin exp) (setq ret (untrace cos)) (untrace)', result: new List([
+            new Sym('exp'), new Sym('sin')
+        ])},
+        {test: '(trace cos sin exp) (untrace exp cos sin)', result: new List([
+            new Sym('cos'), new Sym('exp'), new Sym('sin')
+        ])},
+        // Non-existing
+        {test: '(trace cos) (setq ret (untrace unknown)) (untrace) ret', result: new List([])},
+        {test: '(untrace unknown)', result: new List([])},
+        {test: '(untrace \'unknown)', result: new List([])},
         // See trace.{exp,lsp}
     ],
 

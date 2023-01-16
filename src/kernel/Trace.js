@@ -19,61 +19,109 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Bool, Sym, Fun, KFun} from '../VeLispTypes.js'
+import {Bool, Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
 const _traces = new Set()
 
-export const isTrace = (fun) => {
-    return _traces.has(fun)
+// :: (string) -> boolean
+export const isTrace = (name) => {
+    return _traces.has(name.toUpperCase())
+}
+
+// :: (string) -> ()
+const addTrace = (name) => {
+    _traces.add(name.toUpperCase())
+}
+
+// :: (string) -> ()
+const rmTrace = (name) => {
+    _traces.delete(name.toUpperCase())
+}
+
+// :: () -> ()
+const rmTraces = () => {
+    _traces.clear()
+}
+
+// :: ([string]) -> List(Sym)
+const traceNames = (names) => {
+    return new List(names.sort().map(name => new Sym(name)))
+}
+
+// :: () -> List(Sym)
+const allTraceNames = () => {
+    return traceNames(Array.from(_traces.values()))
 }
 
 export const initContext = (context) => {
     context.setSym('TRACE', new KFun('trace', ['[function] ...'], [], (self, args) => {
         if (args.length === 0) {
-            return new Bool(false)
+            return allTraceNames()
         }
-        let fun = new Bool(false)
+        let arg = new Bool(false)
+        const names = []
         for (let i = 0; i < args.length; i++) {
-            fun = args[i]
-            if (fun instanceof Sym) {
-                // Try resolving symbol to function
-                fun = self.contexts.top().getSym(fun.value())
+            arg = args[i]
+            switch (true) {
+            case arg instanceof Sym: {
+                const name = arg.value()
+                if (!isTrace(name)) {
+                    addTrace(name)
+                    names.push(name)
+                }
+                break
             }
-            if (fun instanceof Fun) {
-                _traces.add(fun)
-                continue
+            case arg instanceof Fun: {
+                const name = arg.name
+                if (!isTrace(name)) {
+                    addTrace(name)
+                    names.push(name)
+                }
+                break
             }
-            if (!fun.isNil()) {
+            case arg.isNil():
+                break
+            default:
                 throw new Error('trace: `function` expected Sym, Fun')
             }
         }
-        if (fun.isNil()) {
-            return fun
-        }
-        return new Sym(fun.name)
+        // Return added traces
+        return traceNames(names)
     }))
     context.setSym('UNTRACE', new KFun('untrace', ['[function] ...'], [], (self, args) => {
         if (args.length === 0) {
-            return new Bool(false)
+            const names = allTraceNames()
+            rmTraces()
+            return names
         }
-        let fun = new Bool(false)
+        let arg = new Bool(false)
+        const names = []
         for (let i = 0; i < args.length; i++) {
-            fun = args[i]
-            if (fun instanceof Sym) {
-                // Try resolving symbol to function
-                fun = self.contexts.top().getSym(fun.value())
+            arg = args[i]
+            switch (true) {
+            case arg instanceof Sym: {
+                const name = arg.value()
+                if (isTrace(name)) {
+                    rmTrace(name)
+                    names.push(name)
+                }
+                break
             }
-            if (fun instanceof Fun) {
-                _traces.delete(fun)
-                continue
+            case arg instanceof Fun: {
+                const name = arg.name
+                if (isTrace(name)) {
+                    rmTrace(name)
+                    names.push(name)
+                }
+                break
             }
-            if (!fun.isNil()) {
+            case arg.isNil():
+                break
+            default:
                 throw new Error('untrace: `function` expected Sym, Fun')
             }
         }
-        if (fun.isNil()) {
-            return fun
-        }
-        return new Sym(fun.name)
+        // Return removed names
+        return traceNames(names)
     }))
 }

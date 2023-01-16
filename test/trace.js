@@ -1,18 +1,37 @@
 import {TestRunner} from './test-runner.js'
-import {Bool, Sym} from '../src/VeLispTypes.js'
+import {evaluate} from '../src/VeLispEvaluator.js'
+import {Sym, List} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'trace',
 
+    setup:    () => { evaluate('(untrace)') },
+    tearDown: () => { evaluate('(untrace)') },
+
     tests: [
-        {test: '(trace)', result: new Bool(false)},
-        {test: '(trace) (trace)', result: new Bool(false)},
-        {test: '(trace cos)', result: new Sym('cos')},        // existing
-        {test: '(trace \'cos)', result: new Sym('cos')},      // existing
-        {test: '(trace unknown)', result: new Bool(false)},   // unknown
-        {test: '(trace \'unknown)', result: new Bool(false)}, // unknown
-        {test: '(trace cos cos)', result: new Sym('cos')},
-        {test: '(trace cos sin exp)', result: new Sym('exp')},
+        {test: '(trace)', result: new List([])},
+        {test: '(trace) (trace)', result: new List([])},
+        // Existing
+        {test: '(setq ret (trace cos)) (untrace) ret', result: new List([
+            new Sym('cos')
+        ])},
+        {test: '(setq ret (trace \'cos)) (untrace) ret', result: new List([
+            new Sym('cos')
+        ])},
+        {test: '(setq ret (trace cos \'cos)) (untrace) ret', result: new List([
+            new Sym('cos')
+        ])},
+        {test: '(setq ret (trace cos sin exp)) (untrace) ret', result: new List([
+            new Sym('cos'), new Sym('exp'), new Sym('sin')
+        ])},
+        {test: '(trace cos exp) (setq ret (trace sin)) (untrace) ret', result: new List([
+            new Sym('sin')
+        ])},
+        // Non-existing
+        {test: '(setq ret (trace unknown)) (untrace) ret', result: new List([])},
+        {test: '(setq ret (trace \'unknown)) (untrace) ret', result: new List([
+            new Sym('unknown')
+        ])},
         // See trace.{exp,lsp}
     ],
 
