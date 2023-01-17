@@ -70,7 +70,7 @@
 | (distof string [mode]) | Converts a string that represents a real (floating-point) value into a real value | Expected in vTBD |
 | (itoa int) | Returns the conversion of an integer into a string | |
 | (ftoa real) | Returns the conversion of a real into a string | VeLisp Extension |
-| (rtos number [mode [precision]]) | Converts a number into a string | Expected in vTBD |
+| (rtos number [mode [precision]]) | Converts a number into a string | Expected in vTBD, use ftoa |
 | (trans pt from to [disp]) | Translates a point (or a displacement) from one coordinate system to another | Expected in vTBD |
 
 ### Display Control Functions
