@@ -89,6 +89,14 @@ QUnit.test('types', assert => {
     )
 
     assert.equal(
+        (new Pair(
+            new Int(1), new Pair(
+                new Int(2), new Pair(
+                    new Int(3), new Int(4))))).toString(),
+        '(1 2 3 . 4)'
+    )
+
+    assert.equal(
         (new List([new Int(1), new Pair(new Int(2), new Sym('z'))])).toString(),
         '(1 (2 . Z))'
     )

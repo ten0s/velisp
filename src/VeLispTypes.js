@@ -729,7 +729,7 @@ class Pair {
                 break
             }
             str += ' '
-            cur = this.snd
+            cur = cur.snd
         }
 
         str += ')'
