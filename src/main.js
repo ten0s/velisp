@@ -57,7 +57,7 @@ function main() {
 
             const context = new VeLispContext()
             VeLispContextIniter.initWithKernel(context)
-            await maybeInjectDcl(option.dcl, action, context)
+            await maybeInjectDcl(options.dcl, action, context)
             maybeInjectLib(action, context)
 
             if (options.eval) {
@@ -75,7 +75,7 @@ function main() {
                 VeSysInfo.isRepl = true
                 const file = path.join(process.cwd(), '__REPL__')
                 context.setSym('%VELISP_LSP_FILE%', new Str(file))
-                startRepl(VeSysInfo, action, context)
+                startRepl(action, context)
             } else {
                 //console.log('Read from stdin');
                 const file = path.join(process.cwd(), '__STDIN__')
@@ -178,8 +178,8 @@ function readStream(stream, action, context) {
     })
 }
 
-function startRepl(info, action, context) {
-    console.log(versionInfo(info))
+function startRepl(action, context) {
+    console.log(versionInfo(VeSysInfo))
     console.log('Type ".license" or ".help" for more information')
 
     let historyFile = process.env['VELISP_REPL_HISTORY']
@@ -201,7 +201,7 @@ function startRepl(info, action, context) {
     }
 
     const replServer = repl.start({
-        prompt: info.prompt,
+        prompt: VeSysInfo.prompt,
         useGlobal: true,
         historySize: historySize,
         eval: (input, replCtx, filename, callback) => {
