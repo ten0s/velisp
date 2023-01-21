@@ -1,38 +1,11 @@
-import {spawn} from 'child_process'
-import util from 'util'
+import {command, argsToArray} from './command-lib.js'
 
 //
 // Brings Pacman (https://wiki.archlinux.org/title/pacman) closer to Node.js
 //
 
 // :: ([string]) -> Promise(stdout :: string, stderr :: string)
-const pacman = (args) => {
-    let out = ''
-    let all = ''
-    return new Promise((resolve, reject) => {
-        const child = spawn('pacman', [...args])
-
-        child.stdout.on('data', (data) => {
-            out += data.toString()
-            all += data.toString()
-            //console.error(`stdout: ${data}`)
-        })
-
-        child.stderr.on('data', (data) => {
-            all += data.toString()
-            //console.error(`stderr: ${data}`)
-        })
-
-        child.on('close', (code) => {
-            if (code === 0) {
-                resolve(out)
-            } else {
-                reject(all)
-            }
-            //console.error(`Child exited with ${code}`)
-        })
-    })
-}
+const pacman = command('pacman')
 
 //
 // Query the local package database
@@ -42,23 +15,12 @@ const pacmanQuery = (args) => {
     return pacman(['--query', ...args])
 }
 
-// :: (string | [string]) -> [string]
-const toArray = (x) => {
-    if (typeof x === 'string') {
-        return [x]
-    }
-    if (Array.isArray(x)) {
-        return x
-    }
-    throw new Error(`Expected string or array but got: ${util.inspect(x)}`)
-}
-
 //
-// Query the local package database for package(s) that own the specified file(s)
+// Query the local package database for packages that own the specified file(s)
 //
 // :: (string | [string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQueryOwns = (args) => {
-    return pacmanQuery(['--owns', ...toArray(args)])
+    return pacmanQuery(['--owns', ...argsToArray(args)])
 }
 
 //
@@ -66,7 +28,7 @@ const pacmanQueryOwns = (args) => {
 //
 // :: (string | [string]) -> Promise(stdout :: string, stderr :: string)
 const pacmanQueryInfo = (args) => {
-    return pacmanQuery(['--info', ...toArray(args)])
+    return pacmanQuery(['--info', ...argsToArray(args)])
 }
 
 export {
