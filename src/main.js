@@ -57,7 +57,7 @@ function main() {
 
             const context = new VeLispContext()
             VeLispContextIniter.initWithKernel(context)
-            await maybeInjectDcl(action, options.dcl, context)
+            await maybeInjectDcl(option.dcl, action, context)
             maybeInjectLib(action, context)
 
             if (options.eval) {
@@ -149,7 +149,7 @@ function maybeInjectLib(action, context) {
     }
 }
 
-async function maybeInjectDcl(action, withDcl, context) {
+async function maybeInjectDcl(withDcl, action, context) {
     VeSysInfo.withDcl = withDcl
     if (action === evaluate && withDcl) {
         await VeLispContextIniter.initWithDcl(context)
