@@ -816,19 +816,19 @@ class UFun extends Fun {
 }
 
 const FileStream = {
-    STDIN: 'stdin',
+    STDIN : 'stdin',
     STDOUT: 'stdout',
     STDERR: 'stderr'
 }
 
 const FileMode = {
-    READ: 'r',
-    WRITE: 'w',
+    READ  : 'r',
+    WRITE : 'w',
     APPEND: 'a'
 }
 
 const FileState = {
-    OPEN: 'o',
+    OPEN  : 'o',
     CLOSED: 'c'
 }
 
