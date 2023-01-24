@@ -45,12 +45,14 @@ $ glade calc.xml
 
 ```
 $ node src/main.js --eval '("abc" 1 2)'
-Error: file: __EVAL__ "abc": function not defined
+Error: "abc": function not defined
+    at __EVAL__:1
 ```
 
 ```
-$ VELISP_DEBUG=stacktrace node src/main.js --eval '("abc" 1 2)'
-Error: file: __EVAL__ "abc": function not defined
+$ VELISP_DEBUG=fulltrace node src/main.js --eval '("abc" 1 2)'
+Error: "abc": function not defined
+    at __EVAL__:1
     ...
 ```
 
@@ -71,7 +73,7 @@ _$ (+ 1 2)
 
 Various behaviors can be customized using the following environment variables:
 
-* VELISP_DEBUG=glade | stacktrace | tree | libs | help
+* VELISP_DEBUG=glade | fulltrace | tree | libs | help
 * VELISP_REPL_HISTORY: When a valid path is given, persistent REPL history will be
 saved to the specified file rather than .velisp_repl_history in the user's home
 directory. Setting this value to '' (an empty string) will disable persistent

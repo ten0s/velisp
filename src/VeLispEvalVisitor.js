@@ -71,7 +71,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const list = this.getValue(this.visit(ctx.foreachList()))
 
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         //console.error(`foreach: ${name} ${list}`);
         if (list.isNil()) {
@@ -105,7 +105,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const str = expr.getText()
 
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
@@ -161,7 +161,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const str = expr.getText()
 
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         if (expr instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
@@ -248,7 +248,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         //console.error('repeat count:', count);
 
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         if (count instanceof Int && count.value() > 0) {
             for (let i = 0; i < count.value(); i++) {
@@ -266,7 +266,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         let value = new Bool(false)
 
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         for (let i = 0; i < ctx.setqNameExpr().length; i++) {
             // This argument is not evaluated
@@ -282,7 +282,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         let result = new Bool(false)
 
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         for (;;) {
             const test = this.getValue(this.visit(ctx.whileTest()))
@@ -314,9 +314,6 @@ class VeLispEvalVisitor extends VeLispVisitor {
         }
         const name = ctx.listExpr(0).expr().getText()
 
-        const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
-
         let fun = this.getValue(this.visit(ctx.listExpr(0).expr()))
         // Try to get function out of symbol
         if (!fun.isNil() && fun instanceof Sym) {
@@ -328,7 +325,21 @@ class VeLispEvalVisitor extends VeLispVisitor {
             for (let i = 1; i < ctx.listExpr().length; i++) {
                 args.push(this.getValue(this.visit(ctx.listExpr(i).expr())))
             }
-            this.stack.push(new VeLispContext(this.stack.top()))
+            // Create new context
+            const topContext = this.stack.top()
+            const context = new VeLispContext(topContext)
+            context.funName = fun.name
+            context.funFile = fun.file
+            //context.funArgs = args.map(v => v.toString()) // for debug only
+            context.callerFile = (
+                !topContext.funFile || topContext.funFile === 'kernel'
+                    ? topContext.callerFile
+                    : topContext.funFile
+            )
+            context.callerLine = ctx.start.line
+
+            // Push new context
+            this.stack.push(context)
 
             const trace = isTrace(fun.name)
             let indent
@@ -354,6 +365,20 @@ class VeLispEvalVisitor extends VeLispVisitor {
             this.stack.pop()
             return result
         }
+
+        // Make and push minimal helpful stack context
+        // to better locate the error
+        const topContext = this.stack.top()
+        const context = new VeLispContext(topContext)
+        context.funName = name
+        context.callerFile = (
+            !topContext.funFile || topContext.funFile === 'kernel'
+                ? topContext.callerFile
+                : topContext.funFile
+        )
+        context.callerLine = ctx.start.line
+        this.stack.push(context)
+
         throw new Error(`${name}: function not defined`)
     }
 
@@ -388,7 +413,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
 
     makeUFun(name, ctx) {
         const line = ctx.start.line
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
 
         const params = []
         const locals = []
@@ -403,26 +428,32 @@ class VeLispEvalVisitor extends VeLispVisitor {
             const local = this.visit(ctx.funLocal(i).ID()).toUpperCase()
             locals.push(local)
         }
-        return new UFun(name, params, locals, (self, args) => {
-            if (args.length < params.length) {
-                throw new Error(`${name}: too few arguments`)
-            } else if (args.length > params.length) {
-                throw new Error(`${name}: too many arguments`)
-            }
-            // Since locals with the same names as params will reset the values, init locals first.
-            const context = self.stack.top()
-            for (let i = 0; i < locals.length; i++) {
-                context.initVar(locals[i], new Bool(false))
-            }
-            for (let i = 0; i < params.length; i++) {
-                context.initVar(params[i], args[i])
-            }
-            let result = new Bool(false)
-            for (let i = 0; i < ctx.expr().length; i++) {
-                result = this.getValue(self.visit(ctx.expr(i)))
-            }
-            return result
-        })
+        return new UFun(
+            name,
+            params,
+            locals,
+            (self, args) => {
+                if (args.length < params.length) {
+                    throw new Error(`${name}: too few arguments`)
+                } else if (args.length > params.length) {
+                    throw new Error(`${name}: too many arguments`)
+                }
+                // Since locals with the same names as params will reset the values, init locals first.
+                const context = self.stack.top()
+                for (let i = 0; i < locals.length; i++) {
+                    context.initVar(locals[i], new Bool(false))
+                }
+                for (let i = 0; i < params.length; i++) {
+                    context.initVar(params[i], args[i])
+                }
+                let result = new Bool(false)
+                for (let i = 0; i < ctx.expr().length; i++) {
+                    result = this.getValue(self.visit(ctx.expr(i)))
+                }
+                return result
+            },
+            this.stack.top().callerFile
+        )
     }
 
     getValue(expr) {

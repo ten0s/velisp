@@ -52,7 +52,7 @@ const VeSysInfo = {
 
     debug: {
         glade: false,
-        stacktrace: false,
+        fulltrace: false,
         tree: false,
         libs: false,
         help: false,

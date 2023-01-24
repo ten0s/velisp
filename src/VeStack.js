@@ -65,7 +65,7 @@ class VeStack {
         if (this.stack.length === 0) {
             throw new Error('Stack is empty')
         }
-        // Simple unwinding up to initial context frame
+        // Simple unwinding up to initial context
         while (this.stack.length > 1) {
             this.pop()
         }

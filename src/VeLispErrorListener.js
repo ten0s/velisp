@@ -20,7 +20,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import antlr4 from 'antlr4'
-import {Int} from './VeLispTypes.js'
 
 class VeLispErrorListener extends antlr4.error.ErrorListener {
     constructor(stack) {
@@ -28,7 +27,7 @@ class VeLispErrorListener extends antlr4.error.ErrorListener {
         this.stack = stack
     }
     syntaxError(_recognizer, _symbol, line, _column, message, _payload) {
-        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().callerLine = line
         throw new Error(message, this.stack)
     }
 }

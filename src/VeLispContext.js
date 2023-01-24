@@ -24,8 +24,14 @@ import {Bool} from './VeLispTypes.js'
 // VeLisp is a Lisp-1
 class VeLispContext {
     constructor(parent = null) {
+        // Binding context
         this.parent = parent
         this.symbols = {}
+        // Call frame
+        this.funName = null
+        this.funFile = null
+        this.callerFile = null
+        this.callerLine = null
     }
 
     // Init variable in the current context only.

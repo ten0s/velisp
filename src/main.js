@@ -38,9 +38,10 @@ import {
 } from './VeUtil.js'
 import VeLispContext from './VeLispContext.js'
 import VeLispContextIniter from './VeLispContextIniter.js'
+import VeStack from './VeStack.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
 import {fmtError, catchError, printError} from './VeLispError.js'
-import {Bool, Str} from './VeLispTypes.js'
+import {Bool} from './VeLispTypes.js'
 
 main()
 
@@ -65,23 +66,23 @@ function main() {
             if (options.eval) {
                 //console.log(`Eval from ${options.eval}`);
                 const file = path.join(process.cwd(), '__EVAL__')
-                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                stack.top().callerFile = file
                 readStream(Readable.from(options.eval), action, stack)
             } else if (file) {
                 //console.log(`Read from ${file}`);
                 file = ensureLspExt(path.resolve(makeUnixPath(file)))
-                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                stack.top().callerFile = file
                 readStream(fs.createReadStream(file), action, stack)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
                 VeSysInfo.isRepl = true
                 const file = path.join(process.cwd(), '__REPL__')
-                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                stack.top().callerFile = file
                 startRepl(action, stack)
             } else {
                 //console.log('Read from stdin');
                 const file = path.join(process.cwd(), '__STDIN__')
-                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                stack.top().callerFile = file
                 readStream(process.stdin, action, stack)
             }
         })
@@ -238,7 +239,7 @@ function startRepl(action, stack) {
                         printError,
                         stack
                     )
-                    // Leave only main frame in stack
+                    // Leave only main context in stack
                     stack.unwind()
                     // Fall through
                 }
@@ -274,7 +275,7 @@ function replEval(repl, input, action, stack, callback) {
                 return callback(new repl.Recoverable(e))
             } else {
                 printError(e, stack)
-                // Leave only main frame in stack
+                // Leave only main context in stack
                 stack.unwind()
                 // Fall through
             }
@@ -326,7 +327,7 @@ function licenseInfo() {
 function debugHelp() {
     return 'Valid options for the VELISP_DEBUG environment variable are:\n' +
            '  glade       show Glade XML                                \n' +
-           '  stacktrace  show full stacktrace                          \n' +
+           '  fulltrace   show full stacktrace                          \n' +
            '  tree        show parse tree                               \n' +
            '  libs        show libs loading (MacOS)                     \n' +
            '  help        show this help message and exit               \n'

@@ -738,14 +738,20 @@ class Pair {
 }
 
 // Abstract Fun - do NOT use directly
-// KFun or UFun are used instead
+// KFun or UFun MUST be used instead
 class Fun {
-    // :: (string, [string], [string], function)
-    constructor(name, params, locals, fun) {
-        this.name = name
+    // :: ( name   :: string
+    //    , params :: [string]
+    //    , locals :: [string]
+    //    , fun    :: function
+    //    , file   :: string | undefined
+    //    ) -> Fun
+    constructor(name, params, locals, fun, file = 'kernel') {
+        this.name   = name
         this.params = params
         this.locals = locals
-        this.fun = fun
+        this.fun    = fun
+        this.file   = file
     }
 
     // :: () -> throw

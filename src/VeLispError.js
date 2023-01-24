@@ -20,27 +20,8 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import path from 'path'
-import {Int, Str} from './VeLispTypes.js'
+import {EOL} from 'os'
 import VeSysInfo from './VeSysInfo.js'
-
-function makeError(message, stack) {
-    let file = stack.top().getVar('%VELISP_LSP_FILE%')
-    let line = stack.top().getVar('%VELISP_LSP_LINE%')
-    let desc = ''
-    if (file instanceof Str) {
-        file = path.basename(file.value())
-        desc = file
-        if (line instanceof Int) {
-            line = line.value()
-            desc = `${file}:${line}`
-        }
-    }
-    if (desc.length != 0) {
-        return `location: ${desc} message: ${message}`
-    } else {
-        return `message: ${message}`
-    }
-}
 
 function fmtError(name, error) {
     let message = `${name}: `
@@ -84,12 +65,32 @@ function catchError(fun, onError, stack) {
     }
 }
 
+function makeTrace(stack) {
+    const cwd = process.cwd()
+    return stack.fold((acc, frame, i) => {
+        //console.log('--------------------', i)
+        if (frame.funName) {
+            const name = stack.top(i+1).funName
+            const file = path.relative(cwd, frame.callerFile)
+            const line = frame.callerLine
+            if (name) {
+                acc.push(`    at ${name} (${file}:${line})`)
+            } else {
+                acc.push(`    at ${file}:${line}`)
+            }
+            return acc
+        }
+        return acc
+    }, []).join(EOL)
+}
+
 function printError(error, stack) {
-    if (VeSysInfo.debug.stacktrace) {
-        error.message = makeError(error.message, stack)
+    const message = error.message + '\n' + makeTrace(stack)
+    if (VeSysInfo.debug.fulltrace) {
+        error.message = message
         console.error(error)
     } else {
-        console.error('Error: ' + makeError(error.message, stack))
+        console.error('Error: ' + message)
     }
 }
 

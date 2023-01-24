@@ -89,9 +89,9 @@ export const initContext = (context) => {
             ensureType('load_dialog:', args[0], [Str]).value()))
         if (!path.isAbsolute(dclFile)) {
             if (!fs.existsSync(dclFile)) {
-                const lspFile = self.stack.top().getSym('%VELISP_LSP_FILE%')
-                if (lspFile instance of Str) {
-                    dclFile = path.join(path.dirname(lspFile.value()), dclFile)
+                const lspFile = self.stack.top().callerFile
+                if (lspFile) {
+                    dclFile = path.join(path.dirname(lspFile), dclFile)
                 }
             }
         }

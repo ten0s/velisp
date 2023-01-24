@@ -40,29 +40,33 @@ export const initContext = (context) => {
         if (!(args[0] instanceof Str)) {
             throw new Error('load: `filename` expected Str')
         }
+        const topContext = self.stack.top()
+        const callerFile = topContext.callerFile
+
         let filename = ensureLspExt(makeUnixPath(args[0].value()))
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
-                const parent = self.stack.top().getSym('%VELISP_LSP_FILE%')
-                if (parent instanceof Str) {
-                    filename = path.join(path.dirname(parent.value()), filename)
-                }
+                filename = path.join(path.dirname(callerFile), filename)
             }
         }
         try {
             const data = fs.readFileSync(filename).toString()
-            // FunCall pushes new context just before the call
-            // and pops it after the call.
-            // Since (load filename) can defun other functions
-            // we need to store them in the parent context.
-            const context = self.stack.top(1)
-            const parent = context.getSym('%VELISP_LSP_FILE%')
-            context.setSym('%VELISP_LSP_FILE%', new Str(path.resolve(filename)))
-            const result = evaluate(data, context)
-            // Restore back source file.
-            context.setSym('%VELISP_LSP_FILE%', parent)
+
+            // Set temporarily the call file to be the loading file
+            // to make it possible to load internal files with
+            // relative paths.
+            topContext.callerFile = path.resolve(filename)
+
+            const result = evaluate(data, self.stack)
+
+            // Restore back caller file.
+            topContext.callerFile = callerFile
+
             return result
         } catch (e) {
+            // Restore back calle file in case of exception!
+            topContext.callerFile = callerFile
+
             if (args.length === 2) {
                 let onfailure = args[1]
                 if (onfailure instanceof Sym) {
