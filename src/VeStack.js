@@ -54,6 +54,22 @@ class VeStack {
         }
         throw new Error('Stack is empty')
     }
+
+    // :: ((acc :: y, x, idx :: int) -> y, init :: y) -> y
+    fold(fn, init) {
+        return this.stack.reduce(fn, init)
+    }
+
+    // :: () -> ()
+    unwind() {
+        if (this.stack.length === 0) {
+            throw new Error('Stack is empty')
+        }
+        // Simple unwinding up to initial context frame
+        while (this.stack.length > 1) {
+            this.pop()
+        }
+    }
 }
 
 export default VeStack

@@ -61,3 +61,46 @@ QUnit.test('VeStack size=3', assert => {
     assert.equal(0, S.size())
     assert.ok(S.isEmpty())
 })
+
+QUnit.test('VeStack empty fold', assert => {
+    const S = new VeStack()
+    assert.equal(0, S.fold((acc, x) => x + acc, 0))
+})
+
+QUnit.test('VeStack size=1 fold', assert => {
+    const S = new VeStack()
+    S.push(1)
+    assert.equal(1, S.fold((acc, x) => x + acc, 0))
+})
+
+QUnit.test('VeStack size=3 fold', assert => {
+    const S = new VeStack()
+    S.push(1)
+    S.push(2)
+    S.push(3)
+    assert.equal(6, S.fold((acc, x) => x + acc, 0))
+    assert.equal('123', S.fold((acc, x) => x + acc, ''))
+})
+
+QUnit.test('VeStack empty unwind', assert => {
+    const S = new VeStack()
+    assert.throws(() => S.unwind(), new Error('Stack is empty'))
+})
+
+QUnit.test('VeStack size=1 unwind', assert => {
+    const S = new VeStack()
+    S.push(1)
+    S.unwind()
+    assert.equal(1, S.size())
+    assert.equal(1, S.top())
+})
+
+QUnit.test('VeStack size=3 unwind', assert => {
+    const S = new VeStack()
+    S.push(1)
+    S.push(2)
+    S.push(3)
+    S.unwind()
+    assert.equal(1, S.size())
+    assert.equal(1, S.top())
+})
