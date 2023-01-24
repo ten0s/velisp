@@ -1,5 +1,6 @@
+import path from 'path'
 import {TestRunner} from './test-runner.js'
-import {Bool, Int, Real} from '../src/VeLispTypes.js'
+import {Bool, Int, Real, Str} from '../src/VeLispTypes.js'
 
 TestRunner.run({
     name: 'getvar',
@@ -16,6 +17,34 @@ TestRunner.run({
         {test: '(getvar "unknown")', result: new Bool(false)},
         {test: '(getvar "UNKNOWN")', result: new Bool(false)},
         {test: '(getvar \'UNKNOWN)', result: new Bool(false)},
+
+        {test: '(getvar "velisp-version")', result: (act) => act instanceof Str},
+        {test: '(getvar "velisp-file")', result: (act) => {
+            return act instanceof Str &&
+                path.basename(act.value()) === '__TEST__'
+        }},
+        {test: `(defun test-func ( / line)
+                  (princ "Hello")
+                  (setq line (getvar "velisp-line"))
+                  (princ "End")
+                  line)
+                (test-func)`,
+        result: (act) => {
+            return act instanceof Int &&
+                act.value() === 3
+        }},
+        {test: '(getvar "velisp-function")', result: new Bool(false)},
+        {test: `(defun test-func ( / name)
+                  (princ "Hello")
+                  (setq name (getvar "velisp-function"))
+                  (princ "End")
+                  name)
+                (test-func)`,
+        result: (act) => {
+            return act instanceof Str &&
+                act.value() === 'TEST-FUNC'
+        }
+        },
     ],
 
     errors: [

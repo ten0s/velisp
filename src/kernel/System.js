@@ -24,6 +24,7 @@ import {spawn} from 'child_process'
 import {Bool, Int, Real, Str, Sym, List, KFun, Argv0, ensureType} from '../VeLispTypes.js'
 import VeArgv from '../VeArgv.js'
 import {homeDir, tmpDir, sleep} from '../VeSystem.js'
+import VeSysInfo from '../VeSysInfo.js'
 
 export const initContext = (context) => {
     // VeLisp Extension
@@ -148,6 +149,29 @@ export const initContext = (context) => {
         }
         case 'millisecs':
             return new Int(os.uptime() * 1000)
+        case 'velisp-version':
+            return new Str(VeSysInfo.version)
+        case 'velisp-file': {
+            const file = self.stack.top().callerFile
+            if (typeof file === 'string') {
+                return new Str(file)
+            }
+            return new Bool(false)
+        }
+        case 'velisp-line': {
+            const line = self.stack.top().callerLine
+            if (typeof line === 'number') {
+                return new Int(line)
+            }
+            return new Bool(false)
+        }
+        case 'velisp-function': {
+            const funName = self.stack.top(1).funName
+            if (typeof funName === 'string') {
+                return new Str(funName)
+            }
+            return new Bool(false)
+        }
         default:
             return new Bool(false)
         }

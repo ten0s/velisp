@@ -10,7 +10,7 @@
 ;;;;
 
 (defun is_autocad ()
-  (null %VELISP_VERSION%))
+  (not (getvar "VELISP-VERSION")))
 
 (if (is_autocad)
     (progn

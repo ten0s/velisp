@@ -85,5 +85,4 @@ export const initContext = (context) => {
     context.setSym('VER', new KFun('ver', [], [], (_self, _args) => {
         return new Str(`${VeSysInfo.name} ${VeSysInfo.version} on ${VeSysInfo.platform}`)
     }))
-    context.setSym('%VELISP_VERSION%', new Str(VeSysInfo.version))
 }

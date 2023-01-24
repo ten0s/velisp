@@ -5,7 +5,7 @@
 ;;;;
 
 (defun is_autocad ()
-  (null %VELISP_VERSION%))
+  (not (getvar "VELISP-VERSION")))
 
 (if (is_autocad)
     (progn
@@ -36,8 +36,8 @@
   (princ "\n"))
 
 (defun get_current_file ()
-  (if %VELISP_LSP_FILE% %VELISP_LSP_FILE%
-    (findfile "demo.lsp")))
+  (if (is_autocad) (findfile "demo.lsp")
+    (getvar "VELISP-FILE")))
 
 (defun get_file_dir ()
   ;; Determine current LSP file directory
