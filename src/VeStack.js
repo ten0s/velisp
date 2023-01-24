@@ -34,15 +34,15 @@ class VeStack {
         return this.stack.length
     }
 
-    // :: (value) -> int
+    // :: (value) -> ()
     push(value) {
-        this.stack.push(value)
+        this.stack.unshift(value)
     }
 
     // :: () -> value | throw Error
     pop() {
         if (this.stack.length > 0) {
-            return this.stack.pop()
+            return this.stack.shift()
         }
         throw new Error('Stack is empty')
     }
@@ -50,7 +50,7 @@ class VeStack {
     // :: (int) -> value | throw Error
     top(n = 0) {
         if (this.stack.length > n) {
-            return this.stack[this.stack.length-1-n]
+            return this.stack[n]
         }
         throw new Error('Stack is empty')
     }
