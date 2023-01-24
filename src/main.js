@@ -55,32 +55,34 @@ function main() {
             const options = program.opts()
             const action = runAction(VeSysInfo.debug)
 
-            const context = new VeLispContext()
-            VeLispContextIniter.initWithKernel(context)
-            await maybeInjectDcl(options.dcl, action, context)
-            maybeInjectLib(action, context)
+            const stack = new VeStack()
+            stack.push(new VeLispContext())
+
+            VeLispContextIniter.initWithKernel(stack)
+            await maybeInjectDcl(options.dcl, action, stack)
+            maybeInjectLib(action, stack)
 
             if (options.eval) {
                 //console.log(`Eval from ${options.eval}`);
                 const file = path.join(process.cwd(), '__EVAL__')
-                context.setSym('%VELISP_LSP_FILE%', new Str(file))
-                readStream(Readable.from(options.eval), action, context)
+                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                readStream(Readable.from(options.eval), action, stack)
             } else if (file) {
                 //console.log(`Read from ${file}`);
                 file = ensureLspExt(path.resolve(makeUnixPath(file)))
-                context.setSym('%VELISP_LSP_FILE%', new Str(file))
-                readStream(fs.createReadStream(file), action, context)
+                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                readStream(fs.createReadStream(file), action, stack)
             } else if (process.stdin.isTTY) {
                 //console.log('Read from tty');
                 VeSysInfo.isRepl = true
                 const file = path.join(process.cwd(), '__REPL__')
-                context.setSym('%VELISP_LSP_FILE%', new Str(file))
-                startRepl(action, context)
+                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                startRepl(action, stack)
             } else {
                 //console.log('Read from stdin');
                 const file = path.join(process.cwd(), '__STDIN__')
-                context.setSym('%VELISP_LSP_FILE%', new Str(file))
-                readStream(process.stdin, action, context)
+                stack.top().setSym('%VELISP_LSP_FILE%', new Str(file))
+                readStream(process.stdin, action, stack)
             }
         })
         .parse(initArgv)
@@ -135,29 +137,29 @@ function runAction(debug) {
         process.exit(0)
         return
     case debug.tree:
-        return (input, context) => {
-            console.log(tree(input, context))
+        return (input, stack) => {
+            console.log(tree(input, stack))
         }
     default:
         return evaluate
     }
 }
 
-function maybeInjectLib(action, context) {
+function maybeInjectLib(action, stack) {
     if (action === evaluate) {
-        VeLispContextIniter.initWithLib(context)
+        VeLispContextIniter.initWithLib(stack)
     }
 }
 
-async function maybeInjectDcl(withDcl, action, context) {
+async function maybeInjectDcl(withDcl, action, stack) {
     VeSysInfo.withDcl = withDcl
     if (action === evaluate && withDcl) {
-        await VeLispContextIniter.initWithDcl(context)
+        await VeLispContextIniter.initWithDcl(stack)
     }
-    context.setSym('%VELISP_DCL%', new Bool(withDcl))
+    stack.top().setSym('%VELISP_DCL%', new Bool(withDcl))
 }
 
-function readStream(stream, action, context) {
+function readStream(stream, action, stack) {
     let input = ''
     stream.on('data', (chunk) => {
         input += chunk.toString()
@@ -166,19 +168,19 @@ function readStream(stream, action, context) {
         catchError(
             () => {
                 if (input.trim()) {
-                    action(input, context)
+                    action(input, stack)
                 }
             },
             printError,
-            context
+            stack
         )
     })
     stream.on('error', (e) => {
-        printError(new Error(fmtError('open', e)), context)
+        printError(new Error(fmtError('open', e)), stack)
     })
 }
 
-function startRepl(action, context) {
+function startRepl(action, stack) {
     console.log(versionInfo(VeSysInfo))
     console.log('Type ".license" or ".help" for more information')
 
@@ -205,10 +207,10 @@ function startRepl(action, context) {
         useGlobal: true,
         historySize: historySize,
         eval: (input, replCtx, filename, callback) => {
-            return replEval(repl, input, action, context, callback)
+            return replEval(repl, input, action, stack, callback)
         },
         completer: (line) => {
-            return replCompleter(repl, line, context)
+            return replCompleter(repl, line, stack)
         },
         writer: (output) => {
             return replWriter(repl, output)
@@ -218,7 +220,7 @@ function startRepl(action, context) {
         replServer.defineCommand('context', {
             help: 'Show global context',
             action() {
-                console.log(context)
+                console.log(stack.top())
                 this.displayPrompt()
             }
         })
@@ -228,15 +230,17 @@ function startRepl(action, context) {
                 if (input.trim()) {
                     catchError(
                         () => {
-                            const result = action(input, context)
+                            const result = action(input, stack)
                             if (result !== null) {
                                 console.log(inspect(result))
                             }
                         },
                         printError,
-                        context
+                        stack
                     )
-                    // fall through
+                    // Leave only main frame in stack
+                    stack.unwind()
+                    // Fall through
                 }
                 this.displayPrompt()
             }
@@ -258,10 +262,10 @@ function startRepl(action, context) {
     }
 }
 
-function replEval(repl, input, action, context, callback) {
+function replEval(repl, input, action, stack, callback) {
     if (input.trim()) {
         try {
-            const result = action(input, context)
+            const result = action(input, stack)
             if (result !== null && result !== undefined) {
                 return callback(null, result)
             }
@@ -269,15 +273,17 @@ function replEval(repl, input, action, context, callback) {
             if (isRecoverable(input, e)) {
                 return callback(new repl.Recoverable(e))
             } else {
-                printError(e, context)
-                // fall through
+                printError(e, stack)
+                // Leave only main frame in stack
+                stack.unwind()
+                // Fall through
             }
         }
     }
     callback(null)
 }
 
-function replCompleter(_repl, line, context) {
+function replCompleter(_repl, line, stack) {
     const forms = [
         '.break', '.clear', '.context', '.editor',
         '.exit', '.help', '.inspect', '.load', '.save',
@@ -286,7 +292,7 @@ function replCompleter(_repl, line, context) {
         'lambda', 'or', 'progn', 'quote', 'repeat',
         'setq', 'while', 'list', 'nil'
     ]
-    const symbols = Object.keys(context.symbols).map(s => s.toLowerCase())
+    const symbols = Object.keys(stack.top().symbols).map(s => s.toLowerCase())
     const completions = forms.concat(symbols)
     const tokens = line.split(' ')
     if (tokens.length) {

@@ -55,7 +55,7 @@ export const initContext = (context) => {
                 throw new Error('atoms-family: `symlist` expected List of Str')
             })
         }
-        let syms = self.contexts.top().getSyms()
+        let syms = self.stack.top().getSyms()
         if (symlist.length) {
             syms = symlist.map(s => syms.indexOf(s) !== -1 ? s : null)
         }
@@ -72,7 +72,7 @@ export const initContext = (context) => {
             throw new Error('boundp: too many arguments')
         }
         const name = args[0] // Allow everything
-        const value = self.contexts.top().getVar(name)
+        const value = self.stack.top().getVar(name)
         if (value instanceof Bool && value.value() === false) {
             // sym is undefined, but what's the point to automatically create it?
             return new Bool(false)
@@ -89,7 +89,7 @@ export const initContext = (context) => {
         const name = ensureType('set: `sym`', args[0], [Sym])
         const value = args[1]
         //console.error(`set: ${name} = ${value}`);
-        self.contexts.top().setVar(name, value)
+        self.stack.top().setVar(name, value)
         return value
     }))
     context.setSym('TYPE', new KFun('type', ['item'], [], (self, args) => {

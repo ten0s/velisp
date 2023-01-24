@@ -23,9 +23,9 @@ import path from 'path'
 import {Int, Str} from './VeLispTypes.js'
 import VeSysInfo from './VeSysInfo.js'
 
-function makeError(message, context) {
-    let file = context.getVar('%VELISP_LSP_FILE%')
-    let line = context.getVar('%VELISP_LSP_LINE%')
+function makeError(message, stack) {
+    let file = stack.top().getVar('%VELISP_LSP_FILE%')
+    let line = stack.top().getVar('%VELISP_LSP_LINE%')
     let desc = ''
     if (file instanceof Str) {
         file = path.basename(file.value())
@@ -76,20 +76,20 @@ function perror(errCode) {
     }
 }
 
-function catchError(func, onError, context) {
+function catchError(fun, onError, stack) {
     try {
-        return func()
+        return fun()
     } catch (e) {
-        onError(e, context)
+        onError(e, stack)
     }
 }
 
-function printError(error, context) {
+function printError(error, stack) {
     if (VeSysInfo.debug.stacktrace) {
-        error.message = makeError(error.message, context)
+        error.message = makeError(error.message, stack)
         console.error(error)
     } else {
-        console.error('Error: ' + makeError(error.message, context))
+        console.error('Error: ' + makeError(error.message, stack))
     }
 }
 

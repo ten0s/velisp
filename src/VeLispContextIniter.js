@@ -23,18 +23,18 @@ import {evaluate} from './VeLispEvaluator.js'
 import * as Kernel from './kernel/Kernel.js'
 
 class VeLispContextIniter {
-    static initWithKernel(context) {
-        Kernel.initContext(context)
+    static initWithKernel(stack) {
+        Kernel.initContext(stack.top())
     }
 
-    static initWithLib(context) {
+    static initWithLib(stack) {
         const rootdir = process.env['VELISP_ROOT']
-        evaluate(`(load "${rootdir}/lib/main.lsp")`, context)
+        evaluate(`(load "${rootdir}/lib/main.lsp")`, stack)
     }
 
-    static async initWithDcl(context) {
+    static async initWithDcl(stack) {
         const DCL = await import('./kernel/DCL.js')
-        DCL.initContext(context)
+        DCL.initContext(stack.top())
     }
 }
 

@@ -89,8 +89,8 @@ export const initContext = (context) => {
             ensureType('load_dialog:', args[0], [Str]).value()))
         if (!path.isAbsolute(dclFile)) {
             if (!fs.existsSync(dclFile)) {
-                const lspFile = self.contexts.top().getSym('%VELISP_LSP_FILE%')
-                if (lspFile instanceof Str) {
+                const lspFile = self.stack.top().getSym('%VELISP_LSP_FILE%')
+                if (lspFile instance of Str) {
                     dclFile = path.join(path.dirname(lspFile.value()), dclFile)
                 }
             }
@@ -137,7 +137,7 @@ export const initContext = (context) => {
                     _dialogs.push(dclDialog.clone())
                     return withDialog(dialog => {
                         const position = [point.value()[0].value(), point.value()[1].value()]
-                        dialog.gtkInitWidget(action.value(), position, self.contexts.top())
+                        dialog.gtkInitWidget(action.value(), position, self.stack)
                         return new Bool(true)
                     })
                 } catch (e) {
@@ -208,7 +208,7 @@ export const initContext = (context) => {
         //console.log(action.toUnescapedString());
         return withDialog(dialog => {
             try {
-                dialog.actionTile(key.value(), action.value(), self.contexts.top())
+                dialog.actionTile(key.value(), action.value(), self.stack)
                 return new Bool(true)
             } catch (e) {
                 console.error(e)

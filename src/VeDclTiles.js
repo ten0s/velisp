@@ -251,7 +251,7 @@ class Tile {
     // Optional
     gtkInitWidget(_gtkWidget) { }
 
-    gtkActionTile(_gtkWidget, _action, _context) {
+    gtkActionTile(_gtkWidget, _action, _stack) {
         throw new Error(
             `Not implemented gtkActionTile for ${this.constructor.name}`
         )
@@ -454,10 +454,10 @@ class Dialog extends Cluster {
     }
 
     // DCL
-    actionTile(key, action, context) {
+    actionTile(key, action, stack) {
         const tile = this.findTile(key)
         const gtkWidget = this.gtkFindWidget(key)
-        tile.gtkActionTile(gtkWidget, action, context)
+        tile.gtkActionTile(gtkWidget, action, stack)
     }
 
     // DCL
@@ -688,7 +688,7 @@ class Dialog extends Cluster {
     }
 
     // GTK
-    gtkInitWidget(defaultAction, initPosition, context) {
+    gtkInitWidget(defaultAction, initPosition, stack) {
         // Pre init
         this._initPosition = initPosition
         this._listStores = this.getListStores()
@@ -710,13 +710,13 @@ class Dialog extends Cluster {
             // Optional dialog action
             if (defaultAction) {
                 if (tile.hasOwnProperty('action') && !tile.action) {
-                    this.actionTile(key, defaultAction, context)
+                    this.actionTile(key, defaultAction, stack)
                 }
             }
         }
         // 2. Init attribute actions
         for (let [key, action] of this.getActions()) {
-            this.actionTile(key, action, context)
+            this.actionTile(key, action, stack)
         }
         // 3. Optional initial focus
         if (this.initial_focus) {
@@ -1235,18 +1235,19 @@ class Button extends Tile {
         }
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('clicked', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         gtkWidget.on('clicked', this._callback)
@@ -1332,19 +1333,20 @@ class EditBox extends Tile {
         }
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('changed', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             // TODO: Implement reason 2 - Edit Box lost focus?
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         gtkWidget.on('changed', this._callback)
@@ -1531,10 +1533,11 @@ class ImageButton extends Tile {
         // For mnemonic see accelerator in gtkXml()
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('clicked', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             context.setVar('$VALUE', new Str(''))
             context.setVar('$X', new Int(this._x))
@@ -1542,9 +1545,9 @@ class ImageButton extends Tile {
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(this._reason))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         gtkWidget.on('clicked', this._callback)
@@ -1626,19 +1629,20 @@ class PopupList extends Tile {
         }
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('changed', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         gtkWidget.on('changed', this._callback)
@@ -1751,11 +1755,12 @@ class ListBox extends Tile {
         }
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         const selection = gtkWidget.getSelection()
         this._action = action
         this._callback && selection.off('changed', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             // TODO: Should be nil if nothing is selected?
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
@@ -1763,9 +1768,9 @@ class ListBox extends Tile {
             // TODO: Implement reason 4 - List Box double-clicked?
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         selection.on('changed', this._callback)
@@ -1888,7 +1893,7 @@ class RadioCluster extends Cluster {
         this._action = this.action
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         for (let i = 0; i < gtkWidget.getChildren().length; i++) {
             const child = gtkWidget.getChildren()[i]
@@ -1898,6 +1903,7 @@ class RadioCluster extends Cluster {
                 tile._callback && child.off('clicked', tile._callback)
                 tile._callback = () => {
                     if (child.active) {
+                        const context = stack.top()
                         // Radio Cluster Key
                         context.setVar('$KEY', new Str(this.key))
                         // Radio Button Key
@@ -1905,9 +1911,9 @@ class RadioCluster extends Cluster {
                         context.setVar('$DATA', new Str(this._clientData))
                         context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
                         catchError(
-                            () => evaluate(unescape(this._action), context),
+                            () => evaluate(unescape(this._action), stack),
                             printError,
-                            context
+                            stack
                         )
                     }
                 }
@@ -2193,19 +2199,20 @@ class RadioButton extends Tile {
         }
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('clicked', this._callback)
         this._callback = () => {
             if (gtkWidget.active) {
+                const context = stack.top()
                 context.setVar('$KEY', new Str(this.key))
                 context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
                 context.setVar('$DATA', new Str(this._clientData))
                 context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
                 catchError(
-                    () => evaluate(unescape(this._action), context),
+                    () => evaluate(unescape(this._action), stack),
                     printError,
-                    context
+                    stack
                 )
             }
         }
@@ -2285,10 +2292,11 @@ class Slider extends Tile {
         // For mnemonic see accelerator in gtkXml()
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('value-changed', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
@@ -2297,9 +2305,9 @@ class Slider extends Tile {
             // https://help.autodesk.com/view/OARX/2019/ENU/?guid=GUID-F208561B-5C2E-47FE-BD24-520DF75DE92A
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         gtkWidget.on('value-changed', this._callback)
@@ -2394,18 +2402,19 @@ class Toggle extends Tile {
         }
     }
 
-    gtkActionTile(gtkWidget, action, context) {
+    gtkActionTile(gtkWidget, action, stack) {
         this._action = action
         this._callback && gtkWidget.off('clicked', this._callback)
         this._callback = () => {
+            const context = stack.top()
             context.setVar('$KEY', new Str(this.key))
             context.setVar('$VALUE', new Str(this.gtkGetTile(gtkWidget)))
             context.setVar('$DATA', new Str(this._clientData))
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
-                () => evaluate(unescape(this._action), context),
+                () => evaluate(unescape(this._action), stack),
                 printError,
-                context
+                stack
             )
         }
         gtkWidget.on('clicked', this._callback)

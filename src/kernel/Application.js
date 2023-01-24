@@ -43,7 +43,7 @@ export const initContext = (context) => {
         let filename = ensureLspExt(makeUnixPath(args[0].value()))
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
-                const parent = self.contexts.top().getSym('%VELISP_LSP_FILE%')
+                const parent = self.stack.top().getSym('%VELISP_LSP_FILE%')
                 if (parent instanceof Str) {
                     filename = path.join(path.dirname(parent.value()), filename)
                 }
@@ -55,7 +55,7 @@ export const initContext = (context) => {
             // and pops it after the call.
             // Since (load filename) can defun other functions
             // we need to store them in the parent context.
-            const context = self.contexts.top(1)
+            const context = self.stack.top(1)
             const parent = context.getSym('%VELISP_LSP_FILE%')
             context.setSym('%VELISP_LSP_FILE%', new Str(path.resolve(filename)))
             const result = evaluate(data, context)
@@ -67,7 +67,7 @@ export const initContext = (context) => {
                 let onfailure = args[1]
                 if (onfailure instanceof Sym) {
                     // Try resolving symbol to function
-                    onfailure = self.contexts.top().getSym(onfailure.value())
+                    onfailure = self.stack.top().getSym(onfailure.value())
                 }
                 if (onfailure instanceof Fun) {
                     return onfailure.apply(self, [])

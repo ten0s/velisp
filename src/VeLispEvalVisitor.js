@@ -22,16 +22,14 @@
 import VeLispParser from '../grammar/VeLispParser.js'
 import VeLispVisitor from '../grammar/VeLispVisitor.js'
 import VeLispContext from './VeLispContext.js'
-import VeStack from './VeStack.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
 import {isTrace} from './kernel/Trace.js'
 
 class VeLispEvalVisitor extends VeLispVisitor {
-    constructor(context) {
+    constructor(stack) {
         super()
-        this.contexts = new VeStack()
-        this.contexts.push(context)
+        this.stack = stack
         this.traceDepth = 0
     }
 
@@ -64,7 +62,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     visitDefun(ctx) {
         const name = this.visit(ctx.funName().ID()).toUpperCase()
         const fun = this.makeUFun(name, ctx)
-        this.contexts.top().setSym(name, fun)
+        this.stack.top().setSym(name, fun)
         return new Sym(name)
     }
 
@@ -73,7 +71,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const list = this.getValue(this.visit(ctx.foreachList()))
 
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         //console.error(`foreach: ${name} ${list}`);
         if (list.isNil()) {
@@ -82,9 +80,9 @@ class VeLispEvalVisitor extends VeLispVisitor {
         if (list instanceof List) {
             let result = new Bool(false)
             // Push new context with 'name' = nil
-            const context = new VeLispContext(this.contexts.top())
+            const context = new VeLispContext(this.stack.top())
             context.initVar(name, new Bool(false))
-            this.contexts.push(context)
+            this.stack.push(context)
             for (let i = 0; i < list.value().length; i++) {
                 // Set each list value directly into our context, not the top context,
                 // to make it possible to shadow 'name' in some upper context
@@ -96,7 +94,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 }
             }
             // Pop new context
-            this.contexts.pop()
+            this.stack.pop()
             return result
         }
         throw new Error('foreach: `list` expected List')
@@ -107,7 +105,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const str = expr.getText()
 
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
@@ -163,7 +161,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const str = expr.getText()
 
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         if (expr instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
@@ -250,7 +248,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         //console.error('repeat count:', count);
 
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         if (count instanceof Int && count.value() > 0) {
             for (let i = 0; i < count.value(); i++) {
@@ -268,14 +266,14 @@ class VeLispEvalVisitor extends VeLispVisitor {
         let value = new Bool(false)
 
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         for (let i = 0; i < ctx.setqNameExpr().length; i++) {
             // This argument is not evaluated
             const name = this.visit(ctx.setqNameExpr(i).ID()).toUpperCase()
             value = this.getValue(this.visit(ctx.setqNameExpr(i).expr()))
             //console.error(`setq: ${name} = ${value}`);
-            this.contexts.top().setVar(name, value)
+            this.stack.top().setVar(name, value)
         }
         return value
     }
@@ -284,7 +282,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         let result = new Bool(false)
 
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         for (;;) {
             const test = this.getValue(this.visit(ctx.whileTest()))
@@ -322,7 +320,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         let fun = this.getValue(this.visit(ctx.listExpr(0).expr()))
         // Try to get function out of symbol
         if (!fun.isNil() && fun instanceof Sym) {
-            fun = this.contexts.top().getSym(fun.value())
+            fun = this.stack.top().getSym(fun.value())
         }
         if (fun instanceof Fun) {
             // Evaluate args eagerly
@@ -330,8 +328,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             for (let i = 1; i < ctx.listExpr().length; i++) {
                 args.push(this.getValue(this.visit(ctx.listExpr(i).expr())))
             }
-            // Push new context
-            this.contexts.push(new VeLispContext(this.contexts.top()))
+            this.stack.push(new VeLispContext(this.stack.top()))
 
             const trace = isTrace(fun.name)
             let indent
@@ -354,7 +351,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             }
 
             // Pop new context
-            this.contexts.pop()
+            this.stack.pop()
             return result
         }
         throw new Error(`${name}: function not defined`)
@@ -380,7 +377,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             return new Str(unescape(str.substring(1, str.length-1)))
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
-            return this.contexts.top().getVar(str.toUpperCase())
+            return this.stack.top().getVar(str.toUpperCase())
         } else {
             // Also handles ID outside of expr
             //console.error('TERMINAL:', str);
@@ -391,7 +388,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
 
     makeUFun(name, ctx) {
         const line = ctx.start.line
-        this.contexts.top().setSym('%VELISP_LSP_LINE%', new Int(line))
+        this.stack.top().setSym('%VELISP_LSP_LINE%', new Int(line))
 
         const params = []
         const locals = []
@@ -413,7 +410,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 throw new Error(`${name}: too many arguments`)
             }
             // Since locals with the same names as params will reset the values, init locals first.
-            const context = self.contexts.top()
+            const context = self.stack.top()
             for (let i = 0; i < locals.length; i++) {
                 context.initVar(locals[i], new Bool(false))
             }

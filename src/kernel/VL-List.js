@@ -45,7 +45,7 @@ export const initContext = (context) => {
         let fun = args[0]
         if (fun instanceof Sym) {
             // Try resolving symbol to function
-            fun = self.contexts.top().getSym(fun.value())
+            fun = self.stack.top().getSym(fun.value())
         }
         if (fun instanceof Fun) {
             // Prepare lists
@@ -86,7 +86,7 @@ export const initContext = (context) => {
         let fun = args[0]
         if (fun instanceof Sym) {
             // Try resolving symbol to function
-            fun = self.contexts.top().getSym(fun.value())
+            fun = self.stack.top().getSym(fun.value())
         }
         if (fun instanceof Fun) {
             // Prepare lists
