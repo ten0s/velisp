@@ -96,14 +96,14 @@ export const initContext = (context) => {
             }
         }
         // Return a positive integer, or a negative integer on error
-        const context = new VeDclContext()
+        const dclContext = new VeDclContext()
 
         // Inject lib/dcl/{base,acad}.dcl
-        let rootdir = process.env['VELISP_ROOT']
-        VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, context)
-        VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, context)
+        const rootdir = process.env['VELISP_ROOT']
+        VeDclLoader.load(`${rootdir}/lib/dcl/base.dcl`, dclContext)
+        VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, dclContext)
 
-        const dclDialogs = VeDclLoader.load(dclFile, context)
+        const dclDialogs = VeDclLoader.load(dclFile, dclContext)
         const dclMap = {}
         for (const dclDialog of dclDialogs) {
             dclMap[dclDialog.id] = dclDialog

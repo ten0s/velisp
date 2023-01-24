@@ -27,13 +27,15 @@ import VeDclListener from '../grammar/VeDclListener.js'
 import {Dialog, buildTile} from './VeDclTiles.js'
 
 class VeDclLoader extends VeDclListener {
-    constructor(context) {
+    constructor(dclContext) {
         super()
-        this.context = context
+        this.context = dclContext
     }
 
     get dialogs() {
-        return Object.values(this.context.defines).filter(obj => obj instanceof Dialog)
+        return Object
+            .values(this.context.defines)
+            .filter(obj => obj instanceof Dialog)
     }
 
     enterFile(_ctx) { }
