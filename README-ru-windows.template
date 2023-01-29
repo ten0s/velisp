@@ -14,6 +14,8 @@
 
 ### Установка
 
+Последнюю версию можно найти [здесь](https://github.com/ten0s/velisp/releases).
+
 #### Автоматическая установка
 
 1. Скачайте https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip

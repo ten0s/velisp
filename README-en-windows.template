@@ -14,6 +14,8 @@ run DCL dialogs just like regular applications on Windows, MacOS and Linux.
 
 ### Install
 
+You can find the latest release [here](https://github.com/ten0s/velisp/releases).
+
 #### Install via automatic setup
 
 1. Download https://github.com/ten0s/velisp/releases/download/{{version}}/velisp-{{version}}-win-x64-setup.zip
