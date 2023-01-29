@@ -135,7 +135,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitLambda(ctx) {
-        return this.makeUFun('', ctx)
+        return this.makeUFun('#<lambda>', ctx)
     }
 
     visitOr(ctx) {

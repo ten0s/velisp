@@ -794,7 +794,7 @@ class Fun {
     // :: () -> string
     toString() {
         let prefix
-        if (this.name) {
+        if (this.name !== '#<lambda>') {
             prefix = `defun ${this.name}`
         } else {
             prefix = 'lambda'

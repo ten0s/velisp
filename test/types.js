@@ -142,8 +142,8 @@ QUnit.test('types', assert => {
     assert.equal((new Fun('name', ['x'], ['y'], () => {})).toString(), '(defun name (x / y))')
     assert.equal((new Fun('name', [], ['x'], () => {})).toString(), '(defun name ( / x))')
 
-    assert.equal((new Fun('', [], [], () => {})).toString(), '(lambda ())')
-    assert.equal((new Fun('', ['x'], [], () => {})).toString(), '(lambda (x))')
-    assert.equal((new Fun('', ['x'], ['y'], () => {})).toString(), '(lambda (x / y))')
-    assert.equal((new Fun('', [], ['x'], () => {})).toString(), '(lambda ( / x))')
+    assert.equal((new Fun('#<lambda>', [], [], () => {})).toString(), '(lambda ())')
+    assert.equal((new Fun('#<lambda>', ['x'], [], () => {})).toString(), '(lambda (x))')
+    assert.equal((new Fun('#<lambda>', ['x'], ['y'], () => {})).toString(), '(lambda (x / y))')
+    assert.equal((new Fun('#<lambda>', [], ['x'], () => {})).toString(), '(lambda ( / x))')
 })
