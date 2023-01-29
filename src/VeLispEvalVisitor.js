@@ -70,8 +70,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const name = this.visit(ctx.foreachName().ID()).toUpperCase()
         const list = this.getValue(this.visit(ctx.foreachList()))
 
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         //console.error(`foreach: ${name} ${list}`);
         if (list.isNil()) {
@@ -104,8 +104,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const expr = ctx.expr()
         const str = expr.getText()
 
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str);
@@ -160,8 +160,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const expr = ctx.expr()
         const str = expr.getText()
 
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         if (expr instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str);
@@ -247,8 +247,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const count = this.getValue(this.visit(ctx.repeatNum()))
         //console.error('repeat count:', count);
 
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         if (count instanceof Int && count.value() > 0) {
             for (let i = 0; i < count.value(); i++) {
@@ -265,8 +265,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
     visitSetQ(ctx) {
         let value = new Bool(false)
 
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         for (let i = 0; i < ctx.setqNameExpr().length; i++) {
             // This argument is not evaluated
@@ -281,8 +281,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
     visitWhile(ctx) {
         let result = new Bool(false)
 
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         for (;;) {
             const test = this.getValue(this.visit(ctx.whileTest()))
@@ -331,11 +331,15 @@ class VeLispEvalVisitor extends VeLispVisitor {
             context.funName = fun.name
             context.funFile = fun.file
             //context.funArgs = args.map(v => v.toString()) // for debug only
-            context.callerFile = (
-                !topContext.funFile || topContext.funFile === 'kernel'
-                    ? topContext.callerFile
-                    : topContext.funFile
-            )
+            context.callerName = topContext.funName
+            if (!topContext.funFile) {
+                context.callerFile = topContext.callerFile
+            } else if (topContext.funFile === 'kernel') {
+                // The same as above until some better solution is found
+                context.callerFile = topContext.callerFile
+            } else {
+                context.callerFile = topContext.funFile
+            }
             context.callerLine = ctx.start.line
 
             // Push new context
@@ -371,11 +375,15 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const topContext = this.stack.top()
         const context = new VeLispContext(topContext)
         context.funName = name
-        context.callerFile = (
-            !topContext.funFile || topContext.funFile === 'kernel'
-                ? topContext.callerFile
-                : topContext.funFile
-        )
+        context.callerName = topContext.funName
+        if (!topContext.funFile) {
+            context.callerFile = topContext.callerFile
+        } else if (topContext.funFile === 'kernel') {
+            // The same as above until some better solution is found
+            context.callerFile = topContext.callerFile
+        } else {
+            context.callerFile = topContext.funFile
+        }
         context.callerLine = ctx.start.line
         this.stack.push(context)
 
@@ -412,8 +420,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     makeUFun(name, ctx) {
-        const line = ctx.start.line
-        this.stack.top().callerLine = line
+        //const line = ctx.start.line
+        //this.stack.top().callerLine = line
 
         const params = []
         const locals = []

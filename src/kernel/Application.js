@@ -64,7 +64,7 @@ export const initContext = (context) => {
 
             return result
         } catch (e) {
-            // Restore back calle file in case of exception!
+            // Restore back caller file in case of exception!
             topContext.callerFile = callerFile
 
             if (args.length === 2) {

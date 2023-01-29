@@ -2,7 +2,7 @@
 
 dir=$(dirname $0)
 
-for test in ${dir}/*.exp; do
+for test in ${dir}/*.exp ${dir}/stacktrace/*/*.exp; do
     echo
     echo "----------------------"
     echo "Running ${test}"

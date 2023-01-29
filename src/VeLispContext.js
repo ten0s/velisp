@@ -30,6 +30,7 @@ class VeLispContext {
         // Call frame
         this.funName = null
         this.funFile = null
+        this.callerName = null
         this.callerFile = null
         this.callerLine = null
     }

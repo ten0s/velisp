@@ -22,6 +22,7 @@
 import path from 'path'
 import {EOL} from 'os'
 import VeSysInfo from './VeSysInfo.js'
+import {KFun} from './VeLispTypes.js'
 
 function fmtError(name, error) {
     let message = `${name}: `
@@ -67,15 +68,22 @@ function catchError(fun, onError, stack) {
 
 function makeTrace(stack) {
     const cwd = process.cwd()
-    return stack.fold((acc, frame, i) => {
-        //console.log('--------------------', i)
-        if (frame.funName) {
-            const name = stack.top(i+1).funName
-            const file = path.relative(cwd, frame.callerFile)
-            const line = frame.callerLine
-            if (name) {
-                acc.push(`    at ${name} (${file}:${line})`)
+    return stack.fold((acc, frame) => {
+        if (frame.funName) { // if not top frame
+            const name = frame.callerName
+            let file = undefined
+            let line = undefined
+            if (name && stack.top().getSym(name.toUpperCase()) instanceof KFun) {
+                file = 'kernel'
             } else {
+                file = path.relative(cwd, frame.callerFile)
+                line = frame.callerLine
+            }
+            if (name && file && line) {
+                acc.push(`    at ${name} (${file}:${line})`)
+            } else if (name && file) {
+                acc.push(`    at ${name} (${file})`)
+            } else if (file && line) {
                 acc.push(`    at ${file}:${line}`)
             }
             return acc
