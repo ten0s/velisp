@@ -23,6 +23,7 @@ import path from 'path'
 import {EOL} from 'os'
 import VeSysInfo from './VeSysInfo.js'
 import {KFun} from './VeLispTypes.js'
+import {EXIT_FAILURE, KERNEL} from './VeConst.js'
 
 function fmtError(name, error) {
     let message = `${name}: `
@@ -74,7 +75,7 @@ function makeTrace(stack) {
             let file = undefined
             let line = undefined
             if (name && stack.top().getSym(name.toUpperCase()) instanceof KFun) {
-                file = 'kernel'
+                file = KERNEL
             } else {
                 file = path.relative(cwd, frame.callerFile)
                 line = frame.callerLine
@@ -104,7 +105,7 @@ function printError(error, stack) {
 
 function printErrorAndExit(error, stack) {
     printError(error, stack)
-    process.exit(1)
+    process.exit(EXIT_FAILURE)
 }
 
 export {

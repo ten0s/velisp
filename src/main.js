@@ -42,6 +42,7 @@ import VeStack from './VeStack.js'
 import {evaluate, tree} from './VeLispEvaluator.js'
 import {fmtError, catchError, printError} from './VeLispError.js'
 import {Bool} from './VeLispTypes.js'
+import {EXIT_SUCCESS} from './VeConst.js'
 
 main()
 
@@ -135,7 +136,7 @@ function runAction(debug) {
     switch (true) {
     case debug.help:
         console.error(debugHelp())
-        process.exit(0)
+        process.exit(EXIT_SUCCESS)
         return
     case debug.tree:
         return (input, stack) => {

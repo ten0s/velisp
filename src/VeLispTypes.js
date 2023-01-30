@@ -24,6 +24,7 @@ import os from 'os'
 import {find, escape} from './VeUtil.js'
 import './VeJsExt.js' // Array.without
 import {sleep} from './VeSystem.js'
+import {KERNEL, LAMBDA} from './VeConst.js'
 
 const TRU = 'T'
 const NIL = 'nil'
@@ -746,7 +747,7 @@ class Fun {
     //    , fun    :: function
     //    , file   :: string | undefined
     //    ) -> Fun
-    constructor(name, params, locals, fun, file = 'kernel') {
+    constructor(name, params, locals, fun, file = KERNEL) {
         this.name   = name
         this.params = params
         this.locals = locals
@@ -794,7 +795,7 @@ class Fun {
     // :: () -> string
     toString() {
         let prefix
-        if (this.name !== '#<lambda>') {
+        if (this.name !== LAMBDA) {
             prefix = `defun ${this.name}`
         } else {
             prefix = 'lambda'

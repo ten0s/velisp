@@ -25,6 +25,7 @@ import VeLispContext from './VeLispContext.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
 import {isTrace} from './kernel/Trace.js'
+import {KERNEL, LAMBDA} from './VeConst.js'
 
 class VeLispEvalVisitor extends VeLispVisitor {
     constructor(stack) {
@@ -135,7 +136,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitLambda(ctx) {
-        return this.makeUFun('#<lambda>', ctx)
+        return this.makeUFun(LAMBDA, ctx)
     }
 
     visitOr(ctx) {
@@ -334,7 +335,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
             context.callerName = topContext.funName
             if (!topContext.funFile) {
                 context.callerFile = topContext.callerFile
-            } else if (topContext.funFile === 'kernel') {
+            } else if (topContext.funFile === KERNEL) {
                 // The same as above until some better solution is found
                 context.callerFile = topContext.callerFile
             } else {
@@ -378,7 +379,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         context.callerName = topContext.funName
         if (!topContext.funFile) {
             context.callerFile = topContext.callerFile
-        } else if (topContext.funFile === 'kernel') {
+        } else if (topContext.funFile === KERNEL) {
             // The same as above until some better solution is found
             context.callerFile = topContext.callerFile
         } else {
