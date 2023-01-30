@@ -102,8 +102,14 @@ function printError(error, stack) {
     }
 }
 
+function printErrorAndExit(error, stack) {
+    printError(error, stack)
+    process.exit(1)
+}
+
 export {
     fmtError,
     catchError,
     printError,
+    printErrorAndExit,
 }

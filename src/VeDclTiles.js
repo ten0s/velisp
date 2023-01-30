@@ -23,7 +23,7 @@ import {Int, Str} from './VeLispTypes.js'
 import RGB from './VeDclRGB.js'
 import {unescape} from './VeUtil.js'
 import {evaluate} from './VeLispEvaluator.js'
-import {catchError, printError} from './VeLispError.js'
+import {catchError, printErrorAndExit} from './VeLispError.js'
 import VeSysInfo from './VeSysInfo.js'
 
 import gi from 'node-gtk'
@@ -1246,7 +1246,7 @@ class Button extends Tile {
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
@@ -1345,7 +1345,7 @@ class EditBox extends Tile {
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
@@ -1546,7 +1546,7 @@ class ImageButton extends Tile {
             context.setVar('$REASON', new Int(this._reason))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
@@ -1641,7 +1641,7 @@ class PopupList extends Tile {
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
@@ -1769,7 +1769,7 @@ class ListBox extends Tile {
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
@@ -1912,7 +1912,7 @@ class RadioCluster extends Cluster {
                         context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
                         catchError(
                             () => evaluate(unescape(this._action), stack),
-                            printError,
+                            printErrorAndExit,
                             stack
                         )
                     }
@@ -2211,7 +2211,7 @@ class RadioButton extends Tile {
                 context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
                 catchError(
                     () => evaluate(unescape(this._action), stack),
-                    printError,
+                    printErrorAndExit,
                     stack
                 )
             }
@@ -2306,7 +2306,7 @@ class Slider extends Tile {
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
@@ -2413,7 +2413,7 @@ class Toggle extends Tile {
             context.setVar('$REASON', new Int(ActionReason.TILE_SELECTED))
             catchError(
                 () => evaluate(unescape(this._action), stack),
-                printError,
+                printErrorAndExit,
                 stack
             )
         }
