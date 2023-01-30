@@ -71,31 +71,41 @@ class VeLispEvalVisitor extends VeLispVisitor {
         const name = this.visit(ctx.foreachName().ID()).toUpperCase()
         const list = this.getValue(this.visit(ctx.foreachList()))
 
-        //const line = ctx.start.line
-        //this.stack.top().callerLine = line
-
         //console.error(`foreach: ${name} ${list}`);
         if (list.isNil()) {
             return new Bool(false)
         }
         if (list instanceof List) {
             let result = new Bool(false)
-            // Push new context with 'name' = nil
-            const context = new VeLispContext(this.stack.top())
-            context.initVar(name, new Bool(false))
-            this.stack.push(context)
+
+            const context = this.stack.top()
+
+            // Save previous 'name' from the top context, if defined
+            let prevVar = undefined
+            if (context.isTopVar(name)) {
+                prevVar = context.getTopVar(name)
+            }
+
             for (let i = 0; i < list.value().length; i++) {
-                // Set each list value directly into our context, not the top context,
-                // to make it possible to shadow 'name' in some upper context
+                // Set each list value directly into the top context,
+                // to make it possible to shadow 'name' in some
+                // lower context
                 const value = list.value()[i]
                 //console.error(`foreach: ${value}`);
-                context.setVar(name, value)
+                context.setTopVar(name, value)
                 for (let j = 0; j < ctx.expr().length; j++) {
                     result = this.visit(ctx.expr(j))
                 }
             }
-            // Pop new context
-            this.stack.pop()
+
+            // Restore 'name' if was previously defined in the top context
+            // or delete it otherwise
+            if (prevVar) {
+                context.setTopVar(name, prevVar)
+            } else {
+                context.delTopVar(name)
+            }
+
             return result
         }
         throw new Error('foreach: `list` expected List')
@@ -447,13 +457,14 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 } else if (args.length > params.length) {
                     throw new Error(`${name}: too many arguments`)
                 }
-                // Since locals with the same names as params will reset the values, init locals first.
+                // Since locals with the same names as params will reset
+                // the values, init locals first.
                 const context = self.stack.top()
                 for (let i = 0; i < locals.length; i++) {
-                    context.initVar(locals[i], new Bool(false))
+                    context.setTopVar(locals[i], new Bool(false))
                 }
                 for (let i = 0; i < params.length; i++) {
-                    context.initVar(params[i], args[i])
+                    context.setTopVar(params[i], args[i])
                 }
                 let result = new Bool(false)
                 for (let i = 0; i < ctx.expr().length; i++) {

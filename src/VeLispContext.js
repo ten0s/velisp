@@ -35,11 +35,34 @@ class VeLispContext {
         this.callerLine = null
     }
 
-    // Init variable in the current context only.
+    // Set variable into the current context only.
     // :: (string, Type) -> ()
-    initVar(name, value) {
-        //console.log(`initVar(${name}, ${value})`, this);
+    setTopVar(name, value) {
+        //console.log(`setTopVar(${name}, ${value})`, this);
         this.symbols[name] = value
+    }
+
+    // Get variable from the current context only, if defined.
+    // Otherwise, return nil.
+    // :: (string) -> Type | Nil
+    getTopVar(name) {
+        const value = this.symbols[name]
+        if (value) {
+            return value
+        }
+        return new Bool(false)
+    }
+
+    // Check if variable is defined in current context only.
+    // :: (string) -> boolean
+    isTopVar(name) {
+        return !!this.symbols[name]
+    }
+
+    // Delete variable from the current context only.
+    // :: (string) -> ()
+    delTopVar(name) {
+        delete this.symbols[name]
     }
 
     // Set variable into the current context, if defined.
