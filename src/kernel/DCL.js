@@ -418,6 +418,27 @@ export const initContext = (context) => {
             })
         })
     }))
+    context.setSym('SLIDE_IMAGE', new KFun('slide_image', ['x', 'y', 'width', 'height', 'sldname'], [], (self, args) => {
+        if (args.length < 5) {
+            throw new Error('slide_image: too few arguments')
+        }
+        if (args.length > 5) {
+            throw new Error('slide_image: too many arguments')
+        }
+        const x = ensureType('slide_image: `x`'      , args[0], [Int])
+        const y = ensureType('slide_image: `y`'      , args[1], [Int])
+        const w = ensureType('slide_image: `width`'  , args[2], [Int])
+        const h = ensureType('slide_image: `height`' , args[3], [Int])
+        const n = ensureType('slide_image: `sldname`', args[4], [Str])
+        return withDialog(dialog => {
+            return withImage(image => {
+                dialog.slideImage(
+                    image, x.value(), y.value(), w.value(), h.value(), n.value()
+                )
+                return n
+            })
+        })
+    }))
     context.setSym('END_IMAGE', new KFun('end_image', [], [], (self, args) => {
         if (args.length > 1) {
             throw new Error('end_image: too many arguments')

@@ -32,6 +32,7 @@ let GObject = null
 let Gtk = null
 let Gdk = null
 let MacOS = null
+let Slide = null
 
 const InitGtk = () => {
     if (!Gtk || !Gdk || !GObject) {
@@ -42,6 +43,8 @@ const InitGtk = () => {
         if (process.platform == 'darwin') {
             MacOS = gi.require('MacOSLib', '1.0')
         }
+
+        Slide = gi.require('Slide', '1.0')
 
         gi.startLoop()
         Gtk.init()
@@ -325,6 +328,22 @@ class VectorImage {
         crCtx.moveTo(this.x1, this.y1)
         crCtx.lineTo(this.x2, this.y2)
         crCtx.stroke()
+    }
+}
+
+class SlideImage {
+    constructor(x, y, w, h, sldname) {
+        this.x = x
+        this.y = y
+        this.w = w
+        this.h = h
+        this.sldname = sldname
+    }
+
+    gtkDraw(gtkWidget, crCtx) {
+        console.log('+SlideImage::gtkDraw')
+        Slide.draw(crCtx, this.x, this.y, this.w, this.h, this.sldname)
+        console.log('-SlideImage::gtkDraw')
     }
 }
 
@@ -677,6 +696,11 @@ class Dialog extends Cluster {
     // DCL
     vectorImage(handle, x1, y1, x2, y2, color) {
         handle.operations.push(new VectorImage(x1, y1, x2, y2, color))
+    }
+
+    // DCL
+    slideImage(handle, x, y, w, h, sldname) {
+        handle.operations.push(new SlideImage(x, y, w, h, sldname))
     }
 
     // DCL
