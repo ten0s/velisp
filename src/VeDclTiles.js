@@ -281,8 +281,8 @@ class Tile {
         operations.forEach(op => this._drawOperations.push(op))
     }
 
-    gtkDraw(gtkWidget, gtkCtx) {
-        this._drawOperations.forEach(op => op.gtkDraw(gtkWidget, gtkCtx))
+    gtkDraw(gtkWidget, crCtx) {
+        this._drawOperations.forEach(op => op.gtkDraw(gtkWidget, crCtx))
     }
 
     gtkXml() {
@@ -301,11 +301,11 @@ class FillImage {
         this.c = c
     }
 
-    gtkDraw(gtkWidget, gtkCtx) {
+    gtkDraw(gtkWidget, crCtx) {
         const rgb = RGB.fromACI(this.c)
-        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b)
-        gtkCtx.rectangle(this.x, this.y, this.w, this.h)
-        gtkCtx.fill()
+        crCtx.setSourceRgb(rgb.r, rgb.g, rgb.b)
+        crCtx.rectangle(this.x, this.y, this.w, this.h)
+        crCtx.fill()
     }
 }
 
@@ -318,13 +318,13 @@ class VectorImage {
         this.c = c
     }
 
-    gtkDraw(gtkWidget, gtkCtx) {
+    gtkDraw(gtkWidget, crCtx) {
         const rgb = RGB.fromACI(this.c)
-        gtkCtx.setSourceRgb(rgb.r, rgb.g, rgb.b)
-        gtkCtx.setLineWidth(1)
-        gtkCtx.moveTo(this.x1, this.y1)
-        gtkCtx.lineTo(this.x2, this.y2)
-        gtkCtx.stroke()
+        crCtx.setSourceRgb(rgb.r, rgb.g, rgb.b)
+        crCtx.setLineWidth(1)
+        crCtx.moveTo(this.x1, this.y1)
+        crCtx.lineTo(this.x2, this.y2)
+        crCtx.stroke()
     }
 }
 
