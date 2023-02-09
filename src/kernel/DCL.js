@@ -27,7 +27,12 @@ import VeStack from '../VeStack.js'
 import VeDclContext from '../VeDclContext.js'
 import * as VeDclLoader from '../VeDclLoader.js'
 import {ListOperation} from '../VeDclTiles.js'
-import {ensureDclExt, makeUnixPath} from '../VeUtil.js'
+import {
+    ensureDclExt,
+    ensureSldExt,
+    ensureSlbExt,
+    makeUnixPath
+} from '../VeUtil.js'
 
 // global dclId index
 let _dclId = 0
@@ -75,6 +80,25 @@ const withImage = (ifFunc, elseFunc = null) => {
         return elseFunc()
     }
     throw new Error('No current image')
+}
+
+// :: (string) -> [string, string | undefined]
+const parseSlideName = (sldname) => {
+    sldname = sldname.trim()
+
+    // Check it's a slide library or slide
+    const i = sldname.indexOf('(')
+    const j = sldname.indexOf(')')
+
+    if (i >=0 && j == sldname.length-1) {
+        // It's a slide library
+        return [ensureSlbExt(sldname.substr(0, i)), sldname.substr(i+1, j-i-i)]
+    } else if (i == -1 && j == -1) {
+        // It's a slide
+        return [ensureSldExt(sldname), undefined]
+    } else {
+        throw new Error('slide_image: `sldname` bad format')
+    }
 }
 
 export const initContext = (context) => {
@@ -425,17 +449,28 @@ export const initContext = (context) => {
         if (args.length > 5) {
             throw new Error('slide_image: too many arguments')
         }
-        const x = ensureType('slide_image: `x`'      , args[0], [Int])
-        const y = ensureType('slide_image: `y`'      , args[1], [Int])
-        const w = ensureType('slide_image: `width`'  , args[2], [Int])
-        const h = ensureType('slide_image: `height`' , args[3], [Int])
-        const n = ensureType('slide_image: `sldname`', args[4], [Str])
+        const x = ensureType('slide_image: `x`'      , args[0], [Int]).value()
+        const y = ensureType('slide_image: `y`'      , args[1], [Int]).value()
+        const w = ensureType('slide_image: `width`'  , args[2], [Int]).value()
+        const h = ensureType('slide_image: `height`' , args[3], [Int]).value()
+        const sldName = ensureType('slide_image: `sldname`', args[4], [Str]).value()
+
+        let [sldFile, name] = parseSlideName(makeUnixPath(sldName))
+        if (!path.isAbsolute(sldFile)) {
+            if (!fs.existsSync(sldFile)) {
+                const lspFile = self.stack.top().callerFile
+                if (lspFile) {
+                    sldFile = path.join(path.dirname(lspFile), sldFile)
+                }
+            }
+        }
+        const sldUri = name ? `${sldFile}(${name})` : sldFile
         return withDialog(dialog => {
             return withImage(image => {
                 dialog.slideImage(
-                    image, x.value(), y.value(), w.value(), h.value(), n.value()
+                    image, x, y, w, h, sldFile
                 )
-                return n
+                return sldName
             })
         })
     }))

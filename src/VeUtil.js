@@ -179,6 +179,16 @@ const ensureDclExt = (name) => {
 }
 
 // :: (string) -> string
+const ensureSldExt = (name) => {
+    return ensureExt(name, '.sld')
+}
+
+// :: (string) -> string
+const ensureSlbExt = (name) => {
+    return ensureExt(name, '.slb')
+}
+
+// :: (string) -> string
 const makeUnixPath = (path) => {
     // Win32 workaround
     return path.replaceAll('\\', '/')
@@ -197,6 +207,8 @@ export {
     isRecoverableInput,
     ensureLspExt,
     ensureDclExt,
+    ensureSldExt,
+    ensureSlbExt,
     makeUnixPath,
     makeWinPath,
 }
