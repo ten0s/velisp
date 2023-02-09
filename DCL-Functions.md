@@ -31,8 +31,8 @@
 | (dimx_tile key) | Retrieves the width of a tile in dialog box units | |
 | (dimy_tile key) | Retrieves the height of a tile in dialog box units | |
 | (end_image) | Ends creation of the currently active dialog box image | |
-| (fill_image x1 y1 wid hgt color) | Draws a filled rectangle in the currently active dialog box image tile | |
-| (slide_image x1 y1 wid hgt sldname) | Displays an AutoCAD slide in the currently active dialog box image tile | Expected in vTBD |
+| (fill_image x1 y1 width height color) | Draws a filled rectangle in the currently active dialog box image tile | |
+| (slide_image x1 y1 width height sldname) | Displays an AutoCAD slide in the currently active dialog box image tile | |
 | (start_image key) | Starts the creation of an image in the dialog box tile | |
 | (vector_image x1 y1 x2 y2 color) | Draws a vector in the currently active dialog box image | |
 
