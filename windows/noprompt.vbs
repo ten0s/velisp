@@ -22,7 +22,6 @@ For i = 0 To WScript.Arguments.Count - 1
 Next
 
 Command = Join(Cmd) & """" & Join(Args) & """"
-REM WScript.Echo Command
 
 Set WshShell = WScript.CreateObject("WScript.Shell")
 HideWindow = 0
