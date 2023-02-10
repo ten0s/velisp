@@ -332,18 +332,27 @@ class VectorImage {
 }
 
 class SlideImage {
-    constructor(x, y, w, h, sldname) {
+    constructor(x, y, w, h, slideName, slideUri) {
         this.x = x
         this.y = y
         this.w = w
         this.h = h
-        this.sldname = sldname
+        this.slideName = slideName
+        this.slideUri = slideUri
     }
 
     gtkDraw(gtkWidget, crCtx) {
-        console.log('+SlideImage::gtkDraw')
-        Slide.draw(crCtx, this.x, this.y, this.w, this.h, this.sldname)
-        console.log('-SlideImage::gtkDraw')
+        if (Slide) {
+            const ret = Slide.draw(
+                crCtx,
+                this.x, this.y,
+                this.w, this.h,
+                this.slideUri
+            )
+            if (ret != 0) {
+                console.error(`slide_image: "${this.slideName}" error`);
+            }
+        }
     }
 }
 
@@ -699,8 +708,8 @@ class Dialog extends Cluster {
     }
 
     // DCL
-    slideImage(handle, x, y, w, h, sldname) {
-        handle.operations.push(new SlideImage(x, y, w, h, sldname))
+    slideImage(handle, x, y, w, h, slideName, slideUri) {
+        handle.operations.push(new SlideImage(x, y, w, h, slideName, slideUri))
     }
 
     // DCL

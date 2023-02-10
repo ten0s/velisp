@@ -88,11 +88,11 @@ const parseSlideName = (sldname) => {
 
     // Check it's a slide library or slide
     const i = sldname.indexOf('(')
-    const j = sldname.indexOf(')')
+    const j = sldname.lastIndexOf(')')
 
     if (i >=0 && j == sldname.length-1) {
         // It's a slide library
-        return [ensureSlbExt(sldname.substr(0, i)), sldname.substr(i+1, j-i-i)]
+        return [ensureSlbExt(sldname.substr(0, i)), sldname.substr(i+1, j-i-1)]
     } else if (i == -1 && j == -1) {
         // It's a slide
         return [ensureSldExt(sldname), undefined]
@@ -453,24 +453,24 @@ export const initContext = (context) => {
         const y = ensureType('slide_image: `y`'      , args[1], [Int]).value()
         const w = ensureType('slide_image: `width`'  , args[2], [Int]).value()
         const h = ensureType('slide_image: `height`' , args[3], [Int]).value()
-        const sldName = ensureType('slide_image: `sldname`', args[4], [Str]).value()
+        const slideName = ensureType('slide_image: `sldname`', args[4], [Str]).value()
 
-        let [sldFile, name] = parseSlideName(makeUnixPath(sldName))
-        if (!path.isAbsolute(sldFile)) {
-            if (!fs.existsSync(sldFile)) {
+        let [slideFile, name] = parseSlideName(makeUnixPath(slideName))
+        if (!path.isAbsolute(slideFile)) {
+            if (!fs.existsSync(slideFile)) {
                 const lspFile = self.stack.top().callerFile
                 if (lspFile) {
-                    sldFile = path.join(path.dirname(lspFile), sldFile)
+                    slideFile = path.join(path.dirname(lspFile), slideFile)
                 }
             }
         }
-        const sldUri = name ? `${sldFile}(${name})` : sldFile
+        const slideUri = name ? `${slideFile}(${name})` : slideFile
         return withDialog(dialog => {
             return withImage(image => {
                 dialog.slideImage(
-                    image, x, y, w, h, sldFile
+                    image, x, y, w, h, slideName, slideUri
                 )
-                return sldName
+                return slideName
             })
         })
     }))
