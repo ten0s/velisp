@@ -86,7 +86,7 @@ const withImage = (ifFunc, elseFunc = null) => {
 const parseSlideName = (sldname) => {
     sldname = sldname.trim()
 
-    // Check it's a slide library or slide
+    // Check if it's a slide library or slide
     const i = sldname.indexOf('(')
     const j = sldname.lastIndexOf(')')
 
