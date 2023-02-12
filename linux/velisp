@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Debug libs loading
+[[ "${VELISP_DEBUG}" == "libs" ]] && export LD_DEBUG=libs
+
+# Force local lib64
+BASE_DIR=$(dirname $0)
+
+LD_LIBRARY_PATH=$BASE_DIR/lib64
+GI_TYPELIB_PATH=$BASE_DIR/lib64/girepository-1.0
+
+export LD_LIBRARY_PATH
+export GI_TYPELIB_PATH
+
+exec $BASE_DIR/Velisp.bin "$@"
