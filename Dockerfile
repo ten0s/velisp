@@ -42,6 +42,7 @@ RUN mkdir -p velisp
 COPY examples/                velisp/examples/
 COPY grammar/                 velisp/grammar/
 COPY lib/                     velisp/lib/
+COPY linux/                   velisp/linux/
 COPY src/                     velisp/src/
 COPY patches/                 velisp/patches/
 COPY util/                    velisp/util/
@@ -54,6 +55,16 @@ COPY rollup.config.js         velisp/
 COPY LICENSE                  velisp/
 COPY README-en-linux.template velisp/
 COPY README-ru-linux.template velisp/
+
+RUN mkdir -p velisp/lib64/girepository-1.0
+
+RUN echo "Building libslide..."
+RUN git clone https://github.com/ten0s/slide &&           \
+    cd slide &&                                           \
+    make &&                                               \
+    cp lib*.so ../velisp/lib64 &&                         \
+    cp Slide*.typelib ../velisp/lib64/girepository-1.0 && \
+    cd ..
 
 RUN echo "Building VeLisp..."
 

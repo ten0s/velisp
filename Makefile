@@ -131,8 +131,10 @@ pkgMacos:
 tarLinux:
 	rm -rf          velisp-${VERSION}-linux-x64/
 	mkdir -p        velisp-${VERSION}-linux-x64/
-	cp velisp       velisp-${VERSION}-linux-x64/
+	cp velisp       velisp-${VERSION}-linux-x64/velisp.bin
+	cp linux/velisp velisp-${VERSION}-linux-x64/
 	cp -r lib/      velisp-${VERSION}-linux-x64/
+	cp -r lib64/    velisp-${VERSION}-linux-x64/
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	cp LICENSE      velisp-${VERSION}-linux-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-linux-x64/NOTICE

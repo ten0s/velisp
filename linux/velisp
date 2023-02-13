@@ -12,4 +12,4 @@ GI_TYPELIB_PATH=$BASE_DIR/lib64/girepository-1.0
 export LD_LIBRARY_PATH
 export GI_TYPELIB_PATH
 
-exec $BASE_DIR/Velisp.bin "$@"
+exec $BASE_DIR/velisp.bin "$@"
