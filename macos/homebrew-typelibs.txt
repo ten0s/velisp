@@ -8,7 +8,7 @@
 /usr/local/Cellar/gobject-introspection/1.74.0/lib/girepository-1.0/Gio-2.0.typelib
 /usr/local/Cellar/gobject-introspection/1.74.0/lib/girepository-1.0/cairo-1.0.typelib
 /usr/local/Cellar/gobject-introspection/1.74.0/lib/girepository-1.0/freetype2-2.0.typelib
-/usr/local/Cellar/gtk+3/3.24.35/lib/girepository-1.0/Gdk-3.0.typelib
-/usr/local/Cellar/gtk+3/3.24.35/lib/girepository-1.0/Gtk-3.0.typelib
-/usr/local/Cellar/harfbuzz/5.3.1/lib/girepository-1.0/HarfBuzz-0.0.typelib
+/usr/local/Cellar/gtk+3/3.24.36/lib/girepository-1.0/Gdk-3.0.typelib
+/usr/local/Cellar/gtk+3/3.24.36/lib/girepository-1.0/Gtk-3.0.typelib
+/usr/local/Cellar/harfbuzz/7.0.0/lib/girepository-1.0/HarfBuzz-0.0.typelib
 /usr/local/Cellar/pango/1.50.12/lib/girepository-1.0/Pango-1.0.typelib

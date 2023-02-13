@@ -30,13 +30,12 @@ su $USER -c "/bin/bash -s" <<'EOF'
         jq                    \
         node@16
    brew tap ten0s/brew-cache
-   brew tap ten0s/gi-macos-lib
+   brew tap ten0s/tap
    brew install gi-macos-lib
    brew update
    brew cache -u
 
-   echo 'setopt interactivecomments'                      > ~/.zshrc
-   echo 'alias ll="ls -l"'                               >> ~/.zshrc
+   echo 'alias ll="ls -l"'                                > ~/.zshrc
    echo 'export HOMEBREW_NO_AUTO_UPDATE=1'               >> ~/.zshrc
    echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
 

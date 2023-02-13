@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export VAGRANT_VAGRANTFILE=Vagrantfile.macos.build
-export MACOS_NAME=catalina
+export MACOS_NAME=big_sur
 
 vagrant up --provision
 if [[ $? -ne 0 ]]; then

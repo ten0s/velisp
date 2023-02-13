@@ -74,8 +74,8 @@ and import it.
 
 ```
 $ curl -s https://app.vagrantup.com/jakubknejzlik/boxes/macos | jq .
-$ wget https://vagrantcloud.com/jakubknejzlik/boxes/macos/versions/10.15.7/providers/virtualbox.box
-$ vagrant box add macos-catalina-10.15.7 virtualbox.box
+$ wget https://vagrantcloud.com/jakubknejzlik/boxes/macos/versions/11.2.3/providers/virtualbox.box
+$ vagrant box add macos-catalina-11.2.3 virtualbox.box
 ```
 
 #### Download Command Line Tools for Xcode
@@ -86,7 +86,7 @@ Download Command_Line_Tools_for_Xcode_12.4.dmg and copy it to macos/ directory
 
 ```
 $ export VAGRANT_VAGRANTFILE=Vagrantfile.macos.deps
-$ export MACOS_NAME=catalina
+$ export MACOS_NAME=big_sur
 $ vagrant up
 ... some manual setup?
 $ vagrant up --provision

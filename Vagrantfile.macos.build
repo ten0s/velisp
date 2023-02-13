@@ -2,12 +2,11 @@
 # vi: set ft=ruby :
 
 versions = Hash[
-  "catalina" => "10.15.7",
   "big_sur"  => "11.2.3",
   "monterey" => "12.6.1",
 ]
 
-macos_name = ENV["MACOS_NAME"] || "catalina"
+macos_name = ENV["MACOS_NAME"] || "big_sur"
 
 if macos_name == ""
   puts "ENV['MACOS_NAME'] is not set"
