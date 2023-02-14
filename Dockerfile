@@ -59,11 +59,11 @@ COPY README-ru-linux.template velisp/
 RUN mkdir -p velisp/lib64/girepository-1.0
 
 RUN echo "Building libslide..."
-RUN git clone https://github.com/ten0s/slide &&           \
-    cd slide &&                                           \
-    make &&                                               \
-    cp lib*.so ../velisp/lib64 &&                         \
-    cp Slide*.typelib ../velisp/lib64/girepository-1.0 && \
+RUN git clone https://github.com/ten0s/slide && \
+    cd slide &&                                 \
+    make &&                                     \
+    make install &&                             \
+    cp -r install/lib/* ../velisp/lib64/ &&     \
     cd ..
 
 RUN echo "Building VeLisp..."
