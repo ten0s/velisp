@@ -31,7 +31,8 @@ su $USER -c "/bin/bash -s" <<'EOF'
         node@16
    brew tap ten0s/brew-cache
    brew tap ten0s/tap
-   brew install gi-macos-lib
+   brew install libgimacos
+   brew install slide
    brew update
    brew cache -u
 

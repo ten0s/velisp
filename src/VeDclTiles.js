@@ -44,7 +44,7 @@ const InitGtk = () => {
             MacOS = gi.require('MacOSLib', '1.0')
         }
 
-        Slide = gi.require('Slide', '1.0')
+        Slide = gi.require('SlideLib', '1.0')
 
         gi.startLoop()
         Gtk.init()
