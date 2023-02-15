@@ -44,8 +44,6 @@ const InitGtk = () => {
             MacOS = gi.require('MacOSLib', '1.0')
         }
 
-        Slide = gi.require('SlideLib', '1.0')
-
         gi.startLoop()
         Gtk.init()
         Gdk.init([])
@@ -342,6 +340,9 @@ class SlideImage {
     }
 
     gtkDraw(gtkWidget, crCtx) {
+        if (!Slide) {
+            Slide = gi.require('SlideLib', '1.0')
+        }
         if (Slide) {
             const ret = Slide.draw(
                 crCtx,
@@ -350,7 +351,7 @@ class SlideImage {
                 this.slideUri
             )
             if (ret != 0) {
-                console.error(`slide_image: "${this.slideName}" error`);
+                console.error(`slide_image: "${this.slideName}" error: ${ret}`);
             }
         }
     }
