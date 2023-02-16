@@ -66,7 +66,10 @@ mkdir -p mingw64/{bin,lib/girepository-1.0}
 TEMP=$(mktemp)
 while true; do
     cdb -c "g;q" $PROG $ARGS &> $TEMP
-    if [[ $? -ne 0 ]]; then
+    ret1=$?
+    grep ERROR $TEMP &> /dev/null
+    ret2=$?
+    if [[ $ret1 -ne 0 ]] || [[ $ret2 -eq 0 ]]; then
         copy-dlls $TEMP /mingw64/bin/ mingw64/bin/
         copy-typelibs $TEMP /mingw64/lib/girepository-1.0/ mingw64/lib/girepository-1.0/
     else
@@ -89,7 +92,7 @@ fi
 TEMP=$(mktemp)
 ls mingw64/lib/girepository-1.0/ | xargs -n1 > $TEMP
 if ! diff windows/mingw64-typelibs.txt $TEMP; then
-    mv -f $TERP windows/mingw64-typelibs.txt
+    mv -f $TEMP windows/mingw64-typelibs.txt
     echo "windows/mingw64-typelibs.txt updated"
 else
     rm $TEMP

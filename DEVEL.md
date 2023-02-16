@@ -46,13 +46,13 @@ $ ./build-windows-package.sh
 Build Done
 ```
 
-#### Upgrade Mingw64 deps
+#### Upgrade MinGW64 deps
 
 Inside the MSYS shell (Run as administrator)
 
 ```
 # gflags -i node.exe +sls
-# windows/find-mingw64-deps.sh velisp examples/calc.lsp
+# windows/find-mingw64-deps.sh node.exe src/main.js examples/calc.lsp
 # gflags -i node.exe -sls
 ```
 

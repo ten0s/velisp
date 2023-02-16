@@ -17,3 +17,4 @@ PangoCairo-1.0.typelib
 PangoFc-1.0.typelib
 PangoFT2-1.0.typelib
 PangoOT-1.0.typelib
+SlideLib-1.0.typelib
