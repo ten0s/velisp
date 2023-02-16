@@ -7,7 +7,7 @@ versions = Hash[
 ]
 
 tools = Hash[
-  "big_sur"  => "12.4",
+  "big_sur"  => "12.5.1",
   "monterey" => "14.1",
 ]
 
