@@ -9,7 +9,7 @@
 
 (if (is_autocad)
     (progn
-      (setq START_LIST_CLEAR 3)
+      (load "../lib/dcl/consts.lsp")
       (load "../lib/velisp/list.lsp")
       (load "../lib/velisp/string.lsp")))
 

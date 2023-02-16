@@ -39,6 +39,7 @@ Name: "{app}\shortcuts\Calc Example";    Filename: "{app}\noprompt.vbs"; Paramet
 Name: "{app}\shortcuts\Demo Example";    Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\demo.lsp""";    WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
 Name: "{app}\shortcuts\Fifteen Example"; Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\fifteen.lsp"""; WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
 Name: "{app}\shortcuts\Mines Example";   Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\mines.lsp""";   WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
+Name: "{app}\shortcuts\Slides Example";  Filename: "{app}\noprompt.vbs"; Parameters: """{app}\velisp.exe"" ""{app}\examples\slides.lsp""";  WorkingDir: "{app}"; IconFilename: "{app}\velisp.exe"
 Name: "{group}\Uninstall";               Filename: "{uninstallexe}"
 
 [Tasks]

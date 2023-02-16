@@ -15,6 +15,7 @@
 
 (if (is_autocad)
     (progn
+      (load "../lib/dcl/colors.lsp")
       (load "../lib/velisp/list.lsp")
       (load "../lib/velisp/random.lsp")
       (load "../lib/velisp/string.lsp")))
@@ -29,7 +30,6 @@
 ;;;; Graphics
 ;;;;
 
-(load "color.lsp")
 (load "glyph.lsp")
 (load "image-button.lsp")
 
