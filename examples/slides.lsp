@@ -37,7 +37,7 @@
     (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
     (exit 1)))
 
-(setq NAMES '("mylib(slide1)" "mylib(slide2)" "slide1" "slide2" "slide_dn" "slide_kss" "slide_up"))
+(setq NAMES '("mylib(slide1)" "mylib(slide2)" "slide_kss" "slide_up" "slide_dn"))
 (setq WIDTH  (dimx_tile "image"))
 (setq HEIGHT (dimy_tile "image"))
 
