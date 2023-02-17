@@ -28,17 +28,17 @@ su $USER -c "/bin/bash -s" <<'EOF'
         gobject-introspection \
         gtk+3                 \
         jq                    \
-        node@16
+        node@18
    brew tap ten0s/brew-cache
    brew update
    brew cache -u
 
    echo 'alias ll="ls -l"'                                > ~/.zshrc
    echo 'export HOMEBREW_NO_AUTO_UPDATE=1'               >> ~/.zshrc
-   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.zshrc
+   echo 'export PATH="/usr/local/opt/node@18/bin:$PATH"' >> ~/.zshrc
 
    echo 'export HOMEBREW_NO_AUTO_UPDATE=1'                > ~/.bashrc
-   echo 'export PATH="/usr/local/opt/node@16/bin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/node@18/bin:$PATH"' >> ~/.bashrc
 
    echo "Done"
 EOF

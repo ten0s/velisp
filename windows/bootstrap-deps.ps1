@@ -5,10 +5,10 @@
 choco install -y visualstudio2017-workload-vctools
 
 # Install Inno Setup
-choco install -y innosetup --version=6.2.1
+choco install -y innosetup --version=6.2.2
 
 # Install Node.js
-choco install -y nodejs-lts --version=16.18.0
+choco install -y nodejs-lts --version=18.14.1
 $Env:PATH = [Environment]::GetEnvironmentVariable('PATH', 'Machine')
 npm config set msvs_version 2017
 

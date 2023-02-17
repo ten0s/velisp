@@ -22,7 +22,7 @@ RUN apt-get update         &&  \
         libcairo2-dev          \
         make
 
-ENV NODE_VERSION=16
+ENV NODE_VERSION=18
 
 RUN echo "Installing Node.js v${NODE_VERSION}..."
 
