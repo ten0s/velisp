@@ -351,7 +351,7 @@ class SlideImage {
                 this.slideUri
             )
             if (ret != 0) {
-                console.error(`slide_image: "${this.slideName}" error: ${ret}`);
+                console.error(`slide_image: "${this.slideName}" error: ${ret}`)
             }
         }
     }
