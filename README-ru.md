@@ -34,19 +34,19 @@
 
 #### Автоматическая установка
 
-1. Скачайте https://github.com/ten0s/velisp/releases/download/0.7.7/velisp-0.7.7-win-x64-setup.zip
+1. Скачайте https://github.com/ten0s/velisp/releases/download/0.7.8/velisp-0.7.8-win-x64-setup.zip
 2. Откройте папку Загрузки
-3. Распакуйте velisp-0.7.7-win-x64-setup.zip
-4. Запустите velisp-0.7.7-win-x64-setup.exe
+3. Распакуйте velisp-0.7.8-win-x64-setup.zip
+4. Запустите velisp-0.7.8-win-x64-setup.exe
 5. Следуйте указаниям установщика. Настройки по умолчанию подходят большинству пользователей
 
 #### Установка из архива
 
 ##### Скачайте и распакуйте
 
-1. Скачайте https://github.com/ten0s/velisp/releases/download/0.7.7/velisp-0.7.7-win-x64.zip
+1. Скачайте https://github.com/ten0s/velisp/releases/download/0.7.8/velisp-0.7.8-win-x64.zip
 2. Откройте папку Загрузки
-3. Выделите velisp-0.7.7-win-x64.zip
+3. Выделите velisp-0.7.8-win-x64.zip
 4. Нажмите правую кнопку мышки
 5. Выберите 'Распаковать все содержимое...'
 6. Введите 'C:\'
@@ -60,7 +60,7 @@
 4. Выберите 'Path' inside the User variables block
 5. Выберите 'Edit...'
 6. Выберите 'New...'
-7. Введите 'C:\velisp-0.7.7-win-x64'
+7. Введите 'C:\velisp-0.7.8-win-x64'
 8. Выберите 'OK'
 9. Выберите 'OK'
 
@@ -73,14 +73,14 @@
 запускайте командную оболочку (cmd.exe) и перейдите в папку распаковки:
 
 ```
-> cd C:\velisp-0.7.7-win-x64
+> cd C:\velisp-0.7.8-win-x64
 ```
 
 #### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 > velisp
-VeLisp 0.7.7 on Windows
+VeLisp 0.7.8 on Windows
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
 3
@@ -178,7 +178,7 @@ _$ (quit)
 2. Выберите 'Files' -> 'Support File Search Path'
 3. Выберите 'Add...'
 4. Выберите 'Browse...'
-5. Выберите C:\Program Files\VeLisp\examples или C:\velisp-0.7.7-win-x64\examples
+5. Выберите C:\Program Files\VeLisp\examples или C:\velisp-0.7.8-win-x64\examples
 6. Выберите 'OK'
 7. Выберите 'Apply'
 7. Выберите 'OK'
@@ -211,27 +211,27 @@ VeLisp в первый раз. Так как VeLisp не подписан, вы 
 
 ```
 % cd $HOME
-% curl -LJO https://github.com/ten0s/velisp/releases/download/0.7.7/velisp-0.7.7-macos-x64.tar.xz
-% tar xfJ velisp-0.7.7-macos-x64.tar.xz
+% curl -LJO https://github.com/ten0s/velisp/releases/download/0.7.8/velisp-0.7.8-macos-x64.tar.xz
+% tar xfJ velisp-0.7.8-macos-x64.tar.xz
 ```
 
 #### Добавьте в ~/.zshrc
 
 ```
-export PATH=<PATH_TO>/velisp-0.7.7-macos-x64:$PATH
+export PATH=<PATH_TO>/velisp-0.7.8-macos-x64:$PATH
 ```
 
 ### Использование
 
 ```
-% cd velisp-0.7.7-macos-x64
+% cd velisp-0.7.8-macos-x64
 ```
 
 #### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 % ./velisp
-VeLisp 0.7.7 on MacOS
+VeLisp 0.7.8 on MacOS
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
 3
@@ -330,27 +330,27 @@ _$ (quit)
 #### Скачайте и распакуйте
 
 ```
-$ curl -LJO https://github.com/ten0s/velisp/releases/download/0.7.7/velisp-0.7.7-linux-x64.tar.xz
-$ tar xfJ velisp-0.7.7-linux-x64.tar.xz
+$ curl -LJO https://github.com/ten0s/velisp/releases/download/0.7.8/velisp-0.7.8-linux-x64.tar.xz
+$ tar xfJ velisp-0.7.8-linux-x64.tar.xz
 ```
 
 #### Добавьте в ~/.bashrc
 
 ```
-export PATH=<PATH_TO>/velisp-0.7.7-linux-x64:$PATH
+export PATH=<PATH_TO>/velisp-0.7.8-linux-x64:$PATH
 ```
 
 ### Использование
 
 ```
-$ cd velisp-0.7.7-linux-x64
+$ cd velisp-0.7.8-linux-x64
 ```
 
 #### Запускаем REPL (Read–Eval–Print Loop)
 
 ```
 $ ./velisp
-VeLisp 0.7.7 on Linux
+VeLisp 0.7.8 on Linux
 Type ".license" or ".help" for more information
 _$ (+ 1 2)
 3
