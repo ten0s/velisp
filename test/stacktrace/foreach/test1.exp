@@ -9,11 +9,12 @@ set timeout 5
 
 spawn node src/main.js --no-dcl test/stacktrace/foreach/test1.lsp
 
+# Allow some garbage before "Error"
 set lines {
-    "^Error: apply: no such function nil\n"
-    "^    at CALL_FUN (*/test1.lsp:4)\n"
-    "^    at MAIN (*/test1.lsp:8)\n"
-    "^    at */test1.lsp:10\n"
+    "Error: apply: no such function nil\n"
+    "^    at CALL_FUN (*test1.lsp:4)\n"
+    "^    at MAIN (*test1.lsp:8)\n"
+    "^    at *test1.lsp:10\n"
 }
 
 foreach line $lines {

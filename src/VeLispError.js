@@ -20,7 +20,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 import path from 'path'
-import {EOL} from 'os'
 import VeSysInfo from './VeSysInfo.js'
 import {KFun} from './VeLispTypes.js'
 import {EXIT_FAILURE, KERNEL} from './VeConst.js'
@@ -90,7 +89,7 @@ function makeTrace(stack) {
             return acc
         }
         return acc
-    }, []).join(EOL)
+    }, []).join('\n')
 }
 
 function printError(error, stack) {

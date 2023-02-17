@@ -9,11 +9,12 @@ set timeout 5
 
 spawn node src/main.js --no-dcl test/stacktrace/foreach/test2.lsp
 
+# Allow some garbage before "Error"
 set lines {
-    "^Error: fun: function not defined\n"
-    "^    at CALL_FUN (*/test2.lsp:4)\n"
-    "^    at MAIN (*/test2.lsp:8)\n"
-    "^    at */test2.lsp:10\n"
+    "Error: fun: function not defined\n"
+    "^    at CALL_FUN (*test2.lsp:4)\n"
+    "^    at MAIN (*test2.lsp:8)\n"
+    "^    at *test2.lsp:10\n"
 }
 
 foreach line $lines {

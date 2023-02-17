@@ -9,12 +9,13 @@ set timeout 5
 
 spawn node src/main.js --no-dcl test/stacktrace/test1/main.lsp
 
+# Allow some garbage before "Error"
 set lines {
-    "^Error: +: expected Int, Real\n"
-    "^    at ADD (*/second.lsp:6)\n"
-    "^    at DOUBLE (*/second.lsp:3)\n"
-    "^    at F1 (*/first.lsp:4)\n"
-    "^    at */main.lsp:3\n"
+    "Error: +: expected Int, Real\n"
+    "^    at ADD (*second.lsp:6)\n"
+    "^    at DOUBLE (*second.lsp:3)\n"
+    "^    at F1 (*first.lsp:4)\n"
+    "^    at *main.lsp:3\n"
 }
 
 foreach line $lines {

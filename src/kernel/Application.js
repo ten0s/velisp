@@ -43,13 +43,14 @@ export const initContext = (context) => {
         const topContext = self.stack.top()
         const callerFile = topContext.callerFile
 
-        let filename = ensureLspExt(makeUnixPath(args[0].value()))
+        let filename = ensureLspExt(args[0].value())
         if (!path.isAbsolute(filename)) {
             if (!fs.existsSync(filename)) {
                 filename = path.join(path.dirname(callerFile), filename)
             }
         }
         try {
+            filename = makeUnixPath(filename)
             const data = fs.readFileSync(filename).toString()
 
             // Set temporarily the call file to be the loading file
