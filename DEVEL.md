@@ -80,7 +80,7 @@ $ vagrant box add macos-catalina-11.2.3 virtualbox.box
 
 #### Download Command Line Tools for Xcode
 
-Download Command_Line_Tools_for_Xcode_12.4.dmg and copy it to macos/ directory
+Download Command_Line_Tools_for_Xcode_12.5.1.dmg and copy it to macos/ directory
 
 #### Build MacOS build deps box
 
