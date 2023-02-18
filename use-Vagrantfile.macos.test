@@ -1,0 +1,15 @@
+export VAGRANT_VAGRANTFILE=Vagrantfile.macos.test
+
+echo "Select MACOS_NAME:"
+PS3="> "
+OPTS="big_sur monterey ventura"
+select OPT in $OPTS; do
+    case $REPLY in
+    1 | 2 | 3)
+        echo "MACOS_NAME=$OPT"
+        export MACOS_NAME=$OPT
+        break
+       ;;
+    *) echo "Try again!" ;;
+    esac
+done

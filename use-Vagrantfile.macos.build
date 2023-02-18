@@ -1,0 +1,2 @@
+export VAGRANT_VAGRANTFILE=Vagrantfile.macos.build
+export MACOS_NAME=big_sur
