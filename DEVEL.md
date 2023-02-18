@@ -117,11 +117,11 @@ Inside MacOS Terminal
 $ sudo apt install jq make
 ```
 
-#### [Node.js 16.x](https://nodejs.org/dist/latest-v16.x/)
+#### [Node.js 18.x](https://nodejs.org/dist/latest-v18.x/)
 
 ```
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-$ nvm install 16
+$ nvm install 18
 ```
 
 #### [GTK+3](https://www.gtk.org/) deps
