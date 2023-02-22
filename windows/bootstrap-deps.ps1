@@ -10,7 +10,6 @@ choco install -y innosetup --version=6.2.2
 # Install Node.js
 choco install -y nodejs-lts --version=18.14.1
 $Env:PATH = [Environment]::GetEnvironmentVariable('PATH', 'Machine')
-npm config set msvs_version 2017
 
 # Install MSYS2
 choco install -y msys2 --params "/InstallDir:C:\\msys64"
