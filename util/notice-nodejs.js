@@ -102,7 +102,8 @@ const parseNpmHomepage = (pkg) => {
         }
     }
 
-    throw new Error(`No homepage or repository: ${util.inspect(pkg)}`)
+    console.error(`No homepage or repository: ${util.inspect(pkg)}`)
+    return ''
 }
 
 const parseLicense = (lic) => lic.replace('(', '').replace(')', '').split(' OR ')
@@ -134,7 +135,8 @@ const parseNpmLicenses = (pkg) => {
         }
     }
 
-    throw new Error(`Unknown NPM license(s) object: ${util.inspect(pkg)}`)
+    console.error(`Unknown NPM license(s) object: ${util.inspect(pkg)}`)
+    return []
 }
 
 const parseNpmPkg = (pkg) => {

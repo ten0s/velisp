@@ -9,7 +9,7 @@
     "dependencies": {
         "antlr4": "4.10.1",
         "commander": "9.3.0",
-        "node-gtk": "github:romgrk/node-gtk#master",
+        "node-gtk": "github:ten0s/node-gtk#master",
         "temp": "0.9.4"
     },
     "devDependencies": {
