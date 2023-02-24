@@ -261,9 +261,11 @@ export const initContext = (context) => {
         const child = spawn(cmd, cmdArgs, {
             detached: false,
             stdio: 'inherit',
+            shell: false,
             windowsHide,
             windowsVerbatimArguments,
         }).on('error', () => {})
+        // Parent can exit without waiting for the child to exit
         child.unref()
         if (child.pid) {
             return new Int(child.pid)
