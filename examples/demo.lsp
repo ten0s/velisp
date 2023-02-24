@@ -99,11 +99,12 @@
 
 (defun read_lines (file / fd line lines)
   ;; Read lines from file
-  (setq fd (open file "r"))
-  (while (setq line (read-line fd))
-    (setq lines (cons line lines)))
-  (close fd)
-  (reverse lines))
+  (if (setq fd (open file "r"))
+      (progn
+        (while (setq line (read-line fd))
+          (setq lines (cons line lines)))
+        (close fd)
+        (reverse lines))))
 
 (defun run_name ( / name lsp argv0)
   ;; Run currently selected name
