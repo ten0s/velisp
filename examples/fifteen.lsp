@@ -1,17 +1,17 @@
 ;;;; SPDX-License-Identifier: 0BSD
 
+(load "util.lsp")
+
 ;;;;
-;;;; Defines
+;;;; Globals
 ;;;;
+
 (setq ROWS 4 COLS ROWS)
 (setq BLANK (* ROWS COLS))
 
 ;;;;
 ;;;; VeLisp functions missing in AutoCAD
 ;;;;
-
-(defun is_autocad ()
-  (not (getvar "VELISP-VERSION")))
 
 (if (is_autocad)
     (progn

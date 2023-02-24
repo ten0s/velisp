@@ -1,11 +1,10 @@
 ;;;; SPDX-License-Identifier: 0BSD
 
+(load "util.lsp")
+
 ;;;;
 ;;;; VeLisp functions missing in AutoCAD
 ;;;;
-
-(defun is_autocad ()
-  (not (getvar "VELISP-VERSION")))
 
 (if (is_autocad)
     (progn
@@ -16,10 +15,6 @@
 ;;;;
 ;;;; Main Logic
 ;;;;
-
-(defun get_os ()
-  (if (is_autocad) "Windows"
-    (nth 3 (split " " (ver)))))
 
 (defun editor ( / os)
   (setq os (get_os))
@@ -96,15 +91,6 @@
   (start_list "listbox_lsp" START_LIST_CLEAR)
     (mapcar 'add_list (read_lines lsp))
   (end_list))
-
-(defun read_lines (file / fd line lines)
-  ;; Read lines from file
-  (if (setq fd (open file "r"))
-      (progn
-        (while (setq line (read-line fd))
-          (setq lines (cons line lines)))
-        (close fd)
-        (reverse lines))))
 
 (defun run_name ( / name lsp argv0)
   ;; Run currently selected name
