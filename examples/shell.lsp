@@ -7,6 +7,9 @@
     (defun sleep (millisecs)
       (command "_.DELAY" millisecs)))
 
+(setq SHELL_RUN_ONLY nil
+      SHELL_RETURN_LINES T)
+
 (defun shell (cmd return / os shellargs shellsep tmp_out tmp_done)
   ;; Run a command inside OS dependent shell
   ;; Usage:
