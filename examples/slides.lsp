@@ -29,23 +29,30 @@
 ;;;; Main Logic
 ;;;;
 
-(defun parse_slide_lib_info (lines / parse_line parse_val parsers parsed info)
+(defun parse_lines (lines parsers / parsed parsers* pattern parser result)
+  (foreach line lines
+           (setq parsed nil
+                 parsers* parsers)
+           (while (and (not parsed) parsers*)
+             (setq pattern (caar parsers*)
+                   parser  (cdar parsers*))
+             (if (wcmatch line pattern)
+                 (setq parsed (parser line)
+                       result (cons parsed result))
+               (setq parsers* (cdr parsers*)))))
+  (reverse result))
+
+(defun parse_slide_lib_info (lines / parse_line parse_val)
   (defun parse_line (key str)
     (cons key (parse_val str)))
   (defun parse_val (str)
     (vl-string-trim " " (cadr (split ":" str))))
-  (setq parsers
-        '(("*Type*:*"   . (lambda (s) (parse_line 'type s)))
-          ("*Name*:*"   . (lambda (s) (parse_line 'name s)))
-          ("*Size*:*"   . (lambda (s) (parse_line 'size s)))
-          ("*Slides*:*" . (lambda (s) (parse_line 'slides s)))))
-  (foreach line lines
-           (foreach parser parsers
-                    (if (wcmatch line (car parser))
-                        (progn
-                          (setq parsed ((cdr parser) line))
-                          (setq info (cons parsed info))))))
-  info)
+  (parse_lines
+   lines
+   '(("*Type*:*"   . (lambda (str) (parse_line "Type" str)))
+     ("*Name*:*"   . (lambda (str) (parse_line "Name" str)))
+     ("*Size*:*"   . (lambda (str) (parse_line "Size" str)))
+     ("*Slides*:*" . (lambda (str) (parse_line "Slides" str))))))
 
 (defun slide_lib_info (slb_file / lines)
   (setq lines (shell (strcat "slide --info=info " slb_file) T))
