@@ -54,7 +54,7 @@
 (defun get_names (dir / names name)
   ;; Determine LSP file names that have corresponding DCL files
   (setq names '())
-  (foreach lsp (vl-directory-files dir "*.lsp")
+  (foreach lsp (vl-directory-files dir "*.lsp" LIST_FILES_ONLY)
            (setq name (vl-filename-base lsp))
            (if (vl-file-size (dcl_path dir name))
                (setq names (cons name names))))

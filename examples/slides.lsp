@@ -53,7 +53,7 @@
 
 (defun slide_lib_names (slb_file / lines)
   (setq lines (shell (strcat "slide --info=names " slb_file) T))
-  (mapcar '(lambda (name) (strcase name T))
+  (mapcar '(lambda (name) (strcase name LOWER_CASE))
           lines))
 
 (defun slide_names_from_slb_file (slb_file / lib names)
@@ -65,13 +65,13 @@
           names))
 
 (defun collect_slide_names (dir / slb_files slb_names sld_files sld_names)
-  (setq slb_files (vl-directory-files dir "*.slb" 1)
+  (setq slb_files (vl-directory-files dir "*.slb" LIST_FILES_ONLY)
         slb_files (mapcar '(lambda (file) (strcat dir "/" file))
                           slb_files)
         slb_names (mapcar 'slide_names_from_slb_file
                           slb_files)
         slb_names (apply 'append slb_names)
-        sld_files (vl-directory-files dir "*.sld" 1)
+        sld_files (vl-directory-files dir "*.sld" LIST_FILES_ONLY)
         sld_names (mapcar 'vl-filename-base
                           sld_files))
   (append slb_names sld_names))
