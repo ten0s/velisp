@@ -160,9 +160,9 @@
 (defun process_current_name ( / info)
   (setq info (get_current_info))
   (draw_slide (get_info 'name info))
-  (show_info (get_slide_info info)
+  (show_info (get_slide_info info)      ; Cache info?
              (get_info 'lib_info info)
-             (get_slide_records info)))
+             (get_slide_records info))) ; Cache recs?
 
 (defun draw_slide (name)
   (start_image "image")
