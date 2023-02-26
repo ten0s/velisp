@@ -17,3 +17,33 @@
           (setq lines (cons line lines)))
         (close fd)
         (reverse lines))))
+
+(defun filter (fun lst / acc)
+  (foreach elm lst
+           (if (fun elm)
+               (setq acc (cons elm acc))))
+  (reverse acc))
+
+(defun duplicate (n elm / acc)
+  (while (> n 0)
+    (setq n (1- n)
+          acc (cons elm acc))))
+
+(defun evenp (num)
+  (and (= (type num) 'INT)
+       (= (rem num 2) 0)))
+
+(defun oddp (num)
+  (and (= (type num) 'INT)
+       (/= (rem num 2) 0)))
+
+(defun println (what)
+  (if (atom what)
+      (princ what)
+    (foreach str what (princ str)))
+  (princ "\n")
+  what)
+
+(defun inspect (msg what)
+  (princ msg)
+  (println what))

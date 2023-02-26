@@ -181,28 +181,6 @@
       (setq keys (cons (make_key i j) keys))))
   (reverse keys))
 
-(defun println (lst)
-  (foreach str lst (princ str))
-  (princ "\n"))
-
-(defun inspect (msg val)
-  (println (list msg val))
-  val)
-
-(defun filter (fun lst / acc)
-  (foreach elm lst
-           (if (fun elm)
-               (setq acc (cons elm acc))))
-  (reverse acc))
-
-(defun evenp (num)
-  (and (= (type num) 'INT)
-       (= (rem num 2) 0)))
-
-(defun oddp (num)
-  (and (= (type num) 'INT)
-       (/= (rem num 2) 0)))
-
 ;;;;
 ;;;; Main Logic
 ;;;;

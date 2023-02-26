@@ -194,11 +194,6 @@
 ;;;; Utilities
 ;;;;
 
-(defun duplicate (n elm / lst)
-  (while (> n 0)
-    (setq n (1- n)
-          lst (cons elm lst))))
-
 (defun make_key (i j)
   (strcat (itoa i) "x" (itoa j)))
 
@@ -213,10 +208,6 @@
     (foreach j (seq 1 cols 1)
       (setq keys (cons (make_key i j) keys))))
   (reverse keys))
-
-(defun println (lst)
-  (foreach str lst (princ str))
-  (princ "\n"))
 
 ;;;;
 ;;;; Main Logic

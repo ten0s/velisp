@@ -21,20 +21,12 @@
 ;;;; Utilities
 ;;;;
 
-(defun println (what)
-  (princ what) (princ "\n")
-  what)
-
-(defun inspect (msg what)
-  (princ msg) (princ " ")
-  (println what))
-
 (defun flatten (xss)
   ;; Poor man's flatten
   (apply 'append xss))
 
 (defun shell_lines (cmd)
-  (shell (inspect "Running:" cmd) SHELL_RETURN_LINES))
+  (shell (inspect "Running: " cmd) SHELL_RETURN_LINES))
 
 (defun get_dir_files (dir glob / join_dir)
   (defun join_dir (file)

@@ -26,10 +26,6 @@
 (defun path_sep ()
   (if (= (get_os) "Windows") "\\" "/"))
 
-(defun println (what)
-  (princ what)
-  (princ "\n"))
-
 (defun get_current_file ()
   (if (is_autocad) (findfile "demo.lsp")
     (getvar "VELISP-FILE")))
