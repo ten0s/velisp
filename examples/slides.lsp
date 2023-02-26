@@ -50,7 +50,7 @@
                (setq parsers* (cdr parsers*)))))
   (reverse result))
 
-(defun parse_colon_split_info (lines / parse_line)
+(defun parse_colon_split_lines (lines / parse_line)
   (defun parse_line (str / pair)
     (setq pair (split ":" str))
     (strcat (vl-string-trim " " (car pair))
@@ -61,7 +61,7 @@
 
 (defun get_slb_info (slb_file / lines)
   (setq lines (shell_lines (strcat "slide --info=info " slb_file)))
-  (parse_colon_split_info lines))
+  (parse_colon_split_lines lines))
 
 (defun get_slb_names (slb_file / lines)
   (setq lines (shell_lines (strcat "slide --info=names " slb_file)))
@@ -80,11 +80,11 @@
 
 (defun get_slide_info_from_sld_file (sld_file / lines)
   (setq lines (shell_lines (strcat "slide --info=info " sld_file)))
-  (parse_colon_split_info lines))
+  (parse_colon_split_lines lines))
 
 (defun get_slide_info_from_slb_file (slb_file name / lines)
   (setq lines (shell_lines (strcat "slide --info=info " slb_file " " name)))
-  (parse_colon_split_info lines))
+  (parse_colon_split_lines lines))
 
 (defun get_slide_records_from_sld_file (sld_file)
   (shell_lines (strcat "slide --info=recs " sld_file)))
