@@ -536,8 +536,11 @@ class List {
         this.arr = [...arr]
     }
 
-    // :: () -> Sym
+    // :: () -> Sym | Nil
     type() {
+        if (this.isNil()) {
+            return new Bool(false)
+        }
         return new Sym('list')
     }
 
