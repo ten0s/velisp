@@ -16,6 +16,7 @@ RUN apt-get update         &&  \
         git                    \
         gobject-introspection  \
         jq                     \
+        libboost-all-dev       \
         libgirepository1.0-dev \
         libgtk-3-dev           \
         libcairo2              \
@@ -56,13 +57,15 @@ COPY LICENSE                  velisp/
 COPY README-en-linux.template velisp/
 COPY README-ru-linux.template velisp/
 
+RUN mkdir -p velisp/bin
 RUN mkdir -p velisp/lib64/girepository-1.0
 
 RUN echo "Building slide..."
-RUN git clone -b 0.3.0 https://github.com/ten0s/slide && \
+RUN git clone -b 0.4.0 https://github.com/ten0s/slide && \
     cd slide                                          && \
     make                                              && \
     make install                                      && \
+    cp -r install/bin/* ../velisp/bin/                && \
     cp -r install/lib/* ../velisp/lib64/              && \
     cd ..
 

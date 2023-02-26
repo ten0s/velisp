@@ -30,7 +30,11 @@ su $USER -c "/bin/bash -s" <<'EOF'
         jq                    \
         node@18
    brew tap ten0s/brew-cache
+   brew tap ten0s/velisp
+   brew install libgimacos
+   brew install slide
    brew update
+   brew upgrade
    brew cache -u
 
    echo 'alias ll="ls -l"'                                > ~/.zshrc

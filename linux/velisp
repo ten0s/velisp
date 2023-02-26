@@ -6,9 +6,11 @@
 # Force local lib64
 BASE_DIR=$(dirname $0)
 
+PATH=$BASE_DIR:$PATH
 LD_LIBRARY_PATH=$BASE_DIR/lib64
 GI_TYPELIB_PATH=$BASE_DIR/lib64/girepository-1.0
 
+export PATH
 export LD_LIBRARY_PATH
 export GI_TYPELIB_PATH
 

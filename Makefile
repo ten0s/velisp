@@ -137,6 +137,7 @@ tarLinux:
 	cp -r lib64/    velisp-${VERSION}-linux-x64/
 	cp -r examples/ velisp-${VERSION}-linux-x64/
 	cp LICENSE      velisp-${VERSION}-linux-x64/
+	cp bin/slide    velisp-${VERSION}-linux-x64/
 	node util/notice-nodejs.js node_modules/ > velisp-${VERSION}-linux-x64/NOTICE
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-en-linux.template > velisp-${VERSION}-linux-x64/README-en.md
 	sed -E -e "s/\{\{version\}\}/${VERSION}/g" README-ru-linux.template > velisp-${VERSION}-linux-x64/README-ru.md
@@ -150,6 +151,7 @@ prepareWindows:
 	cp -r lib/              velisp-${VERSION}-win-x64/
 	cp -r examples/         velisp-${VERSION}-win-x64/
 	cp LICENSE              velisp-${VERSION}-win-x64/
+	cp /mingw64/bin/slide        velisp/${VERSION}-win-x64/
 	windows/copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	node util/notice-nodejs.js node_modules/                            > velisp-${VERSION}-win-x64/NOTICE
 	echo -e "\n--------------------------------\n"                     >> velisp-${VERSION}-win-x64/NOTICE
@@ -173,6 +175,7 @@ tarMacos:
 	cp -R lib       velisp-${VERSION}-macos-x64/
 	cp -R examples  velisp-${VERSION}-macos-x64/
 	cp LICENSE      velisp-${VERSION}-macos-x64/
+	cp /usr/local/bin/slide     velisp-${VERSION}-macos-x64/
 	macos/copy-homebrew-deps.sh velisp-${VERSION}-macos-x64/
 	node util/notice-nodejs.js node_modules/                                > velisp-${VERSION}-macos-x64/NOTICE
 	echo "\n--------------------------------\n"                            >> velisp-${VERSION}-macos-x64/NOTICE
