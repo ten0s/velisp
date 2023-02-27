@@ -2,7 +2,9 @@
 set -Eeuo pipefail
 
 # Upgrade deps
-brew upgrade
+brew update
+brew upgrade libgimacos
+brew upgrade slide
 brew cache -u
 
 make macosPackage
