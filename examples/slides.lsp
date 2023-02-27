@@ -137,24 +137,43 @@
     (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
     (exit 1)))
 
-(defun fill_slide_names ( / names)
-  (setq names (mapcar '(lambda (info) (get_info 'name info)) INFOS))
+(defun fill_slide_names (names)
   (start_list "names")
     (mapcar 'add_list names)
   (end_list)
   (set_tile "names" "0")
   (action_tile "names" "(process_current_name)"))
 
-(defun get_current_info ()
-  (nth (atoi (get_tile "names"))
-       INFOS))
+(defun get_current_info ( / name infos* info found)
+  (setq name (nth (atoi (get_tile "names")) NAMES)
+        infos* INFOS)
+  (while (and infos* (not found))
+    (setq info (car infos*)
+          infos* (cdr infos*)
+          found (= (get_info 'name info) name)))
+  info)
 
-(defun process_current_name ( / info)
+(defun process_current_name ( / info slide_info slide_recs)
   (setq info (get_current_info))
+
+  ;; Get slide info if not cached
+  (if (not (get_info 'slide_info info))
+      (setq slide_info (get_slide_info info)
+            info (cons (cons 'slide_info slide_info) info)))
+
+  ;; Get side records if not cached
+  (if (not (get_info 'slide_recs info))
+      (setq slide_recs (get_slide_records info)
+            info (cons (cons 'slide_recs slide_recs) info)))
+
+  ;; Cache if needed
+  (if (or slide_info slide_recs)
+      (setq INFOS (cons info INFOS)))
+
   (draw_slide (get_info 'name info))
-  (show_info (get_slide_info info)      ; Cache info?
-             (get_info 'lib_info info)
-             (get_slide_records info))) ; Cache recs?
+  (show_info (get_info 'slide_info info)
+             (get_info 'slide_recs info)
+             (get_info 'lib_info info)))
 
 (defun draw_slide (name)
   (start_image "image")
@@ -162,24 +181,25 @@
     (slide_image 0 0 WIDTH HEIGHT name)
   (end_image))
 
-(defun show_info (slide_info lib_info slide_records)
+(defun show_info (slide_info slide_recs lib_info)
   (start_list "slide-info")
     (mapcar 'add_list slide_info)
   (end_list)
 
-  (start_list "lib-info")
-    (mapcar 'add_list lib_info)
-  (end_list)
-
   (start_list "slide-recs")
     (mapcar 'add_list slide_records)
+  (end_list)
+
+  (start_list "lib-info")
+    (mapcar 'add_list lib_info)
   (end_list))
 
-(setq INFOS (get_infos_from_dir_files "examples"))
-(setq WIDTH  (dimx_tile "image"))
-(setq HEIGHT (dimy_tile "image"))
+(setq INFOS (get_infos_from_dir_files "examples")
+      NAMES (mapcar '(lambda (info) (get_info 'name info)) INFOS)
+      WIDTH (dimx_tile "image")
+      HEIGHT (dimy_tile "image"))
 
-(fill_slide_names)
+(fill_slide_names NAMES)
 (process_current_name)
 
 (start_dialog)
