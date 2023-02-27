@@ -139,7 +139,7 @@
 
 (defun fill_slide_names ( / names)
   (setq names (mapcar '(lambda (info) (get_info 'name info)) INFOS))
-  (start_list "names" START_LIST_CLEAR)
+  (start_list "names")
     (mapcar 'add_list names)
   (end_list)
   (set_tile "names" "0")
@@ -163,15 +163,15 @@
   (end_image))
 
 (defun show_info (slide_info lib_info slide_records)
-  (start_list "slide-info" START_LIST_CLEAR)
+  (start_list "slide-info")
     (mapcar 'add_list slide_info)
   (end_list)
 
-  (start_list "lib-info" START_LIST_CLEAR)
+  (start_list "lib-info")
     (mapcar 'add_list lib_info)
   (end_list)
 
-  (start_list "slide-recs" START_LIST_CLEAR)
+  (start_list "slide-recs")
     (mapcar 'add_list slide_records)
   (end_list))
 

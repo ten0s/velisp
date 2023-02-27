@@ -60,7 +60,7 @@
 
 (defun init_listbox_names ()
   ;; Initialize listbox with names
-  (start_list "listbox_names" START_LIST_CLEAR)
+  (start_list "listbox_names")
     (mapcar 'add_list NAMES)
   (end_list)
 
@@ -77,13 +77,13 @@
 
   (setq dcl (dcl_path DIR name))
   (set_tile "text_dcl" dcl)
-  (start_list "listbox_dcl" START_LIST_CLEAR)
+  (start_list "listbox_dcl")
     (mapcar 'add_list (read_lines dcl))
   (end_list)
 
   (setq lsp (lsp_path DIR name))
   (set_tile "text_lsp" lsp)
-  (start_list "listbox_lsp" START_LIST_CLEAR)
+  (start_list "listbox_lsp")
     (mapcar 'add_list (read_lines lsp))
   (end_list))
 
