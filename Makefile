@@ -151,7 +151,7 @@ prepareWindows:
 	cp -r lib/              velisp-${VERSION}-win-x64/
 	cp -r examples/         velisp-${VERSION}-win-x64/
 	cp LICENSE              velisp-${VERSION}-win-x64/
-	cp /mingw64/bin/slide        velisp/${VERSION}-win-x64/
+	cp /mingw64/bin/slide.exe    velisp-${VERSION}-win-x64/
 	windows/copy-mingw64-deps.sh velisp-${VERSION}-win-x64/
 	node util/notice-nodejs.js node_modules/                            > velisp-${VERSION}-win-x64/NOTICE
 	echo -e "\n--------------------------------\n"                     >> velisp-${VERSION}-win-x64/NOTICE
