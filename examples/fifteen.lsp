@@ -343,19 +343,6 @@
 ;;;; DCL Dialog
 ;;;;
 
-(setq dcl_file "fifteen.dcl")
-(setq dlg_id "fifteen")
-
-(if (< (setq dcl_id (load_dialog dcl_file)) 0)
-  (progn
-    (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
-    (exit 1)))
-
-(if (not (new_dialog dlg_id dcl_id "(button_handler $KEY $REASON)"))
-  (progn
-    (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
-    (exit 1)))
-
 (defun button_handler (key reason)
   (if (= reason 1)
       (single_click_handler key)))
@@ -378,9 +365,9 @@
               (draw_tile blank_key old_state)
               (check_game_over))))))
 
-(action_tile "new_game" "(start_game)")
-
-(start_game)
-
-(start_dialog)
-(unload_dialog dcl_id)
+(with_dialog
+ "fifteen.dcl" "fifteen" "(button_handler $KEY $REASON)"
+ (lambda ()
+   (action_tile "new_game" "(start_game)")
+   (start_game))
+ nil)

@@ -114,26 +114,13 @@
 ;;;; DCL Dialog
 ;;;;
 
-(setq dcl_file "demo.dcl")
-(setq dlg_id "demo_dlg")
-
-(if (< (setq dcl_id (load_dialog dcl_file)) 0)
-  (progn
-    (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
-    (exit 1)))
-
-(if (not (new_dialog dlg_id dcl_id))
-  (progn
-    (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
-    (exit 1)))
-
-(action_tile "button_run" "(run_name)")
-(action_tile "button_dcl" "(open_dcl)")
-(action_tile "button_lsp" "(open_lsp)")
-(action_tile "button_exit" "(done_dialog 0)")
-
-(init_listbox_names)
-(show_current_name)
-
-(start_dialog)
-(unload_dialog dcl_id)
+(with_dialog
+ "demo.dcl" "demo_dlg" ""
+ (lambda ()
+   (action_tile "button_run" "(run_name)")
+   (action_tile "button_dcl" "(open_dcl)")
+   (action_tile "button_lsp" "(open_lsp)")
+   (action_tile "button_exit" "(done_dialog 0)")
+   (init_listbox_names)
+   (show_current_name))
+ nil)

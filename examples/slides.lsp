@@ -124,19 +124,6 @@
 ;;;; DCL Dialog
 ;;;;
 
-(setq dcl_file "slides.dcl")
-(setq dlg_id "slides_dlg")
-
-(if (< (setq dcl_id (load_dialog dcl_file)) 0)
-  (progn
-    (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
-    (exit 1)))
-
-(if (not (new_dialog dlg_id dcl_id))
-  (progn
-    (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
-    (exit 1)))
-
 (defun fill_slide_names (names)
   (start_list "names")
     (mapcar 'add_list names)
@@ -194,13 +181,14 @@
     (mapcar 'add_list lib_info)
   (end_list))
 
-(setq INFOS (get_infos_from_dir_files "examples")
-      NAMES (mapcar '(lambda (info) (get_info 'name info)) INFOS)
-      WIDTH (dimx_tile "image")
-      HEIGHT (dimy_tile "image"))
+(with_dialog
+ "slides.dcl" "slides_dlg" ""
+ (lambda ()
+   (setq INFOS (get_infos_from_dir_files "examples")
+         NAMES (mapcar '(lambda (info) (get_info 'name info)) INFOS)
+         WIDTH (dimx_tile "image")
+         HEIGHT (dimy_tile "image"))
 
-(fill_slide_names NAMES)
-(process_current_name)
-
-(start_dialog)
-(unload_dialog dcl_id)
+   (fill_slide_names NAMES)
+   (process_current_name))
+ nil)

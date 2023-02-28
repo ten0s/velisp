@@ -47,3 +47,23 @@
 (defun inspect (msg what)
   (princ msg)
   (println what))
+
+(defun with_dialog (dcl_file dlg_id action init_fun done_fun / dcl_id ret)
+  (if (< (setq dcl_id (load_dialog dcl_file)) 0)
+    (progn
+      (princ (strcat "Error: dcl file '" dcl_file "' not loaded\n"))
+      (exit 1)))
+
+  (if (not (new_dialog dlg_id dcl_id action))
+    (progn
+      (princ (strcat "Error: dialog '" dlg_id "' not found\n"))
+      (exit 1)))
+
+  (if (not done_fun)
+      (setq done_fun (lambda (x) x)))
+
+  (init_fun)
+  (setq ret (done_fun (start_dialog)))
+
+  (unload_dialog dcl_id)
+  ret)
