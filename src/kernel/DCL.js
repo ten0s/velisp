@@ -36,7 +36,7 @@ import {
 
 // global dclId index
 let _dclId = 0
-const _dclFiles = {}
+const _dclMaps = {}
 
 const _dialogs = new VeStack()
 const _lists   = new VeStack()
@@ -109,17 +109,29 @@ export const initContext = (context) => {
         if (args.length > 1) {
             throw new Error('load_dialog: too many arguments')
         }
+        // Return a positive integer on success,
+        // or a negative integer on error
         let dclFile = ensureDclExt(makeUnixPath(
             ensureType('load_dialog:', args[0], [Str]).value()))
         if (!path.isAbsolute(dclFile)) {
-            if (!fs.existsSync(dclFile)) {
-                const lspFile = self.stack.top().callerFile
-                if (lspFile) {
-                    dclFile = path.join(path.dirname(lspFile), dclFile)
+            // Search dclFile relative to stack callers
+            const dclFileOrig = dclFile
+            for (let i = 0; i < self.stack.size(); i++) {
+                if (!fs.existsSync(dclFile)) {
+                    dclFile = dclFileOrig
+                    const lspFile = self.stack.top(i).callerFile
+                    if (lspFile) {
+                        dclFile = path.join(path.dirname(lspFile), dclFile)
+                    }
+                } else {
+                    break
                 }
             }
         }
-        // Return a positive integer, or a negative integer on error
+        if (!fs.existsSync(dclFile)) {
+            console.error(`Error: ${dclFile} not found`)
+            return new Int(-1)
+        }
         const dclContext = new VeDclContext()
 
         // Inject lib/dcl/{base,acad}.dcl
@@ -128,12 +140,14 @@ export const initContext = (context) => {
         VeDclLoader.load(`${rootdir}/lib/dcl/acad.dcl`, dclContext)
 
         const dclDialogs = VeDclLoader.load(dclFile, dclContext)
-        const dclMap = {}
+        const dclMap = {
+            DCL_FILE: dclFile // see NEW_DIALOG
+        }
         for (const dclDialog of dclDialogs) {
             dclMap[dclDialog.id] = dclDialog
         }
         const dclId = new Int(_dclId++)
-        _dclFiles[dclId.value()] = dclMap
+        _dclMaps[dclId.value()] = dclMap
         return dclId
     }))
     context.setSym('NEW_DIALOG', new KFun('new_dialog', ['dlg_id', 'dcl_id', '[action]', '[point]'], [], (self, args) => {
@@ -153,26 +167,22 @@ export const initContext = (context) => {
         if (args.length > 3) {
             point = ensureType('new_dialog: `point`', args[3], [List])
         }
-        const dclFile = _dclFiles[dclId.value()]
-        if (dclFile) {
-            const dclDialog = dclFile[dlgId.value()]
+        const dclMap = _dclMaps[dclId.value()]
+        if (dclMap) {
+            const dclDialog = dclMap[dlgId.value()]
             if (dclDialog) {
-                try {
-                    _dialogs.push(dclDialog.clone())
-                    return withDialog(dialog => {
-                        const position = [point.value()[0].value(), point.value()[1].value()]
-                        dialog.gtkInitWidget(action.value(), position, self.stack)
-                        return new Bool(true)
-                    })
-                } catch (e) {
-                    // Should never happen since dialog ID is mandatory
-                    console.error(e)
-                }
+                _dialogs.push(dclDialog.clone())
+                return withDialog(dialog => {
+                    const position = [point.value()[0].value(), point.value()[1].value()]
+                    dialog.gtkInitWidget(action.value(), position, self.stack)
+                    return new Bool(true)
+                })
             } else {
-                throw new Error(`${dlgId} not found in ${dclFile}`)
+                const dclFile = dclMap.DCL_FILE // see LOAD_DIALOG
+                console.error(`Error: ${dlgId} not found in ${dclFile}`)
             }
         } else {
-            throw new Error(`${dclId} not found`)
+            console.error(`Error: ${dclId} not found`)
         }
         return new Bool(false)
     }))
@@ -217,7 +227,7 @@ export const initContext = (context) => {
             throw new Error('unload_dialog: too many arguments')
         }
         const dclId = ensureType('unload_dialog:', args[0], [Int])
-        delete _dclFiles[dclId.value()]
+        delete _dclMaps[dclId.value()]
         return new Bool(false)
     }))
     context.setSym('ACTION_TILE', new KFun('action_tile', ['key', 'action'], [], (self, args) => {
