@@ -187,7 +187,7 @@
   (end_list)
 
   (start_list "slide-recs")
-    (mapcar 'add_list slide_records)
+    (mapcar 'add_list slide_recs)
   (end_list)
 
   (start_list "lib-info")
