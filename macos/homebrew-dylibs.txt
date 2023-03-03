@@ -75,5 +75,5 @@
 /usr/local/Cellar/pixman/0.42.2/lib/libpixman-1.0.42.2.dylib
 /usr/local/Cellar/pixman/0.42.2/lib/libpixman-1.0.dylib
 /usr/local/Cellar/pixman/0.42.2/lib/libpixman-1.dylib
-/usr/local/Cellar/slide/0.5.0/lib/libgislide.dylib
-/usr/local/Cellar/slide/0.5.0/lib/libslide.dylib
+/usr/local/Cellar/slide/0.6.1/lib/libgislide.dylib
+/usr/local/Cellar/slide/0.6.1/lib/libslide.dylib

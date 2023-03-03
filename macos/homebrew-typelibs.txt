@@ -12,4 +12,4 @@
 /usr/local/Cellar/harfbuzz/7.0.1/lib/girepository-1.0/HarfBuzz-0.0.typelib
 /usr/local/Cellar/libgimacos/1.3.0/lib/girepository-1.0/MacOSLib-1.0.typelib
 /usr/local/Cellar/pango/1.50.13/lib/girepository-1.0/Pango-1.0.typelib
-/usr/local/Cellar/slide/0.5.0/lib/girepository-1.0/SlideLib-1.0.typelib
+/usr/local/Cellar/slide/0.6.1/lib/girepository-1.0/SlideLib-1.0.typelib

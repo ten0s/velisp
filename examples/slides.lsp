@@ -60,11 +60,11 @@
                '(("*:*" . parse_line))))
 
 (defun get_slb_info (slb_file / lines)
-  (setq lines (shell_lines (strcat "slide --info=info " slb_file)))
+  (setq lines (shell_lines (strcat "slide-info --what=info " slb_file)))
   (parse_colon_split_lines lines))
 
 (defun get_slb_names (slb_file / lines)
-  (setq lines (shell_lines (strcat "slide --info=names " slb_file)))
+  (setq lines (shell_lines (strcat "slide-info --what=names " slb_file)))
   (mapcar '(lambda (name) (strcase name LOWER_CASE)) lines))
 
 (defun get_infos_from_slb_file (slb_file / slb_name slb_info names)
@@ -79,18 +79,18 @@
           names))
 
 (defun get_slide_info_from_sld_file (sld_file / lines)
-  (setq lines (shell_lines (strcat "slide --info=info " sld_file)))
+  (setq lines (shell_lines (strcat "slide-info --what=info " sld_file)))
   (parse_colon_split_lines lines))
 
 (defun get_slide_info_from_slb_file (slb_file name / lines)
-  (setq lines (shell_lines (strcat "slide --info=info " slb_file " " name)))
+  (setq lines (shell_lines (strcat "slide-info --what=info " slb_file " " name)))
   (parse_colon_split_lines lines))
 
 (defun get_slide_records_from_sld_file (sld_file)
-  (shell_lines (strcat "slide --info=recs " sld_file)))
+  (shell_lines (strcat "slide-info --what=records " sld_file)))
 
 (defun get_slide_records_from_slb_file (slb_file name)
-  (shell_lines (strcat "slide --info=recs " slb_file " " name)))
+  (shell_lines (strcat "slide-info --what=records " slb_file " " name)))
 
 (defun get_slide_info (info)
   (if (get_info 'lib_info info)
