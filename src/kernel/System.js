@@ -252,6 +252,7 @@ export const initContext = (context) => {
             } else {
                 cmd = allArgs.shift()
                 cmdArgs = allArgs
+                windowsVerbatimArguments = true
             }
         } else {
             cmd = allArgs.shift()
