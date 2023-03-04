@@ -37,6 +37,14 @@
 ;;;; Main Logic
 ;;;;
 
+(defun get_current_file_path ()
+  (if (is_autocad) (findfile "slides.lsp")
+    (getvar "VELISP-FILE")))
+
+(defun get_current_file_dir ()
+  ;; Determine current LSP file directory
+  (vl-filename-directory (get_current_file_path)))
+
 (defun parse_lines (lines parsers / parsed parsers* pattern parser result)
   (foreach line lines
            (setq parsed nil
@@ -184,7 +192,8 @@
 (with_dialog
  "slides.dcl" "slides_dlg" ""
  (lambda ()
-   (setq INFOS (get_infos_from_dir_files "examples")
+   (setq DIR (get_current_file_dir)
+         INFOS (get_infos_from_dir_files DIR)
          NAMES (mapcar '(lambda (info) (get_info 'name info)) INFOS)
          WIDTH (dimx_tile "image")
          HEIGHT (dimy_tile "image"))

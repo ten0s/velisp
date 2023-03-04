@@ -26,17 +26,17 @@
 (defun path_sep ()
   (if (= (get_os) "Windows") "\\" "/"))
 
-(defun get_current_file ()
+(defun get_current_file_path ()
   (if (is_autocad) (findfile "demo.lsp")
     (getvar "VELISP-FILE")))
 
-(defun get_file_dir ()
+(defun get_current_file_dir ()
   ;; Determine current LSP file directory
   ;; Works with either:
   ;; $ velisp examples/demo.lsp
   ;; > (load "examples/demo.lsp")
   ;; > (startapp (argv 0) "examples/demo.lsp")
-  (vl-filename-directory (get_current_file)))
+  (vl-filename-directory (get_current_file_path)))
 
 (defun file_path (dir name ext)
   (strcat dir (path_sep) name ext))
@@ -55,8 +55,8 @@
                (setq names (cons name names))))
   (sort < names))
 
-(setq DIR (get_file_dir))
-(setq NAMES (get_names DIR))
+(setq DIR (get_current_file_dir)
+      NAMES (get_names DIR))
 
 (defun init_listbox_names ()
   ;; Initialize listbox with names
