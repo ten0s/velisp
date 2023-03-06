@@ -9,6 +9,9 @@
   (if (is_autocad) "Windows"
     (nth 3 (split " " (ver)))))
 
+(defun path_sep ()
+  (if (= (get_os) "Windows") "\\" "/"))
+
 (defun read_lines (file / fd line lines)
   ;; Read lines from file
   (if (setq fd (open file "r"))

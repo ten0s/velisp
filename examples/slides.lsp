@@ -30,7 +30,7 @@
 
 (defun get_dir_files (dir glob / join_dir)
   (defun join_dir (file)
-    (strcat dir "/" file))
+    (strcat dir (path_sep) file))
   (mapcar 'join_dir (vl-directory-files dir glob LIST_FILES_ONLY)))
 
 ;;;;

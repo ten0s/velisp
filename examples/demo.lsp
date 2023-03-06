@@ -23,9 +23,6 @@
         ((= os "MacOS")   '("open" "-t"))
         (T (alert (strcat "No Editor known for " os)) '("echo"))))
 
-(defun path_sep ()
-  (if (= (get_os) "Windows") "\\" "/"))
-
 (defun get_current_file_path ()
   (if (is_autocad) (findfile "demo.lsp")
     (getvar "VELISP-FILE")))
