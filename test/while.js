@@ -5,6 +5,7 @@ TestRunner.run({
     name: 'while',
 
     tests: [
+        {test: '(while nil)', result: new Bool(false)},
         {test: '(while nil "done")', result: new Bool(false)},
 
         {test: `(setq test 1)

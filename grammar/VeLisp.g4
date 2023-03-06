@@ -38,7 +38,7 @@ expr :
      | '(' QUOTE expr ')'                                                         # quote
      | '(' REPEAT repeatNum expr* ')'                                             # repeat
      | '(' SETQ setqNameExpr* ')'                                                 # setQ
-     | '(' WHILE whileTest expr+ ')'                                              # while
+     | '(' WHILE whileTest expr* ')'                                              # while
 
      | '(' listExpr+ '.' listExpr ')'                                             # dotList
      | '(' listExpr* ')'                                                          # list
