@@ -90,7 +90,7 @@ const parseSlideName = (sldname) => {
     const i = sldname.indexOf('(')
     const j = sldname.lastIndexOf(')')
 
-    if (i >=0 && j == sldname.length-1) {
+    if (i >= 0 && j == sldname.length-1) {
         // It's a slide library
         return [ensureSlbExt(sldname.substr(0, i)), sldname.substr(i+1, j-i-1)]
     } else if (i == -1 && j == -1) {
