@@ -9,7 +9,9 @@
 (if (is_autocad)
     (progn
       (load "../lib/dcl/colors.lsp")
-      (load "../lib/dcl/consts.lsp")))
+      (load "../lib/dcl/consts.lsp")
+      (load "../lib/kernel/consts.lsp")
+      (load "../lib/velisp/string.lsp")))
 
 ;;;;
 ;;;; Shell
@@ -53,7 +55,7 @@
              (setq pattern (caar parsers*)
                    parser  (cdar parsers*))
              (if (wcmatch line pattern)
-                 (setq parsed (parser line)
+                 (setq parsed (apply parser (list line))
                        result (cons parsed result))
                (setq parsers* (cdr parsers*)))))
   (reverse result))
