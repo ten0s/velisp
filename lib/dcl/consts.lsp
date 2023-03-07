@@ -7,7 +7,6 @@
       MODE_TILE_SELECT_EDITBOX 3
       MODE_TILE_FLIP_IMAGE_HIGHLIGHT 4)
 
-
 ;; start_list operation
 (setq START_LIST_CHANGE 1
       START_LIST_APPEND 2

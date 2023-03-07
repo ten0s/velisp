@@ -177,7 +177,7 @@
 
 (defun draw_slide (name)
   (start_image "image")
-    (fill_image  0 0 WIDTH HEIGHT BLACK_COLOR)
+    (fill_image  0 0 WIDTH HEIGHT COLOR_BLACK)
     (slide_image 0 0 WIDTH HEIGHT name)
   (end_image))
 

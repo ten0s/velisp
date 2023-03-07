@@ -98,56 +98,56 @@
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_1 BLACK_COLOR))))
+     (draw_glyph key GLYPH_1 COLOR_BLACK))))
 
 (defun draw_2 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_2 BLACK_COLOR))))
+     (draw_glyph key GLYPH_2 COLOR_BLACK))))
 
 (defun draw_3 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_3 BLACK_COLOR))))
+     (draw_glyph key GLYPH_3 COLOR_BLACK))))
 
 (defun draw_4 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_4 BLACK_COLOR))))
+     (draw_glyph key GLYPH_4 COLOR_BLACK))))
 
 (defun draw_5 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_5 BLACK_COLOR))))
+     (draw_glyph key GLYPH_5 COLOR_BLACK))))
 
 (defun draw_6 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_6 BLACK_COLOR))))
+     (draw_glyph key GLYPH_6 COLOR_BLACK))))
 
 (defun draw_7 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_7 BLACK_COLOR))))
+     (draw_glyph key GLYPH_7 COLOR_BLACK))))
 
 (defun draw_8 (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_8 BLACK_COLOR))))
+     (draw_glyph key GLYPH_8 COLOR_BLACK))))
 
 (defun draw_hidden (key)
   (with_image
@@ -160,35 +160,35 @@
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_FLAG BLACK_COLOR))))
+     (draw_glyph key GLYPH_FLAG COLOR_BLACK))))
 
 (defun draw_question (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_QUESTION BLACK_COLOR))))
+     (draw_glyph key GLYPH_QUESTION COLOR_BLACK))))
 
 (defun draw_found_mine (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_MINE BLUE_COLOR))))
+     (draw_glyph key GLYPH_MINE COLOR_BLUE))))
 
 (defun draw_missed_mine (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_MINE BLACK_COLOR))))
+     (draw_glyph key GLYPH_MINE COLOR_BLACK))))
 
 (defun draw_exploded_mine (key)
   (with_image
    key
    (lambda ()
      (draw_open key)
-     (draw_glyph key GLYPH_MINE RED_COLOR))))
+     (draw_glyph key GLYPH_MINE COLOR_RED))))
 
 ;;;;
 ;;;; Utilities
@@ -259,7 +259,7 @@
   (with_image
    "score_flag"
    (lambda ()
-     (draw_glyph key GLYPH_FLAG BLACK_COLOR)))
+     (draw_glyph key GLYPH_FLAG COLOR_BLACK)))
   (enable_difficulty)
   (setq MINES (get_difficulty))
   (show_score (make_score 0 MINES))
@@ -271,7 +271,7 @@
   (with_image
    "score_flag"
    (lambda ()
-     (draw_glyph key GLYPH_FLAG BLUE_COLOR)))
+     (draw_glyph key GLYPH_FLAG COLOR_BLUE)))
   (show_score "You Won!")
   (show_hint "Start over or exit"))
 
@@ -281,7 +281,7 @@
   (with_image
    "score_flag"
    (lambda ()
-     (draw_glyph key GLYPH_FLAG RED_COLOR)))
+     (draw_glyph key GLYPH_FLAG COLOR_RED)))
   (show_score "You Lost!")
   (show_hint "Start over or exit"))
 

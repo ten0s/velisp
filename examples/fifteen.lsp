@@ -62,105 +62,105 @@
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_1 BLACK_COLOR))))
+     (draw_glyph key GLYPH_1 COLOR_BLACK))))
 
 (defun draw_2 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_2 BLACK_COLOR))))
+     (draw_glyph key GLYPH_2 COLOR_BLACK))))
 
 (defun draw_3 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_3 BLACK_COLOR))))
+     (draw_glyph key GLYPH_3 COLOR_BLACK))))
 
 (defun draw_4 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_4 BLACK_COLOR))))
+     (draw_glyph key GLYPH_4 COLOR_BLACK))))
 
 (defun draw_5 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_5 BLACK_COLOR))))
+     (draw_glyph key GLYPH_5 COLOR_BLACK))))
 
 (defun draw_6 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_6 BLACK_COLOR))))
+     (draw_glyph key GLYPH_6 COLOR_BLACK))))
 
 (defun draw_7 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_7 BLACK_COLOR))))
+     (draw_glyph key GLYPH_7 COLOR_BLACK))))
 
 (defun draw_8 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_8 BLACK_COLOR))))
+     (draw_glyph key GLYPH_8 COLOR_BLACK))))
 
 (defun draw_9 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_9 BLACK_COLOR))))
+     (draw_glyph key GLYPH_9 COLOR_BLACK))))
 
 (defun draw_10 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_10 BLACK_COLOR))))
+     (draw_glyph key GLYPH_10 COLOR_BLACK))))
 
 (defun draw_11 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_11 BLACK_COLOR))))
+     (draw_glyph key GLYPH_11 COLOR_BLACK))))
 
 (defun draw_12 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_12 BLACK_COLOR))))
+     (draw_glyph key GLYPH_12 COLOR_BLACK))))
 
 (defun draw_13 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_13 BLACK_COLOR))))
+     (draw_glyph key GLYPH_13 COLOR_BLACK))))
 
 (defun draw_14 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_14 BLACK_COLOR))))
+     (draw_glyph key GLYPH_14 COLOR_BLACK))))
 
 (defun draw_15 (key)
   (with_image
    key
    (lambda ()
      (draw_closed key)
-     (draw_glyph key GLYPH_15 BLACK_COLOR))))
+     (draw_glyph key GLYPH_15 COLOR_BLACK))))
 
 ;;;;
 ;;;; Utilities
