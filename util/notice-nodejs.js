@@ -163,7 +163,7 @@ const nodeInfo = () => {
 const addNodeInfo = (deps) => [nodeInfo(), ...deps]
 
 const vercelPkgInfo = () => {
-    const version = '5.8.0' // TODO: read from package.json
+    const version = '5.8.1' // TODO: read from package.json
     return {
         name: 'pkg',
         version,

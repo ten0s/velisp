@@ -30,7 +30,7 @@ RUN echo "Installing Node.js v${NODE_VERSION}..."
 # https://github.com/nodesource/distributions/blob/master/README.md#deb
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
 RUN apt-get -y install nodejs
-RUN npm install -g npm pkg@5.8.0
+RUN npm install -g npm pkg@5.8.1
 
 RUN groupadd --gid $GID $USER
 RUN useradd --shell /bin/bash --create-home --gid $GID --uid $UID $USER
