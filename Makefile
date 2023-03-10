@@ -79,15 +79,15 @@ lint:
 
 check: lint test
 
-rollPreRelease:
+roll-prerelease:
 	npm --no-git-tag-version version prerelease
 	$(MAKE) roll
 
-rollMinor:
+roll-minor:
 	npm --no-git-tag-version version minor
 	$(MAKE) roll
 
-rollPatch:
+roll-patch:
 	npm --no-git-tag-version version patch
 	$(MAKE) roll
 
