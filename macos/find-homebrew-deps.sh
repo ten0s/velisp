@@ -18,7 +18,7 @@ ${PROG} ${ARGS} &
 PROG_PID=$!
 
 # TODO: add -t | --timeout option
-sleep 5
+sleep 10
 
 TMP=$(mktemp)
 lsof -p $PROG_PID > $TMP
