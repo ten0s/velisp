@@ -198,8 +198,7 @@
   (end_list))
 
 (defun show_version ()
-  (alert (strcat "Uses slide-info v" VERSION " under the hood"
-                 "\n"
+  (alert (strcat "Uses slide-info v" VERSION " under the hood\n"
                  "See https://github.com/ten0s/slide for detail")))
 
 (with_dialog
@@ -212,7 +211,6 @@
          WIDTH (dimx_tile "image")
          HEIGHT (dimy_tile "image"))
 
-   (princ VERSION)
    (action_tile "info" "(show_version)")
 
    (fill_slide_names NAMES)
