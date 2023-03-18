@@ -50,10 +50,13 @@ slides_dlg : dialog {
     }
   }
   : column {
-    : cancel_button {
+    : row {
+      alignment = centered;
+      : cancel_button {
         label = "Exit";
-        alignment = centered;
         is_default = true;
       }
+      : info_button {}
+    }
   }
 }

@@ -105,6 +105,9 @@
 (defun get_slide_records_from_slb_file (slb_file name)
   (shell_lines (strcat "slide-info --what=records \"" slb_file "\" " name)))
 
+(defun get_version_info ()
+  (car (shell_lines "slide-info --version")))
+
 (defun get_slide_info (info)
   (if (get_info 'lib_info info)
       (get_slide_info_from_slb_file (get_info 'file info)
@@ -194,14 +197,23 @@
     (mapcar 'add_list lib_info)
   (end_list))
 
+(defun show_version ()
+  (alert (strcat "Uses slide-info v" VERSION " under the hood"
+                 "\n"
+                 "See https://github.com/ten0s/slide for detail")))
+
 (with_dialog
  "slides.dcl" "slides_dlg" ""
  (lambda ()
    (setq DIR (get_current_file_dir)
          INFOS (get_infos_from_dir_files DIR)
          NAMES (mapcar '(lambda (info) (get_info 'name info)) INFOS)
+         VERSION (get_version_info)
          WIDTH (dimx_tile "image")
          HEIGHT (dimy_tile "image"))
+
+   (princ VERSION)
+   (action_tile "info" "(show_version)")
 
    (fill_slide_names NAMES)
    (process_current_name))
