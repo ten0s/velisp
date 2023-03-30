@@ -197,9 +197,8 @@
     (mapcar 'add_list lib_info)
   (end_list))
 
-(defun show_version ()
-  (alert (strcat "Uses slide-info v" VERSION " under the hood\n"
-                 "See https://github.com/ten0s/slide for detail")))
+(defun get_version ()
+  (strcat "Uses https://github.com/ten0s/slide v" VERSION " under the hood"))
 
 (with_dialog
  "slides.dcl" "slides_dlg" ""
@@ -211,7 +210,7 @@
          WIDTH (dimx_tile "image")
          HEIGHT (dimy_tile "image"))
 
-   (action_tile "info" "(show_version)")
+   (set_tile "error" (get_version))
 
    (fill_slide_names NAMES)
    (process_current_name))

@@ -56,7 +56,7 @@ slides_dlg : dialog {
         label = "Exit";
         is_default = true;
       }
-      : info_button {}
     }
+    errtile;
   }
 }
