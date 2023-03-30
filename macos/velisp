@@ -6,6 +6,7 @@
 # Force local homebrew/lib
 BASE_DIR=$(dirname $0)
 
+PATH=$BASE_DIR:$PATH
 DYLD_LIBRARY_PATH=$BASE_DIR/homebrew/lib
 GI_TYPELIB_PATH=$BASE_DIR/homebrew/lib/girepository-1.0
 
@@ -18,6 +19,7 @@ case $(sw_vers -productVersion) in
     ;;
 esac
 
+export PATH
 export DYLD_LIBRARY_PATH
 export GI_TYPELIB_PATH
 
