@@ -115,6 +115,12 @@ Run the Demo example
 > velisp examples\demo.lsp
 ```
 
+Run the Slides example
+
+```
+> velisp examples\slides.lsp
+```
+
 #### Run code from standard input
 
 ```
@@ -157,6 +163,7 @@ _$ (load "calc")
 _$ (load "mines")
 _$ (load "fifteen")
 _$ (load "demo")
+_$ (load "slides")
 ```
 
 ### License

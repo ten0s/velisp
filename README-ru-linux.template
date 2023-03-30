@@ -90,6 +90,12 @@ $ ./velisp examples/fifteen.lsp
 $ ./velisp examples/demo.lsp
 ```
 
+Запускаем пример Слайды
+
+```
+$ ./velisp examples/slides.lsp
+```
+
 #### Запускаем код из стандартного ввода
 
 ```
