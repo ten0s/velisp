@@ -139,6 +139,14 @@ Run the Demo example
 
 ![App Demo Windows Image](/images/app-demo-windows.png)
 
+Run the Slides example
+
+```
+> velisp examples\slides.lsp
+```
+
+![App Slides Windows Image](/images/app-slides-windows.png)
+
 ### Run code from standard input
 
 ```
@@ -193,6 +201,7 @@ _$ (load "calc")
 _$ (load "mines")
 _$ (load "fifteen")
 _$ (load "demo")
+_$ (load "slides")
 ```
 
 ## MacOS
@@ -290,6 +299,14 @@ Run the Demo example
 ```
 
 ![App Demo MacOS Image](/images/app-demo-macos.png)
+
+Run the Slides example
+
+```
+> ./velisp examples/slides.lsp
+```
+
+![App Slides MacOS Image](/images/app-slides-macos.png)
 
 #### Run code from standard input
 
@@ -410,6 +427,13 @@ $ ./velisp examples/demo.lsp
 
 ![App Demo Linux Image](/images/app-demo-linux.png)
 
+Run the Slides example
+
+```
+> ./velisp examples/slides.lsp
+```
+
+![App Slides Linux Image](/images/app-slides-linux.png)
 
 #### Run code from standard input
 

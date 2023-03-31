@@ -139,6 +139,14 @@ _$ (quit)
 
 ![App Demo Windows Image](/images/app-demo-windows.png)
 
+Запускаем пример Слайды
+
+```
+> velisp examples\slides.lsp
+```
+
+![App Slides Windows Image](/images/app-slides-windows.png)
+
 ### Запускаем код из стандартного ввода
 
 ```
@@ -193,6 +201,7 @@ _$ (load "calc")
 _$ (load "mines")
 _$ (load "fifteen")
 _$ (load "demo")
+_$ (load "slides")
 ```
 
 ## MacOS
@@ -289,6 +298,14 @@ _$ (quit)
 ```
 
 ![App Demo MacOS Image](/images/app-demo-macos.png)
+
+Запускаем пример Слайды
+
+```
+> ./velisp examples/slides.lsp
+```
+
+![App Slides MacOS Image](/images/app-slides-macos.png)
 
 #### Запускаем код из стандартного ввода
 
@@ -408,6 +425,14 @@ $ ./velisp examples/demo.lsp
 ```
 
 ![App Demo Linux Image](/images/app-demo-linux.png)
+
+Запускаем пример Слайды
+
+```
+> ./velisp examples/slides.lsp
+```
+
+![App Slides Linux Image](/images/app-slides-linux.png)
 
 #### Запускаем код из стандартного ввода
 
