@@ -52,7 +52,7 @@ Inside the MSYS shell (Run as administrator)
 
 ```
 # gflags -i node.exe +sls
-# windows/find-mingw64-deps.sh node.exe src/main.js examples/calc.lsp
+# windows/find-mingw64-deps.sh node.exe src/main.js examples/slides.lsp
 # gflags -i node.exe -sls
 ```
 
@@ -105,9 +105,15 @@ Build Done
 Inside MacOS Terminal
 
 ```
-% macos/find-homebrew-deps.sh ./velisp examples/calc.lsp
+% macos/find-homebrew-deps.sh ./velisp examples/slides.lsp
 ```
 
+On host machine
+
+```
+$ vagrant-scp :velisp/macos/homebrew-dylibs.txt   macos/
+$ vagrant-scp :velisp/macos/homebrew-typelibs.txt macos/
+```
 
 ### Build on host (Linux only)
 
