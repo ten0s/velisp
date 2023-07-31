@@ -38,10 +38,12 @@ su $USER -c "/bin/bash -s" <<'EOF'
    brew cache -u
 
    echo 'alias ll="ls -l"'                                > ~/.zshrc
+   echo 'export HOMEBREW_EDITOR=nano'                    >> ~/.zshrc
    echo 'export HOMEBREW_NO_AUTO_UPDATE=1'               >> ~/.zshrc
    echo 'export PATH="/usr/local/opt/node@18/bin:$PATH"' >> ~/.zshrc
 
-   echo 'export HOMEBREW_NO_AUTO_UPDATE=1'                > ~/.bashrc
+   echo 'export HOMEBREW_EDITOR=nano'                     > ~/.bashrc
+   echo 'export HOMEBREW_NO_AUTO_UPDATE=1'               >> ~/.bashrc
    echo 'export PATH="/usr/local/opt/node@18/bin:$PATH"' >> ~/.bashrc
 
    echo "Done"
