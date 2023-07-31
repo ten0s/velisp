@@ -61,12 +61,12 @@ RUN mkdir -p velisp/bin
 RUN mkdir -p velisp/lib64/girepository-1.0
 
 RUN echo "Building slide..."
-RUN git clone -b 0.9.0 https://github.com/ten0s/slide && \
-    cd slide                                          && \
-    make                                              && \
-    make install                                      && \
-    cp -r install/bin/* ../velisp/bin/                && \
-    cp -r install/lib/* ../velisp/lib64/              && \
+RUN git clone -b 0.10.1 https://github.com/ten0s/slide && \
+    cd slide                                           && \
+    make                                               && \
+    make install                                       && \
+    cp -r install/bin/* ../velisp/bin/                 && \
+    cp -r install/lib/* ../velisp/lib64/               && \
     cd ..
 
 RUN echo "Building VeLisp..."
