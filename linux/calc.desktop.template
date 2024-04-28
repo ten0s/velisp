@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=VeLisp - Calc Example
+Exec={{INSTALL_DIR}}/velisp {{INSTALL_DIR}}/examples/calc.lsp
+#Icon={{INSTALL_DIR}}/icons/icon.png
+Terminal=false
+Categories=Development;Education;

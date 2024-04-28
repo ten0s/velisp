@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=VeLisp - Mines Example
+Exec={{INSTALL_DIR}}/velisp {{INSTALL_DIR}}/examples/mines.lsp
+#Icon={{INSTALL_DIR}}/icons/icon.png
+Terminal=false
+Categories=Development;Education;
