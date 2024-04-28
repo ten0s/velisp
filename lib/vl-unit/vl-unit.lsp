@@ -2,7 +2,7 @@
 
 ;;;
 ;;; VL-Unit - Visual Lisp Unit testing framework is a unit test tool for Visual Lisp.
-;;; Copyright (C) 2022-2023 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>
+;;; Copyright (C) 2022-2024 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>
 ;;;
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions are met:
