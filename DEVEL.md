@@ -68,14 +68,14 @@ installed.
 
 #### Build MacOS build deps Vagrant box
 
-Download MacOS Catalina Vagrant box from
+Download MacOS Big Sur Vagrant box from
 https://app.vagrantup.com/jakubknejzlik/boxes/macos
 and import it.
 
 ```
 $ curl -s https://app.vagrantup.com/jakubknejzlik/boxes/macos | jq .
 $ wget https://vagrantcloud.com/jakubknejzlik/boxes/macos/versions/11.2.3/providers/virtualbox.box
-$ vagrant box add macos-catalina-11.2.3 virtualbox.box
+$ vagrant box add macos-big_sur-11.2.3 virtualbox.box
 ```
 
 #### Download Command Line Tools for Xcode
