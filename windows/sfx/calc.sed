@@ -23,13 +23,13 @@ SourceFiles=SourceFiles
 [Strings]
 VeLispVersion=0.7.10
 [SourceFiles]
-SourceFilesUtil=.\
 SourceFilesVelisp=.\
+SourceFilesUtil=.\
 SourceFilesApp=.\
-[SourceFilesUtil]
-unzip.vbs=
 [SourceFilesVelisp]
 velisp-%VeLispVersion%-win-x64.zip=
+[SourceFilesUtil]
+unzip.vbs=
 [SourceFilesApp]
 calc.lsp=
 calc.dcl=

@@ -204,6 +204,11 @@ _$ (load "demo")
 _$ (load "slides")
 ```
 
+### Самораспаковывающийся exe-архив
+
+Пример создания самораспаковывающегося exe-архива
+https://ten0s.github.io/blog/2024/10/05/velisp-self-extracting-archive-ru
+
 ## MacOS
 
 ### Установка
