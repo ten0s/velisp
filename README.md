@@ -204,6 +204,11 @@ _$ (load "demo")
 _$ (load "slides")
 ```
 
+### Self-extracting archive
+
+How to create self-extracting archive
+https://ten0s.github.io/blog/2024/10/05/velisp-self-extracting-archive-en
+
 ## MacOS
 
 ### Install
