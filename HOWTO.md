@@ -22,11 +22,13 @@ Int { int: 3 }
 _$ .context
 ```
 
-## How to run debugger?
+## How to run VeLisp under Node.js debugger?
 
 ```
 $ node --inspect-brk src/main.js
 ```
+
+Open Chrome -> Developer Tools -> Open dedicated DevTools for Node.js
 
 ## How to see VeLisp extensions?
 
