@@ -25,20 +25,9 @@ const not = func => (x) => !(func(x))
 // :: ([x], x) -> bool
 const contains = xs => x => xs.includes(x)
 
-if (!Array.prototype.with) {
-    Array.prototype.with = function vvith(xs = []) {
-        if (!Array.isArray(xs)) {
-            xs = [xs]
-        }
-        return this.filter(contains(xs))
+Array.prototype.without = function without(xs = []) {
+    if (!Array.isArray(xs)) {
+        xs = [xs]
     }
-}
-
-if (!Array.prototype.without) {
-    Array.prototype.without = function without(xs = []) {
-        if (!Array.isArray(xs)) {
-            xs = [xs]
-        }
-        return this.filter(not(contains(xs)))
-    }
+    return this.filter(not(contains(xs)))
 }
