@@ -52,13 +52,11 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
             new Sym('cond')
         ]
 
-        const clauses = []
         for (let i = 0; i < ctx.condTestResult().length; i++) {
             const test = this.getValue(this.visit(ctx.condTestResult(i).condTest()))
             const result = this.getValue(this.visit(ctx.condTestResult(i).condResult()))
-            clauses.push(new List([test, result]))
+            values.push(new List([test, result]))
         }
-        values.push(clauses)
 
         return new List(values)
     }
