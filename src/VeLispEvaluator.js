@@ -29,7 +29,6 @@ import VeLispEvalVisitor from './VeLispEvalVisitor.js'
 import VeLispErrorListener from './VeLispErrorListener.js'
 
 function evaluate(input, stack) {
-    input = preprocess(input)
     if (!stack) {
         // This case is used for tests
         stack = new VeStack()
@@ -39,7 +38,7 @@ function evaluate(input, stack) {
         // Do we really need lib/ included in tests?
         //VeLispContextIniter.initWithLib(stack)
     }
-    const {tree} = parseInput(input, stack)
+    const {tree} = parse(input, stack)
     const allResults = tree.accept(new VeLispEvalVisitor(stack))
     //console.log('allResults:', allResults);
     const result = lastResult(allResults)
@@ -48,11 +47,12 @@ function evaluate(input, stack) {
 }
 
 function tree(input, stack = new VeStack()) {
-    const {parser, tree} = parseInput(input, stack)
+    const {parser, tree} = parse(input, stack)
     return tree.toStringTree(parser.ruleNames)
 }
 
-function parseInput(input, stack) {
+function parse(input, stack) {
+    input = preprocess(input)
     const chars = new antlr4.InputStream(input)
     const lexer = new VeLispLexer(chars)
     lexer.removeErrorListeners()
