@@ -210,6 +210,7 @@
    (vlu-assert-equal '(1 2 three) (subst 'three 3 '(1 2 3)))
    (vlu-assert-equal '(1 2 3) (subst 'four 4 '(1 2 3)))
    (vlu-assert-equal '(1 two 3) (subst 'two '(2) '(1 (2) 3)))
+   (vlu-assert-equal '(a m (a b c) d) (subst 'm 'b '(a b (a b c) d)))
 ))
 
 (vlu-add-test
