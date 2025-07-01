@@ -83,6 +83,7 @@ function lastResult(res) {
 }
 
 export {
+    parse,
     evaluate,
     tree,
 }

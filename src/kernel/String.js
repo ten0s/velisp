@@ -23,6 +23,8 @@ import VeGlob from '../VeGlob.js'
 import VeRegex from '../VeRegex.js'
 import VeWildcard from '../VeWildcard.js'
 import {inspect} from '../VeUtil.js'
+import {parse, evaluate} from '../VeLispEvaluator.js'
+import VeLispNonEvalVisitor from '../VeLispNonEvalVisitor.js'
 import {Bool, Int, Real, Str, Sym, KFun, ensureType} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
@@ -248,5 +250,27 @@ export const initContext = (context) => {
             }
         }
         return new Bool(re.test(str))
+    }))
+    context.setSym('READ', new KFun('read', ['[str]'], [], (self, args) => {
+        if (!args.length) {
+            return new Bool(false)
+        }
+        if (args.length > 1) {
+            throw new Error('read: too many arguments')
+        }
+        const str = ensureType('read:', args[0], [Str]).value()
+        if (!str.length) {
+            return new Bool(false)
+        }
+
+        const stack = self.stack
+        const {tree} = parse(str, stack)
+        const allResults = tree.accept(new VeLispNonEvalVisitor(stack))
+        console.log('allResults:', allResults);
+        return allResults
+        //const result = lastResult(allResults)
+
+        //return evaluate(str, self.stack)
+        //return new Str(parsed)
     }))
 }
