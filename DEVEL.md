@@ -149,10 +149,28 @@ $ sudo apt-get install build-essential libgtk-3-dev gobject-introspection libgir
 $ make
 ```
 
-#### Run tests
+#### Run all tests
 
 ```
 $ make test
+```
+
+#### Run quint tests
+
+```
+$ make quint [--filter TEST]
+```
+
+#### Run expect tests
+
+```
+$ make expect-test
+```
+
+### Run vl-uint tests
+
+```
+$ make vl-unit
 ```
 
 #### Re-build grammars
