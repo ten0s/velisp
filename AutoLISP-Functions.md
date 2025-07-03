@@ -237,7 +237,7 @@
 | Function | Description | Info |
 |----------|-------------|------|
 | (globmatch string pattern [flag]) | Performs a glob pattern match on a string | VeLisp Extension |
-| (read [string]) | Returns the first list or atom obtained from a string | Expected in vTBD |
+| (read [string]) | Returns the first list or atom obtained from a string | |
 | (rematch string pattern [flag]) | Performs a regular expression pattern match on a string | VeLisp Extension |
 | (split delim str) | Splits a string using the delimiter | VeLisp Extension |
 | (strcase string [which]) | Returns a string where all alphabetic characters have been converted to uppercase or lowercase | |
