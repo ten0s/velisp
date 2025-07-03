@@ -21,11 +21,8 @@
 
 import VeLispParser from '../grammar/VeLispParser.js'
 import VeLispVisitor from '../grammar/VeLispVisitor.js'
-import VeLispContext from './VeLispContext.js'
 import {unescape} from './VeUtil.js'
-import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
-import {isTrace} from './kernel/Trace.js'
-import {KERNEL, LAMBDA} from './VeConst.js'
+import {Bool, Int, Real, Str, Sym, List, Pair} from './VeLispTypes.js'
 
 class VeLispNonEvalVisitor extends VeLispVisitor {
     constructor(stack) {

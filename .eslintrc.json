@@ -30,6 +30,9 @@
             "error",
             {"allowEmptyCatch": true}
         ],
+        "no-useless-escape": [
+            "off"
+        ],
         "no-unused-vars": [
             "error",
             {"argsIgnorePattern": "^_"}
