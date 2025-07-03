@@ -19,7 +19,7 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-import {Sym, List, Fun, KFun} from '../VeLispTypes.js'
+import {Bool, Int, Real, Str, Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
 export const initContext = (context) => {
     context.setSym('APPLY', new KFun('apply', ['function', 'list'], [], (self, args) => {
@@ -48,4 +48,56 @@ export const initContext = (context) => {
         }
         throw new Error(`apply: no such function ${args[0]}`)
     }))
+    context.setSym('EVAL', new KFun('eval', ['expr'], [], (self, args) => {
+        //console.log('eval args', args)
+
+        if (args.length < 1) {
+            throw new Error('eval: too few arguments')
+        }
+        if (args.length > 1) {
+            throw new Error('eval: too many arguments')
+        }
+        return eval_expr(self, args[0])
+    }))
+}
+
+function eval_expr(self, expr) {
+
+    if (expr instanceof Bool) {
+        return expr
+    }
+    if (expr instanceof Int) {
+        return expr
+    }
+    if (expr instanceof Real) {
+        return expr
+    }
+    if (expr instanceof Str) {
+        return expr
+    }
+    if (expr instanceof Sym) {
+        // Resolve symbol, nil if not found
+        return self.stack.top().getSym(expr.value())
+    }
+    if (expr instanceof Fun) {
+        return expr
+    }
+    if (expr instanceof List) {
+        if (expr.isNil()) {
+            return expr
+        }
+        let car = expr.car()
+        let fun = car
+        if (fun instanceof Sym) {
+            // Try resolving symbol to function
+            fun = self.stack.top().getSym(fun.value())
+        }
+        if (fun instanceof Fun) {
+            let list = expr.cdr().value()
+            return fun.apply(self, list)
+        }
+        throw new Error(`eval: no such function ${car}`)
+    }
+
+    throw new Error('eval: evaluation failed')
 }

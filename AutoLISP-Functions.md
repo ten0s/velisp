@@ -156,7 +156,7 @@
 |----------|-------------|------|
 | (apply function lst) | Passes a list of arguments to a specified function | |
 | (defun sym ([arguments] [/variables ...]) expr ... ) | Defines a function | |
-| (eval expr) | Returns the result of evaluating an AutoLISP expression | Expected in vTBD |
+| (eval expr) | Returns the result of evaluating an AutoLISP expression | |
 | (lambda arguments expr ...) | Defines an anonymous function | |
 | (progn [expr ...]) | Evaluates each expression sequentially, and returns the value of the last expression | |
 | (trace [function] ...) | Sets the trace flag for the specified functions | If no functions given, returns all traced functions list  |
