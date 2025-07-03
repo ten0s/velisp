@@ -62,7 +62,6 @@ export const initContext = (context) => {
 }
 
 function eval_expr(self, expr) {
-
     if (expr instanceof Bool) {
         return expr
     }
@@ -98,6 +97,5 @@ function eval_expr(self, expr) {
         }
         throw new Error(`eval: no such function ${car}`)
     }
-
     throw new Error('eval: evaluation failed')
 }
