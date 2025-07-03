@@ -87,7 +87,7 @@ export const initContext = (context) => {
                 }
             }
             return new List(names.map(name => new Str(name)))
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -125,7 +125,7 @@ export const initContext = (context) => {
                 fs.closeSync(dstFd)
             }
             return new Int(srcStats.size)
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -142,7 +142,7 @@ export const initContext = (context) => {
         try {
             fs.rmSync(filename, {force: false})
             return new Bool(true)
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -160,7 +160,7 @@ export const initContext = (context) => {
         // vl-file-directory-p looks the AutoCAD default drawing directory.
         try {
             return new Bool(fs.statSync(filename).isDirectory())
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -181,13 +181,13 @@ export const initContext = (context) => {
             // Check destination file exists
             fs.statSync(dstFilename)
             return new Bool(false)
-        } catch (e) {
+        } catch {
             // fall through
         }
         try {
             fs.renameSync(srcFilename, dstFilename)
             return new Bool(true)
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -210,7 +210,7 @@ export const initContext = (context) => {
                 return new Int(0)
             }
             return new Int(stats.size)
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -241,7 +241,7 @@ export const initContext = (context) => {
             return new List([
                 year, month, dow, date, hours, mins, secs, msecs
             ])
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)
@@ -258,7 +258,7 @@ export const initContext = (context) => {
         try {
             fs.mkdirSync(dirname)
             return new Bool(true)
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)

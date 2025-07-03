@@ -45,7 +45,7 @@ class VeRegex {
                 // -> ( -> ...
                 //    -----^
                 G.addEdge(i, i+1)
-                /*eslint no-fallthrough: "error"*/
+                // fall through
             case '|':
                 stack.push(i)
                 RE[i] = {

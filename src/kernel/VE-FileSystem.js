@@ -35,7 +35,7 @@ export const initContext = (context) => {
         try {
             fs.rmdirSync(dirname)
             return new Bool(true)
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)

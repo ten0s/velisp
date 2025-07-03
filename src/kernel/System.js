@@ -81,7 +81,7 @@ export const initContext = (context) => {
         try {
             process.chdir(dirname)
             return new Str(process.cwd())
-        } catch (e) {
+        } catch /*(e)*/ {
             // TODO: put to *error*?
             // console.error(e)
             return new Bool(false)

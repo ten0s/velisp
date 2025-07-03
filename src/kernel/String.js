@@ -76,7 +76,7 @@ export const initContext = (context) => {
             if (Number.isInteger(val)) {
                 return new Int(val)
             }
-        } catch (e) {}
+        } catch {}
         return new Int(0)
     }))
     // VeLisp Extension
@@ -102,7 +102,7 @@ export const initContext = (context) => {
             if (Number.isFinite(val)) {
                 return new Real(val)
             }
-        } catch (e) {}
+        } catch {}
         return new Real(0.0)
     }))
     context.setSym('STRCASE', new KFun('strcase', ['str [which]'], [], (self, args) => {
