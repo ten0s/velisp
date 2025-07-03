@@ -263,9 +263,8 @@ export const initContext = (context) => {
             return new Bool(false)
         }
 
-        const stack = self.stack
-        const {tree} = parse(str, stack)
-        const allResults = tree.accept(new VeLispReadVisitor(stack))
+        const {tree} = parse(str, self.stack)
+        const allResults = tree.accept(new VeLispReadVisitor())
         //console.log('allResults:', allResults);
         // First result only!
         const result = allResults[0]

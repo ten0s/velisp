@@ -25,10 +25,8 @@ import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair} from './VeLispTypes.js'
 
 class VeLispNonEvalVisitor extends VeLispVisitor {
-    constructor(stack) {
+    constructor() {
         super()
-        this.stack = stack
-        this.traceDepth = 0
     }
 
     visitAnd(ctx) {
