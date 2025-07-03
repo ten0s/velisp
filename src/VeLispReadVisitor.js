@@ -290,28 +290,33 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
         if (ctx.parentCtx instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str)
             return new Bool(false)
-        } else if (ctx.parentCtx instanceof VeLispParser.TruContext) {
+        }
+        if (ctx.parentCtx instanceof VeLispParser.TruContext) {
             //console.error('T:', str)
             return new Bool(true)
-        } else if (ctx.parentCtx instanceof VeLispParser.IntContext) {
+        }
+        if (ctx.parentCtx instanceof VeLispParser.IntContext) {
             //console.error('INT:', str)
             return new Int(Number.parseInt(str))
-        } else if (ctx.parentCtx instanceof VeLispParser.RealContext) {
+        }
+        if (ctx.parentCtx instanceof VeLispParser.RealContext) {
             //console.error('REAL:', str)
             return new Real(Number.parseFloat(str))
-        } else if (ctx.parentCtx instanceof VeLispParser.StrContext) {
+        }
+        if (ctx.parentCtx instanceof VeLispParser.StrContext) {
             //console.error('STR:', str)
             // Remove first and last double quotes (")
             return new Str(unescape(str.substring(1, str.length-1)))
-        } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
+        }
+        if (ctx.parentCtx instanceof VeLispParser.IdContext) {
             //console.error('ID:', str)
             return new Sym(str)
-        } else {
-            // Also handles ID outside of expr
-            //console.error('TERMINAL:', str)
-            //console.error(ctx)
-            return str
         }
+
+        // Also handles ID outside of expr
+        //console.error('TERMINAL:', str)
+        //console.error(ctx)
+        return str
     }
 
     getValue(expr) {

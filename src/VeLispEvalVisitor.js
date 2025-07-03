@@ -177,20 +177,25 @@ class VeLispEvalVisitor extends VeLispVisitor {
         if (expr instanceof VeLispParser.NilContext) {
             //console.error('NIL:', str)
             return new Bool(false)
-        } else if (expr instanceof VeLispParser.IntContext) {
+        }
+        if (expr instanceof VeLispParser.IntContext) {
             //console.error('INT:', str)
             return new Int(Number.parseInt(str))
-        } else if (expr instanceof VeLispParser.RealContext) {
+        }
+        if (expr instanceof VeLispParser.RealContext) {
             //console.error('REAL:', str)
             return new Real(Number.parseFloat(str))
-        } else if (expr instanceof VeLispParser.StrContext) {
+        }
+        if (expr instanceof VeLispParser.StrContext) {
             //console.error('STR:', str)
             // Remove first and last double quotes (")
             return new Str(unescape(str.substring(1, str.length-1)))
-        } else if (expr instanceof VeLispParser.IdContext) {
+        }
+        if (expr instanceof VeLispParser.IdContext) {
             //console.error('ID:', str)
             return new Sym(str)
-        } else if (expr instanceof VeLispParser.DotListContext) {
+        }
+        if (expr instanceof VeLispParser.DotListContext) {
             //console.error('DOTLIST:', str)
             const length = expr.listExpr().length
             let last = this.getValue(this.visitQuote(expr.listExpr(length-1)))
@@ -212,7 +217,8 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 result = result.cons(value)
             }
             return result
-        } else if (expr instanceof VeLispParser.ListContext) {
+        }
+        if (expr instanceof VeLispParser.ListContext) {
             //console.error('LIST:', str)
             const length = expr.listExpr().length
             const values = []
@@ -221,9 +227,11 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 values.push(value)
             }
             return new List(values)
-        } else if (expr instanceof VeLispParser.LambdaContext) {
+        }
+        if (expr instanceof VeLispParser.LambdaContext) {
             return this.visitLambda(expr)
-        } else if (expr instanceof VeLispParser.QuoteContext) {
+        }
+        if (expr instanceof VeLispParser.QuoteContext) {
             const name = new Sym(expr.children[1].getText())
             const values = [name]
             for (let i = 2; i < expr.children.length-1; i++) {
@@ -233,24 +241,25 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 values.push(value)
             }
             return new List(values)
-        } else if (expr instanceof VeLispParser.AndContext ||
-                   expr instanceof VeLispParser.CondContext ||
-                   expr instanceof VeLispParser.DefunContext ||
-                   expr instanceof VeLispParser.ForeachContext ||
-                   expr instanceof VeLispParser.FunctionContext ||
-                   expr instanceof VeLispParser.IfContext ||
-                   expr instanceof VeLispParser.OrContext ||
-                   expr instanceof VeLispParser.PrognContext ||
-                   expr instanceof VeLispParser.RepeatContext ||
-                   expr instanceof VeLispParser.SetQContext ||
-                   expr instanceof VeLispParser.WhileContext) {
+        }
+        if (expr instanceof VeLispParser.AndContext ||
+            expr instanceof VeLispParser.CondContext ||
+            expr instanceof VeLispParser.DefunContext ||
+            expr instanceof VeLispParser.ForeachContext ||
+            expr instanceof VeLispParser.FunctionContext ||
+            expr instanceof VeLispParser.IfContext ||
+            expr instanceof VeLispParser.OrContext ||
+            expr instanceof VeLispParser.PrognContext ||
+            expr instanceof VeLispParser.RepeatContext ||
+            expr instanceof VeLispParser.SetQContext ||
+            expr instanceof VeLispParser.WhileContext) {
             const name = expr.children[1].getText()
             throw new Error(`quote: \`${name}\` not supported`)
-        } else {
-            //console.error(str)
-            //console.error(ctx.expr())
-            return new Sym(str)
         }
+
+        //console.error(str)
+        //console.error(ctx.expr())
+        return new Sym(str)
     }
 
     visitRepeat(ctx) {

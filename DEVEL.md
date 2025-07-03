@@ -158,7 +158,8 @@ $ make test
 #### Run quint tests
 
 ```
-$ make quint [--filter TEST]
+$ make qunit
+$ npx qunit [--filter TEST]
 ```
 
 #### Run expect tests
