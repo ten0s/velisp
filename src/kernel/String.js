@@ -267,8 +267,15 @@ export const initContext = (context) => {
         const allResults = tree.accept(new VeLispReadVisitor())
         //console.log('allResults:', allResults);
         // First result only!
-        const result = allResults[0]
+        const result = firstResult(allResults)
         //console.log('result:', result);
         return result
     }))
+}
+
+function firstResult(res) {
+    if (res instanceof Array) {
+        return firstResult(res[0])
+    }
+    return res
 }

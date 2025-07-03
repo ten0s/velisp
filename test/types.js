@@ -137,6 +137,14 @@ QUnit.test('types', assert => {
         new Pair(new Int(4), new Pair(new Int(5), new Int(6)))
     ])).toString(), '((1 2 . 3) (4 5 . 6))')
 
+    assert.equal((new List([
+        new Int(1), new Real(2.0)
+    ])).map(X => X.add(new Int(1))).toString(), '(2 3.0)')
+
+    assert.equal((new List([
+        new Int(1), new Real(2.0)
+    ])).map(X => new Str(X.toString())).toString(), '("1" "2.0")')
+
     assert.equal((new Fun('name', [], [], () => {})).toString(), '(defun name ())')
     assert.equal((new Fun('name', ['x'], [], () => {})).toString(), '(defun name (x))')
     assert.equal((new Fun('name', ['x'], ['y'], () => {})).toString(), '(defun name (x / y))')

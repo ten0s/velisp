@@ -35,6 +35,17 @@ TestRunner.run({
         ])},
         {test: '(eval \'(+))', result: new Int(0)},
         {test: '(eval \'(+ 1 2 3))', result: new Int(6)},
+
+        {test: '(eval \'(list (list 1) (list 2)))', result: new List([
+            new List([new Int(1)]), new List([new Int(2)])
+        ])},
+
+        {test: '(eval \'(list (read "1") (+ 1 1) (+ 1 1 1)))', result: new List([
+            new Int(1), new Int(2), new Int(3)
+        ])},
+
+        {test: '(setq x 5) (eval \'(+ x 1))', result: new Int(6)},
+
     ],
 
     errors: [

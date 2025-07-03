@@ -642,6 +642,12 @@ class List {
         return new Bool(false)
     }
 
+    // map :: ((AnyX) -> AnyY) -> List[AnyY]
+    map(fn) {
+        const arr = this.arr.map(fn)
+        return new List(arr)
+    }
+
     // :: () -> string
     toString() {
         if (this.isNil()) {

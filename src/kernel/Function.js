@@ -85,15 +85,28 @@ function eval_expr(self, expr) {
         if (expr.isNil()) {
             return expr
         }
-        let car = expr.car()
+
+        // Evaluate internal expressions
+        // List[AnyX] -> List[AnyY]
+        let head = expr.car()
+        if (!head.isAtom()) {
+            head = eval_expr(self, head)
+        }
+        let tail = expr.cdr()
+        tail = tail.map(X => {
+            return eval_expr(self, X)
+        })
+        expr = tail.cons(head)
+
+        const car = expr.car()
         let fun = car
         if (fun instanceof Sym) {
             // Try resolving symbol to function
             fun = self.stack.top().getSym(fun.value())
         }
         if (fun instanceof Fun) {
-            let list = expr.cdr().value()
-            return fun.apply(self, list)
+            const args = expr.cdr().value()
+            return fun.apply(self, args)
         }
         throw new Error(`eval: no such function ${car}`)
     }
