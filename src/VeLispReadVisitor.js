@@ -53,9 +53,14 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
         ]
 
         for (let i = 0; i < ctx.condTestResult().length; i++) {
+            const pair = []
             const test = this.getValue(this.visit(ctx.condTestResult(i).condTest()))
             const result = this.getValue(this.visit(ctx.condTestResult(i).condResult()))
-            values.push(new List([test, result]))
+            pair.push(test)
+            if (result) {
+                pair.push(result)
+            }
+            values.push(new List(pair))
         }
 
         return new List(values)
@@ -245,9 +250,28 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
     }
 
     visitDotList(ctx) {
-        // Must be call in the quoted context only,
-        // otherwise evaluate as a list
-        return this.visitList(ctx)
+        //console.error('DOTLIST:', ctx.getText())
+
+        const length = ctx.listExpr().length
+        let last = this.getValue(this.visit(ctx.listExpr(length-1)))
+        //console.error(last)
+        if (last.isNil()) {
+            last = new List([])
+        }
+        if (last instanceof List) {
+            for (let i = length - 2; i >= 0; i--) {
+                const value = this.getValue(this.visit(ctx.listExpr(i)))
+                last = last.cons(value)
+            }
+            return last
+        }
+        const prelast = this.getValue(this.visit(ctx.listExpr(length-2)))
+        let result = new Pair(prelast, last)
+        for (let i = length - 3; i >= 0; i--) {
+            const value = this.getValue(this.visit(ctx.listExpr(i)))
+            result = result.cons(value)
+        }
+        return result
     }
 
     visitList(ctx) {
@@ -269,27 +293,27 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
     visitTerminal(ctx) {
         const str = ctx.getText()
         if (ctx.parentCtx instanceof VeLispParser.NilContext) {
-            console.error('NIL:', str)
+            //console.error('NIL:', str)
             return new Bool(false)
         } else if (ctx.parentCtx instanceof VeLispParser.TruContext) {
-            console.error('T:', str)
+            //console.error('T:', str)
             return new Bool(true)
         } else if (ctx.parentCtx instanceof VeLispParser.IntContext) {
-            console.error('INT:', str)
+            //console.error('INT:', str)
             return new Int(Number.parseInt(str))
         } else if (ctx.parentCtx instanceof VeLispParser.RealContext) {
-            console.error('REAL:', str)
+            //console.error('REAL:', str)
             return new Real(Number.parseFloat(str))
         } else if (ctx.parentCtx instanceof VeLispParser.StrContext) {
-            console.error('STR:', str)
+            //console.error('STR:', str)
             // Remove first and last double quotes (")
             return new Str(unescape(str.substring(1, str.length-1)))
         } else if (ctx.parentCtx instanceof VeLispParser.IdContext) {
-            console.error('ID:', str)
+            //console.error('ID:', str)
             return new Sym(str)
         } else {
             // Also handles ID outside of expr
-            console.error('TERMINAL:', str)
+            //console.error('TERMINAL:', str)
             //console.error(ctx)
             return str
         }

@@ -23,7 +23,7 @@ import VeGlob from '../VeGlob.js'
 import VeRegex from '../VeRegex.js'
 import VeWildcard from '../VeWildcard.js'
 import {inspect} from '../VeUtil.js'
-import {parse, evaluate} from '../VeLispEvaluator.js'
+import {parse} from '../VeLispEvaluator.js'
 import VeLispReadVisitor from '../VeLispReadVisitor.js'
 import {Bool, Int, Real, Str, Sym, KFun, ensureType} from '../VeLispTypes.js'
 
@@ -266,11 +266,10 @@ export const initContext = (context) => {
         const stack = self.stack
         const {tree} = parse(str, stack)
         const allResults = tree.accept(new VeLispReadVisitor(stack))
-        console.log('allResults:', allResults);
-        return allResults
-        //const result = lastResult(allResults)
-
-        //return evaluate(str, self.stack)
-        //return new Str(parsed)
+        //console.log('allResults:', allResults);
+        // First result only!
+        const result = allResults[0]
+        //console.log('result:', result);
+        return result
     }))
 }
