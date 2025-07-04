@@ -586,6 +586,11 @@ class List {
         return this.arr.length
     }
 
+    // :: (non_neg_int) -> Any
+    at(index) {
+        return this.arr[index]
+    }
+
     // :: () -> Any
     last() {
         return this.arr[this.arr.length-1]

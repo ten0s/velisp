@@ -21,6 +21,23 @@
 
 import {Bool, Int, Real, Str, Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
+const specialForms = {
+    'AND': eval_and,
+//    'COND': eval_cond,
+//    'DEFUN': eval_defun,
+//    'FOREACH': eval_foreach,
+//    'FUNCTION': eval_function,
+    'IF': eval_if,
+//    'LAMBDA': eval_lambda,
+    'OR': eval_or,
+//    'PROGN': eval_progn,
+//    'QUOTE': eval_quote,
+//    'REPEAT': eval_repeat,
+//    'SETQ': eval_setq,
+//    'WHILE': eval_while,
+//    'TICK': eval_tick
+}
+
 export const initContext = (context) => {
     context.setSym('APPLY', new KFun('apply', ['function', 'list'], [], (self, args) => {
         //console.log('apply args', args);
@@ -75,6 +92,9 @@ function eval_expr(self, expr) {
         return expr
     }
     if (expr instanceof Sym) {
+        if (specialForms.hasOwnProperty(expr.value())) {
+            return expr
+        }
         // Resolve symbol, nil if not found
         return self.stack.top().getSym(expr.value())
     }
@@ -86,13 +106,21 @@ function eval_expr(self, expr) {
             return expr
         }
 
-        // Evaluate internal expressions
-        // List[AnyX] -> List[AnyY]
         let head = expr.car()
+        let tail = expr.cdr()
+
         if (!head.isAtom()) {
             head = eval_expr(self, head)
         }
-        let tail = expr.cdr()
+
+        // Evaluate special form expressions
+        const specFun = specialForms[head.value()]
+        if (specFun) {
+            return specFun(self, tail)
+        }
+
+        // Evaluate internal expressions
+        // List[AnyX] -> List[AnyY]
         tail = tail.map(X => {
             return eval_expr(self, X)
         })
@@ -111,4 +139,36 @@ function eval_expr(self, expr) {
         throw new Error(`eval: no such function ${car}`)
     }
     throw new Error('eval: evaluation failed')
+}
+
+function eval_and(self, args) {
+    for (let i = 0; i < args.length(); i++) {
+        const result = eval_expr(self, args.at(i))
+        if (result.isNil()) {
+            return new Bool(false)
+        }
+    }
+    return new Bool(true)
+}
+
+function eval_if(self, args) {
+    const test = eval_expr(self, args.at(0))
+    //console.error('if test:', test)
+    if (!test.isNil()) {
+        return eval_expr(self, args.at(1))
+    }
+    if (args.length() > 2) {
+        return eval_expr(self, args.at(2))
+    }
+    return new Bool(false)
+}
+
+function eval_or(self, args) {
+    for (let i = 0; i < args.length(); i++) {
+        const result = eval_expr(self, args.at(i))
+        if (!result.isNil()) {
+            return new Bool(true)
+        }
+    }
+    return new Bool(false)
 }

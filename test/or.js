@@ -1,6 +1,6 @@
 import QUnit from 'qunit'
 import {evaluate} from '../src/VeLispEvaluator.js'
-import {Bool} from '../src/VeLispTypes.js'
+import {Bool, Int, List} from '../src/VeLispTypes.js'
 
 const tests = [
     {test: '(or)', result: new Bool(false)},
@@ -20,6 +20,36 @@ const tests = [
     {test: '(or nil nil T)', result: new Bool(true)},
     {test: '(or nil nil nil)', result: new Bool(false)},
     {test: '(or T T T)', result: new Bool(true)},
+
+    // Short circuit
+    {test: `(setq a 0 b 0 c 0)
+            (or (progn (setq a 1) nil)
+                (progn (setq b 1) T)
+                (progn (setq c 1) T))
+            (list a b c)`, result: new List([
+        new Int(1), new Int(1), new Int(0)
+    ])},
+    {test: `(setq a 0 b 0 c 0)
+            (or (progn (setq a 1) nil)
+                (progn (setq b 1) nil)
+                (progn (setq c 1) T))
+            (list a b c)`, result: new List([
+        new Int(1), new Int(1), new Int(1)
+    ])},
+    {test: `(setq a 0 b 0 c 0)
+            (or (progn (setq a 1) nil)
+                (progn (setq b 1) nil)
+                (progn (setq c 1) nil))
+            (list a b c)`, result: new List([
+        new Int(1), new Int(1), new Int(1)
+    ])},
+    {test: `(setq a 0 b 0 c 0)
+            (or (progn (setq a 1) T)
+                (progn (setq b 1) nil)
+                (progn (setq c 1) nil))
+            (list a b c)`, result: new List([
+        new Int(1), new Int(0), new Int(0)
+    ])},
 ]
 
 QUnit.test('or', assert => {

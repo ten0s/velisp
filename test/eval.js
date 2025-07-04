@@ -46,6 +46,62 @@ TestRunner.run({
 
         {test: '(setq x 5) (eval \'(+ x 1))', result: new Int(6)},
 
+        // AND special form
+        {test: '(eval (read "(and)"))', result: new Bool(true)},
+        {test: '(eval (read "(and nil)"))', result: new Bool(false)},
+        {test: '(eval (read "(and T)"))', result: new Bool(true)},
+        {test: '(eval (read "(and nil nil)"))', result: new Bool(false)},
+        {test: '(eval (read "(and T T)"))', result: new Bool(true)},
+        {test: '(eval (read "(and T T nil)"))', result: new Bool(false)},
+        // Short circuit
+        /*
+        {test: `(setq a 0 b 0 c 0)
+                (and (progn (setq a 1) nil)
+                     (progn (setq b 1) T)
+                     (progn (setq c 1) T))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(0), new Int(0)
+        ])},
+        {test: `(setq a 0 b 0 c 0)
+                (and (progn (setq a 1) T)
+                     (progn (setq b 1) nil)
+                     (progn (setq c 1) T))
+                 (list a b c)`, result: new List([
+            new Int(1), new Int(1), new Int(0)
+        ])},
+        {test: `(setq a 0 b 0 c 0)
+                (and (progn (setq a 1) T)
+                     (progn (setq b 1) T)
+                     (progn (setq c 1) nil))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(1), new Int(1)
+        ])},
+        {test: `(setq a 0 b 0 c 0)
+                (and (progn (setq a 1) T)
+                     (progn (setq b 1) T)
+                     (progn (setq c 1) T))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(1), new Int(1)
+        ])},
+        */
+
+        // IF special form
+        {test: '(eval (read "(if T \\\"yes\\\" \\\"no\\\")"))', result: new Str('yes')},
+        {test: '(eval (read "(if nil \\\"yes\\\" \\\"no\\\")"))', result: new Str('no')},
+        {test: '(eval (read "(if nil \\\"yes\\\")"))', result: new Bool(false)},
+        // Short circuit
+        // TODO
+
+        // OR special form
+        {test: '(eval (read "(or)"))', result: new Bool(false)},
+        {test: '(eval (read "(or nil)"))', result: new Bool(false)},
+        {test: '(eval (read "(or T)"))', result: new Bool(true)},
+        {test: '(eval (read "(or nil nil)"))', result: new Bool(false)},
+        {test: '(eval (read "(or T T)"))', result: new Bool(true)},
+        {test: '(eval (read "(or nil T)"))', result: new Bool(true)},
+        // Short circuit
+        // TODO
+
     ],
 
     errors: [

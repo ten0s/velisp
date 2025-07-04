@@ -136,13 +136,11 @@ class VeLispEvalVisitor extends VeLispVisitor {
         //console.error('if test:', test)
         if (!test.isNil()) {
             return this.visit(ctx.ifThen())
-        } else {
-            if (ctx.ifElse()) {
-                return this.visit(ctx.ifElse())
-            } else {
-                return new Bool(false)
-            }
         }
+        if (ctx.ifElse()) {
+            return this.visit(ctx.ifElse())
+        }
+        return new Bool(false)
     }
 
     visitLambda(ctx) {
