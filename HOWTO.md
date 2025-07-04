@@ -28,6 +28,8 @@ _$ .context
 $ node --inspect-brk src/main.js
 ```
 
+Now run Google Chrome, open Developer tools, open dedicated DevTools for Node.js
+
 ## How to see VeLisp extensions?
 
 ```
