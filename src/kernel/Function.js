@@ -33,7 +33,7 @@ const specialForms = {
 //    'PROGN': eval_progn,
 //    'QUOTE': eval_quote,
 //    'REPEAT': eval_repeat,
-//    'SETQ': eval_setq,
+    'SETQ': eval_setq,
 //    'WHILE': eval_while,
 //    'TICK': eval_tick
 }
@@ -78,7 +78,7 @@ export const initContext = (context) => {
     }))
 }
 
-function eval_expr(self, expr) {
+function eval_expr(self, expr, resolveSym = true) {
     if (expr instanceof Bool) {
         return expr
     }
@@ -92,11 +92,14 @@ function eval_expr(self, expr) {
         return expr
     }
     if (expr instanceof Sym) {
-        if (specialForms.hasOwnProperty(expr.value())) {
-            return expr
+        if (resolveSym) {
+            if (specialForms.hasOwnProperty(expr.value())) {
+                return expr
+            }
+            // Resolve symbol, nil if not found
+            return self.stack.top().getSym(expr.value())
         }
-        // Resolve symbol, nil if not found
-        return self.stack.top().getSym(expr.value())
+        return expr
     }
     if (expr instanceof Fun) {
         return expr
@@ -170,4 +173,15 @@ function eval_or(self, args) {
         }
     }
     return new Bool(false)
+}
+
+function eval_setq(self, args) {
+    let value = new Bool(false)
+    for (let i = 0; i < args.length(); i+=2) {
+        const name = eval_expr(self, args.at(i), false);
+        value = eval_expr(self, args.at(i+1));
+        //console.error(`setq: ${name} = ${value}`)
+        self.stack.top().setVar(name, value)
+    }
+    return value
 }

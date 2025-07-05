@@ -102,6 +102,13 @@ TestRunner.run({
         // Short circuit
         // TODO
 
+        // SETQ special for
+        {test: '(eval (read "(setq)"))', result: new Bool(false)},
+        {test: '(eval (read "(setq a 1)"))', result: new Int(1)},
+        {test: '(eval (read "(setq a 1 b 2.0)"))', result: new Real(2.0)},
+        {test: '(eval (read "(setq a 1 b 2.0)")) (list a b)', result: new List([
+            new Int(1), new Real(2.0)
+        ])},
     ],
 
     errors: [
