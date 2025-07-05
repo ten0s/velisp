@@ -54,7 +54,6 @@ TestRunner.run({
         {test: '(eval (read "(and T T)"))', result: new Bool(true)},
         {test: '(eval (read "(and T T nil)"))', result: new Bool(false)},
         // Short circuit
-        /*
         {test: `(setq a 0 b 0 c 0)
                 (and (progn (setq a 1) nil)
                      (progn (setq b 1) T)
@@ -83,7 +82,6 @@ TestRunner.run({
                 (list a b c)`, result: new List([
             new Int(1), new Int(1), new Int(1)
         ])},
-        */
 
         // IF special form
         {test: '(eval (read "(if T \\\"yes\\\" \\\"no\\\")"))', result: new Str('yes')},
@@ -101,6 +99,16 @@ TestRunner.run({
         {test: '(eval (read "(or nil T)"))', result: new Bool(true)},
         // Short circuit
         // TODO
+
+        // PROGN special form
+        {test: '(eval (read "(progn)"))', result: new Bool(false)},
+        {test: '(eval (read "(progn 1)"))', result: new Int(1)},
+        {test: '(eval (read "(progn 1 2 (+ 1 2))"))', result: new Int(3)},
+        {test: `(setq a 0 b 0)
+                (eval (read "(progn (setq a 1) (setq b 2))"))
+                (list a b)`, result: new List([
+            new Int(1), new Int(2)
+        ])},
 
         // SETQ special for
         {test: '(eval (read "(setq)"))', result: new Bool(false)},

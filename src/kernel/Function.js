@@ -30,7 +30,7 @@ const specialForms = {
     'IF': eval_if,
 //    'LAMBDA': eval_lambda,
     'OR': eval_or,
-//    'PROGN': eval_progn,
+    'PROGN': eval_progn,
 //    'QUOTE': eval_quote,
 //    'REPEAT': eval_repeat,
     'SETQ': eval_setq,
@@ -124,9 +124,7 @@ function eval_expr(self, expr, resolveSym = true) {
 
         // Evaluate internal expressions
         // List[AnyX] -> List[AnyY]
-        tail = tail.map(X => {
-            return eval_expr(self, X)
-        })
+        tail = tail.map(X => eval_expr(self, X))
         expr = tail.cons(head)
 
         const car = expr.car()
@@ -173,6 +171,14 @@ function eval_or(self, args) {
         }
     }
     return new Bool(false)
+}
+
+function eval_progn(self, args) {
+    let result = new Bool(false)
+    for (let i = 0; i < args.length(); i++) {
+        result = eval_expr(self, args.at(i))
+    }
+    return result
 }
 
 function eval_setq(self, args) {
