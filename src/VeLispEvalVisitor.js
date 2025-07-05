@@ -266,23 +266,22 @@ class VeLispEvalVisitor extends VeLispVisitor {
     }
 
     visitRepeat(ctx) {
-        let result = new Bool(false)
         const count = this.getValue(this.visit(ctx.repeatNum()))
         //console.error('repeat count:', count)
 
         //const line = ctx.start.line
         //this.stack.top().callerLine = line
 
-        if (count instanceof Int && count.value() > 0) {
+        if (count instanceof Int && count.value() >= 0) {
+            let result = new Bool(false)
             for (let i = 0; i < count.value(); i++) {
                 for (let j = 0; j < ctx.expr().length; j++) {
                     result = this.visit(ctx.expr(j))
                 }
             }
-        } else {
-            throw new Error('repeat: `num` expected positive Int')
+            return result
         }
-        return result
+        throw new Error('repeat: `num` expected non-negative Int')
     }
 
     visitSetQ(ctx) {

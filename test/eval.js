@@ -157,7 +157,19 @@ TestRunner.run({
             new Sym('list'), new Int(1), new Int(2), new Int(3)
         ])},
 
-        // SETQ special for
+        // REPEAT special form
+        {test: '(eval (read "(repeat 0)"))', result: new Bool(false)},
+        {test: '(eval (read "(repeat 5)"))', result: new Bool(false)},
+        {test: '(eval (read "(repeat 5 \'done)"))', result: new Sym('done')},
+        {test: '(eval (read "(repeat 5 \'do \'done)"))', result: new Sym('done')},
+        {test: `(setq a 10 b 100)
+                (eval
+                    (read "(repeat 4
+                               (setq a (+ a 10))
+                               (setq b (+ b 100)))"))`, result: new Int(500)},
+
+
+        // SETQ special form
         {test: '(eval (read "(setq)"))', result: new Bool(false)},
         {test: '(eval (read "(setq a 1)"))', result: new Int(1)},
         {test: '(eval (read "(setq a 1 b 2.0)"))', result: new Real(2.0)},
@@ -170,5 +182,9 @@ TestRunner.run({
         {test: '(eval)', result: new Error('eval: too few arguments')},
         {test: '(eval 1 2)', result: new Error('eval: too many arguments')},
         {test: '(eval \'(abc 1 2))', result: new Error('eval: no such function ABC')},
+        {test: '(setq lst "1 2 3") (eval (read "(foreach n lst)"))',
+         result: new Error("eval: foreach: `list` expected List")},
+        {test: '(eval (read "(repeat nil)"))',
+         result: new Error('eval: repeat: `num` expected non-negative Int')},
     ]
 })

@@ -32,7 +32,7 @@ const specialForms = {
     'OR': eval_or,
     'PROGN': eval_progn,
     'QUOTE': eval_quote,
-//    'REPEAT': eval_repeat,
+    'REPEAT': eval_repeat,
     'SETQ': eval_setq,
 //    'WHILE': eval_while
 }
@@ -219,7 +219,7 @@ function eval_foreach(self, args) {
         return result
     }
 
-    throw new Error('foreach: `list` expected List')
+    throw new Error('eval: foreach: `list` expected List')
 }
 
 function eval_if(self, args) {
@@ -254,6 +254,21 @@ function eval_progn(self, args) {
 function eval_quote(self, args) {
     // Simply return the first arg
     return args.at(0)
+}
+
+function eval_repeat(self, args) {
+    const count = eval_expr(self, args.at(0))
+    if (count instanceof Int && count.value() >= 0) {
+        let result = new Bool(false)
+        const body = args.cdr()
+        for (let i = 0; i < count.value(); i++) {
+            for (let j = 0; j < body.length(); j++) {
+                result = eval_expr(self, body.at(j))
+            }
+        }
+        return result
+    }
+    throw new Error('eval: repeat: `num` expected non-negative Int')
 }
 
 function eval_setq(self, args) {
