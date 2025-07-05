@@ -153,7 +153,6 @@ function eval_and(self, args) {
 
 function eval_if(self, args) {
     const test = eval_expr(self, args.at(0))
-    //console.error('if test:', test)
     if (!test.isNil()) {
         return eval_expr(self, args.at(1))
     }

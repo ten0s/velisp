@@ -24,7 +24,7 @@ import VeLispVisitor from '../grammar/VeLispVisitor.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair} from './VeLispTypes.js'
 
-class VeLispNonEvalVisitor extends VeLispVisitor {
+class VeLispReadVisitor extends VeLispVisitor {
     constructor() {
         super()
     }
@@ -245,8 +245,6 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
     }
 
     visitDotList(ctx) {
-        //console.error('DOTLIST:', ctx.getText())
-
         const length = ctx.listExpr().length
         let last = this.getValue(this.visit(ctx.listExpr(length-1)))
         //console.error(last)
@@ -327,4 +325,4 @@ class VeLispNonEvalVisitor extends VeLispVisitor {
     }
 }
 
-export default VeLispNonEvalVisitor
+export default VeLispReadVisitor
