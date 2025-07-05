@@ -55,30 +55,30 @@ TestRunner.run({
         {test: '(eval (read "(and T T nil)"))', result: new Bool(false)},
         // Short circuit
         {test: `(setq a 0 b 0 c 0)
-                (and (progn (setq a 1) nil)
-                     (progn (setq b 1) T)
-                     (progn (setq c 1) T))
+                (eval (read "(and (progn (setq a 1) nil)
+                                  (progn (setq b 1) T)
+                                  (progn (setq c 1) T))"))
                 (list a b c)`, result: new List([
             new Int(1), new Int(0), new Int(0)
         ])},
         {test: `(setq a 0 b 0 c 0)
-                (and (progn (setq a 1) T)
-                     (progn (setq b 1) nil)
-                     (progn (setq c 1) T))
-                 (list a b c)`, result: new List([
+                (eval (read "(and (progn (setq a 1) T)
+                                  (progn (setq b 1) nil)
+                                  (progn (setq c 1) T))"))
+                (list a b c)`, result: new List([
             new Int(1), new Int(1), new Int(0)
         ])},
         {test: `(setq a 0 b 0 c 0)
-                (and (progn (setq a 1) T)
-                     (progn (setq b 1) T)
-                     (progn (setq c 1) nil))
+                (eval (read "(and (progn (setq a 1) T)
+                                  (progn (setq b 1) T)
+                                  (progn (setq c 1) nil))"))
                 (list a b c)`, result: new List([
             new Int(1), new Int(1), new Int(1)
         ])},
         {test: `(setq a 0 b 0 c 0)
-                (and (progn (setq a 1) T)
-                     (progn (setq b 1) T)
-                     (progn (setq c 1) T))
+                (eval (read "(and (progn (setq a 1) T)
+                                  (progn (setq b 1) T)
+                                  (progn (setq c 1) T))"))
                 (list a b c)`, result: new List([
             new Int(1), new Int(1), new Int(1)
         ])},
@@ -91,7 +91,19 @@ TestRunner.run({
         {test: '(eval (read "(cond (nil) (T 1))"))', result: new Int(1)},
         {test: '(eval (read "(cond (T 1 2 3))"))', result: new Int(3)},
         {test: '(eval (read "(cond ((= 0 1) \\\"no\\\") ((= 1 1) \\\"yes\\\"))"))', result: new Str('yes')},
-        // TODO: short circuit
+        // Short circuit
+        {test: `(setq a 0 b 0)
+                (eval (read "(cond (nil (setq a 1))
+                                   (T (setq b 1)))"))
+                (list a b)`, result: new List([
+            new Int(0), new Int(1)
+        ])},
+        {test: `(setq a 0 b 0)
+                (eval (read "(cond (T (setq a 1))
+                                   (nil (setq b 1)))"))
+                (list a b)`, result: new List([
+            new Int(1), new Int(0)
+        ])},
 
         // DEFUN special form
         {test: '(eval (read "(defun foo () 42)"))', result: new Sym('foo')},
@@ -125,7 +137,18 @@ TestRunner.run({
         {test: '(eval (read "(if nil \\\"yes\\\" \\\"no\\\")"))', result: new Str('no')},
         {test: '(eval (read "(if nil \\\"yes\\\")"))', result: new Bool(false)},
         // Short circuit
-        // TODO
+        {test: `(setq a 0 b 0)
+                (eval (read "(if T (setq a 1)
+                                   (setq b 1))"))
+                (list a b)`, result: new List([
+            new Int(1), new Int(0)
+        ])},
+        {test: `(setq a 0 b 0)
+                (eval (read "(if nil (setq a 1)
+                                     (setq b 1))"))
+                (list a b)`, result: new List([
+            new Int(0), new Int(1)
+        ])},
 
         // LAMBDA special form
         {test: '(eval (read "(lambda () 42)"))', result: (act) => {
@@ -148,7 +171,34 @@ TestRunner.run({
         {test: '(eval (read "(or T T)"))', result: new Bool(true)},
         {test: '(eval (read "(or nil T)"))', result: new Bool(true)},
         // Short circuit
-        // TODO
+        {test: `(setq a 0 b 0 c 0)
+                (eval (read "(or (progn (setq a 1) nil)
+                                 (progn (setq b 1) T)
+                                 (progn (setq c 1) T))"))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(1), new Int(0)
+        ])},
+        {test: `(setq a 0 b 0 c 0)
+                (eval (read "(or (progn (setq a 1) nil)
+                                 (progn (setq b 1) nil)
+                                 (progn (setq c 1) T))"))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(1), new Int(1)
+        ])},
+        {test: `(setq a 0 b 0 c 0)
+                (eval (read "(or (progn (setq a 1) nil)
+                                 (progn (setq b 1) nil)
+                                 (progn (setq c 1) nil))"))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(1), new Int(1)
+        ])},
+        {test: `(setq a 0 b 0 c 0)
+                (eval (read "(or (progn (setq a 1) T)
+                                 (progn (setq b 1) nil)
+                                 (progn (setq c 1) nil))"))
+                (list a b c)`, result: new List([
+            new Int(1), new Int(0), new Int(0)
+        ])},
 
         // PROGN special form
         {test: '(eval (read "(progn)"))', result: new Bool(false)},
