@@ -14,11 +14,11 @@ TestRunner.run({
         {test: '(quote 1)', result: new Int(1)},
         {test: '\'1', result: new Int(1)},
 
-        {test: '(quote 1.0)', result: new Real(1.0)},
-        {test: '\'1.0', result: new Real(1.0)},
+        {test: '(quote 2.0)', result: new Real(2.0)},
+        {test: '\'2.0', result: new Real(2.0)},
 
-        {test: '(quote "1")', result: new Str('1')},
-        {test: '\'"1"', result: new Str('1')},
+        {test: '(quote "three")', result: new Str('three')},
+        {test: '\'"three"', result: new Str('three')},
 
         {test: '(quote foo)', result: new Sym('foo')},
         {test: '\'foo', result: new Sym('foo')},

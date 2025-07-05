@@ -95,7 +95,7 @@ TestRunner.run({
 
         // FOREACH special form
         {test: '(eval (read "(foreach n (list))"))', result: new Bool(false)},
-//        {test: '(eval (read "(foreach n \'())"))', result: new Bool(false)},
+        {test: '(eval (read "(foreach n \'())"))', result: new Bool(false)},
         {test: '(eval (read "(foreach n ())"))', result: new Bool(false)},
         {test: '(eval (read "(foreach n nil)"))', result: new Bool(false)},
         {test: '(eval (read "(foreach n (list 1 2 3))"))', result: new Bool(false)},
@@ -127,6 +127,34 @@ TestRunner.run({
                 (eval (read "(progn (setq a 1) (setq b 2))"))
                 (list a b)`, result: new List([
             new Int(1), new Int(2)
+        ])},
+
+        // QUOTE special form
+        {test: '(eval (read "(quote nil)"))', result: new Bool(false)},
+        {test: '(eval (read "\'nil"))', result: new Bool(false)},
+        {test: '(eval (read "(quote T)"))', result: new Bool(true)},
+        {test: '(eval (read "\'T"))', result: new Bool(true)},
+        {test: '(eval (read "(quote 1)"))', result: new Int(1)},
+        {test: '(eval (read "\'1"))', result: new Int(1)},
+        {test: '(eval (read "(quote 2.0)"))', result: new Real(2.0)},
+        {test: '(eval (read "\'2.0"))', result: new Real(2.0)},
+        {test: '(eval (read "(quote \\\"three\\\")"))', result: new Str('three')},
+        {test: '(eval (read "\'\\\"three\\\""))', result: new Str('three')},
+        {test: '(eval (read "(quote foo)"))', result: new Sym('foo')},
+        {test: '(eval (read "\'foo"))', result: new Sym('foo')},
+        {test: '(eval (read "(quote ())"))', result: new Bool(false)},
+        {test: '(eval (read "\'()"))', result: new Bool(false)},
+        {test: '(eval (read "(quote (list))"))', result: new List([
+            new Sym('list')
+        ])},
+        {test: '(eval (read "\'(list)"))', result: new List([
+            new Sym('list')
+        ])},
+        {test: '(eval (read "(quote (list 1 2 3))"))', result: new List([
+            new Sym('list'), new Int(1), new Int(2), new Int(3)
+        ])},
+        {test: '(eval (read "\'(list 1 2 3)"))', result: new List([
+            new Sym('list'), new Int(1), new Int(2), new Int(3)
         ])},
 
         // SETQ special for

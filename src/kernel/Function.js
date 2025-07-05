@@ -31,11 +31,10 @@ const specialForms = {
 //    'LAMBDA': eval_lambda,
     'OR': eval_or,
     'PROGN': eval_progn,
-//    'QUOTE': eval_quote,
+    'QUOTE': eval_quote,
 //    'REPEAT': eval_repeat,
     'SETQ': eval_setq,
-//    'WHILE': eval_while,
-//    'TICK': eval_tick
+//    'WHILE': eval_while
 }
 
 export const initContext = (context) => {
@@ -157,11 +156,11 @@ function eval_cond(self, args) {
     for (let i = 0; i < args.length(); i++) {
         const clause = args.at(i)
         const test = eval_expr(self, clause.car())
-        console.error('cond test:', test)
+        //console.error('cond test:', test)
         if (!test.isNil()) {
             result = test
             const body = clause.cdr()
-            console.error('cond body: ', body)
+            //console.error('cond body: ', body)
             for (let j = 0; j < body.length(); j++) {
                 result = eval_expr(self, body.at(j))
             }
@@ -250,6 +249,11 @@ function eval_progn(self, args) {
         result = eval_expr(self, args.at(i))
     }
     return result
+}
+
+function eval_quote(self, args) {
+    // Simply return the first arg
+    return args.at(0)
 }
 
 function eval_setq(self, args) {
