@@ -100,7 +100,7 @@ TestRunner.run({
         {test: '(eval (read "(foreach n nil)"))', result: new Bool(false)},
         {test: '(eval (read "(foreach n (list 1 2 3))"))', result: new Bool(false)},
         {test: '(eval (read "(foreach n (list 1 2 3) n)"))', result: new Int(3)},
-        {test: `(eval (read "(foreach n (list 1 2 3) (+ n 1))"))`, result: new Int(4)},
+        {test: '(eval (read "(foreach n (list 1 2 3) (+ n 1))"))', result: new Int(4)},
 
         // IF special form
         {test: '(eval (read "(if T \\\"yes\\\" \\\"no\\\")"))', result: new Str('yes')},
@@ -193,9 +193,9 @@ TestRunner.run({
         {test: '(eval)', result: new Error('eval: too few arguments')},
         {test: '(eval 1 2)', result: new Error('eval: too many arguments')},
         {test: '(eval \'(abc 1 2))', result: new Error('eval: no such function ABC')},
-        {test: '(setq lst "1 2 3") (eval (read "(foreach n lst)"))',
-         result: new Error("eval: foreach: `list` expected List")},
-        {test: '(eval (read "(repeat nil)"))',
-         result: new Error('eval: repeat: `num` expected non-negative Int')},
+        {test: '(setq lst "1 2 3") (eval (read "(foreach n lst)"))', result:
+         new Error('eval: foreach: `list` expected List')},
+        {test: '(eval (read "(repeat nil)"))', result:
+         new Error('eval: repeat: `num` expected non-negative Int')},
     ]
 })

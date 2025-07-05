@@ -274,8 +274,8 @@ function eval_repeat(self, args) {
 function eval_setq(self, args) {
     let value = new Bool(false)
     for (let i = 0; i < args.length(); i+=2) {
-        const name = eval_expr(self, args.at(i), false);
-        value = eval_expr(self, args.at(i+1));
+        const name = eval_expr(self, args.at(i), false)
+        value = eval_expr(self, args.at(i+1))
         //console.error(`setq: ${name} = ${value}`)
         self.stack.top().setVar(name, value)
     }
