@@ -93,6 +93,15 @@ TestRunner.run({
         {test: '(eval (read "(cond ((= 0 1) \\\"no\\\") ((= 1 1) \\\"yes\\\"))"))', result: new Str('yes')},
         // TODO: short circuit
 
+        // DEFUN special form
+        {test: '(eval (read "(defun foo () 42)"))', result: new Sym('foo')},
+        {test: '((eval (read "(defun foo () 42)")))', result: new Int(42)},
+        {test: '(eval (read "(defun foo () 42)")) (foo)', result: new Int(42)},
+        {test: '(eval (read "(defun id (x) x)"))', result: new Sym('id')},
+        {test: '((eval (read "(defun id (x) x)")) 42)', result: new Int(42)},
+        {test: '(eval (read "(defun id (x) x)")) (id 42)', result: new Int(42)},
+        {test: '(eval (read "(defun id (x / a) x)"))', result: new Sym('id')},
+
         // FOREACH special form
         {test: '(eval (read "(foreach n (list))"))', result: new Bool(false)},
         {test: '(eval (read "(foreach n \'())"))', result: new Bool(false)},
@@ -108,6 +117,19 @@ TestRunner.run({
         {test: '(eval (read "(if nil \\\"yes\\\")"))', result: new Bool(false)},
         // Short circuit
         // TODO
+
+        // LAMBDA special form
+        {test: '(eval (read "(lambda () 42)"))', result: (act) => {
+            return act instanceof UFun
+        }},
+        {test: '((eval (read "(lambda () 42)")))', result: new Int(42)},
+        {test: '(eval (read "(lambda (x) x)"))', result: (act) => {
+            return act instanceof UFun
+        }},
+        {test: '((eval (read "(lambda (x) x)")) 42)', result: new Int(42)},
+        {test: '(eval (read "(lambda (x / a) x)"))', result: (act) => {
+            return act instanceof UFun
+        }},
 
         // OR special form
         {test: '(eval (read "(or)"))', result: new Bool(false)},

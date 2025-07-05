@@ -19,16 +19,17 @@
 
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
+import {evaluate} from '../VeLispEvaluator.js'
 import {Bool, Int, Real, Str, Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
 const specialForms = {
     'AND': eval_and,
     'COND': eval_cond,
-//    'DEFUN': eval_defun,
+    'DEFUN': eval_defun,
     'FOREACH': eval_foreach,
 //    'FUNCTION': eval_function,
     'IF': eval_if,
-//    'LAMBDA': eval_lambda,
+    'LAMBDA': eval_lambda,
     'OR': eval_or,
     'PROGN': eval_progn,
     'QUOTE': eval_quote,
@@ -170,6 +171,12 @@ function eval_cond(self, args) {
     return result
 }
 
+function eval_defun(self, args) {
+    // Restore defun's string representation and evaluate it.
+    const defun = args.cons(new Sym('defun')).toString()
+    return evaluate(defun, self.stack)
+}
+
 function eval_foreach(self, args) {
     const name = args.at(0)
     const list = eval_expr(self, args.at(1))
@@ -231,6 +238,12 @@ function eval_if(self, args) {
         return eval_expr(self, args.at(2))
     }
     return new Bool(false)
+}
+
+function eval_lambda(self, args) {
+    // Restore lambda's string representation and evaluate it.
+    const lambda = args.cons(new Sym('lambda')).toString()
+    return evaluate(lambda, self.stack)
 }
 
 function eval_or(self, args) {

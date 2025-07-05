@@ -67,11 +67,10 @@ TestRunner.run({
             new Sym(')'),
             new Str('foo'),
         ])},
-        {test: '(read "(defun foo (/) \\\"foo\\\")")', result: new List([
+        {test: '(read "(defun foo ( / ) \\\"foo\\\")")', result: new List([
             new Sym('defun'),
             new Sym('foo'),
             new Sym('('),
-            new Sym('/'),
             new Sym(')'),
             new Str('foo'),
         ])},
@@ -150,10 +149,9 @@ TestRunner.run({
             new Sym(')'),
             new Str('foo')
         ])},
-        {test: '(read "(lambda (/) \\\"foo\\\")")', result: new List([
+        {test: '(read "(lambda ( / ) \\\"foo\\\")")', result: new List([
             new Sym('lambda'),
             new Sym('('),
-            new Sym('/'),
             new Sym(')'),
             new Str('foo')
         ])},
