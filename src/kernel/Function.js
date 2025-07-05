@@ -27,7 +27,7 @@ const specialForms = {
     'COND': eval_cond,
     'DEFUN': eval_defun,
     'FOREACH': eval_foreach,
-//    'FUNCTION': eval_function,
+    'FUNCTION': eval_function,
     'IF': eval_if,
     'LAMBDA': eval_lambda,
     'OR': eval_or,
@@ -227,6 +227,22 @@ function eval_foreach(self, args) {
     }
 
     throw new Error('eval: foreach: `list` expected List')
+}
+
+function eval_function(self, args) {
+    const arg = args.car()
+    if (arg instanceof Sym) {
+        return arg
+    }
+    if (arg instanceof List && !arg.car().equal(new Sym('lambda')).isNil()) {
+        // Get rid of initial Sym('lambda') and evaluate
+        return eval_lambda(self, arg.cdr())
+    }
+    if (arg instanceof List && !arg.car().equal(new Sym('defun')).isNil()) {
+        // Get rid of initial Sym('defun') and evaluate
+        return eval_defun(self, arg.cdr())
+    }
+    throw new Error('eval: function: expected Sym, Fun')
 }
 
 function eval_if(self, args) {

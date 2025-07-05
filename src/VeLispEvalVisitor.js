@@ -127,13 +127,16 @@ class VeLispEvalVisitor extends VeLispVisitor {
             //console.error('ID:', str)
             return new Sym(str)
         }
+        if (expr instanceof VeLispParser.DefunContext) {
+            return this.visitDefun(expr)
+        }
         if (expr instanceof VeLispParser.LambdaContext) {
             return this.visitLambda(expr)
         }
         //console.error(str)
         //console.error(ctx.expr())
 
-        throw new Error('function: expected Fun')
+        throw new Error('function: expected Sym, Fun')
     }
 
     visitIf(ctx) {

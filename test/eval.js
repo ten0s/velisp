@@ -111,6 +111,15 @@ TestRunner.run({
         {test: '(eval (read "(foreach n (list 1 2 3) n)"))', result: new Int(3)},
         {test: '(eval (read "(foreach n (list 1 2 3) (+ n 1))"))', result: new Int(4)},
 
+        // FUNCTION special form
+        {test: '(eval (read "(function car)"))', result: new Sym('car')},
+        {test: '(eval (read "(function (defun id (x) x))"))', result: new Sym('id')},
+        {test: '(eval (read "(function (defun id (x) x))")) (id 42)', result: new Int(42)},
+        {test: '(eval (read "(function (lambda (x) x))"))', result: (act) => {
+            return act instanceof UFun
+        }},
+        {test: '((eval (read "(function (lambda (x) x))")) 42)', result: new Int(42)},
+
         // IF special form
         {test: '(eval (read "(if T \\\"yes\\\" \\\"no\\\")"))', result: new Str('yes')},
         {test: '(eval (read "(if nil \\\"yes\\\" \\\"no\\\")"))', result: new Str('no')},
@@ -217,6 +226,8 @@ TestRunner.run({
         {test: '(eval \'(abc 1 2))', result: new Error('eval: no such function ABC')},
         {test: '(setq lst "1 2 3") (eval (read "(foreach n lst)"))', result:
          new Error('eval: foreach: `list` expected List')},
+        {test: '(eval (read "(function 1)"))', result:
+          new Error('eval: function: expected Sym, Fun')},
         {test: '(eval (read "(repeat nil)"))', result:
          new Error('eval: repeat: `num` expected non-negative Int')},
     ]

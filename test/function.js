@@ -6,6 +6,7 @@ TestRunner.run({
 
     tests: [
         {test: '(function car)', result: new Sym('car')},
+        {test: '(function (defun id (x) x))', result: new Sym('id')},
         {test: '(function (lambda (x) x))', result: (act) => {
             return act instanceof Fun
         }},
@@ -13,8 +14,8 @@ TestRunner.run({
     ],
 
     errors: [
-        {test: '(function nil)', result: new Error('function: expected Fun')},
-        {test: '(function T)', result: new Error('function: expected Fun')},
-        {test: '(function 1)', result: new Error('function: expected Fun')},
+        {test: '(function nil)', result: new Error('function: expected Sym, Fun')},
+        {test: '(function T)', result: new Error('function: expected Sym, Fun')},
+        {test: '(function 1)', result: new Error('function: expected Sym, Fun')},
     ]
 })
