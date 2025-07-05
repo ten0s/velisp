@@ -34,7 +34,7 @@ const specialForms = {
     'QUOTE': eval_quote,
     'REPEAT': eval_repeat,
     'SETQ': eval_setq,
-//    'WHILE': eval_while
+    'WHILE': eval_while
 }
 
 export const initContext = (context) => {
@@ -253,11 +253,11 @@ function eval_progn(self, args) {
 
 function eval_quote(self, args) {
     // Simply return the first arg
-    return args.at(0)
+    return args.car()
 }
 
 function eval_repeat(self, args) {
-    const count = eval_expr(self, args.at(0))
+    const count = eval_expr(self, args.car())
     if (count instanceof Int && count.value() >= 0) {
         let result = new Bool(false)
         const body = args.cdr()
@@ -280,4 +280,19 @@ function eval_setq(self, args) {
         self.stack.top().setVar(name, value)
     }
     return value
+}
+
+function eval_while(self, args) {
+    let result = new Bool(false)
+    const test = args.car()
+    const body = args.cdr()
+    for (;;) {
+        if (eval_expr(self, test).isNil()) {
+            break
+        }
+        for (let i = 0; i < body.length(); i++) {
+            result = eval_expr(self, body.at(i))
+        }
+    }
+    return result
 }

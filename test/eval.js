@@ -176,6 +176,17 @@ TestRunner.run({
         {test: '(eval (read "(setq a 1 b 2.0)")) (list a b)', result: new List([
             new Int(1), new Real(2.0)
         ])},
+
+        // WHILE special form
+        {test: '(eval (read "(while nil)"))', result: new Bool(false)},
+        {test: '(eval (read "(while nil \'done)"))', result: new Bool(false)},
+        {test: `(setq test 1)
+                (eval (read "(while (<= test 10)
+                                 (setq test (+ 1 test)))"))`, result: new Int(11)},
+        {test: `(setq test 1)
+                (eval (read "(while (<= test 10)
+                                 (setq test (+ 1 test))
+                                 \'done)"))`, result: new Sym('done')},
     ],
 
     errors: [

@@ -309,12 +309,11 @@ class VeLispEvalVisitor extends VeLispVisitor {
         for (;;) {
             const test = this.getValue(this.visit(ctx.whileTest()))
             //console.error('while test:', test)
-            if (!test.isNil()) {
-                for (let i = 0; i < ctx.expr().length; i++) {
-                    result = this.visit(ctx.expr(i))
-                }
-            } else {
+            if (test.isNil()) {
                 break
+            }
+            for (let i = 0; i < ctx.expr().length; i++) {
+                result = this.visit(ctx.expr(i))
             }
         }
         return result
