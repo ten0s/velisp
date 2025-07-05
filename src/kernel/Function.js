@@ -23,7 +23,7 @@ import {Bool, Int, Real, Str, Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
 const specialForms = {
     'AND': eval_and,
-//    'COND': eval_cond,
+    'COND': eval_cond,
 //    'DEFUN': eval_defun,
 //    'FOREACH': eval_foreach,
 //    'FUNCTION': eval_function,
@@ -150,6 +150,25 @@ function eval_and(self, args) {
         }
     }
     return new Bool(true)
+}
+
+function eval_cond(self, args) {
+    let result = new Bool(false)
+    for (let i = 0; i < args.length(); i++) {
+        const clause = args.at(i)
+        const test = eval_expr(self, clause.car())
+        console.error('cond test:', test)
+        if (!test.isNil()) {
+            result = test
+            const body = clause.cdr()
+            console.error('cond body: ', body)
+            for (let j = 0; j < body.length(); j++) {
+                result = eval_expr(self, body.at(j))
+            }
+            break
+        }
+    }
+    return result
 }
 
 function eval_if(self, args) {

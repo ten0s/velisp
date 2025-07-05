@@ -33,6 +33,18 @@ TestRunner.run({
             new Sym('cond'),
             new List([new Bool(false)])
         ])},
+        {test: '(read "(cond (T))")', result: new List([
+            new Sym('cond'),
+            new List([new Bool(true)])
+        ])},
+        {test: '(read "(cond (T 1))")', result: new List([
+            new Sym('cond'),
+            new List([new Bool(true), new Int(1)])
+        ])},
+        {test: '(read "(cond (T 1 2))")', result: new List([
+            new Sym('cond'),
+            new List([new Bool(true), new Int(1), new Int(2)])
+        ])},
         {test: '(read "(cond (nil 0))")', result: new List([
             new Sym('cond'),
             new List([new Bool(false), new Int(0)])

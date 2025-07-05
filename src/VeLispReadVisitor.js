@@ -48,14 +48,14 @@ class VeLispReadVisitor extends VeLispVisitor {
         ]
 
         for (let i = 0; i < ctx.condTestResult().length; i++) {
-            const pair = []
+            const clause = []
             const test = this.getValue(this.visit(ctx.condTestResult(i).condTest()))
-            const result = this.getValue(this.visit(ctx.condTestResult(i).condResult()))
-            pair.push(test)
-            if (result) {
-                pair.push(result)
+            clause.push(test)
+            for (let j = 0; j < ctx.condTestResult(i).condResult().length; j++) {
+                const result = this.getValue(this.visit(ctx.condTestResult(i).condResult(j)))
+                clause.push(result)
             }
-            values.push(new List(pair))
+            values.push(new List(clause))
         }
 
         return new List(values)

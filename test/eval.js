@@ -83,6 +83,16 @@ TestRunner.run({
             new Int(1), new Int(1), new Int(1)
         ])},
 
+        // COND special form
+        {test: '(eval (read "(cond)"))', result: new Bool(false)},
+        {test: '(eval (read "(cond (nil))"))', result: new Bool(false)},
+        {test: '(eval (read "(cond (nil) (T))"))', result: new Bool(true)},
+        {test: '(eval (read "(cond (nil 0))"))', result: new Bool(false)},
+        {test: '(eval (read "(cond (nil) (T 1))"))', result: new Int(1)},
+        {test: '(eval (read "(cond (T 1 2 3))"))', result: new Int(3)},
+        {test: '(eval (read "(cond ((= 0 1) \\\"no\\\") ((= 1 1) \\\"yes\\\"))"))', result: new Str('yes')},
+        // TODO: short circuit
+
         // IF special form
         {test: '(eval (read "(if T \\\"yes\\\" \\\"no\\\")"))', result: new Str('yes')},
         {test: '(eval (read "(if nil \\\"yes\\\" \\\"no\\\")"))', result: new Str('no')},
