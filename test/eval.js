@@ -93,6 +93,15 @@ TestRunner.run({
         {test: '(eval (read "(cond ((= 0 1) \\\"no\\\") ((= 1 1) \\\"yes\\\"))"))', result: new Str('yes')},
         // TODO: short circuit
 
+        // FOREACH special form
+        {test: '(eval (read "(foreach n (list))"))', result: new Bool(false)},
+//        {test: '(eval (read "(foreach n \'())"))', result: new Bool(false)},
+        {test: '(eval (read "(foreach n ())"))', result: new Bool(false)},
+        {test: '(eval (read "(foreach n nil)"))', result: new Bool(false)},
+        {test: '(eval (read "(foreach n (list 1 2 3))"))', result: new Bool(false)},
+        {test: '(eval (read "(foreach n (list 1 2 3) n)"))', result: new Int(3)},
+        {test: `(eval (read "(foreach n (list 1 2 3) (+ n 1))"))`, result: new Int(4)},
+
         // IF special form
         {test: '(eval (read "(if T \\\"yes\\\" \\\"no\\\")"))', result: new Str('yes')},
         {test: '(eval (read "(if nil \\\"yes\\\" \\\"no\\\")"))', result: new Str('no')},

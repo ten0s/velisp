@@ -76,6 +76,11 @@ class VeLispEvalVisitor extends VeLispVisitor {
             return new Bool(false)
         }
         if (list instanceof List) {
+            // Check if body exists
+            if (!ctx.expr().length) {
+                return new Bool(false)
+            }
+
             let result = new Bool(false)
 
             const context = this.stack.top()
@@ -86,11 +91,11 @@ class VeLispEvalVisitor extends VeLispVisitor {
                 prevVar = context.getTopVar(name)
             }
 
-            for (let i = 0; i < list.value().length; i++) {
+            for (let i = 0; i < list.length(); i++) {
                 // Set each list value directly into the top context,
                 // to make it possible to shadow 'name' in some
                 // lower context
-                const value = list.value()[i]
+                const value = list.at(i)
                 //console.error(`foreach: ${value}`)
                 context.setTopVar(name, value)
                 for (let j = 0; j < ctx.expr().length; j++) {

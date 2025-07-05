@@ -25,7 +25,7 @@ const specialForms = {
     'AND': eval_and,
     'COND': eval_cond,
 //    'DEFUN': eval_defun,
-//    'FOREACH': eval_foreach,
+    'FOREACH': eval_foreach,
 //    'FUNCTION': eval_function,
     'IF': eval_if,
 //    'LAMBDA': eval_lambda,
@@ -169,6 +169,58 @@ function eval_cond(self, args) {
         }
     }
     return result
+}
+
+function eval_foreach(self, args) {
+    const name = args.at(0)
+    const list = eval_expr(self, args.at(1))
+
+    //console.error(`foreach: ${name} ${list}`)
+    if (list.isNil()) {
+        return new Bool(false)
+    }
+
+    if (list instanceof List) {
+        // Check if body exists
+        if (args.length() === 2) {
+            return new Bool(false)
+        }
+
+        let result = new Bool(false)
+
+        const context = self.stack.top()
+
+        // Save previous 'name' from the top context, if defined
+        let prevVar = undefined
+        if (context.isTopVar(name)) {
+            prevVar = context.getTopVar(name)
+        }
+
+        for (let i = 0; i < list.length(); i++) {
+            // Set each list value directly into the top context,
+            // to make it possible to shadow 'name' in some
+            // lower context
+            const value = list.at(i)
+            //console.error(`foreach: ${value}`)
+            context.setTopVar(name, value)
+            const body = args.cdr().cdr()
+            for (let j = 0; j < body.length(); j++) {
+                result = eval_expr(self, body.at(j))
+            }
+        }
+
+        // Restore 'name' if was previously defined in the top context
+        // or delete it otherwise
+        if (prevVar) {
+            context.setTopVar(name, prevVar)
+        } else {
+            context.delTopVar(name)
+        }
+
+        return result
+    }
+
+    throw new Error('foreach: `list` expected List')
 }
 
 function eval_if(self, args) {
