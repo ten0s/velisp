@@ -23,19 +23,19 @@ import {evaluate} from '../VeLispEvaluator.js'
 import {Bool, Int, Real, Str, Sym, List, Fun, KFun} from '../VeLispTypes.js'
 
 const specialForms = {
-    'AND': eval_and,
-    'COND': eval_cond,
-    'DEFUN': eval_defun,
-    'FOREACH': eval_foreach,
-    'FUNCTION': eval_function,
-    'IF': eval_if,
-    'LAMBDA': eval_lambda,
-    'OR': eval_or,
-    'PROGN': eval_progn,
-    'QUOTE': eval_quote,
-    'REPEAT': eval_repeat,
-    'SETQ': eval_setq,
-    'WHILE': eval_while
+    'AND': evalAnd,
+    'COND': evalCond,
+    'DEFUN': evalDefun,
+    'FOREACH': evalForeach,
+    'FUNCTION': evalFunction,
+    'IF': evalIf,
+    'LAMBDA': evalLambda,
+    'OR': evalOr,
+    'PROGN': evalProgn,
+    'QUOTE': evalQuote,
+    'REPEAT': evalRepeat,
+    'SETQ': evalSetQ,
+    'WHILE': evalWhile
 }
 
 export const initContext = (context) => {
@@ -74,11 +74,11 @@ export const initContext = (context) => {
         if (args.length > 1) {
             throw new Error('eval: too many arguments')
         }
-        return eval_expr(self, args[0])
+        return evalExpr(self, args[0])
     }))
 }
 
-function eval_expr(self, expr, resolveSym = true) {
+function evalExpr(self, expr, resolveSym = true) {
     if (expr instanceof Bool) {
         return expr
     }
@@ -113,7 +113,7 @@ function eval_expr(self, expr, resolveSym = true) {
         let tail = expr.cdr()
 
         if (!head.isAtom()) {
-            head = eval_expr(self, head)
+            head = evalExpr(self, head)
         }
 
         // Evaluate special form expressions
@@ -124,7 +124,7 @@ function eval_expr(self, expr, resolveSym = true) {
 
         // Evaluate internal expressions
         // List[AnyX] -> List[AnyY]
-        tail = tail.map(X => eval_expr(self, X))
+        tail = tail.map(X => evalExpr(self, X))
         expr = tail.cons(head)
 
         const car = expr.car()
@@ -142,9 +142,9 @@ function eval_expr(self, expr, resolveSym = true) {
     throw new Error('eval: evaluation failed')
 }
 
-function eval_and(self, args) {
+function evalAnd(self, args) {
     for (let i = 0; i < args.length(); i++) {
-        const result = eval_expr(self, args.at(i))
+        const result = evalExpr(self, args.at(i))
         if (result.isNil()) {
             return new Bool(false)
         }
@@ -152,18 +152,18 @@ function eval_and(self, args) {
     return new Bool(true)
 }
 
-function eval_cond(self, args) {
+function evalCond(self, args) {
     let result = new Bool(false)
     for (let i = 0; i < args.length(); i++) {
         const clause = args.at(i)
-        const test = eval_expr(self, clause.car())
+        const test = evalExpr(self, clause.car())
         //console.error('cond test:', test)
         if (!test.isNil()) {
             result = test
             const body = clause.cdr()
             //console.error('cond body: ', body)
             for (let j = 0; j < body.length(); j++) {
-                result = eval_expr(self, body.at(j))
+                result = evalExpr(self, body.at(j))
             }
             break
         }
@@ -171,15 +171,15 @@ function eval_cond(self, args) {
     return result
 }
 
-function eval_defun(self, args) {
+function evalDefun(self, args) {
     // Restore defun's string representation and evaluate it.
     const defun = args.cons(new Sym('defun')).toString()
     return evaluate(defun, self.stack)
 }
 
-function eval_foreach(self, args) {
+function evalForeach(self, args) {
     const name = args.at(0)
-    const list = eval_expr(self, args.at(1))
+    const list = evalExpr(self, args.at(1))
 
     //console.error(`foreach: ${name} ${list}`)
     if (list.isNil()) {
@@ -211,7 +211,7 @@ function eval_foreach(self, args) {
             context.setTopVar(name, value)
             const body = args.cdr().cdr()
             for (let j = 0; j < body.length(); j++) {
-                result = eval_expr(self, body.at(j))
+                result = evalExpr(self, body.at(j))
             }
         }
 
@@ -229,42 +229,42 @@ function eval_foreach(self, args) {
     throw new Error('eval: foreach: `list` expected List')
 }
 
-function eval_function(self, args) {
+function evalFunction(self, args) {
     const arg = args.car()
     if (arg instanceof Sym) {
         return arg
     }
     if (arg instanceof List && !arg.car().equal(new Sym('lambda')).isNil()) {
         // Get rid of initial Sym('lambda') and evaluate
-        return eval_lambda(self, arg.cdr())
+        return evalLambda(self, arg.cdr())
     }
     if (arg instanceof List && !arg.car().equal(new Sym('defun')).isNil()) {
         // Get rid of initial Sym('defun') and evaluate
-        return eval_defun(self, arg.cdr())
+        return evalDefun(self, arg.cdr())
     }
     throw new Error('eval: function: expected Sym, Fun')
 }
 
-function eval_if(self, args) {
-    const test = eval_expr(self, args.at(0))
+function evalIf(self, args) {
+    const test = evalExpr(self, args.at(0))
     if (!test.isNil()) {
-        return eval_expr(self, args.at(1))
+        return evalExpr(self, args.at(1))
     }
     if (args.length() > 2) {
-        return eval_expr(self, args.at(2))
+        return evalExpr(self, args.at(2))
     }
     return new Bool(false)
 }
 
-function eval_lambda(self, args) {
+function evalLambda(self, args) {
     // Restore lambda's string representation and evaluate it.
     const lambda = args.cons(new Sym('lambda')).toString()
     return evaluate(lambda, self.stack)
 }
 
-function eval_or(self, args) {
+function evalOr(self, args) {
     for (let i = 0; i < args.length(); i++) {
-        const result = eval_expr(self, args.at(i))
+        const result = evalExpr(self, args.at(i))
         if (!result.isNil()) {
             return new Bool(true)
         }
@@ -272,27 +272,27 @@ function eval_or(self, args) {
     return new Bool(false)
 }
 
-function eval_progn(self, args) {
+function evalProgn(self, args) {
     let result = new Bool(false)
     for (let i = 0; i < args.length(); i++) {
-        result = eval_expr(self, args.at(i))
+        result = evalExpr(self, args.at(i))
     }
     return result
 }
 
-function eval_quote(self, args) {
+function evalQuote(self, args) {
     // Simply return the first arg
     return args.car()
 }
 
-function eval_repeat(self, args) {
-    const count = eval_expr(self, args.car())
+function evalRepeat(self, args) {
+    const count = evalExpr(self, args.car())
     if (count instanceof Int && count.value() >= 0) {
         let result = new Bool(false)
         const body = args.cdr()
         for (let i = 0; i < count.value(); i++) {
             for (let j = 0; j < body.length(); j++) {
-                result = eval_expr(self, body.at(j))
+                result = evalExpr(self, body.at(j))
             }
         }
         return result
@@ -300,27 +300,27 @@ function eval_repeat(self, args) {
     throw new Error('eval: repeat: `num` expected non-negative Int')
 }
 
-function eval_setq(self, args) {
+function evalSetQ(self, args) {
     let value = new Bool(false)
     for (let i = 0; i < args.length(); i+=2) {
-        const name = eval_expr(self, args.at(i), false)
-        value = eval_expr(self, args.at(i+1))
+        const name = evalExpr(self, args.at(i), false)
+        value = evalExpr(self, args.at(i+1))
         //console.error(`setq: ${name} = ${value}`)
         self.stack.top().setVar(name, value)
     }
     return value
 }
 
-function eval_while(self, args) {
+function evalWhile(self, args) {
     let result = new Bool(false)
     const test = args.car()
     const body = args.cdr()
     for (;;) {
-        if (eval_expr(self, test).isNil()) {
+        if (evalExpr(self, test).isNil()) {
             break
         }
         for (let i = 0; i < body.length(); i++) {
-            result = eval_expr(self, body.at(i))
+            result = evalExpr(self, body.at(i))
         }
     }
     return result
