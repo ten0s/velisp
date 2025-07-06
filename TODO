@@ -1,2 +1,3 @@
+* Support quoting special form atoms: (quote and), etc
 * Support optional file-desc getstring, getint, getreal
 * Handle at least Backspace in read-line, getstring, getint, getreal

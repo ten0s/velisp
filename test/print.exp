@@ -39,8 +39,8 @@ expect {
 
 expect "^Test #4\n"
 expect {
-    "^\n(1 \"2\" '3) "   {}
-    "^\r\n(1 \"2\" '3) " {}
+    "^\n(1 \"2\" (QUOTE 3)) "   {}
+    "^\r\n(1 \"2\" (QUOTE 3)) " {}
     timeout {exit 1}
     eof {exit 2}
 }

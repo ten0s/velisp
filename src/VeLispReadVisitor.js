@@ -240,10 +240,6 @@ class VeLispReadVisitor extends VeLispVisitor {
         return new List(values)
     }
 
-    visitTick(ctx) {
-        return this.visitQuote(ctx)
-    }
-
     visitDotList(ctx) {
         const length = ctx.listExpr().length
         let last = this.getValue(this.visit(ctx.listExpr(length-1)))

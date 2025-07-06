@@ -22,6 +22,7 @@
 import VeLispParser from '../grammar/VeLispParser.js'
 import VeLispVisitor from '../grammar/VeLispVisitor.js'
 import VeLispContext from './VeLispContext.js'
+import VeLispReadVisitor from './VeLispReadVisitor.js'
 import {unescape} from './VeUtil.js'
 import {Bool, Int, Real, Str, Sym, List, Pair, Fun, UFun} from './VeLispTypes.js'
 import {isTrace} from './kernel/Trace.js'
@@ -32,6 +33,7 @@ class VeLispEvalVisitor extends VeLispVisitor {
         super()
         this.stack = stack
         this.traceDepth = 0
+        this.readVisitor = new VeLispReadVisitor()
     }
 
     visitAnd(ctx) {
@@ -237,32 +239,42 @@ class VeLispEvalVisitor extends VeLispVisitor {
         if (expr instanceof VeLispParser.LambdaContext) {
             return this.visitLambda(expr)
         }
+        if (expr instanceof VeLispParser.AndContext) {
+            return this.readVisitor.visitAnd(expr)
+        }
+        if (expr instanceof VeLispParser.CondContext) {
+            return this.readVisitor.visitCond(expr)
+        }
+        if (expr instanceof VeLispParser.DefunContext) {
+            return this.readVisitor.visitDefun(expr)
+        }
+        if (expr instanceof VeLispParser.ForeachContext) {
+            return this.readVisitor.visitForeach(expr)
+        }
+        if (expr instanceof VeLispParser.FunctionContext) {
+            return this.readVisitor.visitFunction(expr)
+        }
+        if (expr instanceof VeLispParser.IfContext) {
+            return this.readVisitor.visitIf(expr)
+        }
+        if (expr instanceof VeLispParser.OrContext) {
+            return this.readVisitor.visitOr(expr)
+        }
+        if (expr instanceof VeLispParser.PrognContext) {
+            return this.readVisitor.visitProgn(expr)
+        }
         if (expr instanceof VeLispParser.QuoteContext) {
-            const name = new Sym(expr.children[1].getText())
-            const values = [name]
-            for (let i = 2; i < expr.children.length-1; i++) {
-                // Fake expr() function returning itself
-                expr.children[i].expr = () => expr.children[i]
-                const value = this.getValue(this.visitQuote(expr.children[i]))
-                values.push(value)
-            }
-            return new List(values)
+            return this.readVisitor.visitQuote(expr)
         }
-        if (expr instanceof VeLispParser.AndContext ||
-            expr instanceof VeLispParser.CondContext ||
-            expr instanceof VeLispParser.DefunContext ||
-            expr instanceof VeLispParser.ForeachContext ||
-            expr instanceof VeLispParser.FunctionContext ||
-            expr instanceof VeLispParser.IfContext ||
-            expr instanceof VeLispParser.OrContext ||
-            expr instanceof VeLispParser.PrognContext ||
-            expr instanceof VeLispParser.RepeatContext ||
-            expr instanceof VeLispParser.SetQContext ||
-            expr instanceof VeLispParser.WhileContext) {
-            const name = expr.children[1].getText()
-            throw new Error(`quote: \`${name}\` not supported`)
+        if (expr instanceof VeLispParser.RepeatContext) {
+            return this.readVisitor.visitRepeat(expr)
         }
-
+        if (expr instanceof VeLispParser.SetQContext) {
+            return this.readVisitor.visitSetQ(expr)
+        }
+        if (expr instanceof VeLispParser.WhileContext) {
+            return this.readVisitor.visitWhile(expr)
+        }
         //console.error(str)
         //console.error(ctx.expr())
         return new Sym(str)
@@ -320,10 +332,6 @@ class VeLispEvalVisitor extends VeLispVisitor {
             }
         }
         return result
-    }
-
-    visitTick(ctx) {
-        return this.visitQuote(ctx)
     }
 
     visitDotList(ctx) {

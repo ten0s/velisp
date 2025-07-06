@@ -54,7 +54,7 @@ expect {
 
 expect "^Test #7\n"
 expect {
-    "^(1 \"2\" '3)" {}
+    "^(1 \"2\" (QUOTE 3))" {}
     timeout {exit 1}
     eof {exit 2}
 }

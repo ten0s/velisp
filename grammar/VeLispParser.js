@@ -579,7 +579,7 @@ export default class VeLispParser extends antlr4.Parser {
 	            break;
 
 	        case 22:
-	            localctx = new TickContext(this, localctx);
+	            localctx = new QuoteContext(this, localctx);
 	            this.enterOuterAlt(localctx, 22);
 	            this.state = 215;
 	            this.match(VeLispParser.T__4);
@@ -1169,30 +1169,6 @@ class RealContext extends ExprContext {
 }
 
 VeLispParser.RealContext = RealContext;
-
-class TickContext extends ExprContext {
-
-    constructor(parser, ctx) {
-        super(parser);
-        super.copyFrom(ctx);
-    }
-
-	expr() {
-	    return this.getTypedRuleContext(ExprContext,0);
-	};
-
-	accept(visitor) {
-	    if ( visitor instanceof VeLispVisitor ) {
-	        return visitor.visitTick(this);
-	    } else {
-	        return visitor.visitChildren(this);
-	    }
-	}
-
-
-}
-
-VeLispParser.TickContext = TickContext;
 
 class CondContext extends ExprContext {
 

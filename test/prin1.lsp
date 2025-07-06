@@ -17,4 +17,4 @@
 (prin1 nil)
 
 (princ "Test #7\n")
-(prin1 '(1 "2" '3 ))
+(prin1 '(1 "2" '3))

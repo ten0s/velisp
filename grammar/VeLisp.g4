@@ -50,7 +50,7 @@ expr :
      | STR                                                                        # str
      | ID                                                                         # id
 
-     | '\'' expr                                                                  # tick
+     | '\'' expr                                                                  # quote
      ;
 
 condTestResult : '(' condTest condResult* ')' ;

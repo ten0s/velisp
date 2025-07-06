@@ -19,6 +19,10 @@ TestRunner.run({
             new Sym('abc'), new Int(1), new Real(2.0), new Sym('id')
         ])},
 
+        //
+        // Special forms
+        //
+
         {test: '(read "(and)")', result: new List([
             new Sym('and')
         ])},
@@ -196,6 +200,44 @@ TestRunner.run({
         {test: '(read "(quote nil)")', result: new List([
             new Sym('quote'),
             new Bool(false)
+        ])},
+        {test: '(read "\'nil")', result: new List([
+            new Sym('quote'),
+            new Bool(false)
+        ])},
+        {test: '(read "(quote (quote nil))")', result: new List([
+            new Sym('quote'),
+            new List([
+                new Sym('quote'),
+                new Bool(false)
+            ])
+        ])},
+        {test: '(read "\'\'nil")', result: new List([
+            new Sym('quote'),
+            new List([
+                new Sym('quote'),
+                new Bool(false)
+            ])
+        ])},
+        {test: '(read "(quote (quote (quote nil)))")', result: new List([
+            new Sym('quote'),
+            new List([
+                new Sym('quote'),
+                new List([
+                    new Sym('quote'),
+                    new Bool(false)
+                ])
+            ])
+        ])},
+        {test: '(read "\'\'\'nil")', result: new List([
+            new Sym('quote'),
+            new List([
+                new Sym('quote'),
+                new List([
+                    new Sym('quote'),
+                    new Bool(false)
+                ])
+            ])
         ])},
         {test: '(read "(quote (1 2 3))")', result: new List([
             new Sym('quote'),
