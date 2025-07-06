@@ -192,7 +192,7 @@ update-copyright:
        -or -name '*.js'    \
        -or -name '*.lsp'   \
        -or -name '*.g4'    \
-       | xargs -I{} sed -i 's/2022-2023 Dmitry Klionsky/2022-2024 Dmitry Klionsky/' {}
+       | xargs -I{} sed -i 's/2022-2024 Dmitry Klionsky/2020-2025 Dmitry Klionsky/' {}
 
 cleanPkg:
 	rm -rf pkg/

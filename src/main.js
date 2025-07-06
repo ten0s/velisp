@@ -1,7 +1,7 @@
 /**
  *   This file is part of VeLisp
  *
- *   Copyright (C) 2022-2024 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>
+ *   Copyright (C) 2020-2025 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -319,7 +319,7 @@ function versionInfo(info) {
 }
 
 function licenseInfo() {
-    return 'Copyright (C) 2022-2024 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>    \n' +
+    return 'Copyright (C) 2020-2025 Dmitry Klionsky aka ten0s <dm.klionsky@gmail.com>    \n' +
            'License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n' +
            'This is free software: you are free to change and redistribute it.           \n' +
            'There is NO WARRANTY, to the extent permitted by law.'
