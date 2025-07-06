@@ -117,9 +117,11 @@ function evalExpr(self, expr, resolveSym = true) {
         }
 
         // Evaluate special form expressions
-        const specFun = specialForms[head.value()]
-        if (specFun) {
-            return specFun(self, tail)
+        if (!(head instanceof Fun)) {
+            const specFun = specialForms[head.value()]
+            if (specFun) {
+                return specFun(self, tail)
+            }
         }
 
         // Evaluate internal expressions

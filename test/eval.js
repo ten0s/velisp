@@ -162,6 +162,7 @@ TestRunner.run({
         {test: '(eval (read "(lambda (x / a) x)"))', result: (act) => {
             return act instanceof UFun
         }},
+        {test: '(eval \'((lambda (x) (+ x 1)) 5))', result: new Int(6)},
 
         // OR special form
         {test: '(eval (read "(or)"))', result: new Bool(false)},
