@@ -9,12 +9,12 @@
     "dependencies": {
         "antlr4": "4.10.1",
         "commander": "9.3.0",
-        "node-gtk": "github:ten0s/node-gtk#master",
+        "node-gtk": "github:ten0s/node-gtk#node-20",
         "temp": "0.9.4"
     },
     "devDependencies": {
-        "@eslint/js": "9.30.1",
         "@eslint/eslintrc": "3.3.1",
+        "@eslint/js": "9.30.1",
         "@rollup/plugin-commonjs": "22.0.0",
         "@rollup/plugin-node-resolve": "13.3.0",
         "@yao-pkg/pkg": "6.5.1",

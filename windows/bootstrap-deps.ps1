@@ -8,7 +8,8 @@ choco install -y visualstudio2017-workload-vctools
 choco install -y innosetup --version=6.2.2
 
 # Install Node.js
-choco install -y nodejs-lts --version=18.14.1
+choco install -y nodejs-lts --version=20.19.3
+npm install -g npm @yao-pkg/pkg@6.5.1
 $Env:PATH = [Environment]::GetEnvironmentVariable('PATH', 'Machine')
 
 # Install MSYS2
