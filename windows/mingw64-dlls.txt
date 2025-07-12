@@ -5,6 +5,7 @@ libbz2-1.dll
 libcairo-2.dll
 libcairo-gobject-2.dll
 libdatrie-1.dll
+libdeflate.dll
 libepoxy-0.dll
 libexpat-1.dll
 libffi-8.dll
@@ -26,6 +27,10 @@ libharfbuzz-0.dll
 libharfbuzz-gobject-0.dll
 libiconv-2.dll
 libintl-8.dll
+libjbig-0.dll
+libjpeg-8.dll
+libLerc.dll
+liblzma-5.dll
 libpango-1.0-0.dll
 libpangocairo-1.0-0.dll
 libpangoft2-1.0-0.dll
@@ -33,8 +38,12 @@ libpangowin32-1.0-0.dll
 libpcre2-8-0.dll
 libpixman-1-0.dll
 libpng16-16.dll
+libsharpyuv-0.dll
 libslide.dll
 libstdc++-6.dll
 libthai-0.dll
+libtiff-6.dll
+libwebp-7.dll
 libwinpthread-1.dll
+libzstd.dll
 zlib1.dll

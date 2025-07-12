@@ -6,8 +6,11 @@ GdkPixbuf-2.0.typelib
 GdkPixdata-2.0.typelib
 GdkWin32-3.0.typelib
 Gio-2.0.typelib
+GioWin32-2.0.typelib
 GIRepository-2.0.typelib
+GIRepository-3.0.typelib
 GLib-2.0.typelib
+GLibWin32-2.0.typelib
 GModule-2.0.typelib
 GObject-2.0.typelib
 Gtk-3.0.typelib
